@@ -531,7 +531,8 @@ ol,
 ul,
 dl {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
+    list-style: none;
 }
 
 ol ol,
@@ -981,8 +982,8 @@ progress {
 .container-lg,
 .container-xl {
     width: 100%;
-    padding-right: var(--bs-gutter-x, 2rem);
-    padding-left: var(--bs-gutter-x, 2rem);
+   /*  padding-right: var(--bs-gutter-x, 2rem);
+    padding-left: var(--bs-gutter-x, 2rem); */
     margin-right: auto;
     margin-left: auto;
 }
@@ -1007,7 +1008,7 @@ progress {
 
 @media (min-width: 1200px) {
     .container, .container-sm, .container-md, .container-lg, .container-xl {
-        max-width: 1140px;
+        max-width: 2000px;
     }
 }
 
@@ -24395,15 +24396,19 @@ textarea.form-control-lg {
  * = Navigation bars
  */
 .navbar-main {
-    position: absolute;
+   /*  position: absolute; */
     top: 0;
     width: 100%;
     z-index: 100;
+    padding: 0;
 }
 
 .navbar-main .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+    background-image: url("../assets/img/main_page/toggler.png");
+    
 }
+
+
 
 .navbar .navbar-nav .nav-link {
     transition: all 0.8s all 0.2s ease;
