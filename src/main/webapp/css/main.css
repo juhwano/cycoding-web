@@ -7,7 +7,7 @@
 }
 
 .main_area_l{
-	height: 1250px;
+	height: 767px;
 	width: 50%;
    	float: left;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url("../assets/img/main_page/main_Project.jpeg");
@@ -18,7 +18,7 @@
 }
 
 .main_area_r{
-	height: 1250px;
+	height: 767px;
 	width: 50%;
 	float: right;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url("../assets/img/main_page/main_Member.jpeg");

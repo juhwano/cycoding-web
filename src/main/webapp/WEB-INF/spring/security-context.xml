@@ -41,7 +41,7 @@
 
 <security:authentication-manager>
 	<security:authentication-provider>
-		<security:jdbc-user-service data-source-ref="driverManagerDataSource"
+		<security:jdbc-user-service data-source-ref="dataSource"
 			users-by-username-query="select userid, pwd as password, 1 enabled from member where userid=?"
 			authorities-by-username-query="select m.userid, r.ROLE_NAME 
 											from member m join roll r
