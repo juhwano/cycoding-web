@@ -4,13 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/projectlist")
+@RequestMapping("/project")
 public class ProjectController {
-	
-	@RequestMapping("/")
-	public String getProjectList() {
-		
-		return null;
-	}
-	
+
 }
