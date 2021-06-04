@@ -14,4 +14,11 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping(value="/login.do", method = RequestMethod.GET)
+	public String login() {
+		
+		return "member/login";
+		
+	}
+	
 }

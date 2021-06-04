@@ -36,12 +36,16 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 
-<!-- Fontawesome -->
-<link type="text/css" href="html&css/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<!-- Fontawesome 
+<link type="text/css" href="html&css/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 <!-- Pixel CSS -->
-<link type="text/css" href="html&css/css/pixel.css" rel="stylesheet">
+<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="html&css/css/register.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 
 </head>
@@ -72,13 +76,15 @@
  		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
  		
         <!-- Section -->
-        <section class="min-vh-100 d-flex align-items-center bg-soft">
+        <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                    
+                    <!-- 화원가입 싸고 있는 박스 -->
+                        <div class="signin-inner mt-3 mt-lg-0 bg-white border-light p-4 p-lg-5 w-100 fmxw-500">
                             <div class="text-center text-md-center mb-4 mt-md-0">
-                                <h1 class="mb-0 h3">Create an account</h1>
+                                <h1 class="mb-0 h3" id="title">회원가입</h1>
                             </div>
                             <form action="#">
                             <div id="formbox">
@@ -88,6 +94,7 @@
                                     <div class="input-group mb-4">
 
                                         <input class="form-control" id="exampleInputIcon4" name="member_email" placeholder="email@cycoding.com" type="text" aria-label="email adress" required>
+                                    	<button type="button" class="checkbtn">인증하기</button>
                                     </div>
 
                                 
@@ -97,8 +104,12 @@
 
                                             <input class="form-control" id="username" placeholder="이름" name="member_name" type="text" aria-label="username" required>
                                         </div>
+                                        
+                                        <div class="input-group mb-4">
 
-                                
+                                        <input class="form-control" id="exampleInputIcon4" name="member_nickname" placeholder="닉네임" type="text" aria-label="email adress" required>
+                                    	<button type="button" class="checkbtn">중복확인</button>
+                                    </div>                                
 
                                         <!-- <label for="password">Password</label>-->
                                         <div class="input-group mb-4">
@@ -110,7 +121,12 @@
                                         <!--  <label for="passwordConfirm">Confirm Password</label>-->
                                         <div class="input-group mb-4">
 
-                                            <input class="form-control" id="passwordConfirm" placeholder="Confirm password" type="password" aria-label="Password" required>
+                                            <input class="form-control" id="passwordConfirm" placeholder="비밀번호 확인" type="password" aria-label="Password" required>
+                                        </div>
+                                        
+                                        <div class="input-group mb-4">
+
+                                            <input class="form-control" id="username" placeholder="핸드폰 번호" name="member_phone" type="text" aria-label="username" required>
                                         </div>
 
 
@@ -128,7 +144,7 @@
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
                                     이미 계정이 있으신가요?
-                                    <a href="./sign-in.html" class="font-weight-bold">로그인</a>
+                                    <a href="login.do" style="color:#C0A9BD">로그인</a>
                                 </span>
                             </div>
                         </div>

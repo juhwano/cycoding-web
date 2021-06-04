@@ -1,3 +1,10 @@
+#title{
+
+	color: gray;
+	letter-spacing:5px;
+
+}
+
 button{
 
 	background-color: #C0A9BD;
@@ -5,4 +12,21 @@ button{
 	border:none;
 	width:100%;
 	padding:10px;
+	border-radius:30px;
+
+}
+
+.checkbtn{
+	
+	width:100px;
+	padding:10px;
+	
+}
+
+.form-control{
+	border:none;
+}
+
+.form-control:focus{
+	border-color:#C0A9BD;
 }

@@ -36,18 +36,23 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 
-<!-- Fontawesome -->
-<link type="text/css" href="html&css/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<!-- Fontawesome 
+<link type="text/css" href="html&css/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 <!-- Pixel CSS -->
-<link type="text/css" href="html&css/css/pixel.css" rel="stylesheet">
+<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="html&css/css/register.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 
 </head>
 
 <body>
     <main>
-
+<!-- 
         <div class="preloader bg-dark flex-column justify-content-center align-items-center">
     <svg id="loader-logo" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 64 78.4">
         <path fill="#fff" d="M10,0h1.2V11.2H0V10A10,10,0,0,1,10,0Z"/>
@@ -64,78 +69,82 @@
         <rect fill="none" stroke="#fff" x="14" stroke-width="28.8" y="17.6" width="0" height="11.2"/>
     </svg>
 </div>
-
+ -->	
+ 
+ 		<!--  header -->
+ 		
+ 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+ 		
         <!-- Section -->
-        <section class="min-vh-100 d-flex align-items-center bg-soft">
+        <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                    
+                    <!-- 화원가입 싸고 있는 박스 -->
+                        <div class="signin-inner mt-3 mt-lg-0 bg-white border-light p-4 p-lg-5 w-100 fmxw-500">
                             <div class="text-center text-md-center mb-4 mt-md-0">
-                                <h1 class="mb-0 h3">Create an account</h1>
+                                <h1 class="mb-0 h3" id="title">회원가입</h1>
                             </div>
                             <form action="#">
+                            <div id="formbox">
                                 <!-- Form -->
-                                <div class="form-group">
-                                    <label for="exampleInputIcon4">Your email</label>
+
+                                   <!--   <label for="exampleInputIcon4">Your email</label>-->
                                     <div class="input-group mb-4">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><span class="fas fa-envelope"></span></span>
-                                        </div>
-                                        <input class="form-control" id="exampleInputIcon4" placeholder="example@company.com" type="text" aria-label="email adress" required>
+
+                                        <input class="form-control" id="exampleInputIcon4" name="member_email" placeholder="email@cycoding.com" type="text" aria-label="email adress" required>
+                                    	<button type="button" class="checkbtn">인증하기</button>
                                     </div>
-                                </div>
-                                <!-- End of Form -->
-                                <div class="form-group">
-                                    <!-- Form -->
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
+
+                                
+
+                                      <!--  <label for="passwordConfirm">Confirm Password</label>-->
                                         <div class="input-group mb-4">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
-                                            </div>
-                                            <input class="form-control" id="password" placeholder="Password" type="password" aria-label="Password" required>
+
+                                            <input class="form-control" id="username" placeholder="이름" name="member_name" type="text" aria-label="username" required>
                                         </div>
-                                    </div>
-                                    <!-- End of Form -->
-                                    <!-- Form -->
-                                    <div class="form-group">
-                                        <label for="passwordConfirm">Confirm Password</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
-                                            </div>
-                                            <input class="form-control" id="passwordConfirm" placeholder="Confirm password" type="password" aria-label="Password" required>
+                                        
+                                        <div class="input-group mb-4">
+
+                                        <input class="form-control" id="exampleInputIcon4" name="member_nickname" placeholder="닉네임" type="text" aria-label="email adress" required>
+                                    	<button type="button" class="checkbtn">중복확인</button>
+                                    </div>                                
+
+                                        <!-- <label for="password">Password</label>-->
+                                        <div class="input-group mb-4">
+
+                                            <input class="form-control" id="password" placeholder="비밀번호" name="member_pwd" type="password" aria-label="Password" required>
                                         </div>
-                                    </div>
-                                    <!-- End of Form -->
+
+
+                                        <!--  <label for="passwordConfirm">Confirm Password</label>-->
+                                        <div class="input-group mb-4">
+
+                                            <input class="form-control" id="passwordConfirm" placeholder="비밀번호 확인" type="password" aria-label="Password" required>
+                                        </div>
+                                        
+                                        <div class="input-group mb-4">
+
+                                            <input class="form-control" id="username" placeholder="핸드폰 번호" name="member_phone" type="text" aria-label="username" required>
+                                        </div>
+
+
                                     <div class="form-check mb-4">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
                                         <label class="form-check-label" for="defaultCheck6">
                                             I agree to the <a href="#">terms and conditions</a>
                                         </label>
                                     </div>
+  
+                                <button type="submit" class="btn-color">가입하기</button>
                                 </div>
-                                <button type="submit" class="btn btn-block btn-primary">Sign in</button>
                             </form>
-                            <div class="mt-3 mb-4 text-center">
-                                <span class="font-weight-normal">or</span>
-                            </div>
-                            <div class="btn-wrapper my-4 text-center">
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook mr-2" type="button" aria-label="facebook button" title="facebook button">
-                                    <span aria-hidden="true" class="fab fa-facebook-f"></span>
-                                </button>
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-twitter mr-2" type="button" aria-label="twitter button" title="twitter button">
-                                    <span aria-hidden="true" class="fab fa-twitter"></span>
-                                </button>
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook" type="button" aria-label="github button" title="github button">
-                                    <span aria-hidden="true" class="fab fa-github"></span>
-                                </button>
-                            </div>
+                           
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
-                                    Already have an account?
-                                    <a href="./sign-in.html" class="font-weight-bold">Login here</a>
+                                    이미 계정이 있으신가요?
+                                    <a href="/login.do" style="color:#C0A9BD">로그인</a>
                                 </span>
                             </div>
                         </div>
