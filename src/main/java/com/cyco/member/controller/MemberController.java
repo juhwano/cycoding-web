@@ -7,18 +7,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MemberController {
 	
-	@RequestMapping(value="/register.do", method = RequestMethod.GET)
+	@RequestMapping(value="/register.cy", method = RequestMethod.GET)
 	public String join() {
 		
-		return "register";
+		return "member/register";
 		
 	}
 	
-	@RequestMapping(value="/login.do", method = RequestMethod.GET)
+	@RequestMapping(value="/login.cy", method = RequestMethod.GET)
 	public String login() {
-		
+		System.out.println("여기는 들어오나?");
 		return "member/login";
 		
 	}
+	
+	
 	
 }

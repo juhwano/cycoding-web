@@ -144,7 +144,7 @@
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
                                     이미 계정이 있으신가요?
-                                    <a href="/login.do" style="color:#C0A9BD">로그인</a>
+                                    <a href="login.cy" style="color:#C0A9BD">로그인</a>
                                 </span>
                             </div>
                         </div>
