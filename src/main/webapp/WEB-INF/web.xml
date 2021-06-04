@@ -28,7 +28,7 @@
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.cy</url-pattern>
 	</servlet-mapping>
 	
 	<!-- UTF-8 관련 파라미터 설정 -->
