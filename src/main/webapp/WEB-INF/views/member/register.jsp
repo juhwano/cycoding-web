@@ -42,8 +42,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 <!-- Pixel CSS -->
-<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
-<link type="text/css" href="html&css/css/register.css" rel="stylesheet">
+<link type="text/css" href="/html&css/css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="/html&css/css/register.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
@@ -86,14 +86,14 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">회원가입</h1>
                             </div>
-                            <form action="#">
+                            <form action="">
                             <div id="formbox">
                                 <!-- Form -->
 
                                    <!--   <label for="exampleInputIcon4">Your email</label>-->
                                     <div class="input-group mb-4">
 
-                                        <input class="form-control" id="exampleInputIcon4" name="member_email" placeholder="email@cycoding.com" type="text" aria-label="email adress" required>
+                                        <input class="form-control" id="exampleInputIcon4" name="MEMBER_EMAIL" placeholder="email@cycoding.com" type="text" aria-label="email adress" required>
                                     	<button type="button" class="checkbtn">인증하기</button>
                                     </div>
 
@@ -102,19 +102,19 @@
                                       <!--  <label for="passwordConfirm">Confirm Password</label>-->
                                         <div class="input-group mb-4">
 
-                                            <input class="form-control" id="username" placeholder="이름" name="member_name" type="text" aria-label="username" required>
+                                            <input class="form-control" id="username" placeholder="이름" name="MEMBER_NAME" type="text" aria-label="username" required>
                                         </div>
                                         
                                         <div class="input-group mb-4">
 
-                                        <input class="form-control" id="exampleInputIcon4" name="member_nickname" placeholder="닉네임" type="text" aria-label="email adress" required>
+                                        <input class="form-control" id="exampleInputIcon4" name="MEMBER_NICKNAME" placeholder="닉네임" type="text" aria-label="email adress" required>
                                     	<button type="button" class="checkbtn">중복확인</button>
                                     </div>                                
 
                                         <!-- <label for="password">Password</label>-->
                                         <div class="input-group mb-4">
 
-                                            <input class="form-control" id="password" placeholder="비밀번호" name="member_pwd" type="password" aria-label="Password" required>
+                                            <input class="form-control" id="password" placeholder="비밀번호" name="MEMBER_PWD" type="password" aria-label="Password" required>
                                         </div>
 
 
@@ -126,7 +126,7 @@
                                         
                                         <div class="input-group mb-4">
 
-                                            <input class="form-control" id="username" placeholder="핸드폰 번호" name="member_phone" type="text" aria-label="username" required>
+                                            <input class="form-control" id="username" placeholder="핸드폰 번호" name="MEMBER_PHONE" type="text" aria-label="username" required>
                                         </div>
 
 

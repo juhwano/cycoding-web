@@ -42,8 +42,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 <!-- Pixel CSS -->
-<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
-<link type="text/css" href="html&css/css/register.css" rel="stylesheet">
+<link type="text/css" href="/html&css/css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="/html&css/css/register.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
@@ -103,16 +103,21 @@
 
                                             <input class="form-control" id="password" placeholder="비밀번호" name="member_pwd" type="password" aria-label="Password" required>
                                         </div>
+                                        
+                                        <div>
+                                        <p>이메일 찾기/비밀번호 찾기</p>
+                                        </div>
 
   
                                 <button type="submit" class="btn-color">로그인</button>
+                                <button type="submit" style="background-color:#fef01b; color:#3A1D1D; margin-top:10px">카카오 계정으로 로그인</button>
                                 </div>
                             </form>
                            
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
                                     계정이 없으신가요?
-                                    <a href="register.do" style="color:#C0A9BD">회원가입</a>
+                                    <a href="register.cy" style="color:#C0A9BD">회원가입</a>
                                 </span>
                             </div>
                         </div>
