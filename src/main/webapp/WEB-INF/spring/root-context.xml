@@ -9,31 +9,30 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<!-- properties 파일 위치 -->
-	<context:property-placeholder
-		location="classpath:config/*" />
-
-
-	<!-- Hikari -->
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="${db.driver}" />
-		<property name="jdbcUrl" value="${db.url}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
-	</bean>
-
-	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig"></constructor-arg>
-	</bean>
-	<bean id="internalResourceViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/WEB-INF/views/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
-	</bean>
-
+<!-- 공통 DB작업  -->
+  <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+ 	<property name="url" value="jdbc:oracle:thin:@ehdrms519.iptime.org:1521:XE" />
+ 	<property name="username" value="CYCO" />
+ 	<property name="password" value="1004" />
+ </bean>
+ 
+ <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+ 	<property name="dataSource"  ref="driverManagerDataSource"></property>
+ </bean>
+ 
+  <!-- 공통 UI  -->
+ <bean   id="internalResourceViewResolver"   class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	  		<property name="prefix">
+	  				<value>/WEB-INF/views/</value>
+	  		</property>
+	  		<property name="suffix">
+	  				<value>.jsp</value>
+	  		</property>
+	  </bean>
+	  
+	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
+	</bean>	  
+	  
 </beans>
