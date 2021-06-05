@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.cyco.member.vo.MemberVo;
+import com.cyco.member.vo.MemberDetailVo;
 
 
 public class UserAuthenticationService implements UserDetailsService {
@@ -47,8 +47,8 @@ public class UserAuthenticationService implements UserDetailsService {
 		System.out.println("현재 username : " + username);
 		
 		//return new MemberVo(user.get("username").toString(), user.get("password").toString(), (Integer)user.get("enabled") == 1, true, true, true, gas,user.get("username").toString());
-		return new MemberVo(user.get("username").toString(), user.get("password").toString(), (Integer)user.get("enabled") == 1, true, true, true, gas,
-				user.get("username").toString(), user.get("nickname").toString());
+		return new MemberDetailVo(user.get("username").toString(), user.get("password").toString(), (Integer)user.get("enabled") == 1, true, true, true, gas,
+				user.get("username").toString());
 	}
 
 }

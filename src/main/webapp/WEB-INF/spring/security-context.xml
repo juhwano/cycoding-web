@@ -15,7 +15,7 @@
 
 	<http auto-config="true" use-expressions="true" create-session="never">
 		<intercept-url pattern="/admin.cy" access="hasRole('ROLE_ADMIN')" />		
-		<intercept-url pattern="/register.cy" access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />
+		<!--  <intercept-url pattern="/register.cy" access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<intercept-url pattern="/**" access="permitAll" />
 		<form-login login-page="/login.cy"
 			login-processing-url="/login.cy" 
@@ -27,11 +27,16 @@
 		</session-management>
 		<logout delete-cookies="true" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
 		<access-denied-handler ref="userDeniedHandler"/>
+		
+		<!-- 보안 토큰 -->
+		<csrf/>
 	</http>
 	
 	<beans:bean id="userDeniedHandler" 	class="com.cyco.member.security.UserDeniedHandler"></beans:bean>
 	<beans:bean id="userLoginSuccessHandler" class="com.cyco.member.security.UserLoginSuccessHandler"></beans:bean>
 	<beans:bean id="userLoginFailureHandler" class="com.cyco.member.security.UserLoginFailureHandler"></beans:bean>
+	
+
 <!-- 
 	   <authentication-manager>
 		<authentication-provider>
@@ -55,7 +60,8 @@
 											on ma.AUTHORITY_ID = a.AUTHORITY_ID
 											where m.MEMBER_EMAIL=?"
 		/>
-		<!--  <password-encoder ref="bCryptPasswordEncoder"/>-->
+		<!-- 비밀번호 암호화 -->
+			  <password-encoder ref="bCryptPasswordEncoder"/>
 	</authentication-provider>
 
 </authentication-manager>				

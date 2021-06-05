@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.cyco.member.vo.MemberVo;
+import com.cyco.member.vo.MemberDetailVo;
 
 
 

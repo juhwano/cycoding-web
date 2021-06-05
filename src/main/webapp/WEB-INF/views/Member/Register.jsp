@@ -53,26 +53,7 @@
 </head>
 
 <body>
-    <main>
-<!-- 
-        <div class="preloader bg-dark flex-column justify-content-center align-items-center">
-    <svg id="loader-logo" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 64 78.4">
-        <path fill="#fff" d="M10,0h1.2V11.2H0V10A10,10,0,0,1,10,0Z"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="40" y="17.6" width="0" height="25.6"/>
-        <rect fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="11.2" x="23" y="35.2" width="0" height="25.6"/>
-        <path fill="#fff" d="M52.8,35.2H64V53.8a7,7,0,0,1-7,7H52.8V35.2Z"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="6" y="52.8" width="0" height="25.6"/>
-        <path fill="#fff" d="M52.8,0H57a7,7,0,0,1,7,7h0v4.2H52.8V0Z"/>
-        <rect fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="11.2" x="57.8" y="17.6" width="0" height="11.2"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="6" y="35.2" width="0" height="11.2"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="40.2" y="49.6" width="0" height="11.2"/>
-        <path fill="#fff" d="M17.6,67.2H28.8v1.2a10,10,0,0,1-10,10H17.6V67.2Z"/>
-        <rect fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="28.8" x="31.6" width="0" height="11.2"/>
-        <rect fill="none" stroke="#fff" x="14" stroke-width="28.8" y="17.6" width="0" height="11.2"/>
-    </svg>
-</div>
- -->	
- 
+    <main> 
  
  		<!--  header -->
  		
@@ -89,11 +70,15 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">회원가입</h1>
                             </div>
-                            <form action="">
+                            <form action="" id="form" method="post">
+                            
+
                             <div id="formbox">
                                 <!-- Form -->
+                                
+                                <!-- 스프링 시큐리티를 사용하면서 post 전송을 하려면 보안토큰을 context에 설정 후 모든 form에 이 태그를 적용해야 한다 -->
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                                   <!--   <label for="exampleInputIcon4">Your email</label>-->
                                    <div>
                                     <div class="input-group">
 
@@ -104,7 +89,6 @@
 									</div>
                                 
 
-                                      <!--  <label for="passwordConfirm">Confirm Password</label>-->
                                       <div>
                                         <div class="input-group">
 
@@ -117,7 +101,7 @@
                                         <div class="input-group">
 
                                         <input class="form-control" id="nickName" name="MEMBER_NICKNAME" placeholder="닉네임" type="text" aria-label="nickName">
-                                    	<button type="button" class="checkbtn">중복확인</button>
+                                    	<button type="button" id="nickNameCheckBtn" class="checkbtn">중복확인</button>
                                     	</div>
                                     	</div>
                                     	
@@ -148,6 +132,7 @@
                                         <div class="input-group">
 
                                             <input class="form-control" id="phone" placeholder="핸드폰 번호" name="MEMBER_PHONE" type="text" aria-label="phone">
+                                            <button type="button" id="phoneCheckBtn" class="checkbtn">중복확인</button>
                                         </div>                                     
                                         <div id="phoneCheck" class="validation"></div>
                                         </div>
@@ -387,11 +372,11 @@
 	
 	
 			//비밀번호 일치 체크
-			if (!(password == passwordC)) {
-				/* swal({
+			/*if (!(password == passwordC)) {
+				 swal({
 					title: "비밀번호가 일치하지 않습니다",
 					icon: "error"
-				}); */
+				});
 				alert("비밀번호가 일치하지 않습니다");
 				console.log(password);
 				console.log(passwordC);
@@ -399,7 +384,7 @@
 				checking = false;
 				return;
 			}
-	
+	 */
 			if (passwordC == "") {
 				/* swal({
 					title: "비밀번호 확인란을 입력하세요",
@@ -413,42 +398,46 @@
 	
 
 	
-			//상점 이름 체크
+			//닉네임 체크
 			if (nickName == '') {
-				swal({
-					title: "닉네임 / 상점이름을 입력하세요",
+				/* swal({
+					title: "닉네임 을 입력하세요",
 					icon: "error"
-				});
+				}); */
+				alert("닉네임을 입력하세요");
+				$("#nickName").focus();
 				checking = false;
 				return;
 			}
 	
 	
-			if (!($('#emailCheckBtn').html() == '인증완료')) {
+			/*if (!($('#emailCheckBtn').html() == '인증완료')) {
 				console.log($('#emailCheckBtn').html());
-				swal({
+				 swal({
 					title: "이메일 중복체크를 해주세요",
 					icon: "error"
-				});
+				}); 
 				return;
-			}
-			if (!($('#nameCheckBtn').html() == '체크완료')) {
+			}*/
+			/* if (!($('#nameCheckBtn').html() == '체크완료')) {
 				swal({
 					title: "상점이름 중복체크를 해주세요",
 					icon: "error"
 				});
 				return;
-			}
-			if (!($('#phoneCheckBtn').html() == '인증완료')) {
+			} */
+			/* if (!($('#phoneCheckBtn').html() == '인증완료')) {
 				swal({
 					title: "핸드폰 번호 인증을 해주세요",
 					icon: "error"
 				});
 				return;
-			}
+			} */
 	
 			if (checking) {
-				console.log($('#emailType').val());
+				
+				console.log("가입하기");
+				
 				document.getElementById('form').submit();
 			}
 		});
@@ -457,7 +446,7 @@
 		//이메일 인증
 		//중복체크, 인증메일링 두 가지
 		$('#emailCheckBtn').click(function() {
-			let email = $('#email').val();
+			let email = $('#email').val().trim();
 
 			console.log(email);
 			if (email == '') {
@@ -474,7 +463,7 @@
 				data: {
 					email: email
 				},
-				type: "POST",
+				type: "GET",
 				dataType: "text",
 				success: function(data) {
 					console.log(data);
@@ -483,9 +472,11 @@
 							title: "이미 존재하는 이메일입니다",
 							icon: "error"
 						}); */
-						alert("이미 존재하는 이메일입니다");
+						alert("이미 가입된 이메일입니다");
+						
 					} else {
 						
+						alert("사용 가능한 이메일입니다");
 						
 						
 					//$('#emailCheckBtn').html('인증완료');
@@ -499,38 +490,86 @@
 			});
 		});
 	
-		//닉네임 / 상점이름 중복체크
-		$('#nameCheckBtn').click(function() {
+		//닉네임 중복체크
+		$('#nickNameCheckBtn').click(function() {
 			let nickName = $('#nickName').val();
 	
 			if (nickName == '') {
-				swal({
-					title: "닉네임 / 상점이름을 입력해주세요",
+				/* swal({
+					title: "닉네임 을 입력해주세요",
 					icon: "error"
-				});
+				}); */
+				alert("닉네임을 입력해주세요");
+				$("#nickName").focus();
 				return;
 			}
 	
 			$.ajax({
-				url: "NameCheckOk.ajax",
+				url: "nicknamecheckajax.cy",
 				data: {
-					storename: nickName
+					nickName: nickName
 				},
 				type: "get",
-				dataType: "html",
+				dataType: "text",
 				success: function(data) {
-					if (data == 'true') {
-						swal({
-							title: "사용가능한 상점이름 입니다",
+					if (data == 'able') {
+						/* swal({
+							title: "사용 가능한 닉네임입니다",
 							icon: "success"
-						});
-						$('#nameCheckBtn').html('체크완료');
-						$('#nameCheckBtn').attr('disabled', 'true');
+						}); */
+						alert("사용 가능한 닉네임입니다");
+						$('#nickNameCheckBtn').html('체크완료');
+						$('#nickNameCheckBtn').attr('disabled', 'true');
 					} else {
-						swal({
-							title: "이미 존재하는 상점이름 입니다",
+						/* swal({
+							title: "이미 존재하는 닉네임 입니다",
 							icon: "error"
-						});
+						}); */
+						alert("이미 존재하는 닉네임입니다");
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		});
+		
+		//휴대폰 번호 중복체크
+		$('#phoneCheckBtn').click(function() {
+			let phone = $('#phone').val();
+	
+			if (phone == '') {
+				/* swal({
+					title: "닉네임 을 입력해주세요",
+					icon: "error"
+				}); */
+				alert("휴대폰 번호를 입력해주세요");
+				$("#phone").focus();
+				return;
+			}
+	
+			$.ajax({
+				url: "phonecheckajax.cy",
+				data: {
+					phone: phone
+				},
+				type: "get",
+				dataType: "text",
+				success: function(data) {
+					if (data == 'able') {
+						/* swal({
+							title: "사용 가능한 번호입니다",
+							icon: "success"
+						}); */
+						alert("사용 가능한 번호입니다");
+						$('#phoneCheckBtn').html('체크완료');
+						$('#phoneCheckBtn').attr('disabled', 'true');
+					} else {
+						/* swal({
+							title: "사용할 수 없는 번호입니다",
+							icon: "error"
+						}); */
+						alert("사용할 수 없는 번호입니다");
 					}
 				},
 				error: function(error) {

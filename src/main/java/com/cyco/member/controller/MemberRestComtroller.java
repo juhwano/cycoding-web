@@ -19,7 +19,7 @@ public class MemberRestComtroller {
 	}
 	
 	@RequestMapping(value="emailcheckajax.cy")
-	public String checkEmail(@RequestBody String email) {
+	public String checkEmail(String email) {
 		
 		System.out.println("This is checkEmail");
 		String mail = email.replace("email=","").replace("%40","@");
@@ -42,6 +42,53 @@ public class MemberRestComtroller {
 		return result;
 	}
 	
+	@RequestMapping(value="nicknamecheckajax.cy")
+	public String checkNickName(String nickName) {
+		
+		System.out.println("This is checkNickName");
+		
+		
+		System.out.println("중복체크할 닉네임 : " + nickName );
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = "able";
+		
+		if(memberdao.checkNickName(nickName) != null) {
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
+
+		System.out.println("결과값 : " + result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="phonecheckajax.cy")
+	public String checkPhone(String phone) {
+		
+		System.out.println("This is checkPhone");
+		
+		
+		System.out.println("중복체크할 번호 : " + phone );
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = "able";
+		
+		if(memberdao.checkPhone(phone) != null) {
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
+
+		System.out.println("결과값 : " + result);
+		
+		return result;
+	}
 	
 
 }
