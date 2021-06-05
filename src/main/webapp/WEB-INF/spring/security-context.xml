@@ -1,56 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:tx="http://www.springframework.org/schema/tx"
- xmlns:mvc="http://www.springframework.org/schema/mvc"
- xmlns:security="http://www.springframework.org/schema/security"
- xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                     http://www.springframework.org/schema/beans/spring-beans.xsd
-                     http://www.springframework.org/schema/context
-					http://www.springframework.org/schema/context/spring-context.xsd
-					http://www.springframework.org/schema/mvc
-					http://www.springframework.org/schema/mvc/spring-mvc.xsd
-  					 http://www.springframework.org/schema/security 
-  					 http://www.springframework.org/schema/security/spring-security.xsd
-  					  http://www.springframework.org/schema/tx 
-  					 http://www.springframework.org/schema/tx/spring-tx.xsd
-  					 ">
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util.xsd">
 
-<mvc:annotation-driven/>
-<security:http>
-	<security:csrf disabled="true"/>
-	<security:form-login login-page="/join/login.htm"
-						authentication-failure-url="/join/login.htm?error" 
-						authentication-success-handler-ref=""
-						  />
-	<security:logout logout-success-url="/main.cy"/>
+	<http pattern="/resources/**" security="none"></http>
+
+	<http auto-config="true" use-expressions="true" create-session="never">
+		<intercept-url pattern="/admin.cy" access="hasRole('ROLE_ADMIN')" />		
+		<intercept-url pattern="/register.cy" access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />
+		<intercept-url pattern="/**" access="permitAll" />
+		<form-login login-page="/login.cy"
+			login-processing-url="/login.cy" 
+			authentication-success-handler-ref="userLoginSuccessHandler"
+			authentication-failure-handler-ref="userLoginFailureHandler"
+			username-parameter="username" password-parameter="password" />
+		<session-management>
+			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="true"/>
+		</session-management>
+		<logout delete-cookies="true" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
+		<access-denied-handler ref="userDeniedHandler"/>
+	</http>
 	
-	<!-- <security:intercept-url pattern="/notice/noticeDetail.htm" access="hasRole('ROLE_USER')"/> -->
-	<!-- <security:intercept-url pattern="/notice/noticeReg.htm" access="hasRole('ROLE_ADMIN')"/> -->
-     <security:access-denied-handler error-page="/login/accessDenied.do" />
-</security:http>
+	<beans:bean id="userDeniedHandler" 	class="com.cyco.member.security.UserDeniedHandler"></beans:bean>
+	<beans:bean id="userLoginSuccessHandler" class="com.cyco.member.security.UserLoginSuccessHandler"></beans:bean>
+	<beans:bean id="userLoginFailureHandler" class="com.cyco.member.security.UserLoginFailureHandler"></beans:bean>
+<!-- 
+	   <authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="admin@gmail.com" authorities="ROLE_ADMIN" password="1004" />
+				<user name="user" authorities="ROLE_USER" password="user" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager> 
+	 
+		-->
+		
 
-<!--   /login  컨트롤로를 구현하지 않았어요  
-             사용자입력한 ID , PWD 가지고 처리하는 로직
-	  select userid, pwd as password, 1 enabled from member where userid='kglim'
-            결과를 가지고 ... 사용자가 있으면  입력한password 비교하는  DB password  작업 (x) .....Spring 처리 
-
-로그인 처리 : <security:password-encoder ref="bCryptPasswordEncoder"/> 
--->
-
-<security:authentication-manager>
-	<security:authentication-provider>
-		<security:jdbc-user-service data-source-ref="dataSource"
-			users-by-username-query="select userid, pwd as password, 1 enabled from member where userid=?"
-			authorities-by-username-query="select m.userid, r.ROLE_NAME 
-											from member m join roll r
-											on m.userid = r.userid
-											where m.userid=?"
+	<authentication-manager>
+	<authentication-provider>
+		<jdbc-user-service data-source-ref="dataSource"
+			users-by-username-query="select MEMBER_EMAIL as username, MEMBER_PWD as password, 1 enabled from member where MEMBER_EMAIL=?"
+			authorities-by-username-query="select m.MEMBER_EMAIL as username, a.AUTHORITY_NAME as authority
+											from member m left join m_auth ma
+											on m.MEMBER_ID = ma.MEMBER_ID left join auth a
+											on ma.AUTHORITY_ID = a.AUTHORITY_ID
+											where m.MEMBER_EMAIL=?"
 		/>
-		<security:password-encoder ref="bCryptPasswordEncoder"/>
-	</security:authentication-provider>
-</security:authentication-manager>
+		<!--  <password-encoder ref="bCryptPasswordEncoder"/>-->
+	</authentication-provider>
 
+</authentication-manager>				
 
-</beans>
+	<beans:bean id="userService" class="com.cyco.member.service.UserAuthenticationService">
+		<beans:constructor-arg name="sqlSession" ref="sqlSession" />
+	</beans:bean>										
+
+	
+	
+	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<beans:constructor-arg name="strength" value="256"></beans:constructor-arg>
+	</beans:bean>
+</beans:beans>

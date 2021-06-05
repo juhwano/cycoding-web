@@ -5,9 +5,16 @@
 
 }
 
-p{
+#find{
+	color: #C0A9BD;
 	font-size:12px;
-	color:#C0A9BD;
+}
+
+.validation{
+	font-size:12px;
+	height:35px;
+	padding-top:10px;
+	color:#CA8FAB;
 }
 
 button{
@@ -17,7 +24,6 @@ button{
 	border:none;
 	width:100%;
 	padding:10px;
-	border-radius:30px;
 
 }
 

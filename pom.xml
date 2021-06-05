@@ -104,7 +104,13 @@
   			<version>2.0.1</version>
   		</dependency>	
 
-  		<!-- Spring Security  작업  -->		
+  		<!-- Spring Security  작업  -->	
+  		<dependency> 
+  		<groupId>org.springframework.security</groupId> 
+  		<artifactId>spring-security-core</artifactId> 
+  		<version>4.0.1.RELEASE</version> 
+  		</dependency>
+
 		<dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-web</artifactId>
@@ -120,6 +126,10 @@
          <artifactId>spring-security-taglibs</artifactId>
          <version>4.0.1.RELEASE</version>
     </dependency>
+    <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-test</artifactId> <version>4.0.1.RELEASE</version> </dependency>
+
+
+
     <!-- JSON Mapper -->
 		<dependency>
 	        <groupId>com.fasterxml.jackson.core</groupId>
@@ -245,9 +255,53 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency> 
+		
+		
+		<!-- java mail -->	
+		<dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+		
+		<!-- spring-context-support -->
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        
+        <!-- velocity -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-tools</artifactId>
+            <version>2.0</version>
+        </dependency>
 	</dependencies>
     <build>
+    
+    <resources>
+
+   <resource>
+
+      <directory>src/main/java</directory>
+
+      <includes>
+
+         <include>**/*.xml</include>
+
+      </includes>
+
+   </resource>
+
+</resources>
+    
         <plugins>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>

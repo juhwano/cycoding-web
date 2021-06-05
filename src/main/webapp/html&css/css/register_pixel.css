@@ -745,14 +745,14 @@ button:not(:disabled),
 textarea {
     resize: vertical;
 }
-
+/*
 fieldset {
     min-width: 0;
     padding: 0;
     margin: 0;
     border: 0;
 }
-
+*/
 legend {
     float: left;
     width: 100%;
@@ -3509,8 +3509,8 @@ textarea.form-control-lg {
 }
 
 .form-check-input:checked {
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #C0A9BD;
+    border-color: #C0A9BD;
 }
 
 .form-check-input:checked[type="checkbox"] {

@@ -1,31 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- Primary Meta Tags -->
-<title>Pixel Pages - Sign up</title>
+<title>사이좋게 코딩하자</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="title" content="Pixel Pages - Sign up">
 <meta name="author" content="Themesberg">
 <meta name="description" content="Open source and accessibility first Bootstrap Design System featuring over 80 premium components and 4 example pages.">
 <meta name="keywords" content="bootstrap, Bootstrap Design System, accessiblity, accessibility first, open source, open source Bootstrap Design System" />
 <link rel="canonical" href="https://themesberg.com/product/ui-kits/pixel-lite-free-bootstrap-4-ui-kit">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://demo.themesberg.com/pixel-lite">
-<meta property="og:title" content="Pixel Pages - Sign up">
-<meta property="og:description" content="Open source and accessibility oriented Bootstrap Design System featuring over 80 premium components and 4 example pages.">
-<meta property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/pixel-lite/pixel-lite-preview.jpg">
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://demo.themesberg.com/pixel-lite">
-<meta property="twitter:title" content="Pixel Pages - Sign up">
-<meta property="twitter:description" content="Open source and accessibility oriented Bootstrap Design System featuring over 80 premium components and 4 example pages.">
-<meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/pixel-lite/pixel-lite-preview.jpg">
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="120x120" href="../../assets/img/favicon/apple-touch-icon.png">
@@ -42,8 +30,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
 <!-- Pixel CSS -->
-<link type="text/css" href="/html&css/css/register_pixel.css" rel="stylesheet">
-<link type="text/css" href="/html&css/css/register.css" rel="stylesheet">
+<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="html&css/css/register.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
 
@@ -52,28 +40,11 @@
 
 <body>
     <main>
-<!-- 
-        <div class="preloader bg-dark flex-column justify-content-center align-items-center">
-    <svg id="loader-logo" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 64 78.4">
-        <path fill="#fff" d="M10,0h1.2V11.2H0V10A10,10,0,0,1,10,0Z"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="40" y="17.6" width="0" height="25.6"/>
-        <rect fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="11.2" x="23" y="35.2" width="0" height="25.6"/>
-        <path fill="#fff" d="M52.8,35.2H64V53.8a7,7,0,0,1-7,7H52.8V35.2Z"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="6" y="52.8" width="0" height="25.6"/>
-        <path fill="#fff" d="M52.8,0H57a7,7,0,0,1,7,7h0v4.2H52.8V0Z"/>
-        <rect fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="11.2" x="57.8" y="17.6" width="0" height="11.2"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="6" y="35.2" width="0" height="11.2"/>
-        <rect fill="none" stroke="#fff" stroke-width="11.2" x="40.2" y="49.6" width="0" height="11.2"/>
-        <path fill="#fff" d="M17.6,67.2H28.8v1.2a10,10,0,0,1-10,10H17.6V67.2Z"/>
-        <rect fill="none" stroke="#fff" stroke-opacity="0.4" stroke-width="28.8" x="31.6" width="0" height="11.2"/>
-        <rect fill="none" stroke="#fff" x="14" stroke-width="28.8" y="17.6" width="0" height="11.2"/>
-    </svg>
-</div>
- -->	
- 
+
  		<!--  header -->
  		
  		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+ 		
  		
         <!-- Section -->
         <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
@@ -86,30 +57,31 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">로그인</h1>
                             </div>
-                            <form action="#">
+                            <form id="form" action="login.cy" method="post">
                             <div id="formbox">
                                 <!-- Form -->
-
+                                
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									
                                    <!--   <label for="exampleInputIcon4">Your email</label>-->
                                     <div class="input-group mb-4">
 
-                                        <input class="form-control" id="exampleInputIcon4" name="member_email" placeholder="email@cycoding.com" type="text" aria-label="email adress" required>
+                                        <input class="form-control" id="email" name="username" placeholder="email@cycoding.com" type="text" aria-label="email adress">
 
                                     </div>
                              
-
                                         <!-- <label for="password">Password</label>-->
                                         <div class="input-group mb-4">
 
-                                            <input class="form-control" id="password" placeholder="비밀번호" name="member_pwd" type="password" aria-label="Password" required>
+                                            <input class="form-control" id="password" placeholder="비밀번호" name="password" type="password" aria-label="Password">
                                         </div>
                                         
                                         <div>
-                                        <p>이메일 찾기/비밀번호 찾기</p>
+                                        <p id="find">이메일 찾기/비밀번호 찾기</p>
                                         </div>
 
   
-                                <button type="submit" class="btn-color">로그인</button>
+                                <button type="submit" class="btn-color"">로그인</button>
                                 <button type="submit" style="background-color:#fef01b; color:#3A1D1D; margin-top:10px">카카오 계정으로 로그인</button>
                                 </div>
                             </form>
@@ -118,6 +90,7 @@
                                 <span class="font-weight-normal">
                                     계정이 없으신가요?
                                     <a href="register.cy" style="color:#C0A9BD">회원가입</a>
+                                    <a href="admin.cy" style="color:#C0A9BD">어드민 페이지</a>
                                 </span>
                             </div>
                         </div>
