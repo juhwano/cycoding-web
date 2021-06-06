@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +36,9 @@
 <link type="text/css" href="html&css/css/register.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
+
+<!-- 카카오 로그인 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 
 </head>
@@ -82,7 +87,7 @@
 
   
                                 <button type="submit" class="btn-color"">로그인</button>
-                                <button type="submit" style="background-color:#fef01b; color:#3A1D1D; margin-top:10px">카카오 계정으로 로그인</button>
+                                <button type="submit" onclick="kakaoLogin();" style="background-color:#fef01b; color:#3A1D1D; margin-top:10px">카카오 계정으로 로그인</button>
                                 </div>
                             </form>
                            
@@ -90,7 +95,7 @@
                                 <span class="font-weight-normal">
                                     계정이 없으신가요?
                                     <a href="register.cy" style="color:#C0A9BD">회원가입</a>
-                                    <a href="admin.cy" style="color:#C0A9BD">어드민 페이지</a>
+                                    <!--  <a href="admin.cy" style="color:#C0A9BD">어드민 페이지</a>-->
                                 </span>
                             </div>
                         </div>
@@ -121,6 +126,47 @@
 
 <!-- pixel JS -->
 <script src="html&css/assets/js/pixel.js"></script>
+
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+Kakao.init('25d56d8cc547216af9df8aabb4c0ada4'); //발급받은 키 중 javascript키 사용
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/kakaologin.cy',
+          success: function (response) {
+        	  console.log("응답 : " ,response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+//카카오로그아웃  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/logout.cy',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }  
+</script>
 </body>
 
 </html>

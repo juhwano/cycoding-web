@@ -77,7 +77,7 @@
                     <!-- 로그인 안하면 -->
                     <se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 						<li class="nav-item dropdown">
-                        <a href="${path}register.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+                        <a href="login.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
                            	로그인
                         </a>
                     </li>

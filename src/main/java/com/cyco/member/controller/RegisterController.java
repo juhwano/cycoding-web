@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.MemberDetailVo;
 import com.cyco.member.vo.MemberVo;
 
 
 @Controller
-public class MemberController {
+public class RegisterController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -26,13 +26,5 @@
 		values (M_SEQ.nextval,#{MEMBER_EMAIL},#{MEMBER_PWD},#{MEMBER_NAME},#{MEMBER_NICKNAME},#{MEMBER_PHONE},'defualt.jpg',1)
 		
 	</insert>
-
-		
-	<select id="login"  resultType="integer">
-	
-		select member_id from member where member_email=#{param1} and member_pwd=#{param2}
-	
-	</select>
-	
 	
 </mapper>
