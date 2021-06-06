@@ -142,14 +142,33 @@
                                         </div>
                                         
                                     <div class="form-check mb-4">
-                                        <div>
+                                        
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
-                                        <a href="#myModal" class="trigger-btn" data-toggle="modal"><span class="agreement" style="color:#CA8FAB; font-size:12px;">이용약관 동의(필수)</span></a>
-                                        </div>                                        
+                                        <span class="agreement" style="color:#CA8FAB; font-size:12px;margin:0;"><a href="#myModal" class="trigger-btn" data-toggle="modal">이용약관 동의(필수)</a></span>
+                                                                 
 									</div>
 									
 									<!-- Modal HTML -->
-<div id="myModal" class="modal fade">
+
+  
+                                <button type="button" class="btn-color" id="register">가입하기</button>
+                                </div>
+                            </form>
+                           
+                            <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
+                                <span class="font-weight-normal">
+                                    이미 계정이 있으신가요?
+                                    <a href="login.cy" style="color:#C0A9BD">로그인</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="myModal" class="modal fade">
 	<div class="modal-dialog modal-login">
 		<div class="modal-content">
 			<div class="modal-header">				
@@ -399,23 +418,6 @@
 		</div>
 	</div>
 </div>     
-  
-                                <button type="button" class="btn-color" id="register">가입하기</button>
-                                </div>
-                            </form>
-                           
-                            <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal">
-                                    이미 계정이 있으신가요?
-                                    <a href="login.cy" style="color:#C0A9BD">로그인</a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
 
     <!-- Core -->
 <script src="html&css/vendor/jquery/dist/jquery.min.js"></script>
