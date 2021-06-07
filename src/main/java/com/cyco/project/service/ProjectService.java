@@ -26,4 +26,10 @@ public class ProjectService {
 		
 		return list;
 	}
+	public List<String> getFiltedProjectList(String field_code, String adr_code, String p_state){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<String> list = dao.getFiltedProjectList(field_code,  adr_code,  p_state);
+		System.out.println(list.toString());
+		return list;
+	}
 }

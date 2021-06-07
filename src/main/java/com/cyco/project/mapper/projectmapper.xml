@@ -10,6 +10,17 @@
 		desc
 	</select>
 	
+	<select id="getFiltedProjectList" parameterType="String">
+	select p.project_id, p.field_code, p.adr_code, pd.p_state 
+	from project p 
+	inner join p_detail pd 
+	on pd.project_id = p.project_id
+	where p.field_code like '%${field_code}'
+    and p.adr_code like '%${adr_code}'
+    and pd.p_state like '%${p_state}'
+;
+	</select>
+	
 	<select id="getProjectMemberList">
 		select project_id, member_id, position_name  from view_pm_position
 	</select>

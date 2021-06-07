@@ -19,6 +19,7 @@ public interface ProjectDao {
 	//select field_code, field_name,field_enable from p_field;
 	
 	public List<ProjectVO> getProjectList();
+	public List<String> getFiltedProjectList(String field_code, String adr_code, String p_state);
 	public List<P_MemberVO> getProjectMemberList();
 	public List<P_SkillVO> getProjectSkillList();
 	public List<AdrVO> getAdrList();
