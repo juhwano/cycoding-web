@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,11 +10,13 @@
 	<!-- Fontawesome -->
 	<link type="text/css" href="../vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 	<!-- Pixel CSS -->
-	<link type="text/css" href="../css/pixel.css" rel="stylesheet">
+	<link type="text/css" href="css/pixel.css" rel="stylesheet">
 	<!-- main CSS -->
-	<link type="text/css" href="../css/main.css" rel="stylesheet">
+	<link type="text/css" href="css/main.css" rel="stylesheet">
 	</head>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- 스프링 시큐리티 설정 -->
 <%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 <body>
 <header class="header-global">
@@ -72,20 +75,47 @@
                	<ul>
                		  
                     <!-- 로그인 안하면 -->
-                    <se:authorize access="!hasRole('ROLE_USER')">
+                    <se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 						<li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+                        <a href="login.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
                            	로그인
                         </a>
                     </li>
 					</se:authorize>
 					
-					
-					<se:authentication property="name" var="LoginUser" />
-					<se:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+					<se:authorize access="hasRole('ROLE_ADMIN')">
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
-	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                        <a href="register.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                            <img src="./assets/img/brand/ALARM.svg">
+	                        </a>
+	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
+	                            <div class="col-auto px-0">
+	                               
+	                            </div>
+	                        </div>
+	                    </li>
+						
+					  	 <!-- 로그인 -->
+	                     <li class="nav-item dropdown">
+	                        <a href="admin.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                            관리자 페이지
+	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
+	                        </a>
+	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
+	                            <div class="col-auto px-0">
+	                                
+	                            </div>
+	                        </div>
+	                    </li>
+						
+					</se:authorize>
+					
+					<se:authentication property="name" var="nickname" />
+					<se:authorize access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+						 <!--알림 -->
+	                     <li class="nav-item dropdown">
+	                        <a href="register.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
 	                            <img src="./assets/img/brand/ALARM.svg">
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
@@ -98,7 +128,7 @@
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
-	                            ${LoginUser})님
+	                            ${nickname}님 마이페이지
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
@@ -147,23 +177,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script type="text/javascript">
-
-
 /* ==============================================
 Loader -->
 =============================================== */
-
 $(function() {
     $("#preloader").on(500).fadeOut();
     $(".preloader").on(600).fadeOut("slow");
 	$('.loader-container').addClass('done');
 	$('.progress-br').addClass('done');	 
 });
-
 /* ==============================================
 Loader -->
 =============================================== */
-
 </script>
 
 </body>
