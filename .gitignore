@@ -13,3 +13,4 @@ buildNumber.properties
 src/main/resources/config/
 .classpath
 .settings/
+.project
