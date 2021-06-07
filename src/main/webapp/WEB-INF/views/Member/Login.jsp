@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!-- 스프링 시큐리티 설정 -->
+
 <!-- 스프링 시큐리티 설정 -->
 <%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 
@@ -122,7 +122,7 @@
                                 <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 
                                 <p class="font-weight-normal" style="text-align:center">
-                                    나가기 전에 한 번 더 살펴보세요<br>방금 나에게 꼭 맞는 프로젝트가 생겼을지도 몰라요!
+                                    나가기 전에 한 번 더 둘러보세요<br>방금 나에게 꼭 맞는 프로젝트가 생겼을지도 몰라요!
                                     
                                     <br>
                                     <br>
@@ -136,20 +136,18 @@
                                     <button type="submit" class="btn-color">로그아웃</button>
                                 </div>
                             </form>
-</div>
+						</div>
                     </se:authorize>
                 </div>
             </div>
             </div>
         </section>
     </main>
-
     <!-- Core -->
 <script src="html&css/vendor/jquery/dist/jquery.min.js"></script>
 <script src="html&css/vendor/popper.js/dist/umd/popper.min.js"></script>
 <script src="html&css/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="html&css/vendor/headroom.js/dist/headroom.min.js"></script>
-
 <!-- Vendor JS -->
 <script src="html&css/vendor/onscreen/dist/on-screen.umd.min.js"></script>
 <script src="html&css/vendor/nouislider/distribute/nouislider.min.js"></script>
@@ -159,16 +157,12 @@
 <script src="html&css/vendor/jarallax/dist/jarallax.min.js"></script>
 <script src="html&css/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
 <script src="html&css/vendor/vivus/dist/vivus.min.js"></script>
-
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-
 <!-- pixel JS -->
 <script src="html&css/assets/js/pixel.js"></script>
-
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-
 <script>
 Kakao.init('25d56d8cc547216af9df8aabb4c0ada4'); //발급받은 키 중 javascript키 사용
 console.log(Kakao.isInitialized()); // sdk초기화여부판단
@@ -227,7 +221,6 @@ console.log(Kakao.isInitialized()); // sdk초기화여부판단
 	                            $("form").attr("method","POST").attr("action","kakaologin.cy/"+email).attr("target","_parent").submit();
 	                        }
 	                    }
-
 	        		  
 	        	  });
 	            },
@@ -242,10 +235,7 @@ console.log(Kakao.isInitialized()); // sdk초기화여부판단
 	          }
 	        });
 		}	
-
 	//});
-
-
 //카카오로그아웃  
 function kakaoLogout() {
     if (Kakao.Auth.getAccessToken()) {
@@ -263,5 +253,4 @@ function kakaoLogout() {
   }  
 </script>
 </body>
-
 </html>
