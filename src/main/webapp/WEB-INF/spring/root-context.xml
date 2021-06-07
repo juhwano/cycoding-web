@@ -10,11 +10,10 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 
-	
 <!-- properties 파일 위치 -->	  
   <context:property-placeholder location="classpath:config/*"/>
+
   
- 
  <!-- Hikari -->
 <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	<property name="driverClassName" value="${db.driver}"/>
@@ -56,18 +55,21 @@
 	
 <bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource"></property>
-    <property name="mapperLocations" value="classpath*:com/cyco/**/*xml" />
+    <property name="mapperLocations" value="classpath*:com.cyco.*/*xml" />
 
 </bean> 
 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="annotationClass" value="org.springframework.stereotype.Repository" />
 		<property name="basePackage" value="com.cyco.*.dao.*" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-	</bean>
+
+</bean> 
+
 
 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
   <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
 </bean>
+
 
 
 
@@ -98,5 +100,10 @@
 	</bean>
 	
 	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+ <!-- 비밀번호 암호화 --> 
+   <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+      <!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
+   </bean>     
 
 </beans>

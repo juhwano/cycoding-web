@@ -74,3 +74,4 @@
 		<beans:constructor-arg name="strength" value="256"></beans:constructor-arg>
 	</beans:bean>
 </beans:beans>
+
