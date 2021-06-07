@@ -11,4 +11,7 @@ public class MemberVo {
 	private String skill;
 	private String p_enable;
 	private String s_enable;
+	
+	//페이징처리용 rownum
+	private int rownum;
 }

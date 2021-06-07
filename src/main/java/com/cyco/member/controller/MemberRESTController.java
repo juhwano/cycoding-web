@@ -51,4 +51,13 @@ public class MemberRESTController {
 		
 		return memberNicknameList;
 	}
+	
+	//더보기버튼
+	@RequestMapping(value = "memberMore.cy", method = RequestMethod.GET)
+	public List<MemberVo> moreBtn() {
+		System.out.println("더보기 컨트롤러 진입");
+		//회원목록
+		List<MemberVo> memberList = memberservice.memberList();
+		return memberList;
+	}
 }

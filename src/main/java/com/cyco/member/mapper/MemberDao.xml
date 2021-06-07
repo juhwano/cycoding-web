@@ -5,8 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.cyco.member.dao.MemberDao">
 	
+	<!-- 멤버리스트 최초로딩-->
 	<select id="getMemberList" resultType="com.cyco.member.vo.MemberVo">
-		select m_id,
+		select rownum,
+			   m_id,
 			   m_nick,
 			   m_image,
 			   position,
@@ -24,14 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- getMemberPosition -->
 	<select id="getMemberPosition" resultType="com.cyco.member.vo.MemberVo">
-		select m_id, m_nick, m_image, position, skill, p_enable, s_enable
+		select rownum, m_id, m_nick, m_image, position, skill, p_enable, s_enable
 		from V_MLIST
 		where position like '%${position}%'
 	</select>
 	
 	<!-- getMemberNickname -->
 	<select id="getMemberNickname" resultType="com.cyco.member.vo.MemberVo">
-		select m_id, m_nick, m_image, position, skill, p_enable, s_enable
+		select rownum, m_id, m_nick, m_image, position, skill, p_enable, s_enable
 		from V_MLIST
 		where m_nick like '%${nickname}%'
 	</select>
