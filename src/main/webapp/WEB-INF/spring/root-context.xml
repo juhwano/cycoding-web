@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
@@ -10,11 +11,10 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 
-	
 <!-- properties 파일 위치 -->	  
   <context:property-placeholder location="classpath:config/*"/>
+
   
- 
  <!-- Hikari -->
 <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	<property name="driverClassName" value="${db.driver}"/>
@@ -62,5 +62,11 @@
 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
   <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
 </bean>
+
+ <!-- 비밀번호 암호화 --> 
+   <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+      <!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
+   </bean>     
+     
 
 </beans>
