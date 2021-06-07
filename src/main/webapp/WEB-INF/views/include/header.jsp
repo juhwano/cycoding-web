@@ -55,7 +55,7 @@
                     
                     
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="memberlist.cy" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
                             MEMBER
                         </a>
                     </li>
