@@ -1,6 +1,7 @@
 package com.cyco.project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cyco.project.vo.AdrVO;
 import com.cyco.project.vo.FieldVO;
@@ -18,8 +19,9 @@ public interface ProjectDao {
 	//select skill_code, skill_name, skill_enable from skill;
 	//select field_code, field_name,field_enable from p_field;
 	
-	public List<ProjectVO> getProjectList();
-	public List<String> getFiltedProjectList(String field_code, String adr_code, String p_state);
+//	public List<ProjectVO> getProjectList();
+	public List<ProjectVO> getProjectList(String where);
+	public List<String> getFiltedProjectList(Map<String, String> data);
 	public List<P_MemberVO> getProjectMemberList();
 	public List<P_SkillVO> getProjectSkillList();
 	public List<AdrVO> getAdrList();

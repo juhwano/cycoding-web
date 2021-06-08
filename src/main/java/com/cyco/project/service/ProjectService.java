@@ -1,6 +1,7 @@
 package com.cyco.project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,30 @@ public class ProjectService {
 	public List<ProjectVO> getProjectList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
-		List<ProjectVO> list = dao.getProjectList();
+		String where = "";
+		List<ProjectVO> list = dao.getProjectList(where);
 		
 		return list;
 	}
-	public List<String> getFiltedProjectList(String field_code, String adr_code, String p_state){
+	public List<ProjectVO> getProjectList(List<String> filterlist){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		List<String> list = dao.getFiltedProjectList(field_code,  adr_code,  p_state);
+		
+		String where = "where p.project_id in (";
+		where +=filterlist.get(0);
+		for(int i=1; i<filterlist.size(); i++) {
+			where +=","+filterlist.get(i);
+		}
+		where += ")";
+		
+		System.out.println(where);
+		List<ProjectVO> list = dao.getProjectList(where);
+		System.out.println(list);
+		
+		return list;
+	}
+	public List<String> getFiltedProjectList(Map<String, String> data){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<String> list = dao.getFiltedProjectList(data);
 		System.out.println(list.toString());
 		return list;
 	}
