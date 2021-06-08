@@ -16,6 +16,10 @@ public class LoginController {
 	  return "Member/Login";
 	  
 	  }
+	
+	  
+	  
+	  
 	  
 		/*
 		 * @RequestMapping(value="kakaologin.cy") public String

@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
-
-
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 
 	private static final Logger logger = LoggerFactory.getLogger(UserLoginSuccessHandler.class);

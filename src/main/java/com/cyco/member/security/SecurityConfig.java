@@ -16,7 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/register.cy").fullyAuthenticated()
                 .antMatchers("/Member").permitAll()
                 .anyRequest().permitAll();
-
+        
 
         // @formatter:on
     }
