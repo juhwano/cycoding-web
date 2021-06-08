@@ -10,13 +10,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.csrf().disable();
-        http.httpBasic();
+        //http.csrf().disable();
+        //http.httpBasic();
+        
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/register.cy").fullyAuthenticated()
-                .antMatchers("/Member").permitAll()
-                .anyRequest().permitAll();
+                .antMatchers("/**").permitAll()
+                .anyRequest().permitAll()
+        	.and()
+        		.csrf()
+        		.ignoringAntMatchers("/login.cy");
 
+		    	 
 
         // @formatter:on
     }

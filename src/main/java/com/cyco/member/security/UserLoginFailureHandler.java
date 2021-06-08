@@ -37,7 +37,10 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler{
 		System.out.println(req.getParameter("username"));
 
 		req.setAttribute("errMsg",auth.getMessage());
-		req.getRequestDispatcher("/WEB-INF/views/Member/Login.jsp").forward(req, res);
+
+		res.sendRedirect("login.cy");
+		//req.getRequestDispatcher("/login.cy").forward(req, res);
+		
 	}
 	
 }

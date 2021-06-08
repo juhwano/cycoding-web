@@ -11,7 +11,7 @@
 
     
 <!-- Primary Meta Tags -->
-<title>Pixel Pages - Sign up</title>
+<title>사이좋게 코딩하자</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="title" content="Pixel Pages - Sign up">
 <meta name="author" content="Themesberg">
@@ -776,7 +776,7 @@
 									
 								} else {
 									
-									alert("메일을 인증해주세요.");
+									alert("인증메일이 발송되었습니다.");
 									
 									$("#mailcheck").empty();
 									$("#mailcheck").append(
