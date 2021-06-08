@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cyco.member.dao.MemberDao">
+
+	<select id="checkEmail" resultType="integer">
+		
+		select MEMBER_ID from member where MEMBER_EMAIL = #{email}
+	
+	</select>
+	
+	<select id="checkNickName" resultType="integer">
+		
+		select MEMBER_ID from member where MEMBER_NICKNAME = #{nickName}
+	
+	</select>
+	
+	<select id="checkPhone" resultType="integer">
+		
+		select MEMBER_ID from member where MEMBER_PHONE = #{phone}
+	
+	</select>
+
+	<insert id="registMember" parameterType="com.cyco.member.vo.MemberVo">
+	
+		insert into member(MEMBER_ID, MEMBER_EMAIL,MEMBER_PWD,MEMBER_NAME,MEMBER_NICKNAME,MEMBER_PHONE,MEMBER_IMAGE,ENABLED) 
+		values (M_SEQ.nextval,#{MEMBER_EMAIL},#{MEMBER_PWD},#{MEMBER_NAME},#{MEMBER_NICKNAME},#{MEMBER_PHONE},'defualt.jpg',1)
+		
+	</insert>
+	
+</mapper>
