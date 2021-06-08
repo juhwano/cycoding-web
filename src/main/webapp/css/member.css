@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+.top_area {
+	width: 100%;
+	/*
+	max-width: 100%;
+	height: auto;
+	*/
+
+	/* 
+	background-color: #C0A9BD; 
+	background-image: url("../assets/img/ain_test/MemberListHeader.png");
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100%; 
+    */
+}
+
+#memberListHeader {
+	max-width: 100%;
+	height: auto;
+}
+
+.m_container {
+	max-width: 960px;
+	margin: auto;
+}
+
+.select_section {
+	height: 100px;
+}
+
+.m_sel {
+	width: 200px !important;
+	float: left;
+}
+
+.m_img {
+	width: 300px;
+	height: 300px;
+}
+
+.m_img_size {
+	object-fit: cover;
+	width: 300px;
+	height: 300px;
+	border-radius: 1rem;
+}
+
+.m_search {
+	width: 200px !important;
+	float: right;
+}
+
+#topBtn {
+	position: fixed;
+	right: 22px;
+	bottom: 22px;
+	display: none;
+	z-index: 100;
+	width: 50px;
+}
+
+.moreBtn {
+	width: 40%;
+	
+	border-radius: 7px;
+	color: #c0a9bd;
+	font-size: 18px;
+	padding: 10px 20px 10px 20px;
+	border: solid #c0a9bd 2px;
+	background: white;
+}
+
+.moreBtn:hover {
+	background: #c0a9bd;
+	color: white;
+}
+
+.more_sec{
+	width: 100%;
+	text-align: center;
+}

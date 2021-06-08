@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainController {
 
-	@RequestMapping(value = "main.cy", method = RequestMethod.GET)
+public class MainController {
+	@RequestMapping(value="/main")
 	public String login() {
-		
+		System.out.println("this is main");
 		
 		return "Main/CycoMain";
 	
