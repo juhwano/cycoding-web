@@ -14,7 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Contact us if you want to remove it.
 
 */
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR");
+
+
 
 .datepicker {
     display: none;
@@ -746,14 +748,14 @@ button:not(:disabled),
 textarea {
     resize: vertical;
 }
-
+/*
 fieldset {
     min-width: 0;
     padding: 0;
     margin: 0;
     border: 0;
 }
-
+*/
 legend {
     float: left;
     width: 100%;
@@ -1008,7 +1010,7 @@ progress {
 
 @media (min-width: 1200px) {
     .container, .container-sm, .container-md, .container-lg, .container-xl {
-        max-width: 2000px;
+        max-width: 1300px;
     }
 }
 
@@ -3217,7 +3219,6 @@ progress {
     border: 0.0625rem solid #D1D5DB;
     -webkit-appearance: none;
     appearance: none;
-    border-radius: 1rem;
     box-shadow: inset 0 1px 2px rgba(23, 31, 56, 0.075);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -3239,9 +3240,9 @@ progress {
 .form-control:focus {
     color: #4B5563;
     background-color: #F9FAFB;
-    border-color: #4d62a3;
+    border-color: #C0A9BD;
     outline: 0;
-    box-shadow: inset 0 1px 2px rgba(23, 31, 56, 0.075), 0 0 0 0.2rem rgba(36, 46, 76, 0.25);
+    box-shadow: inset 0 1px 2px #C0A9BD, 0 0 0 0.1rem #C0A9BD;
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -3512,8 +3513,8 @@ textarea.form-control-lg {
 }
 
 .form-check-input:checked {
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #C0A9BD;
+    border-color: #C0A9BD;
 }
 
 .form-check-input:checked[type="checkbox"] {
