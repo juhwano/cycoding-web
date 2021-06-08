@@ -38,7 +38,7 @@ public class RegisterRestComtroller {
 		System.out.println("This is checkEmail");
 		String mail = email.replace("email=","").replace("%40","@");
 		
-		System.out.println("중복체크할 메일 : " + mail );
+		System.out.println(" : " + mail );
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
@@ -51,7 +51,7 @@ public class RegisterRestComtroller {
 		}
 		
 
-		System.out.println("결과값 : " + result);
+		System.out.println("寃곌낵媛� : " + result);
 		
 		return result;
 	}
@@ -59,21 +59,21 @@ public class RegisterRestComtroller {
 	@RequestMapping(value="emailcheckajax.cy", method=RequestMethod.POST)
 	public String mailSending(HttpServletRequest request, String email, HttpServletResponse response_email) throws IOException {
 		 
-		System.out.println("인증메일 발송 컨트롤러");
+		System.out.println("�씤利앸찓�씪 諛쒖넚 而⑦듃濡ㅻ윭");
         Random r = new Random();
-        int dice = r.nextInt(4589362) + 49311; //이메일로 받는 인증코드 부분 (난수)
+        int dice = r.nextInt(4589362) + 49311; //�씠硫붿씪濡� 諛쏅뒗 �씤利앹퐫�뱶 遺�遺� (�궃�닔)
         
         String setfrom = "mnd3259@gmail.com";
-        String tomail = request.getParameter("email"); // 받는 사람 이메일
-        String title = "[CYCODING]사이좋게 코딩하자 사이코딩 인증 메일입니다"; // 제목
+        String tomail = request.getParameter("email"); // 諛쏅뒗 �궗�엺 �씠硫붿씪
+        String title = "[CYCODING]�궗�씠醫뗪쾶 肄붾뵫�븯�옄 �궗�씠肄붾뵫 �씤利� 硫붿씪�엯�땲�떎"; // �젣紐�
         String content =
         
-        System.getProperty("line.separator")+ //한줄씩 줄간격을 두기위해 작성        
+        System.getProperty("line.separator")+ //�븳以꾩뵫 以꾧컙寃⑹쓣 �몢湲곗쐞�빐 �옉�꽦        
         System.getProperty("line.separator")+
                 
-        "안녕하세요 회원님!" +
+        "�븞�뀞�븯�꽭�슂 �쉶�썝�떂!" +
         System.getProperty("line.separator")+ 
-        "CYCODING에 가입하기 위해 아래 인증번호를 입력해주세요"
+        "CYCODING�뿉 媛��엯�븯湲� �쐞�빐 �븘�옒 �씤利앸쾲�샇瑜� �엯�젰�빐二쇱꽭�슂"
         
         +System.getProperty("line.separator")+        
         System.getProperty("line.separator")+
@@ -83,12 +83,12 @@ public class RegisterRestComtroller {
         +System.getProperty("line.separator")+       
         System.getProperty("line.separator")+
         
-        "위의 인증번호를 회원가입 창에 입력하시면 다음 단계로 진행이 가능합니다." // 내용
+        "�쐞�쓽 �씤利앸쾲�샇瑜� �쉶�썝媛��엯 李쎌뿉 �엯�젰�븯�떆硫� �떎�쓬 �떒怨꾨줈 吏꾪뻾�씠 媛��뒫�빀�땲�떎." // �궡�슜
         
         +System.getProperty("line.separator")+
         System.getProperty("line.separator")+
         
-        "감사합니다!";
+        "媛먯궗�빀�땲�떎!";
         
         String result = "fail";
         
@@ -97,10 +97,10 @@ public class RegisterRestComtroller {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message,
                     true, "UTF-8");
 
-            messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
-            messageHelper.setTo(tomail); // 받는사람 이메일
-            messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-            messageHelper.setText(content); // 메일 내용
+            messageHelper.setFrom(setfrom); // 蹂대궡�뒗�궗�엺 �깮�왂�븯硫� �젙�긽�옉�룞�쓣 �븞�븿
+            messageHelper.setTo(tomail); // 諛쏅뒗�궗�엺 �씠硫붿씪
+            messageHelper.setSubject(title); // 硫붿씪�젣紐⑹� �깮�왂�씠 媛��뒫�븯�떎
+            messageHelper.setText(content); // 硫붿씪 �궡�슜
             
             mailSender.send(message);
             
@@ -130,7 +130,7 @@ public class RegisterRestComtroller {
 		System.out.println("This is checkNickName");
 		
 		
-		System.out.println("중복체크할 닉네임 : " + nickName );
+		System.out.println("以묐났泥댄겕�븷 �땳�꽕�엫 : " + nickName );
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
@@ -143,7 +143,7 @@ public class RegisterRestComtroller {
 		}
 		
 
-		System.out.println("결과값 : " + result);
+		System.out.println("寃곌낵媛� : " + result);
 		
 		return result;
 	}
@@ -154,7 +154,7 @@ public class RegisterRestComtroller {
 		System.out.println("This is checkPhone");
 		
 		
-		System.out.println("중복체크할 번호 : " + phone );
+		System.out.println("以묐났泥댄겕�븷 踰덊샇 : " + phone );
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
@@ -167,7 +167,7 @@ public class RegisterRestComtroller {
 		}
 		
 
-		System.out.println("결과값 : " + result);
+		System.out.println("寃곌낵媛� : " + result);
 		
 		return result;
 	}
