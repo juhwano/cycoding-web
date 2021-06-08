@@ -29,11 +29,7 @@ public class RestProjectController {
 		System.out.println("adr_code : " + data.get("adr_code"));
 		System.out.println("p_state : " + data.get("p_state"));
 		System.out.println("skill_code : " + data.get("skill_code"));
-		
-		
-		String skill_code = data.get("skill_code");
 
-		
 		
 		List<String> Flist= service.getFilteredProjectList(data);
 		
@@ -41,13 +37,13 @@ public class RestProjectController {
 		
 		//skill_code에 값이 있을경우
 		if(!data.get("skill_code").equals("")) {
-			List<String> list = service.getFilteredProjectSkillList(skill_code);
-			System.out.println("skill list : " + list);
-			Flist.addAll(list);
+			//위에서받은 Flist도 같이 넣어준다.
+			Flist = service.getFilteredProjectSkillList(data,Flist);
+			System.out.println("skill list : " + Flist);
 		}
 		System.out.println("after Flist : "+Flist);
 		
-//		service.getProjectList(Flist);
+		service.getProjectList(Flist);
 		
 		return null;
 	}
