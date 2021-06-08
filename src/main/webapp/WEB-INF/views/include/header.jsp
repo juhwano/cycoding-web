@@ -1,40 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+
+	
 	<!-- Primary Meta Tags -->
 	<title>사이좋게 코딩하자</title>
-	<!-- Fontawesome -->
-	<link type="text/css" href="../vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 	
 	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
+		<!-- 반응형 토글 -->
+<script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	
+
+	<!-- Fontawesome -->
+	<link type="text/css" href="${pageContext.request.contextPath}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
 	<!-- Pixel CSS -->
-
-	<link type="text/css" href="css/pixel.css" rel="stylesheet">
+	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
 	<!-- main CSS -->
-	<link type="text/css" href="css/main.css" rel="stylesheet">
+	<link type="text/css" href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
+
 	</head>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!-- 스프링 시큐리티 설정 -->
-
-	<link type="text/css" href="../css/pixel.css" rel="stylesheet">
+	
+	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
 	<!-- main CSS -->
-	<link type="text/css" href="../css/main.css" rel="stylesheet">
+	<link type="text/css" href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
 	</head>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<!-- 스프링 시큐리티 설정 -->
+	<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 
-<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 <body>
 <header class="header-global">
     <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-dark">
         <div class="container position-relaive">
             <a class="navbar-brand me-lg-5" href="main.cy">
-                <img class="navbar-brand-dark" src="./assets/img/brand/LOGO.svg" alt="Logo light">
+                <img class="navbar-brand-dark" src="${pageContext.request.contextPath}/assets/img/brand/LOGO.svg" alt="Logo light">
             </a>
             <div class="navbar-collapse collapse me-auto" id="navbar_global">
                	
@@ -42,7 +50,7 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="main.cy">
-                                <img src="./assets/img/brand/LOGO.svg" alt="Themesberg logo">
+                                <img src="${pageContext.request.contextPath}/assets/img/brand/LOGO.svg" alt="Themesberg logo">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -69,7 +77,7 @@
                     
                     
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="memberlist.cy" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
                             MEMBER
                         </a>
                     </li>
@@ -82,25 +90,24 @@
                 </ul>
                 
                <!-- Header Right --> 
-               <div class="d-flex align-items-center">
-               	<ul>
+               	<div class="right_nav">
+               	 <ul class="navbar-nav navbar-nav-hover align-items-lg-center plex_right">
                		  
                     <!-- 로그인 안하면 -->
-
                     <se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 						<li class="nav-item dropdown">
-                        <a href="login.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
-
-                           	로그인
+                        <a href="login.cy" class="nav-link">
+                           	로그인 
                         </a>
-                    </li>
+                   		</li>
 					</se:authorize>
 
 					<se:authorize access="hasRole('ROLE_ADMIN')">
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
+
 	                        <a href="register.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
-	                            <img src="./assets/img/brand/ALARM.svg">
+	                            <img src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
 	                            <div class="col-auto px-0">
@@ -126,12 +133,12 @@
 					
 		
 					<se:authentication property="name" var="LoginUser" />
-					<se:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+					<se:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MEMBER','ROLE_PREMEMBER')">
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
 
-	                            <img src="./assets/img/brand/ALARM.svg">
+	                            <img src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
 	                            <div class="col-auto px-0">
@@ -143,21 +150,25 @@
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
-                     ${LoginUser})님
-
+                 			    ${LoginUser}님
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
-	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
-	                            <div class="col-auto px-0">
-	                                
-	                            </div>
-	                        </div>
-	                    </li>
-						
+		                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
+		                            <div class="col-auto px-0">
+		                                <div class="list-group list-group-flush">
+		                                 
+		                                  <form action="logout.cy" method="post">
+		                                  	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                                  	<button type="submit">로그아웃</button>
+		                                  </form>
+		                                </div>
+		                            </div>
+		                        </div>
+	                   	 </li>
 					</se:authorize>   
-               	</ul>
-               </div>
-                
+					
+               		</ul>
+                </div>
             </div>
             <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
@@ -179,15 +190,11 @@
 	<!-- END LOADER -->	
 	
     </main>
-
-<!-- 반응형 토글 -->
-<script src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
 <!-- Pixel JS -->
-<script src="./assets/js/pixel.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
 
 <!-- sweetalert -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- JQuesy -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

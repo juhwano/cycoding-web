@@ -5,35 +5,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <!-- j쿼리  -->
-    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- 모달창 css -->
-
-    
-<!-- Primary Meta Tags -->
-<title>사이좋게 코딩하자</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="title" content="Pixel Pages - Sign up">
-<meta name="author" content="Themesberg">
-<meta name="description" content="Open source and accessibility first Bootstrap Design System featuring over 80 premium components and 4 example pages.">
-<meta name="keywords" content="bootstrap, Bootstrap Design System, accessiblity, accessibility first, open source, open source Bootstrap Design System" />
-<link rel="canonical" href="https://themesberg.com/product/ui-kits/pixel-lite-free-bootstrap-4-ui-kit">
-
- 
-<!-- Favicon -->
-<link rel="apple-touch-icon" sizes="120x120" href="../../assets/img/favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon/favicon-16x16.png">
-<link rel="manifest" href="../../assets/img/favicon/site.webmanifest">
-<link rel="mask-icon" href="../../assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="theme-color" content="#ffffff">
-
-<!-- Fontawesome 
-<link type="text/css" href="html&css/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR" rel="stylesheet">
-
 <!-- Pixel CSS -->
 <link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="html&css/css/register.css" rel="stylesheet">
@@ -51,7 +22,7 @@
         <!-- Section -->
         <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mt-6">
                     <div class="col-12 d-flex align-items-center justify-content-center">
                     
                     <!-- 화원가입 싸고 있는 박스 -->
@@ -109,7 +80,6 @@
                                         <div>
                                         <div id="pwdCheck" class="validation"></div>
 
-
                                         <!--  <label for="passwordConfirm">Confirm Password</label>-->
                                         <div class="input-group">
 
@@ -131,7 +101,7 @@
                                     <div class="condition">
                                         
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
-                                        <span class="agreement" style="color:#CA8FAB; font-size:12px;margin:0;"><a href="#myModal" class="trigger-btn" data-toggle="modal">이용약관 동의(필수)</a></span>
+                                        <span id="agreement" style="color:#CA8FAB; font-size:12px;margin:0;"><a href="#myModal" class="trigger-btn" data-toggle="modal">이용약관 동의(필수)</a></span>
                                                                  
 									</div>
 									
@@ -144,8 +114,7 @@
                            
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
-                                    이미 계정이 있으신가요?
-                                    <a href="login.cy" style="color:#C0A9BD">로그인</a>
+                                    <a href="login.cy" style="color:#C0A9BD">이미 계정이 있으신가요?</a>
                                 </span>
                             </div>
                         </div>
@@ -405,29 +374,6 @@
 		</div>
 	</div>
 </div>     
-
-    <!-- Core -->
-<script src="html&css/vendor/jquery/dist/jquery.min.js"></script>
-<script src="html&css/vendor/popper.js/dist/umd/popper.min.js"></script>
-<script src="html&css/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="html&css/vendor/headroom.js/dist/headroom.min.js"></script>
-
-<!-- Vendor JS -->
-<script src="html&css/vendor/onscreen/dist/on-screen.umd.min.js"></script>
-<script src="html&css/vendor/nouislider/distribute/nouislider.min.js"></script>
-<script src="html&css/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="html&css/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-<script src="html&css/vendor/waypoints/lib/jquery.waypoints.min.js"></script>
-<script src="html&css/vendor/jarallax/dist/jarallax.min.js"></script>
-<script src="html&css/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-<script src="html&css/vendor/vivus/dist/vivus.min.js"></script>
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
-<!-- pixel JS -->
-<script src="html&css/assets/js/pixel.js"></script>
-
 <!-- 가입 정보 유효성 검사 -->
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -439,6 +385,7 @@
 			     $('.modal-wrapper').toggleClass('open');
 			     return false;
 		});
+		
 		
 	});
 	
@@ -468,7 +415,7 @@
 				$("#emailCheck").text("올바른 이메일을 입력해주세요");
 			} else{
 				$("#emailCheck").css("color","green");
-				$("#emailCheck").text("✔올바른 형식의 이메일입니다");
+				$("#emailCheck").text("✔ 올바른 형식의 이메일입니다");
 			}
 			
 		});
@@ -496,7 +443,7 @@
 					$("#pwdCheck").text("비밀번호는 공백을 포함할 수 없습니다");
 				} else{
 					$("#pwdCheck").css("color","green");
-					$("#pwdCheck").text("✔사용 가능한 비밀번호 입니다");
+					$("#pwdCheck").text("✔ 사용 가능한 비밀번호 입니다");
 				}
 
 			}
@@ -516,14 +463,14 @@
 			
 			if(password =! "" && passwordC != "" ){
 				
-				if(password == passwordC){
+				if(password. passwordC){
 					
 					$("#pwdcCheck").css("color","green");
-					$("#pwdcCheck").text("✔비밀번호가 일치합니다");
+					$("#pwdcCheck").text("✔ 비밀번호가 일치합니다");
 					
 				} else if(password != passwordC){
-					//$("#pwdcCheck").css("color","#CA8FAB");
-					//$("#pwdcCheck").text("비밀번호가 일치하지 않습니다");
+					$("#pwdcCheck").css("color","#CA8FAB");
+					$("#pwdcCheck").text("비밀번호가 일치하지 않습니다");
 				}
 				
 			}
@@ -558,7 +505,7 @@
 					title: "이메일을 입력하세요",
 					icon: "error"
 				}); */
-				alert("올바른 이메일을 입력해주세요");
+				swal("올바른 이메일을 입력해주세요." , "" ,"error");
 				checking = false;
 				$("#email").focus();
 				
@@ -571,7 +518,7 @@
 					title: "이름을 입력하세요",
 					icon: "error"
 				}); */
-				alert("이름을 입력하세요");
+				swal("이름을 입력하세요." , "" ,"error");
 				checking = false;
 				$("#name").focus();
 				return;
@@ -586,7 +533,7 @@
 					title: "비밀번호는 8-20자리 이내로 입력하세요",
 					icon: "error"
 				}); */
-				alert("비밀번호는 8-20자리 이내로 입력하세요");
+				swal("비밀번호는 8-20자리 이내로 입력하세요." , "" ,"error");
 				checking = false;
 				$("#password").focus();
 				return;
@@ -596,7 +543,7 @@
 					title: "비밀번호는 공백을 입력할 수 없습니다",
 					icon: "error"
 				}); */
-				alert("비밀번호는 공백을 입력할 수 없습니다");
+				swal("비밀번호는 공백을 입력할 수 없습니다." , "" ,"error");
 				checking = false;
 				$("#password").focus();
 				return;
@@ -606,7 +553,7 @@
 					title: "영문, 숫자를 포함하여 입력하세요",
 					icon: "error"
 				}); */
-				alert("영문, 숫자를 포함하여 입력하세요");
+				swal("영문, 숫자를 포함하여 입력하세요." , "" ,"error");
 				checking = false;
 				$("#password").focus();
 				return;
@@ -617,7 +564,7 @@
 					title: "비밀번호를 입력하세요",
 					icon: "error"
 				}); */
-				alert("비밀번호를 입력하세요");
+				swal("비밀번호를 입력하세요." , "" ,"error");
 				checking = false;
 				$("#password").focus();
 				return;
@@ -643,7 +590,7 @@
 					title: "비밀번호 확인란을 입력하세요",
 					icon: "error"
 				}); */
-				alert("비밀번호를 확인해주세요");
+				swal("비밀번호를 확인해주세요." , "" ,"error");
 				checking = false;
 				$("#passwordC").focus();
 				return;
@@ -657,7 +604,7 @@
 					title: "닉네임 을 입력하세요",
 					icon: "error"
 				}); */
-				alert("닉네임을 입력하세요");
+				swal("닉네임을 입력하세요." , "" ,"error");
 				$("#nickName").focus();
 				checking = false;
 				return;
@@ -666,7 +613,7 @@
 	
 			if (!($('#emailCheckBtn').html() == '인증완료')) {
 				console.log($('#emailCheckBtn').html());
-				alert("이메일을 인증해주세요");
+				swal("이메일을 인증해주세요." , "" ,"error");
 				 /* swal({
 					title: "이메일 중복체크를 해주세요",
 					icon: "error"
@@ -674,7 +621,7 @@
 				return;
 			}
 			 if (!($('#nickNameCheckBtn').html() == '체크완료')) {
-				 alert("닉네임 중복확인을 해주세요");
+				 swal("닉네임 중복확인을 해주세요." , "" ,"error");
 				/* swal({
 					title: "상점이름 중복체크를 해주세요",
 					icon: "error"
@@ -682,7 +629,8 @@
 				return;
 			} 
 			if (!($('#phoneCheckBtn').html() == '체크완료')) {
-				alert("휴대폰 번호 중복확인을 해주세요");
+				
+				 swal("휴대폰 번호 중복확인을 해주세요." , "" ,"error");
 				/* swal({
 					title: "핸드폰 번호 인증을 해주세요",
 					icon: "error"
@@ -691,7 +639,7 @@
 			}
 			
 			if($("#defaultCheck6").is(":checked")!=true){
-				alert("약관 동의를 해주세요");
+				swal("약관 동의를 해주세요." , "" ,"error");
 				return;
 			}
 	
@@ -715,7 +663,7 @@
 					title: "이메일을 입력해주세요",
 					icon: "error"
 				}); */
-				alert("인증할 이메일을 입력해주세요");
+				swal("인증할 이메일을 입력해주세요." , "" ,"error");
 				return;
 			}
 			
@@ -733,7 +681,7 @@
 							title: "이미 존재하는 이메일입니다",
 							icon: "error"
 						}); */
-						alert("이미 가입된 이메일입니다");
+						swal("이미 가입된 이메일입니다." , "" ,"error");
 						
 					} else {
 						
@@ -759,11 +707,13 @@
 										title: "이미 존재하는 이메일입니다",
 										icon: "error"
 									}); */
-									alert("인증 메일 발송에 실패했습니다.");
+									swal("인증 메일 발송에 실패했습니다." , "" ,"error");
 									
 								} else {
-									
+
 									alert("인증메일이 발송되었습니다.");
+									swal("📨" , "메일을 발송하였습니다.");
+
 									
 									$("#mailcheck").empty();
 									$("#mailcheck").append(
@@ -784,15 +734,15 @@
 										console.log(dice);
 										
 										if(dice == $("#emailCheckNumber").val()){
-											alert("인증이 완료되었습니다.");
+											swal("인증이 완료되었습니다." , "" ,"success");
 											$('#emailCheckBtn').html('인증완료');
 											$('#emailCheckBtn').attr('disabled', 'true');
 											$("#mailcheck").empty();
 											
 										} else if( $("#emailCheckNumber").val() == ""){
-											alert("인증번호를 입력해주세요.");
+											swal("인증번호를 입력해주세요." , "" ,"error");
 										} else if(dice != $("#emailCheckNumber").val()){
-											alert("다시 입력해주세요.");
+											swal("다시 입력해주세요." , "" ,"error");
 										}
 										
 										
@@ -823,7 +773,7 @@
 					title: "닉네임 을 입력해주세요",
 					icon: "error"
 				}); */
-				alert("닉네임을 입력해주세요");
+				swal("닉네임을 입력해주세요." , "" ,"error");
 				$("#nickName").focus();
 				return;
 			}
@@ -841,7 +791,7 @@
 							title: "사용 가능한 닉네임입니다",
 							icon: "success"
 						}); */
-						alert("사용 가능한 닉네임입니다");
+						swal("사용 가능한 닉네임입니다." , "" ,"success");
 						$('#nickNameCheckBtn').html('체크완료');
 						$('#nickNameCheckBtn').attr('disabled', 'true');
 						
@@ -853,7 +803,7 @@
 							title: "이미 존재하는 닉네임 입니다",
 							icon: "error"
 						}); */
-						alert("이미 존재하는 닉네임입니다");
+						swal("이미 존재하는 닉네임입니다." , "" ,"error");
 					}
 				},
 				error: function(error) {
@@ -871,7 +821,7 @@
 					title: "닉네임 을 입력해주세요",
 					icon: "error"
 				}); */
-				alert("휴대폰 번호를 입력해주세요");
+				swal("휴대폰 번호를 입력해주세요." , "" ,"error");
 				$("#phone").focus();
 				return;
 			}
@@ -889,18 +839,18 @@
 							title: "사용 가능한 번호입니다",
 							icon: "success"
 						}); */
-						alert("사용 가능한 번호입니다");
+						swal("사용 가능한 번호입니다." , "" ,"success");
 						$('#phoneCheckBtn').html('체크완료');
 						$('#phoneCheckBtn').attr('disabled', 'true');
 						
 						$("#phoneCheck").css("color","green");
-						$("#phoneCheck").text("✔사용 가능한 번호입니다");
+						$("#phoneCheck").text("✔ 사용 가능한 번호입니다");
 					} else {
 						/* swal({
 							title: "사용할 수 없는 번호입니다",
 							icon: "error"
 						}); */
-						alert("사용할 수 없는 번호입니다");
+						swal("사용할 수 없는 번호입니다." , "" ,"success");
 					}
 				},
 				error: function(error) {
@@ -910,13 +860,6 @@
 		});
 
 	}
-
-	
-
 </script>
-
-
-
 </body>
-
 </html>

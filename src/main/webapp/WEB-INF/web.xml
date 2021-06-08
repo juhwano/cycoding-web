@@ -13,10 +13,6 @@
                 <param-value>UTF-8</param-value>
         </init-param>
 </filter>
-<init-param>
-	<param-name>forceEncoding</param-name>
-	<param-value>true</param-value>
-</init-param>
 <filter-mapping>
         <filter-name>encodingFilterUTF8</filter-name>
         <url-pattern>/*</url-pattern>
@@ -50,28 +46,27 @@
 	</listener>
 
 	<!-- Processes application requests -->
-	<servlet>
-		<servlet-name>appServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-		
-	<servlet-mapping>
-		<servlet-name>appServlet</servlet-name>
-		<url-pattern>*.cy</url-pattern>
-	</servlet-mapping>
+
+ <servlet>
+    <servlet-name>appServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>appServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
 	
 	
     <welcome-file-list>
-        <welcome-file>main.cy</welcome-file>
+        <welcome-file>main</welcome-file>
     </welcome-file-list>
-	
-	
-	
 
 
 <!--   Spring security 설정-->

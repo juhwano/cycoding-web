@@ -1,10 +1,29 @@
 package com.cyco.project.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/project")
-public class ProjectController {
+import com.cyco.project.service.ProjectService;
+import com.cyco.project.vo.ProjectVO;
 
+@Controller
+@RequestMapping(value="project/")
+public class ProjectController {
+	
+	@Autowired
+	private ProjectService service;
+	
+	
+	
+	@RequestMapping(value="list")
+	public String getProjectList() {
+		System.out.println("this is /list");
+		List<ProjectVO> plist = service.getProjectList();
+		System.out.println(plist);
+		
+		return "Project/ProjectList";
+	}
 }

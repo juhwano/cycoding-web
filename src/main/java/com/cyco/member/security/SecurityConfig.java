@@ -21,7 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.csrf()
         		.ignoringAntMatchers("/login.cy");
 
-		    	 
 
         // @formatter:on
     }

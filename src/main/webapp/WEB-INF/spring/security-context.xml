@@ -70,8 +70,8 @@
 											where m.MEMBER_EMAIL=?"
 		/>
 
-
 			  <password-encoder ref="bCryptPasswordEncoder"/>
+
 	</authentication-provider>
 
 </authentication-manager>				

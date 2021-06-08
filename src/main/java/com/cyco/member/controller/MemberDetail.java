@@ -13,13 +13,6 @@ public class MemberDetail {
 		
 		return "/Member/MemberDetail";
 	}
-	
-	@RequestMapping(value="test.cy")
-	public @ResponseBody String test(){
-		
-		System.out.println("test.cy 접근");
-		
-		return "/Member/Test";
-	}
+
 	
 }

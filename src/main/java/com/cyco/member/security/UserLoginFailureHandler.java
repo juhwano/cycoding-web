@@ -35,12 +35,15 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler{
 		
 		System.out.println("로그인 실패");
 		System.out.println(req.getParameter("username"));
-
 		req.setAttribute("errMsg",auth.getMessage());
 
-		res.sendRedirect("login.cy");
+		//res.sendRedirect("login.cy");
 		//req.getRequestDispatcher("/login.cy").forward(req, res);
-		
+
+		res.sendRedirect("login.cy?error=true");
+
 	}
+	
+	
 	
 }

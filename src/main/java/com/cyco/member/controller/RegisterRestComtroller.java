@@ -1,7 +1,6 @@
 package com.cyco.member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
