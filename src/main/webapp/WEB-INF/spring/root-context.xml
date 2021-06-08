@@ -59,7 +59,6 @@
   	  <property name="dataSource" ref="dataSource"></property>
       <property name="mapperLocations" value="classpath*:com/cyco/**/*xml" />
 	</bean>
-	
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="annotationClass"

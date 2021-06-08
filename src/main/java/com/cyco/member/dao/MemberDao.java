@@ -1,20 +1,20 @@
 package com.cyco.member.dao;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import com.cyco.member.vo.MemberVo;
+import com.cyco.member.vo.PositionVo;
 
-
-@Repository
 public interface MemberDao {
+	//회원목록
+	public List<MemberVo> getMemberList();
 	
-	public Integer checkEmail(String email);
+	//포지션목록
+	public List<PositionVo> getPositionList();
 	
-	public Integer checkNickName(String nickName);
+	//포지션기반 필터링
+	public List<MemberVo> getMemberPosition(String position);
 	
-	public Integer checkPhone(String phone);
-	
-	public int registMember(MemberVo member);
-
-
+	//닉네임 검색
+	public List<MemberVo> getMemberNickname(String nickname);
 }
