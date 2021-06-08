@@ -10,83 +10,89 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 
-<!-- properties 파일 위치 -->	  
-  <context:property-placeholder location="classpath:config/*"/>
+	<!-- properties 파일 위치 -->
+	<context:property-placeholder
+		location="classpath:config/*" />
 
-  
- <!-- Hikari -->
-<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-	<property name="driverClassName" value="${db.driver}"/>
-	<property name="jdbcUrl" value="${db.url}"/>
-	<property name="username" value="${db.username}"/>
-	<property name="password" value="${db.password}"/>
-</bean>
 
- 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+	<!-- Hikari -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="jdbcUrl" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
 		<constructor-arg ref="hikariConfig"></constructor-arg>
-	</bean> 
+	</bean>
 
-<!-- 공통 DB작업  -->
-<!--   <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
- 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
- 	<property name="url" value="jdbc:oracle:thin:@ehdrms519.iptime.org:1521:XE" />
- 	<property name="username" value="CYCO" />
- 	<property name="password" value="1004" />
- </bean> -->
- 
-<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
- 	<property name="dataSource"  ref="hikariConfig"></property>
- </bean>  -->
+	<!-- 공통 DB작업 -->
+	<!-- <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" 
+		/> <property name="url" value="jdbc:oracle:thin:@ehdrms519.iptime.org:1521:XE" 
+		/> <property name="username" value="CYCO" /> <property name="password" value="1004" 
+		/> </bean> -->
 
- 
-  <!-- 공통 UI  -->
- <bean  id="internalResourceViewResolver"   class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	<property name="prefix">
+	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> 
+		<property name="dataSource" ref="hikariConfig"></property> </bean> -->
+
+
+	<!-- 공통 UI -->
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
 			<value>/WEB-INF/views/</value>
-	</property>
-	<property name="suffix">
+		</property>
+		<property name="suffix">
 			<value>.jsp</value>
-	</property>
-</bean>
-	  
-	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		</property>
+	</bean>
+
+	<bean id="bCryptPasswordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
-	</bean>	  
+	</bean>
+
+	<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+  	  <property name="dataSource" ref="dataSource"></property>
+      <property name="mapperLocations" value="classpath*:com/cyco/**/*xml" />
+	</bean>
 	
-<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="dataSource" ref="dataSource"></property>
-    <property name="mapperLocations" value="classpath*:com.cyco.*/*xml" />
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="annotationClass"
+			value="org.springframework.stereotype.Repository" />
+		<property name="basePackage" value="com.cyco.**.dao.*" />
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory" />
 
-</bean> 
-<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="annotationClass" value="org.springframework.stereotype.Repository" />
-		<property name="basePackage" value="com.cyco.*.dao.*" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-
-</bean> 
+	</bean>
 
 
-<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-  <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
-</bean>
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryBean" />
+	</bean>
 
 
 
 
 
-<!-- velocity -->
- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    <property name="host" value="smtp.gmail.com" />
-    <property name="port" value="587" />
-    <property name="username" value="${mail.adr}" />
-    <property name="password" value="${mail.pwd}" />
-    <property name="javaMailProperties">
-    <props>
-      <prop key="mail.smtp.auth">true</prop>
-      <prop key="mail.smtp.starttls.enable">true</prop>
-    </props>
-    </property>
-  </bean>
+	<!-- velocity -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="${mail.adr}" />
+		<property name="password" value="${mail.pwd}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
 
 	<!-- velocityEngine -->
 	<bean id="velocityEngine"
@@ -98,12 +104,8 @@
 			</value>
 		</property>
 	</bean>
-	
-	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 
- <!-- 비밀번호 암호화 --> 
-   <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-      <!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
-   </bean>     
+	<bean name="jsonview"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
 </beans>
