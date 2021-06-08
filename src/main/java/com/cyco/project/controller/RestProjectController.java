@@ -20,15 +20,34 @@ public class RestProjectController {
 	@Autowired
 	private ProjectService service;
 	
-	@RequestMapping(value="", method = RequestMethod.GET)
+	@RequestMapping(value="/filter", method = RequestMethod.GET)
 	public String getFiltedProjectList(@RequestBody Map<String, String> data){
+		//data : view에서 선택한 필터링
+		//field_code , adr_code , p_state
 		System.out.println("this is /filter");
 		System.out.println("field_code : " + data.get("field_code"));
 		System.out.println("adr_code : " + data.get("adr_code"));
 		System.out.println("p_state : " + data.get("p_state"));
+		System.out.println("skill_code : " + data.get("skill_code"));
 		
-		List<String> list= service.getFiltedProjectList(data);
-		service.getProjectList(list);
+		
+		String skill_code = data.get("skill_code");
+
+		
+		
+		List<String> Flist= service.getFilteredProjectList(data);
+		
+		System.out.println("Flist : " +Flist);
+		
+		//skill_code에 값이 있을경우
+		if(!data.get("skill_code").equals("")) {
+			List<String> list = service.getFilteredProjectSkillList(skill_code);
+			System.out.println("skill list : " + list);
+			Flist.addAll(list);
+		}
+		System.out.println("after Flist : "+Flist);
+		
+//		service.getProjectList(Flist);
 		
 		return null;
 	}

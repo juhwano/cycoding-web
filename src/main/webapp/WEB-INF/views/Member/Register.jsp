@@ -9,7 +9,6 @@
 <link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="html&css/css/register.css" rel="stylesheet">
 
-
 </head>
 
 <body>
@@ -380,11 +379,12 @@
 		validation();
 		
 		
-		//이용약관 모달창
-		  $('.agreement').on('click', function() {
-			     $('.modal-wrapper').toggleClass('open');
-			     return false;
-		});
+	      //이용약관 모달창
+        $('.trigger').on('click', function() {
+              $('.modal-wrapper').toggleClass('open');
+              return false;
+      });
+      
 		
 	});
 	
