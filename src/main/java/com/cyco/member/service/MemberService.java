@@ -71,4 +71,15 @@ public class MemberService {
 		return memberNickname;
 	}
 	
+   public int regist(MemberVo member) {
+	      
+	      int result =0;
+	      
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      result = memberdao.registMember(member);
+	      
+	      return result;
+	      
+	   }
+	
 }

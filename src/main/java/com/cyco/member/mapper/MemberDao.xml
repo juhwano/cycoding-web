@@ -13,27 +13,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			   m_image,
 			   position,
 			   skill,
-			   p_enable,
-			   s_enable
+			   p_enabled,
+			   s_enabled
 		from V_MLIST
 	</select>
 
 	<select id="getPositionList" resultType="com.cyco.member.vo.PositionVo">
-		select position_id, position_name, position_enable
+		select position_id, position_name, position_enabled
 		from position
 		order by position_id
 	</select>
 	
 	<!-- getMemberPosition -->
 	<select id="getMemberPosition" resultType="com.cyco.member.vo.MemberVo">
-		select rownum, m_id, m_nick, m_image, position, skill, p_enable, s_enable
+		select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
 		from V_MLIST
 		where position like '%${position}%'
 	</select>
 	
 	<!-- getMemberNickname -->
 	<select id="getMemberNickname" resultType="com.cyco.member.vo.MemberVo">
-		select rownum, m_id, m_nick, m_image, position, skill, p_enable, s_enable
+		select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
 		from V_MLIST
 		where m_nick like '%${nickname}%'
 	</select>
