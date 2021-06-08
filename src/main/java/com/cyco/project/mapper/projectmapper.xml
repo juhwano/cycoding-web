@@ -12,7 +12,7 @@
 		desc
 	</select>
 	
-	<select id="getFiltedProjectList" parameterType="hashmap" resultType="string">
+	<select id="getFilteredProjectList" parameterType="hashmap" resultType="string">
 	select p.project_id
 	from project p 
 	inner join p_detail pd 
@@ -26,19 +26,21 @@
 		select project_id, member_id, position_name  from view_pm_position
 	</select>
 	
-	<select id="getProjectSkillList">
-		select project_id, skill_name from view_psk_sk
+	<select id="getFilteredProjectSkillList" parameterType="string" resultType="string">
+		select project_id 
+		from p_skill
+		where skill_code = #{skill_code}
 	</select>
 	
 	<select id="getAdrList">
 		select adr_code, adr_name from adr
 	</select>
 	
-	<select id="getFieldList">
+	<select id="getSkillList">
 		select skill_code, skill_name, skill_enable from skill
 	</select>
 	
-	<select id="getSkillList">
+	<select id="getFieldList">
 		select field_code, field_name,field_enable from p_field
 	</select>
 </mapper>

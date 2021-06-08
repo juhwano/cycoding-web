@@ -12,8 +12,7 @@ import com.cyco.project.vo.ProjectVO;
 
 @Service
 public class ProjectService {
-	//ÇÊÅÍ¸µ Æ÷ÇÔ
-	//Áö¿ª , ºĞ¾ß , »óÅÂ , ½ºÅ³
+
 	
 	@Autowired
 	private SqlSession sqlsession;
@@ -28,6 +27,7 @@ public class ProjectService {
 		
 		return list;
 	}
+//	ProjectList with Filter
 	public List<ProjectVO> getProjectList(List<String> filterlist){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
@@ -44,10 +44,22 @@ public class ProjectService {
 		
 		return list;
 	}
-	public List<String> getFiltedProjectList(Map<String, String> data){
+	
+//	í•„í„°ë§ìœ¼ë¡œ ì„ íƒëœ field_code , adr_code , p_stateì„ ê°€ì§„ Mapê°ì²´ë¡œ 
+//	í•„í„°ë§ëœ Project_id ë½‘ì•„ì˜¤ê¸°
+	public List<String> getFilteredProjectList(Map<String, String> data){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		List<String> list = dao.getFiltedProjectList(data);
+		List<String> list = dao.getFilteredProjectList(data);
 		System.out.println(list.toString());
+		return list;
+	}
+	
+//	Filtered Project_id List
+//	P_Skillí…Œì´ë¸”ì—ì„œ Project_id ë½‘ì•„ì˜¤ê¸°
+	public List<String> getFilteredProjectSkillList(String skill_code){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<String> list = dao.getFilteredProjectSkillList(skill_code);
+		System.out.println("P_Skill list : " +list.toString());
 		return list;
 	}
 }

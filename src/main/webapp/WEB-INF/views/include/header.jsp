@@ -14,6 +14,13 @@
 	<link type="text/css" href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
 
 	</head>
+			<!-- 반응형 토글 -->
+<script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<!-- JQuesy -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+
 	
 	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
 	<!-- main CSS -->
@@ -22,6 +29,8 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<!-- 스프링 시큐리티 설정 -->
 	<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
+	
+
 
 <body>
 <header class="header-global">
@@ -177,8 +186,7 @@
 	
     </main>
 
-<!-- 반응형 토글 -->
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
 
 <!-- Pixel JS -->
 <script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
@@ -186,8 +194,7 @@
 <!-- sweetalert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- JQuesy -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 <script type="text/javascript">
 

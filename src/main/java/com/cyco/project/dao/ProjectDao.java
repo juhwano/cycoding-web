@@ -19,11 +19,12 @@ public interface ProjectDao {
 	//select skill_code, skill_name, skill_enable from skill;
 	//select field_code, field_name,field_enable from p_field;
 	
-//	public List<ProjectVO> getProjectList();
+	//public List<ProjectVO> getProjectList();
 	public List<ProjectVO> getProjectList(String where);
-	public List<String> getFiltedProjectList(Map<String, String> data);
+	public List<String> getFilteredProjectList(Map<String, String> data);
+	public List<String> getFilteredProjectSkillList(String skill_code);
 	public List<P_MemberVO> getProjectMemberList();
-	public List<P_SkillVO> getProjectSkillList();
+	
 	public List<AdrVO> getAdrList();
 	public List<FieldVO> getFieldList();
 	public List<SkillVO> getSkillList();
