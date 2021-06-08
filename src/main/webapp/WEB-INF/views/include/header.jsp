@@ -9,6 +9,9 @@
 	<title>사이좋게 코딩하자</title>
 	<!-- Fontawesome -->
 	<link type="text/css" href="../vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+	
+	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
 	<!-- Pixel CSS -->
 
 	<link type="text/css" href="css/pixel.css" rel="stylesheet">
