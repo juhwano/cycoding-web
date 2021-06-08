@@ -385,7 +385,7 @@
 			     $('.modal-wrapper').toggleClass('open');
 			     return false;
 		});
-		
+	
 	});
 	
 	//let email = $('#email').val();
