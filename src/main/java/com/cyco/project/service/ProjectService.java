@@ -36,6 +36,7 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
 		String where =null;
+		//넘어온 id리스트가 있을경우
 		if(filterlist.size()>0) {
 			where = "where p.project_id in (";
 			where +=filterlist.get(0);
@@ -44,8 +45,9 @@ public class ProjectService {
 			}
 			where += ")";
 		}
+		//넘어온 리스트가 없을경우
 		else {
-			where ="";
+			return null;
 		}
 		
 		System.out.println(where);
@@ -60,12 +62,12 @@ public class ProjectService {
 	public List<String> getFilteredProjectList(Map<String, String> data){
 		List<String> list = new ArrayList<String>();
 		if(data.get("field_code").equals("") && data.get("adr_code").equals("") && data.get("p_state").equals("")) {
-			return list;
+			return null;
 		}
 		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		list = dao.getFilteredProjectList(data);
-		System.out.println(list.toString());
+		System.out.println("3개 필터링 : "+list.toString());
 		return list;
 	}
 	
@@ -75,19 +77,37 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
 		String skill_code = data.get("skill_code");
+		List<String> idlist = new ArrayList<String>();
 		
 		//skill_code로 필터링된 리스트 뽑기
 		List<String> list = dao.getFilteredProjectSkillList(skill_code);
 		System.out.println("skill filtering list : " + list);
 		
-		//기존 Flist에 위에서 필터링된 값 넣기
-		list.addAll(Flist);
 		
-		//리스트에서 중복값 제거
-		Set<String> temp = new HashSet<String>(list);
-		List<String> list2 = new ArrayList<String>(temp);
-		
+		// list와 Flist에서 중복되는값 찾기
+		// Flist의 값이 존재할 경우
+		if(Flist.size()>0 && Flist!=null) {
+			// list값도 존재할 경우
+			if(list.size()>0)
+			for(String l : list) {
+				//contains()를 이용하여 Flist에 list의 l값이 있으면 중복.
+				if(Flist.contains(l)) {
+					System.out.println("중복값 발생!!! ");
+					System.out.println("l : " + l);
+					idlist.add(l);
+				}
+			}
+			//list값이 없을경우
+			else {
+				idlist.addAll(Flist);
+			}
+		}
+		// Flist에 값이 없다면 skill_code 필터링한 list만 넣어준다.
+		else {
+			idlist.addAll(list);
+		}
+		System.out.println("idlist : " + idlist);
 		//중복제거된 리스트 리턴
-		return list2;
+		return idlist;
 	}
 }
