@@ -28,6 +28,8 @@ public class RestProjectController {
 		//리턴할 List객체 초기화
 		List<V_PjAdrField_Join_V_PDetail> list =null;
 		
+		List<String> FSK_list;
+		
 		
 		//data : view에서 선택한 필터링
 		System.out.println(data.toString());
@@ -38,11 +40,9 @@ public class RestProjectController {
 		
 		//결과 Flist가 null이라는건 input이 하나도 없다는 뜻.
 		//빈 배열로 초기화 해준다.
-		if(Flist==null) {
-			Flist = new ArrayList<String>();
-		}
-		
-		System.out.println("Flist : " +Flist);
+//		if(Flist==null) {
+//			Flist = new ArrayList<String>();
+//		}
 		
 		
 		//skill_code에 값이 있을 경우
@@ -50,18 +50,19 @@ public class RestProjectController {
 			
 			//기술 필터링
 			//위에서받은 Flist도 같이 넣어준다.
-			Flist = service.getFilteredProjectSkillList(data,Flist);
+//		Flist = service.getFilteredProjectSkillList(data,Flist);
+		Flist = service.getFilteredProjectSkillList(data,Flist);
 			System.out.println("skill list : " + Flist);
 //		}
 		
-		
-		if(Flist !=null) {
+//		Flist : 3개를 필터링 한 값이 있고
+//		FSK_list skill을 필터링 한 값이 있으면
+		if(Flist!=null) {
 			 list =service.getProjectList(Flist);
 		}
-		else {
+		else if(Flist == null) {
 			list = service.getProjectList();
 		}
-		
 		
 		
 		return list;

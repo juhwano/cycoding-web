@@ -1,11 +1,13 @@
 package com.cyco.project.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +36,9 @@ public class ProjectService {
 //	field_list
 	public List<V_PjAdrField_Join_V_PDetail> getProjectList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
 		String where = "";
 		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(where);
-		
+		System.out.println(project_list);
 		return project_list;
 	}
 //	ProjectList with Filter
@@ -89,7 +90,7 @@ public class ProjectService {
 		String skill_code = data.get("skill_code");
 		List<String> idlist = new ArrayList<String>();
 		
-		if(skill_code.equals("")) {
+		if(skill_code.equals("") && Flist==null) {
 			return null;
 		}
 		
@@ -100,7 +101,7 @@ public class ProjectService {
 		
 		// list와 Flist에서 중복되는값 찾기
 		// Flist의 값이 존재할 경우
-		if(Flist.size()>0 && Flist!=null) {
+		if(Flist!=null) {
 			// list값도 존재할 경우
 			if(list.size()>0)
 			for(String l : list) {

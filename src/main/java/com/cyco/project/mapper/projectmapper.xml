@@ -18,7 +18,20 @@
 	on pd.project_id = p.project_id
 	where p.field_code like '%${field_code}'
     and p.adr_code like '%${adr_code}'
-    and pd.p_state like '%${p_state}'
+    <choose>
+	     <when test='p_state==""'>
+	    	and pd.p_state not like '완료'
+	    </when>
+	    <when test='p_state =="완료"'>
+   		 	and pd.p_state like '완료'
+	    </when>
+	    <when test='p_state == "진행중"'>
+	    	and pd.p_state like '진행중'
+	    </when>
+	    <when test='p_state == "모집중"'>
+	    	and pd.p_state like '모집중'
+	    </when>
+    </choose>
 	</select>
 	
 	<select id="getProjectMemberList">
