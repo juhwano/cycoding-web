@@ -25,18 +25,12 @@ public class RestProjectController {
 	@RequestMapping(value="/filter", method = RequestMethod.GET)
 	public List<ProjectVO> getFiltedProjectList(@RequestBody Map<String, String> data){
 		//data : view에서 선택한 필터링
-		//field_code , adr_code , p_state
-		System.out.println("this is /filter");
-		System.out.println("field_code : " + data.get("field_code"));
-		System.out.println("adr_code : " + data.get("adr_code"));
-		System.out.println("p_state : " + data.get("p_state"));
-		System.out.println("skill_code : " + data.get("skill_code"));
-		
 		System.out.println(data.toString());
 
 		//3개필터링(분야, 지역, 상태)
 		List<String> Flist= service.getFilteredProjectList(data);
-		//결과 
+		//결과 Flist가 null이라면 결과값이 없다는 뜻.
+		//빈 배열로 초기화 해준다.
 		if(Flist==null) {
 			Flist = new ArrayList<String>();
 		}
