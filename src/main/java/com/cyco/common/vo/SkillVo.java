@@ -1,13 +1,13 @@
-package com.cyco.project.vo;
+package com.cyco.common.vo;
 
 import lombok.Data;
 
 @Data
-public class SkillVO {
+public class SkillVo {
 	//select * from skill;
 	private String skill_code;
 	private String skill_name;
-	private String skille_enable;
+	private String skille_enabled;
 	
 
 }

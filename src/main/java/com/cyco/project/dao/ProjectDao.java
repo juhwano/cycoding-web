@@ -3,12 +3,12 @@ package com.cyco.project.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.cyco.project.vo.AdrVO;
-import com.cyco.project.vo.FieldVO;
-import com.cyco.project.vo.P_MemberVO;
-import com.cyco.project.vo.P_SkillVO;
-import com.cyco.project.vo.ProjectVO;
-import com.cyco.project.vo.SkillVO;
+import com.cyco.project.vo.V_PmPosition;
+import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.P_FieldVo;
+import com.cyco.common.vo.SkillVo;
+import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+
 
 public interface ProjectDao {
 	//p.project_id, p.member_id, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
@@ -20,14 +20,14 @@ public interface ProjectDao {
 	//select field_code, field_name,field_enable from p_field;
 	
 	//public List<ProjectVO> getProjectList();
-	public List<ProjectVO> getProjectList(String where);
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(String where);
 	public List<String> getFilteredProjectList(Map<String, String> data);
 	public List<String> getFilteredProjectSkillList(String skill_code);
-	public List<P_MemberVO> getProjectMemberList();
+	public List<V_PmPosition> getProjectMemberList();
 	
-	public List<AdrVO> getAdrList();
-	public List<FieldVO> getFieldList();
-	public List<SkillVO> getSkillList();
+	public List<AdrVo> getAdrList();
+	public List<P_FieldVo> getFieldList();
+	public List<SkillVo> getSkillList();
 	
 	
 

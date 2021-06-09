@@ -1,5 +1,6 @@
 package com.cyco.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cyco.project.service.ProjectService;
+import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 
 @RestController
 @RequestMapping("/ajaxproject")
@@ -21,34 +23,47 @@ public class RestProjectController {
 	private ProjectService service;
 	
 	@RequestMapping(value="/filter", method = RequestMethod.GET)
-	public String getFiltedProjectList(@RequestBody Map<String, String> data){
+	public List<V_PjAdrField_Join_V_PDetail> getFiltedProjectList(@RequestBody Map<String, String> data){
+		
+		//리턴할 List객체 초기화
+		List<V_PjAdrField_Join_V_PDetail> list =null;
+		
+		
 		//data : view에서 선택한 필터링
-		//field_code , adr_code , p_state
-		System.out.println("this is /filter");
-		System.out.println("field_code : " + data.get("field_code"));
-		System.out.println("adr_code : " + data.get("adr_code"));
-		System.out.println("p_state : " + data.get("p_state"));
-		System.out.println("skill_code : " + data.get("skill_code"));
-		
-		
-		String skill_code = data.get("skill_code");
+		System.out.println(data.toString());
 
-		
-		
+		//3개필터링(분야, 지역, 상태)
 		List<String> Flist= service.getFilteredProjectList(data);
+		
+		
+		//결과 Flist가 null이라는건 input이 하나도 없다는 뜻.
+		//빈 배열로 초기화 해준다.
+		if(Flist==null) {
+			Flist = new ArrayList<String>();
+		}
 		
 		System.out.println("Flist : " +Flist);
 		
-		//skill_code에 값이 있을경우
-		if(!data.get("skill_code").equals("")) {
-			List<String> list = service.getFilteredProjectSkillList(skill_code);
-			System.out.println("skill list : " + list);
-			Flist.addAll(list);
+		
+		//skill_code에 값이 있을 경우
+//		if(!data.get("skill_code").equals("")) {
+			
+			//기술 필터링
+			//위에서받은 Flist도 같이 넣어준다.
+			Flist = service.getFilteredProjectSkillList(data,Flist);
+			System.out.println("skill list : " + Flist);
+//		}
+		
+		
+		if(Flist !=null) {
+			 list =service.getProjectList(Flist);
 		}
-		System.out.println("after Flist : "+Flist);
+		else {
+			list = service.getProjectList();
+		}
 		
-//		service.getProjectList(Flist);
 		
-		return null;
+		
+		return list;
 	}
 }
