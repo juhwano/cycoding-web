@@ -6,9 +6,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.MemberVo;
 import com.cyco.member.dao.MemberDao;
-import com.cyco.member.vo.MemberVo;
-import com.cyco.member.vo.PositionVo;
+
+
 
 @Service
 public class MemberService {
@@ -19,59 +20,10 @@ public class MemberService {
 		this.sqlsession = sqlsession;
 	}
 	
-	//È¸¿ø¸ñ·Ï
-	public List<MemberVo> memberList() {
-		
-		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		
-		List<MemberVo> memberList = memberdao.getMemberList();
-		System.out.println("È¸¿ø¸ñ·ÏºÒ·¯¿À±â");
-		/*
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("memberList", memberList);
-		mv.setViewName("Member/MemberList");
-		*/
-		return memberList;
-	}
 	
-	//Æ÷Áö¼Ç¸ñ·Ï ºÒ·¯¿À±â
-	public List<PositionVo> positionList() {
-		
-		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		
-		List<PositionVo> positionList = memberdao.getPositionList();
-		System.out.println("Æ÷Áö¼Ç¸ñ·Ï ºÒ·¯¿À±â");
-		
-		return positionList;
-	}
 	
-	//Æ÷Áö¼Çselect ¸â¹ö¸ñ·Ï
-	public List<MemberVo> memberPosition(String position) {
-		System.out.println("(memberservice)Æ÷Áö¼ÇÇÊÅÍ¸µ, position: " + position);
-		
-		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		System.out.println("memberPosition ¸ÅÆÛ¿¬°á¿Ï·á");
-		
-		List<MemberVo> memberPosition = memberdao.getMemberPosition(position);
-		
-		System.out.println("Æ÷Áö¼ÇºÒ·¯¿À±â: " + memberPosition);
-		
-		return memberPosition;
-	}
-	
-	//´Ğ³×ÀÓSearch ¸â¹ö¸ñ·Ï
-	public List<MemberVo> memberNickname(String nickname) {
-		System.out.println("(memberservice)´Ğ³×ÀÓ°Ë»ö, nickname: " + nickname);
-		
-		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		
-		List<MemberVo> memberNickname = memberdao.getMemberNickname(nickname);
-		
-		return memberNickname;
-	}
-	
-   public int regist(MemberVo member) {
+	//íšŒì›ê°€ì…
+	public int regist(MemberVo member) {
 	      
 	      int result =0;
 	      
@@ -80,6 +32,25 @@ public class MemberService {
 	      
 	      return result;
 	      
-	   }
+	}
+	
+	//íšŒì›ìƒì„¸(+ë§ˆì´í˜ì´ì§€)////////////////////////////////////////////////////////////////////
+	//ë§ˆì´í˜ì´ì§€ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
+	public MemberVo getMyDetail(String useremail) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		MemberVo memeber = memberdao.getMyDetail(useremail);
+		
+		return memeber;
+	}
+	
+	//ê°œì¸ì •ë³´ ìˆ˜ì •
+	public int editInfo(String column, String info, int userid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.editPersnalInfo(column, info, userid);
+		
+		return row;
+	}
 	
 }

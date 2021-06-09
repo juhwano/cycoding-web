@@ -20,19 +20,19 @@
 <title>사이좋게 코딩하자</title>
 
 <!-- Pixel CSS -->
-<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
-<link type="text/css" href="html&css/css/register.css" rel="stylesheet">
+<link type="text/css" href="css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="css/register.css" rel="stylesheet">
 
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 </head>
-
+ 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
     <main>
  		<!--  header -->
  		
- 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
  		
  		
         <!-- Section -->

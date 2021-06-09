@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.MemberVo;
+
 
 
 @Controller

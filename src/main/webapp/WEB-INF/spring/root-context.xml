@@ -60,14 +60,14 @@
       <property name="mapperLocations" value="classpath*:com/cyco/**/*xml" />
 	</bean>
 	
-<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="annotationClass"
-			value="org.springframework.stereotype.Repository" />
-		<property name="basePackage" value="com.cyco.**.dao.*" />
-		<property name="sqlSessionFactoryBeanName"
-			value="sqlSessionFactory" />
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+                <property name="annotationClass"
+                        value="org.springframework.stereotype.Repository" />
+                <property name="basePackage" value="com.cyco.**.dao.*" />
+                <property name="sqlSessionFactoryBeanName"
+                        value="sqlSessionFactory" />
 
-	</bean>
+        </bean>
 
 
 	<bean id="sqlSession"

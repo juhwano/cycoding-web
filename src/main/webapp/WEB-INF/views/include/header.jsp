@@ -161,6 +161,7 @@
 		                                  	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		                                  	<button type="submit">로그아웃</button>
 		                                  </form>
+		                                  <a href="mypage.cy?useremail=${LoginUser}">마이페이지</a>
 		                                </div>
 		                            </div>
 		                        </div>

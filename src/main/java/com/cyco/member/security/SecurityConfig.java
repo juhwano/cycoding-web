@@ -1,9 +1,10 @@
 package com.cyco.member.security;
 
+
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -20,9 +21,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.and()
         		.csrf()
         		.ignoringAntMatchers("/login.cy");
-
+        	//.and().logout()
+        	//	.invalidateHttpSession(true)
+        	//	.deleteCookies("JSESSIONID");
 
         // @formatter:on
     }
+
+
 
 }
