@@ -15,6 +15,7 @@ import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+import com.cyco.project.vo.V_PjSk;
 
 @Service
 public class ProjectService {
@@ -142,4 +143,11 @@ public class ProjectService {
 		
 		return skill_list;
 	}
+	public List<V_PjSk> getPjSkList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PjSk> pjsk_list = dao.getPjSkList();
+		
+		return pjsk_list;
+	}
+	
 }

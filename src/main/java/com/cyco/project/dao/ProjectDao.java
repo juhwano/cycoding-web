@@ -8,6 +8,7 @@ import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+import com.cyco.project.vo.V_PjSk;
 
 
 public interface ProjectDao {
@@ -24,6 +25,7 @@ public interface ProjectDao {
 	public List<String> getFilteredProjectList(Map<String, String> data);
 	public List<String> getFilteredProjectSkillList(String skill_code);
 	public List<V_PmPosition> getProjectMemberList();
+	public List<V_PjSk> getPjSkList();
 	
 	public List<AdrVo> getAdrList();
 	public List<P_FieldVo> getFieldList();

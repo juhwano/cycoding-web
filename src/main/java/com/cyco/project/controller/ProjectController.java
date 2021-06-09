@@ -12,6 +12,7 @@ import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+import com.cyco.project.vo.V_PjSk;
 
 @Controller
 @RequestMapping(value="project")
@@ -31,11 +32,15 @@ public class ProjectController {
 		List<AdrVo> adr_list = service.getAdrList();
 		List<P_FieldVo> field_list = service.getFieldList();
 		List<SkillVo> skill_list =service.getSkillList();
+		List<V_PjSk> pjsk_list = service.getPjSkList();
+		
 		
 		m.addAttribute("project_list",project_list);
 		m.addAttribute("adr_list",adr_list);
 		m.addAttribute("field_list",field_list);
 		m.addAttribute("skill_list",skill_list);
+		m.addAttribute("pjsk_list",pjsk_list);
+		
 		
 		
 		return "Project/ProjectList";
