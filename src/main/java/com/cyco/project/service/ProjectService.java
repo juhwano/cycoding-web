@@ -10,8 +10,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.P_FieldVo;
+import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
-import com.cyco.project.vo.ProjectVO;
+import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 
 @Service
 public class ProjectService {
@@ -22,17 +25,23 @@ public class ProjectService {
 	
 	
 //	public List<ProjectVO> getProjectList(String adr_code, String field_name, String p_state, String skill_code){
-	public List<ProjectVO> getProjectList(){
+//	첫 프로젝트 리스트 화면 출력.
+//	넘길 리스트
+//	project_list
+//	adr_list
+//	skill_list
+//	field_list
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
 		String where = "";
-		List<ProjectVO> list = dao.getProjectList(where);
+		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(where);
 		
-		return list;
+		return project_list;
 	}
 //	ProjectList with Filter
 //	오버로딩 함수
-	public List<ProjectVO> getProjectList(List<String> filterlist){
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
 		String where =null;
@@ -51,7 +60,7 @@ public class ProjectService {
 		}
 		
 		System.out.println(where);
-		List<ProjectVO> list = dao.getProjectList(where);
+		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(where);
 		System.out.println(list);
 		
 		return list;
@@ -78,6 +87,10 @@ public class ProjectService {
 		
 		String skill_code = data.get("skill_code");
 		List<String> idlist = new ArrayList<String>();
+		
+		if(skill_code.equals("")) {
+			return null;
+		}
 		
 		//skill_code로 필터링된 리스트 뽑기
 		List<String> list = dao.getFilteredProjectSkillList(skill_code);
@@ -109,5 +122,24 @@ public class ProjectService {
 		System.out.println("idlist : " + idlist);
 		//중복제거된 리스트 리턴
 		return idlist;
+	}
+	
+	public List<AdrVo> getAdrList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<AdrVo> adr_list = dao.getAdrList();
+		
+		return adr_list;
+	}
+	public List<P_FieldVo> getFieldList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<P_FieldVo> field_list = dao.getFieldList();
+		
+		return field_list;
+	}
+	public List<SkillVo> getSkillList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<SkillVo> skill_list = dao.getSkillList();
+		
+		return skill_list;
 	}
 }
