@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cyco.common.vo.PositionVo;
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.MemberVo;
-import com.cyco.member.vo.PositionVo;
+import com.cyco.member.vo.V_MlistVo;
 
 @Controller
+@RequestMapping("member")
 public class MemberController {
 	MemberService memberservice;
 	
@@ -19,21 +20,12 @@ public class MemberController {
 	public void setMemberService(MemberService memberservice) {
 		this.memberservice = memberservice;
 	}
-	/*
-	@RequestMapping("memberlist.cy")
-	public ModelAndView memberList() {
-		
-		ModelAndView mv = memberservice.memberList();
-		
-		return mv; 
-	}
-	*/
 	
-	@RequestMapping("memberlist.cy")
+	@RequestMapping("list")
 	public String memberList(Model m) {
-		//È¸¿ø¸ñ·Ï
-		List<MemberVo> memberList = memberservice.memberList();
-		//Æ÷Áö¼Ç¸ñ·Ï(¼¿·ºÆ®¹Ú½º¿ë)
+		//ê¸°ë³¸íšŒì›ëª©ë¡ë„˜ê¸°ê¸°
+		List<V_MlistVo> memberList = memberservice.memberList();
+		//í¬ì§€ì…˜ëª©ë¡ ë„˜ê¸°ê¸°
 		List<PositionVo> positionList = memberservice.positionList();
 		
 		m.addAttribute("memberList", memberList);

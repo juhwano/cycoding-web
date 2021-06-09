@@ -10,14 +10,6 @@ import lombok.Data;
 
 @Data
 public class MemberVo implements UserDetails{
-	private int m_id;
-	private String m_nick;
-	private String m_image;
-	private String position;
-	private String skill;
-	private String p_enable;
-	private String s_enable;
-	
 	private int MEMBER_ID;
 	private String MEMBER_EMAIL;
 	private String MEMBER_PWD;
@@ -27,8 +19,6 @@ public class MemberVo implements UserDetails{
 	private String MEMBER_IMAGE;
 	private Boolean ENABLED;
 	
-	//페이지 로우넘
-	private int rownum;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

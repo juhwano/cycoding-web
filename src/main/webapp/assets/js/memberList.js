@@ -14,7 +14,7 @@ $(document).ready(function() {
       console.log(position)
 
       $.ajax({
-         url: "memberPosition/" + position + ".cy",
+         url: "memberPosition/" + position,
          //data: {position:position},
          type: 'get',
          //dataType: 'text',
@@ -24,7 +24,7 @@ $(document).ready(function() {
             $.each(memberList, function(index, member) {
                var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
                card += "<div class='card shadow'> <div class='m_img'>";
-               card += "<img class='m_img_size' src='../assets/img/ain_test/" + member.m_image + "'> </div>";
+               card += "<img class='m_img_size' src='$&#123;pageContext.request.contextPath&#125;/assets/img/ain_test/" + member.m_image + "'> </div>";
                card += "<div class='card-body'>";
                card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
                card += "<p class='card-text'>";
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
       card_section.empty();
 
-      var searchurl = "memberSearch/" + memberNickname + ".cy";
+      var searchurl = "memberSearch/" + memberNickname;
 
       $.ajax({
          url: searchurl,
@@ -68,7 +68,7 @@ $(document).ready(function() {
             $.each(memberList, function(index, member) {
                var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
                card += "<div class='card shadow'> <div class='m_img'>";
-               card += "<img class='m_img_size' src='../assets/img/ain_test/" + member.m_image + "'> </div>";
+               card += "<img class='m_img_size' src='${pageContext.request.contextPath}/assets/img/ain_test/" + member.m_image + "'> </div>";
                card += "<div class='card-body'>";
                card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
                card += "<p class='card-text'>";
@@ -131,7 +131,7 @@ $(document).ready(function() {
 
    function moreRead(index) {
       $.ajax({
-         url: "memberMore.cy",
+         url: "memberMore",
          type: 'get',
          success: function(memberList) {
 
@@ -144,7 +144,7 @@ $(document).ready(function() {
                   console.log("if문 들어온 member: " + member.m_nick);
                   let card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
                   card += "<div class='card shadow'> <div class='m_img'>";
-                  card += "<img class='m_img_size' src='../assets/img/ain_test/" + member.m_image + "'> </div>";
+                  card += "<img class='m_img_size' src='${pageContext.request.contextPath}/assets/img/ain_test/" + member.m_image + "'> </div>";
                   card += "<div class='card-body'>";
                   card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
                   card += "<p class='card-text'>";
