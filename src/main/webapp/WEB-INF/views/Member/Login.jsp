@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!-- 스프링 시큐리티 설정 -->
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="se" %>
-
 <!DOCTYPE html>
 <html>
 	
@@ -134,10 +132,7 @@
             </div>
             </div>
         </section>
-    </main>
-
-    
-    
+    </main>  
 
 <% String err = request.getParameter("error"); %>   
 <!-- 카카오 스크립트 -->

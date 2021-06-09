@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cyco.project.dao.ProjectDao">
 
-	<select id="getProjectList" resultType="com.cyco.project.vo.ProjectVO" parameterType="string">
+	<select id="getProjectList" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="string">
 		select p.project_id, p.member_id, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
-		from view_pj_adr_field p
-		inner join view_project_detail vpd
+		from v_pj_adr_field p 
+		inner join v_p_detail vpd
 		on p.project_id = vpd.project_id
 		${where}
 		order by vpd.p_date
 		desc
 	</select>
 	
-	<select id="getFiltedProjectList" parameterType="hashmap" resultType="string">
+	<select id="getFilteredProjectList" parameterType="hashmap" resultType="string">
 	select p.project_id
 	from project p 
 	inner join p_detail pd 
@@ -23,22 +23,29 @@
 	</select>
 	
 	<select id="getProjectMemberList">
-		select project_id, member_id, position_name  from view_pm_position
+		select project_id, member_id, position_name  
+		from v_pm_position
 	</select>
 	
-	<select id="getProjectSkillList">
-		select project_id, skill_name from view_psk_sk
+	<select id="getFilteredProjectSkillList" parameterType="string" resultType="string">
+		select project_id 
+		from p_skill
+		where skill_code = #{skill_code}
 	</select>
 	
-	<select id="getAdrList">
+	<select id="getAdrList" resultType="com.cyco.common.vo.AdrVo">
 		select adr_code, adr_name from adr
 	</select>
 	
-	<select id="getFieldList">
-		select skill_code, skill_name, skill_enable from skill
+	<select id="getSkillList" resultType="com.cyco.common.vo.SkillVo">
+		select skill_code, skill_name, skill_enabled 
+		from skill
+		where skill_enabled = 1
 	</select>
 	
-	<select id="getSkillList">
-		select field_code, field_name,field_enable from p_field
+	<select id="getFieldList" resultType="com.cyco.common.vo.P_FieldVo">
+		select field_code, field_name,field_enabled 
+		from p_field
+		where field_enabled = 1
 	</select>
 </mapper>

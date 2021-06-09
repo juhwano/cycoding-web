@@ -10,7 +10,8 @@ import lombok.Data;
 
 @Data
 public class MemberVo implements UserDetails{
-	
+
+
 	private int MEMBER_ID;
 	private String MEMBER_EMAIL;
 	private String MEMBER_PWD;
@@ -19,11 +20,12 @@ public class MemberVo implements UserDetails{
 	private String MEMBER_PHONE;
 	private String MEMBER_IMAGE;
 	private Boolean ENABLED;
-	
+
 	//이건 포인트 테이블
 	private int HAVE_POINT;
 	private int USE_POINT;
 	
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

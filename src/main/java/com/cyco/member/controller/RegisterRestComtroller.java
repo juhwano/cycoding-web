@@ -20,8 +20,8 @@ import com.cyco.member.dao.MemberDao;
 
 @RestController
 public class RegisterRestComtroller {
-	
-	private SqlSession sqlsession;
+   
+   private SqlSession sqlsession;
 
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
@@ -59,6 +59,7 @@ public class RegisterRestComtroller {
 	public String mailSending(HttpServletRequest request, String email, HttpServletResponse response_email) throws IOException {
 		 
 		System.out.println("인증메일 발송 컨트롤러");
+
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; //이메일로 받는 인증코드 부분 (난수)
         
@@ -121,6 +122,7 @@ public class RegisterRestComtroller {
         return result;
         
     }
+
 	
 	
 	@RequestMapping(value="nicknamecheckajax.cy")
@@ -170,6 +172,6 @@ public class RegisterRestComtroller {
 		
 		return result;
 	}
-	
+
 
 }

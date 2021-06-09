@@ -9,7 +9,6 @@
 <link type="text/css" href="css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="css/register.css" rel="stylesheet">
 
-
 </head>
 
  		<!--  header -->
@@ -375,5 +374,7 @@
 </div>     
 <!-- 가입 정보 유효성 검사 -->
 <script src="${pageContext.request.contextPath}/assets/js/register.js"></script>
+
+
 </body>
 </html>
