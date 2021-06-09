@@ -71,7 +71,6 @@
 
 
 
-
 <!-- velocity -->
  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.gmail.com" />

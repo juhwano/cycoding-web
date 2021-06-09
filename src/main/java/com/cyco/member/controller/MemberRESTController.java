@@ -3,14 +3,13 @@ package com.cyco.member.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.MemberVo;
+import com.cyco.member.vo.V_MlistVo;
 
 @RestController
 public class MemberRESTController {
@@ -21,43 +20,30 @@ public class MemberRESTController {
 		this.memberservice = memberservice;
 	}
 
-	/*
-	 * // Æ÷Áö¼Ç select
-	 * 
-	 * @RequestMapping(value = "memberPosition/{position}", method =
-	 * RequestMethod.GET) public MemberVo viewEmp(@PathVariable("position") String
-	 * position) { MemberVo member = null; try { // member = service.readEmp(empno);
-	 * } catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * return member; }
-	 */
 
-	// Æ÷Áö¼Ç select
-	@RequestMapping(value = "memberPosition/{position}.cy", method = RequestMethod.GET)
-	public List<MemberVo> getMemberPosition(@PathVariable("position") String position) {
+	// í¬ì§€ì…˜ select
+	@RequestMapping(value = "memberPosition/{position}", method = RequestMethod.GET)
+	public List<V_MlistVo> getMemberPosition(@PathVariable("position") String position) {
 		System.out.println("RESTController, position: " + position);
-		//Æ÷Áö¼Çº° ¸â¹ö ¸ñ·Ï
-		List<MemberVo> memberPosition = memberservice.memberPosition(position);
+		List<V_MlistVo> memberPosition = memberservice.memberPosition(position);
 		
 		return memberPosition;
 	}
 	
-	//´Ğ³×ÀÓ search
-	@RequestMapping(value = "memberSearch/{memberNickname}.cy", method = RequestMethod.GET)
-	public List<MemberVo> getMemberNickname(@PathVariable("memberNickname") String memberNickname) {
+	//íšŒì› ê²€ìƒ‰
+	@RequestMapping(value = "memberSearch/{memberNickname}", method = RequestMethod.GET)
+	public List<V_MlistVo> getMemberNickname(@PathVariable("memberNickname") String memberNickname) {
 		System.out.println("RESTController, memberNickname: " + memberNickname);
-		//Æ÷Áö¼Çº° ¸â¹ö ¸ñ·Ï
-		List<MemberVo> memberNicknameList = memberservice.memberNickname(memberNickname);
+		List<V_MlistVo> memberNicknameList = memberservice.memberNickname(memberNickname);
 		
 		return memberNicknameList;
 	}
 	
-	//´õº¸±â¹öÆ°
-	@RequestMapping(value = "memberMore.cy", method = RequestMethod.GET)
-	public List<MemberVo> moreBtn() {
-		System.out.println("´õº¸±â ÄÁÆ®·Ñ·¯ ÁøÀÔ");
-		//È¸¿ø¸ñ·Ï
-		List<MemberVo> memberList = memberservice.memberList();
+	//ë”ë³´ê¸°
+	@RequestMapping(value = "memberMore", method = RequestMethod.GET)
+	public List<V_MlistVo> moreBtn() {
+		System.out.println("ë”ë³´ê¸°ë²„íŠ¼ restcontroller");
+		List<V_MlistVo> memberList = memberservice.memberList();
 		return memberList;
 	}
 }

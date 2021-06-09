@@ -4,17 +4,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <head>
 <!-- member CSS -->
-<link type="text/css" href="../css/member.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/css/member.css" rel="stylesheet">
 </head>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <body>
    <!-- http://localhost:8090/memberlist.cy -->
    
    <!-- 탑버튼 -->
-   <img id="topBtn" src="../assets/img/ain_test/topBtn.png">
+   <img id="topBtn" src="${pageContext.request.contextPath}/assets/img/ain_test/topBtn.png">
 
    <div class="top_area">
-      <img id="memberListHeader" src="../assets/img/ain_test/MemberListHeader.png">
+      <img id="memberListHeader" src="${pageContext.request.contextPath}/assets/img/ain_test/MemberListHeader.png">
    </div>
 
    <c:set var="memberList" value="${memberList}" />
@@ -47,13 +47,13 @@
          
 
          <div class="row mb-5" id="card_section">
-            <!-- 회원카드 -->
+            <!-- 회원카드  -->
             <c:forEach var="member" items="${memberList}">
                <c:if test="${member.rownum <= 6}">
                   <div class="col-12 col-md-6 col-lg-4 mb-5 cardNum">
                      <div class="card shadow">
                         <div class="m_img">
-                           <img class="m_img_size" src="../assets/img/ain_test/${member.m_image}">
+                           <img class="m_img_size" src="${pageContext.request.contextPath}/assets/img/ain_test/${member.m_image}">
                         </div>
                         <div class="card-body">
                            <h3 class="h5 card-title mt-3">${member.m_nick}</h3>
@@ -75,5 +75,5 @@
    </div>
 </body>
 <!-- MemberList Javascript -->
-<script src="../assets/js/memberList.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=1"></script>
 </html>
