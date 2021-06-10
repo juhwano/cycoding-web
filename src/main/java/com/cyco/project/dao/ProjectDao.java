@@ -6,7 +6,9 @@ import java.util.Map;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
+import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
@@ -40,6 +42,12 @@ public interface ProjectDao {
 	
 	//기술스택리스트
 	public List<SkillVo> getSkillList();
+	
+	//포지션리스트
+	public List<PositionVo> getPositionList();
+
+	//포지션리스트
+	public List<P_DurationVO> getDurationList();
 	
 
 }
