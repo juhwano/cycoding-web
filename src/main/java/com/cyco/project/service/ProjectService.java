@@ -16,6 +16,7 @@ import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 
@@ -174,6 +175,15 @@ public class ProjectService {
 		List<V_PjAdrField_Join_V_PDetail> searched_list = dao.getProjectList(map);
 		
 		return searched_list;
+	}
+	
+	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
+	public List<PmemberCountVo> getPmemberCountList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<PmemberCountVo> membercount_list = dao.getPmemberCountList();
+		
+		return membercount_list;
 	}
 	
 }

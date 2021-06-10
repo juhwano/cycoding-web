@@ -76,6 +76,12 @@
 	
 	<select id="getPjSkList" resultType="com.cyco.project.vo.V_PjSk">
 		select project_id, skill_name 
-		from view_psk_sk;
+		from v_psk_sk;
+	</select>
+	
+	<select id="getPmemberCountList" resultType="com.cyco.project.vo.PmemberCountVo">
+		select count(member_id)as m_count, count(*) as total_count, project_id
+		from p_member
+		group by project_id
 	</select>
 </mapper>
