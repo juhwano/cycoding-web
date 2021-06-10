@@ -28,7 +28,7 @@ public class ProjectController {
 		System.out.println("this is /list");
 		// 프로젝트 리스트 첫 페이지
 		// 모든 프로젝트 리스트 바로 뿌려주기.
-		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList();
+		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList("");
 		List<AdrVo> adr_list = service.getAdrList();
 		List<P_FieldVo> field_list = service.getFieldList();
 		List<SkillVo> skill_list =service.getSkillList();

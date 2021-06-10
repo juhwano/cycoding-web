@@ -21,7 +21,7 @@ public interface ProjectDao {
 	//select field_code, field_name,field_enable from p_field;
 	
 	//public List<ProjectVO> getProjectList();
-	public List<V_PjAdrField_Join_V_PDetail> getProjectList(String where);
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(Map<String, String> data);
 	public List<String> getFilteredProjectList(Map<String, String> data);
 	public List<String> getFilteredProjectSkillList(String skill_code);
 	public List<V_PmPosition> getProjectMemberList();

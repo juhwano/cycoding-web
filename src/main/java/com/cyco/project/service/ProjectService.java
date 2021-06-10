@@ -34,16 +34,20 @@ public class ProjectService {
 //	adr_list
 //	skill_list
 //	field_list
-	public List<V_PjAdrField_Join_V_PDetail> getProjectList(){
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(String p_state){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		String where = "";
-		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(where);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("where","");
+		map.put("p_state", p_state);
+		
+		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(map);
 		System.out.println(project_list);
 		return project_list;
 	}
 //	ProjectList with Filter
 //	오버로딩 함수
-	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist){
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist, String p_state){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
 		String where =null;
@@ -62,7 +66,10 @@ public class ProjectService {
 		}
 		
 		System.out.println(where);
-		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(where);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("where",where);
+		map.put("p_state", p_state);
+		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(map);
 		System.out.println(list);
 		
 		return list;
@@ -149,6 +156,24 @@ public class ProjectService {
 		List<V_PjSk> pjsk_list = dao.getPjSkList();
 		
 		return pjsk_list;
+	}
+	
+	//프로젝트 검색 - 제목으로만 검색
+	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(Map<String, String> word){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		Map<String, String> map = new HashMap<String, String>();
+		
+		//검색 where절
+		String where= "where vpd.p_title like '%" + word.get("word") + "%'";
+		
+		//map에 whrer절과 이미 위에서 사용된 dao를 사용하기 위해 파라미터로 사용되는 p_state도 같이 넣어준다.
+		//p_state는 '완료'가 아니어야 하기 때문에 다른 문자열을 넣어주낟.
+		map.put("where", where);
+		map.put("p_state", "검색");
+		
+		List<V_PjAdrField_Join_V_PDetail> searched_list = dao.getProjectList(map);
+		
+		return searched_list;
 	}
 	
 }

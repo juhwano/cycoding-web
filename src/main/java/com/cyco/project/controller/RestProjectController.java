@@ -16,13 +16,13 @@ import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 
 @RestController
-@RequestMapping("/ajaxproject")
+@RequestMapping("ajaxproject")
 public class RestProjectController {
 
 	@Autowired
 	private ProjectService service;
 	
-	@RequestMapping(value="/filter", method = RequestMethod.GET)
+	@RequestMapping(value="filter", method = RequestMethod.GET)
 	public List<V_PjAdrField_Join_V_PDetail> getFiltedProjectList(@RequestBody Map<String, String> data){
 		
 		//리턴할 List객체 초기화
@@ -58,13 +58,21 @@ public class RestProjectController {
 //		Flist : 3개를 필터링 한 값이 있고
 //		FSK_list skill을 필터링 한 값이 있으면
 		if(Flist!=null) {
-			 list =service.getProjectList(Flist);
+			 list =service.getProjectList(Flist,data.get("p_state"));
 		}
 		else if(Flist == null) {
-			list = service.getProjectList();
+			list = service.getProjectList(data.get("p_state"));
 		}
-		
-		
 		return list;
+	}
+	
+	@RequestMapping(value = "search", method=RequestMethod.GET)
+	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(@RequestBody Map<String, String> word){
+		//리턴할 List객체 초기화
+		System.out.println(word);
+		List<V_PjAdrField_Join_V_PDetail> searched_list =null;
+		searched_list = service.getSearchedProjectList(word);
+		
+		return searched_list;
 	}
 }
