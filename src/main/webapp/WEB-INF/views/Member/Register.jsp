@@ -15,7 +15,7 @@
  <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
     <main> 
-
+  
         <!-- Section -->
         <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
             <div class="container">

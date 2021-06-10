@@ -7,7 +7,7 @@ $(document).ready(function(){
              $('.modal-wrapper').toggleClass('open');
              return false;
     });
-    
+     
     
 });
 	
