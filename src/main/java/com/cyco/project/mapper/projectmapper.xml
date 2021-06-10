@@ -5,7 +5,7 @@
 	<select id="getProjectList" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="string">
 		select p.project_id, p.member_id, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
 		from v_pj_adr_field p 
-		inner join v_project_detail vpd
+		inner join v_p_detail vpd
 		on p.project_id = vpd.project_id
 		${where}
 		order by vpd.p_date

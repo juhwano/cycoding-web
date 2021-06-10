@@ -22,12 +22,19 @@
 }
 
 .m_container {
-	max-width: 960px;
+	/* max-width: 960px; */
+	max-width: 1200px;
 	margin: auto;
 }
 
 .select_section {
 	height: 100px;
+}
+
+#memberNickname{
+	border-radius: 1rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .m_sel {
@@ -80,4 +87,137 @@
 .more_sec{
 	width: 100%;
 	text-align: center;
+}
+
+/* 기술스택 태그 */
+.tags{
+color:#CA8FAB;  
+/*
+text-align:center;
+border: 2px solid #CA8FAB;
+box-sizing: border-box;
+width:120px;
+font-size:16px;
+padding:5px;
+margin:5px;
+*/
+}
+
+/* 
+
+.tags{
+text-align:center;
+border: 3px solid #94A7AE;
+box-sizing: border-box;
+color:#94A7AE;   
+width:150px;
+font-size:16px;
+padding:10px;
+margin:10px;
+
+}
+
+.tags:hover{
+   background-color:#F4F2F3;
+border: 3px solid #CA8FAB;
+color:#CA8FAB;  
+position:relative;
+top:-5px;
+
+}
+ 
+.clicked{
+   border: 3px solid #CA8FAB;
+   color:#CA8FAB;
+
+}
+*/
+
+/*카드 테스트*/
+
+.card-title-test{
+	text-align: center;
+}
+
+.m_img_test{
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	
+	margin: 20 auto;
+}
+
+.m_img_size_test{
+	object-fit: cover;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+}
+/*
+.card-text-test{
+	text-align: center;
+}
+*/
+
+.tags-test{
+	margin-bottom: 25px;
+	text-align: center;
+}
+
+.card-body-test{
+	text-align: center;
+	height: 180px;
+}
+
+.card-text-test{
+	text-align: center;
+	margin-bottom: 5px !important;
+}
+
+.card_link{
+	color: #cccccc;  
+	text-align:center;
+	border: 1px solid  #cccccc;
+	box-sizing: border-box;
+	width:150px;
+	font-size:14px;
+	padding:5px;
+	margin:0 auto;
+}
+
+.card_link:hover{
+	background-color:#ca8fab;
+	border: 0px;
+	color: #ffffff;
+}
+
+
+/* */
+#card_section{
+	flex-wrap:wrap;
+	justify-content: space-between;
+}
+
+.cardNum{
+	width: 300px !important;
+	margin-bottom: 20px;
+}
+
+
+@media (max-width: 991.98px) {
+    .cardNum{
+		width: 250px;
+	}
+}
+
+@media (max-width: 1199.98px) {
+    .cardNum{
+		width: 300px;
+	}
+}
+
+@media (max-width: 1399.98px) {
+    .cardNum{
+		width: 350px;
+	}
 }

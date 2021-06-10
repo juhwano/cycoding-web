@@ -37,6 +37,10 @@ public class ProjectController {
 		m.addAttribute("field_list",field_list);
 		m.addAttribute("skill_list",skill_list);
 		
+		System.out.println(project_list);
+		System.out.println(adr_list);
+		System.out.println(field_list);
+		System.out.println(skill_list);
 		
 		return "Project/ProjectList";
 	}

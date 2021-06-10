@@ -82,6 +82,51 @@
 	float: right;
 	font-size: 15px;
 	color: #b3b3b3;
+	margin-top: 5px;
+}
+
+.p_skill{
+	float: left;
+}
+
+.p_team_memNum{
+	float: right;
+}
+
+.m_img_top{
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    justify-content: space-between;
+    padding: 12px 20px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    z-index: 899;
+}
+
+.bookmark{
+	margin-left: auto;
+	
+	font-size: 30px;
+	
+	width: 30px;
+	height: 30px;
+	color: white;
+	cursor: pointer;
+}
+
+.bookmark:hover{
+	color: #ca8fab;	
 }
 
 /* 탑버튼 */
