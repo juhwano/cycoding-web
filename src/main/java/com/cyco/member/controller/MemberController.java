@@ -28,6 +28,9 @@ public class MemberController {
 		//포지션목록 넘기기
 		List<PositionVo> positionList = memberservice.positionList();
 		
+		System.out.println("기본회원리스트 controller");
+		System.out.println("memberlist"+memberList);
+		
 		m.addAttribute("memberList", memberList);
 		m.addAttribute("positionList", positionList);
 		

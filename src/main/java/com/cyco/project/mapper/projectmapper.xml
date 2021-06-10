@@ -2,14 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cyco.project.dao.ProjectDao">
 
-	<select id="getProjectList" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="string">
+	<select id="getProjectList" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="hashmap">
 		select p.project_id, p.member_id, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
 		from v_pj_adr_field p 
-		inner join v_project_detail vpd
+		inner join v_p_detail vpd
 		on p.project_id = vpd.project_id
-		${where}
-		order by vpd.p_date
-		desc
+		<choose>
+			<when test='where == ""'>
+				where vpd.p_state not like '완료'
+			</when>
+			<when test='where != "" and p_state =="완료"'>
+				${where}
+			</when>
+			<otherwise>
+				${where}
+				and vpd.p_state not like '완료'
+			</otherwise>
+		
+		</choose>
+		
+		order by vpd.p_state asc, vpd.p_date desc
 	</select>
 	
 	<select id="getFilteredProjectList" parameterType="hashmap" resultType="string">
@@ -19,7 +31,20 @@
 	on pd.project_id = p.project_id
 	where p.field_code like '%${field_code}'
     and p.adr_code like '%${adr_code}'
-    and pd.p_state like '%${p_state}'
+    <choose>
+	    <when test='p_state =="완료"'>
+   		 	and pd.p_state like '완료'
+	    </when>
+	    <when test='p_state == "진행중"'>
+	    	and pd.p_state like '진행중'
+	    </when>
+	    <when test='p_state == "모집중"'>
+	    	and pd.p_state like '모집중'
+	    </when>
+	    <otherwise>
+	    	and pd.p_state not like '완료'
+	    </otherwise>
+    </choose>
 	</select>
 	
 	<select id="getProjectMemberList">
@@ -47,5 +72,16 @@
 		select field_code, field_name,field_enabled 
 		from p_field
 		where field_enabled = 1
+	</select>
+	
+	<select id="getPjSkList" resultType="com.cyco.project.vo.V_PjSk">
+		select project_id, skill_name 
+		from v_psk_sk;
+	</select>
+	
+	<select id="getPmemberCountList" resultType="com.cyco.project.vo.PmemberCountVo">
+		select count(member_id)as m_count, count(*) as total_count, project_id
+		from p_member
+		group by project_id
 	</select>
 </mapper>

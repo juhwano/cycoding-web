@@ -16,17 +16,19 @@ import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 
 @RestController
-@RequestMapping("/ajaxproject")
+@RequestMapping("ajaxproject")
 public class RestProjectController {
 
 	@Autowired
 	private ProjectService service;
 	
-	@RequestMapping(value="/filter", method = RequestMethod.GET)
+	@RequestMapping(value="filter", method = RequestMethod.GET)
 	public List<V_PjAdrField_Join_V_PDetail> getFiltedProjectList(@RequestBody Map<String, String> data){
 		
 		//리턴할 List객체 초기화
 		List<V_PjAdrField_Join_V_PDetail> list =null;
+		
+		List<String> FSK_list;
 		
 		
 		//data : view에서 선택한 필터링
@@ -38,11 +40,9 @@ public class RestProjectController {
 		
 		//결과 Flist가 null이라는건 input이 하나도 없다는 뜻.
 		//빈 배열로 초기화 해준다.
-		if(Flist==null) {
-			Flist = new ArrayList<String>();
-		}
-		
-		System.out.println("Flist : " +Flist);
+//		if(Flist==null) {
+//			Flist = new ArrayList<String>();
+//		}
 		
 		
 		//skill_code에 값이 있을 경우
@@ -50,20 +50,29 @@ public class RestProjectController {
 			
 			//기술 필터링
 			//위에서받은 Flist도 같이 넣어준다.
-			Flist = service.getFilteredProjectSkillList(data,Flist);
+//		Flist = service.getFilteredProjectSkillList(data,Flist);
+		Flist = service.getFilteredProjectSkillList(data,Flist);
 			System.out.println("skill list : " + Flist);
 //		}
 		
-		
-		if(Flist !=null) {
-			 list =service.getProjectList(Flist);
+//		Flist : 3개를 필터링 한 값이 있고
+//		FSK_list skill을 필터링 한 값이 있으면
+		if(Flist!=null) {
+			 list =service.getProjectList(Flist,data.get("p_state"));
 		}
-		else {
-			list = service.getProjectList();
+		else if(Flist == null) {
+			list = service.getProjectList(data.get("p_state"));
 		}
-		
-		
-		
 		return list;
+	}
+	
+	@RequestMapping(value = "search", method=RequestMethod.GET)
+	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(@RequestBody Map<String, String> word){
+		//리턴할 List객체 초기화
+		System.out.println(word);
+		List<V_PjAdrField_Join_V_PDetail> searched_list =null;
+		searched_list = service.getSearchedProjectList(word);
+		
+		return searched_list;
 	}
 }
