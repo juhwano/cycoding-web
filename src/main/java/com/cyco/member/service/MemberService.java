@@ -6,9 +6,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.PositionVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.MemberVo;
-import com.cyco.member.vo.PositionVo;
+import com.cyco.member.vo.V_MlistVo;
 
 @Service
 public class MemberService {
@@ -19,54 +20,39 @@ public class MemberService {
 		this.sqlsession = sqlsession;
 	}
 	
-	//È¸¿ø¸ñ·Ï
-	public List<MemberVo> memberList() {
+	//ê¸°ë³¸ íšŒì›ë¦¬ìŠ¤íŠ¸ í˜¸ì¶œ
+	public List<V_MlistVo> memberList() {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
-		List<MemberVo> memberList = memberdao.getMemberList();
-		System.out.println("È¸¿ø¸ñ·ÏºÒ·¯¿À±â");
-		/*
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("memberList", memberList);
-		mv.setViewName("Member/MemberList");
-		*/
+		List<V_MlistVo> memberList = memberdao.getMemberList();
+		System.out.println("ê¸°ë³¸ íšŒì› ë¦¬ìŠ¤íŠ¸ í˜¸ì¶œ");
 		return memberList;
 	}
 	
-	//Æ÷Áö¼Ç¸ñ·Ï ºÒ·¯¿À±â
+	//í¬ì§€ì…˜ ë¦¬ìŠ¤íŠ¸ í˜¸ì¶œ(ì˜µì…˜ìš©)
 	public List<PositionVo> positionList() {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
 		List<PositionVo> positionList = memberdao.getPositionList();
-		System.out.println("Æ÷Áö¼Ç¸ñ·Ï ºÒ·¯¿À±â");
+		System.out.println("í¬ì§€ì…˜ë¦¬ìŠ¤íŠ¸ í˜¸ì¶œ");
 		
 		return positionList;
 	}
 	
-	//Æ÷Áö¼Çselect ¸â¹ö¸ñ·Ï
-	public List<MemberVo> memberPosition(String position) {
-		System.out.println("(memberservice)Æ÷Áö¼ÇÇÊÅÍ¸µ, position: " + position);
-		
+	//í¬ì§€ì…˜ í•„í„°ë§
+	public List<V_MlistVo> memberPosition(String position) {
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		System.out.println("memberPosition ¸ÅÆÛ¿¬°á¿Ï·á");
-		
-		List<MemberVo> memberPosition = memberdao.getMemberPosition(position);
-		
-		System.out.println("Æ÷Áö¼ÇºÒ·¯¿À±â: " + memberPosition);
+		List<V_MlistVo> memberPosition = memberdao.getMemberPosition(position);
 		
 		return memberPosition;
 	}
 	
-	//´Ğ³×ÀÓSearch ¸â¹ö¸ñ·Ï
-	public List<MemberVo> memberNickname(String nickname) {
-		System.out.println("(memberservice)´Ğ³×ÀÓ°Ë»ö, nickname: " + nickname);
-		
+	//íšŒì›ê²€ìƒ‰
+	public List<V_MlistVo> memberNickname(String nickname) {
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		
-		List<MemberVo> memberNickname = memberdao.getMemberNickname(nickname);
+		List<V_MlistVo> memberNickname = memberdao.getMemberNickname(nickname);
 		
 		return memberNickname;
 	}

@@ -9,7 +9,6 @@
 <link type="text/css" href="${pageContext.request.contextPath}/css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet">
 
-
 </head>
 <!--  header -->
  <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -376,7 +375,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		validation();
-		
+	
 		//이용약관 모달창
         $('.trigger-btn').on('click', function() {
               $('.modal-wrapper').toggleClass('open');

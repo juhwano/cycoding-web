@@ -14,7 +14,7 @@ $(document).ready(function() {
       console.log(position)
 
       $.ajax({
-         url: "memberPosition/" + position + ".cy",
+         url: "memberPosition/" + position,
          //data: {position:position},
          type: 'get',
          //dataType: 'text',
@@ -22,20 +22,29 @@ $(document).ready(function() {
             console.log(memberList);
 
             $.each(memberList, function(index, member) {
-               var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
-               card += "<div class='card shadow'> <div class='m_img'>";
-               card += "<img class='m_img_size' src='../assets/img/ain_test/" + member.m_image + "'> </div>";
-               card += "<div class='card-body'>";
-               card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
-               card += "<p class='card-text'>";
-               card += "- 선호포지션: " + member.position + " <br> - 기술스택: " + member.skill;
-               card += "</p> </div> </div> </div>";
-               $(card_section).append(card);
+	
+			for(var index = 0; index < 8 ; index++){
+	               var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
+	               card += "<div class='card shadow'> <div class='m_img'>";
+	               card += "<img class='m_img_size' src='$&#123;pageContext.request.contextPath&#125;/assets/img/ain_test/" + member.m_image + "'> </div>";
+	               card += "<div class='card-body'>";
+	               card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
+	               card += "<p class='card-text'>";
+	               card += "- 선호포지션: " + member.position + " <br> - 기술스택: " + member.skill;
+	               card += "</p> </div> </div> </div>";
+	               $(card_section).append(card);
+               }
             })
             
-            var cardNum = $('.cardNum').length;
-            if (cardNum < endIndex) {
-               $(".moreBtn").css('display', 'none');
+            startIndex = 1;
+   			endIndex = 8;
+            
+            //더보기버튼 지우기
+            //노출된 카드 개수
+            var new_cardNum = $('.cardNum').length;
+            if (new_cardNum < endIndex) {
+            $(".moreBtn").css('display', 'none');
+                 endIndex = endIndex+indexStep;
             }
          }
 
@@ -57,7 +66,7 @@ $(document).ready(function() {
 
       card_section.empty();
 
-      var searchurl = "memberSearch/" + memberNickname + ".cy";
+      var searchurl = "memberSearch/" + memberNickname;
 
       $.ajax({
          url: searchurl,
@@ -68,7 +77,7 @@ $(document).ready(function() {
             $.each(memberList, function(index, member) {
                var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
                card += "<div class='card shadow'> <div class='m_img'>";
-               card += "<img class='m_img_size' src='../assets/img/ain_test/" + member.m_image + "'> </div>";
+               card += "<img class='m_img_size' src='${pageContext.request.contextPath}/assets/img/ain_test/" + member.m_image + "'> </div>";
                card += "<div class='card-body'>";
                card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
                card += "<p class='card-text'>";
@@ -113,13 +122,16 @@ $(document).ready(function() {
 
    //더보기 인덱스
    var startIndex = 1;
-   var endIndex = 6;
-   var indexStep = 6;
+   var endIndex = 8;
+   var indexStep = 8;
 
    //목록 마지막이면 더보기 버튼 없애기
    var cardNum = $('.cardNum').length;
+   console.log("cardNum"+cardNum);
+   console.log("endIndex"+endIndex);
    if (cardNum < endIndex) {
       $(".moreBtn").css('display', 'none');
+      endIndex = endIndex+indexStep;
    }
 
    //더보기 클릭
@@ -131,7 +143,7 @@ $(document).ready(function() {
 
    function moreRead(index) {
       $.ajax({
-         url: "memberMore.cy",
+         url: "memberMore",
          type: 'get',
          success: function(memberList) {
 
@@ -141,10 +153,9 @@ $(document).ready(function() {
                //console.log("member로우넘: " + member.rownum);
 
                if (startIndex <= member.rownum && member.rownum <= endIndex) {
-                  console.log("if문 들어온 member: " + member.m_nick);
                   let card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
                   card += "<div class='card shadow'> <div class='m_img'>";
-                  card += "<img class='m_img_size' src='../assets/img/ain_test/" + member.m_image + "'> </div>";
+                  card += "<img class='m_img_size' src='${pageContext.request.contextPath}/assets/img/ain_test/" + member.m_image + "'> </div>";
                   card += "<div class='card-body'>";
                   card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
                   card += "<p class='card-text'>";
@@ -153,16 +164,18 @@ $(document).ready(function() {
                   $(card_section).append(card);
                }
 
-               //더보기버튼 지우기
-               //노출된 카드 개수
-               var cardNum = $('.cardNum').length;
-               if (cardNum < endIndex) {
-                  $(".moreBtn").css('display', 'none');
-               }
-
             })
+            
+            //더보기버튼 지우기
+               //노출된 카드 개수
+               var new_cardNum = $('.cardNum').length + indexStep;
+               console.log("new_cardNum"+new_cardNum);
+ 			   console.log("endIndex"+endIndex);
+               if (new_cardNum < endIndex) {
+                  $(".moreBtn").css('display', 'none');
+                  endIndex = endIndex+indexStep;
+            	}
          }
       })
    }
-
 })
