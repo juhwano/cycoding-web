@@ -85,7 +85,9 @@
 		group by project_id
 	</select>
 	
+
 	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
+
 		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
 	</select>
 	

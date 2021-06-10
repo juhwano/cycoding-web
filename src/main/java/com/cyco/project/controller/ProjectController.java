@@ -21,7 +21,7 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 
 @Controller
-@RequestMapping(value="project")
+@RequestMapping(value="project/")
 public class ProjectController {
 	
 	@Autowired
@@ -69,7 +69,6 @@ public class ProjectController {
 		return "Project/ProjectList";
 	}
 	
-	
 	@RequestMapping(value="create",method = RequestMethod.GET)
 	public String ProjectAdd(Model model) {
 		
@@ -99,5 +98,6 @@ public class ProjectController {
 		
 		return null;
 	}
+
 	
 }

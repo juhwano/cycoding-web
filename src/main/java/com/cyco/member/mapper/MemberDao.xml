@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 멤버리스트 최초로딩-->
 	<select id="getMemberList" resultType="com.cyco.member.vo.V_MlistVo">
+
 		select rownum, dis_mlist.*
 		from 
 			( select row_number() over
@@ -14,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			as rnum, v_mlist.* from v_mlist 
 			) dis_mlist
 		where rnum = 1
+
 	</select>
 
 	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
@@ -23,6 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- getMemberPosition -->
+
+
 	<!-- select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
 		from V_MLIST
 		where position like '%${position}%' -->
@@ -51,4 +55,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE rnum = 1
 		  AND dis_mlist.m_nick like '%${nickname}%'
 	</select>
+
 </mapper>

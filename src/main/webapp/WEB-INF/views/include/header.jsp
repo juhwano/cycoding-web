@@ -4,10 +4,24 @@
 <html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+
+	
 	<!-- Primary Meta Tags -->
 	<title>사이좋게 코딩하자</title>
+	
+	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+		<!-- 반응형 토글 -->
+<script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	
+
 	<!-- Fontawesome -->
 	<link type="text/css" href="${pageContext.request.contextPath}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
 	<!-- Pixel CSS -->
 	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
 	<!-- main CSS -->
@@ -30,10 +44,9 @@
 	<link type="text/css" href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
 	</head>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 	<!-- 스프링 시큐리티 설정 -->
 	<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
-	
-
 
 <body>
 <header class="header-global">
@@ -157,10 +170,11 @@
 		                            <div class="col-auto px-0">
 		                                <div class="list-group list-group-flush">
 		                                 
-		                                  <form action="/logout.cy" method="post">
+		                                  <form action="logout.cy" method="post">
 		                                  	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		                                  	<button type="submit">로그아웃</button>
 		                                  </form>
+		                                  <a href="mypage.cy?useremail=${LoginUser}">마이페이지</a>
 		                                </div>
 		                            </div>
 		                        </div>
