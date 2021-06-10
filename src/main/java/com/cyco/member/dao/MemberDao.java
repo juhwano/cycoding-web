@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
-
+import com.cyco.common.vo.SkillVo;
+import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
 
 
@@ -39,5 +41,17 @@ public interface MemberDao {
 	//public MemberVo getMemberInfo(String useremail);
 	
 	public Integer editPersnalInfo(String column, String info, int userid);
+	
+	public List<SkillVo> getSkills();
+	
+	public List<MemberDetailPageVo> getPreferSkills(String userid);
+	
+	public List<PositionVo> getPositions();
+	
+	public List<MemberDetailPageVo> getPreferPosition(String userid);
+	
+	public List<V_Duration> getDurations();
+	
+	public List<V_Duration> getPreferDurations(String userid);
 	
 }

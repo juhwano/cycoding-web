@@ -34,24 +34,7 @@ public class MemberService {
 	      
 	}
 	
-	//회원상세(+마이페이지)////////////////////////////////////////////////////////////////////
-	//마이페이지 정보 불러오기
-	public MemberVo getMyDetail(String useremail) {
-		
-		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		MemberVo memeber = memberdao.getMyDetail(useremail);
-		
-		return memeber;
-	}
-	
-	//개인정보 수정
-	public int editInfo(String column, String info, int userid) {
-		
-		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		int row = memberdao.editPersnalInfo(column, info, userid);
-		
-		return row;
-	}
+
 	//기본 회원리스트 호출
 	public List<V_MlistVo> memberList() {
 		

@@ -1,19 +1,27 @@
 package com.cyco.member.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cyco.common.vo.PositionVo;
+import com.cyco.common.vo.SkillVo;
+import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.V_Duration;
 
 @RestController
 public class MemberDeatilRestController {
 	
 	MemberService memberservice;
+	MemberDetailService memberdetailservice;
 	
 	@Autowired
-	public void setMemberService(MemberService memberservice) {
-		this.memberservice = memberservice;
+	public void setMemberDetailService(MemberDetailService memberdetailservice) {
+		this.memberdetailservice = memberdetailservice;
 	}
 	
 	//회원 개인정보 수정
@@ -45,24 +53,24 @@ public class MemberDeatilRestController {
 			
 			column="MEMBER_PWD";
 			
-			row = memberservice.editInfo(column, info, id);
+			row = memberdetailservice.editInfo(column, info, id);
 			
 			//중복검사 해야 함
 		} else if(code.equals("닉네임")) {
 
 			column="MEMBER_NICKNAME";
-			row = memberservice.editInfo(column, info, id);
+			row = memberdetailservice.editInfo(column, info, id);
 			
 		} else if(code.equals("이름")) {
 
 			column="MEMBER_NAME";
-			row = memberservice.editInfo(column, info, id);
+			row = memberdetailservice.editInfo(column, info, id);
 			
 			//중복검사 해야 함
 		} else if(code.equals("휴대폰")) {
 			
 			column="MEMBER_PHONE";
-			row = memberservice.editInfo(column, info, id);
+			row = memberdetailservice.editInfo(column, info, id);
 		}
 		
 		if(row > 0) {
@@ -71,5 +79,50 @@ public class MemberDeatilRestController {
 		
 		return result;
 	}
+	
+	
+	//모달창에 기술 태그 뿌리기
+	@RequestMapping(value="getskills.ajax")
+	public List<SkillVo> getSkills(){
+		
+		List<SkillVo> list = new ArrayList<SkillVo>();
+
+		System.out.println(memberdetailservice.getSkills().toString());
+			
+		list = memberdetailservice.getSkills();
+			
+		return list;
+
+	}
+	
+	//모달창에 포지션 태그 뿌리기
+	@RequestMapping(value="getposition.ajax")
+	public List<PositionVo> getSPositions(){
+		
+		List<PositionVo> list = new ArrayList<PositionVo>();
+
+		System.out.println(memberdetailservice.getSkills().toString());
+			
+		list = memberdetailservice.getPositions();
+			
+		return list;
+
+	}
+	
+	
+	//모달창에 선호 기간 태그 뿌리기
+	@RequestMapping(value="getdurations.ajax")
+	public List<V_Duration> getDurations(){
+		
+		List<V_Duration> list = new ArrayList<V_Duration>();
+
+		System.out.println(memberdetailservice.getDurations().toString());
+			
+		list = memberdetailservice.getDurations();
+			
+		return list;
+
+	}
+	
 
 }

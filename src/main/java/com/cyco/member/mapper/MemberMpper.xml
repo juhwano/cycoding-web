@@ -28,19 +28,4 @@
 		
 	</insert>
 	
-	<select id="getMyDetail" resultType="com.cyco.common.vo.MemberVo">
-		
-		select  m.MEMBER_ID, m.MEMBER_EMAIL, m.MEMBER_NICKNAME, m.MEMBER_NAME, m.MEMBER_PWD, m.MEMBER_PHONE, m.MEMBER_EMAIL, p.HAVE_POINT
-			    from member m left join point p
-			    on m.MEMBER_ID=p.MEMBER_ID
-			    where member_email=#{useremail}
-		
-	</select>
-	
-	<update id="editPersnalInfo">
-		
-		update member set ${param1}=#{param2} where MEMBER_ID=#{param3}
-
-	</update>
-	
 </mapper>

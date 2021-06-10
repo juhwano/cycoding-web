@@ -72,6 +72,11 @@ ul {
 
 }
 
+.sub_title{
+	color:#94A7AE;
+	font-size:14px;
+}
+
 .item{
 	color:#CA8FAB;
 	width:200px;
@@ -147,15 +152,29 @@ width:70px;*/
 
 
 /*모달창*/
+.modal.fade .modal-dialog{
+	margin: auto;
+	height:1000px;
+	width:800px;
+	max-width:1000px;
+}
 .modal.show .modal-dialog{
 	margin: auto;
 	height:1000px;
+	width:800px;
+	max-width:1000px;
 }
+
+.modal-header{
+	text-align:center;
+}
+
 #modal-title{
-	color:black;
+	color:gray;
 	font-size:21px;
 	text-align:center;
 	font-weight:bold;
+	width:100%;
 }
 .modal-login {
 	color: #636363;
@@ -195,3 +214,170 @@ width:70px;*/
 	font-size: 13px;
 	justify-content: center;
 }
+
+#tagarea{
+
+	display:flex;
+	flex-wrap: wrap;
+	text-align:center;
+	/*justify-content:space-between;*/
+}
+
+#selectedarea{
+
+	display:flex;
+	flex-wrap: wrap;
+	text-align:center;
+	/*justify-content:space-between;*/
+	margin-top: 30px;
+}
+
+.tags{
+text-align:center;
+	/*background-color:#F4F2F3;*/
+border: 2px solid #94A7AE;
+box-sizing: border-box;
+color:#94A7AE;	
+width:150px;
+height:50px;
+font-size:16px;
+padding:10px;
+margin:10px;
+
+}
+
+.tags:hover{
+position:relative;
+top:-5px;
+
+}
+
+.clicked{
+	border: 2px solid #CA8FAB;
+	color:#CA8FAB;
+	width:150px;
+	height:50px;
+font-size:16px;
+padding:10px;
+margin:10px;
+text-align:center;
+
+}
+
+.clicked:hover{
+position:relative;
+top:-5px;
+
+}
+
+
+.positions{
+	text-align:center;
+		/*background-color:#F4F2F3;*/
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color:#94A7AE;	
+	width:150px;
+	height:50px;
+	font-size:16px;
+	padding:10px;
+	margin:10px;
+	
+	}
+	
+	.positions:hover{
+	position:relative;
+	top:-5px;
+	
+	}
+	
+	.p_clicked{
+		border: 2px solid #CA8FAB;
+		color:#CA8FAB;
+		width:150px;
+		height:50px;
+	font-size:16px;
+	padding:10px;
+	margin:10px;
+	text-align:center;
+	
+	}
+	
+	.p_clicked:hover{
+	position:relative;
+	top:-5px;
+	
+	}
+
+
+#buttonarea{
+	position:absolute;
+	bottom:30px;
+	right:50px;
+}
+
+#buttonarea button{
+	border:none;
+	width:70px;
+	padding: 10px;
+	margin:10px;
+}
+#edit{
+	background-color:#94A7AE;
+	color:#F4F2F3;
+}
+#cancel{
+
+	background-color:#F4F2F3;
+	color:#94A7AE;
+
+}
+
+/*여기까지 모달창*/
+
+.detail_section{
+	margin: 50px auto;
+    width: 700px;
+}
+
+.infolist{
+	margin:15px auto;
+	width:700px;
+	align-items:center;
+	
+}
+
+.infolist .item{
+	width:100%;
+}
+
+.info_tags{
+	border: 2px solid #CA8FAB;
+	color:#CA8FAB;
+	width:150px;
+	height:50px;
+font-size:16px;
+padding:10px;
+margin:10px;
+text-align:center;
+display: inline-block;
+	
+}
+.main_skill{
+	font-weight: bold;
+}
+#star{
+    position: relative;
+    top: -12px;
+    left: -78px;
+    width: 10px;
+}
+
+.moerdetails{
+	text-align:center;
+}
+
+.moredetails a{
+	width:100%;
+}
+

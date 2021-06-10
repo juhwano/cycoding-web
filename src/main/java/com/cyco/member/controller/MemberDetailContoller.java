@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 
 
 @Controller
 public class MemberDetailContoller {
 	
-	MemberService memberservice;
+	MemberDetailService memberdetailservice;
 	
 	@Autowired
-	public void setMemberService(MemberService memberservice) {
-		this.memberservice = memberservice;
+	public void setMemberDetailService(MemberDetailService memberdetailservice) {
+		this.memberdetailservice = memberdetailservice;
 	}
 	
 	//마이페이지 정보 불러오기
@@ -29,9 +30,15 @@ public class MemberDetailContoller {
 		
 		ModelMap mmp = new ModelMap();
 		
-		mmp.addAttribute("memberdetail", memberservice.getMyDetail(useremail));
+		mmp.addAttribute("aboutmember", memberdetailservice.getMyDetail(useremail));
+		mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
+		mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
+		mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
 		
-		return new ModelAndView("/Member/MemberDetail",mmp) ;
+		System.out.println(memberdetailservice.getPreferSkills(useremail));
+		System.out.println(memberdetailservice.getPreferDurations(useremail));
+		
+		return new ModelAndView("/Member/Mypage",mmp) ;
 	}
 	
 
