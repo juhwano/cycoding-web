@@ -10,6 +10,8 @@ import com.cyco.member.vo.PositionVo;
 @Repository
 public interface MemberDao {
 	
+	public MemberVo getMember();
+	
 	public List<MemberVo> getMemberList();
 	
 	

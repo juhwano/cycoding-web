@@ -3210,7 +3210,7 @@ progress {
     display: block;
     width: 100%;
     padding: 0.55rem 0.75rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 400;
     line-height: 1.5;
     color: #4B5563;
@@ -23924,7 +23924,7 @@ textarea.form-control-lg {
 }
 
 .headroom--not-top.navbar-theme-primary {
-    background-color: #242e4c;
+    background-color: white;
 }
 
 .headroom--not-top.navbar-theme-primary .navbar-brand-light {
@@ -24397,11 +24397,19 @@ textarea.form-control-lg {
  * = Navigation bars
  */
 .navbar-main {
-   /*  position: absolute; */
     top: 0;
     width: 100%;
     z-index: 100;
     padding: 0;
+    height: 55px;
+}
+
+.header_{
+	top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 0;
+    height: 55px;
 }
 
 .navbar-main .navbar-toggler-icon {

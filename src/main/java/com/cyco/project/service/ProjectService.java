@@ -7,13 +7,16 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyco.member.vo.PositionVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.AdrVO;
+import com.cyco.project.vo.FieldVO;
+import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.ProjectVO;
+import com.cyco.project.vo.SkillVO;
 
 @Service
 public class ProjectService {
-	//필터링 포함
-	//지역 , 분야 , 상태 , 스킬
 	
 	@Autowired
 	private SqlSession sqlsession;
@@ -50,4 +53,36 @@ public class ProjectService {
 		System.out.println(list.toString());
 		return list;
 	}
+	
+	public List<FieldVO> getProjectField(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<FieldVO> list = dao.getFieldList();
+		return list;
+	}
+	
+	public List<AdrVO> getAdr(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<AdrVO> list = dao.getAdrList();
+		return list;
+	}
+	
+	public List<SkillVO> getSkill(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<SkillVO> list = dao.getSkillList();
+		return list;
+	}
+	
+	public List<PositionVo> getPosition(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<PositionVo> list = dao.getPostion();
+		return list;
+	}
+	
+	public List<P_DurationVO> getDuration(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<P_DurationVO> list = dao.getDuration();
+		return list;
+	}
+	
+	
 }

@@ -3,8 +3,10 @@ package com.cyco.project.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.cyco.member.vo.PositionVo;
 import com.cyco.project.vo.AdrVO;
 import com.cyco.project.vo.FieldVO;
+import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVO;
 import com.cyco.project.vo.P_SkillVO;
 import com.cyco.project.vo.ProjectVO;
@@ -24,10 +26,14 @@ public interface ProjectDao {
 	public List<String> getFiltedProjectList(Map<String, String> data);
 	public List<P_MemberVO> getProjectMemberList();
 	public List<P_SkillVO> getProjectSkillList();
+	
+	
 	public List<AdrVO> getAdrList();
 	public List<FieldVO> getFieldList();
 	public List<SkillVO> getSkillList();
-	
+	public List<PositionVo> getPostion();
+	public List<P_DurationVO> getDuration();
+
 	
 
 }

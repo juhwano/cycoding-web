@@ -12,7 +12,10 @@
 	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
 	<!-- main CSS -->
 	<link type="text/css" href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet">
-
+	
+	<!-- favicon -->
+	<link type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/favicon/cycoding-favicon.ico" rel="icon">
+	
 	</head>
 	
 	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
@@ -25,9 +28,10 @@
 
 <body>
 <header class="header-global">
+	<div class="header_">
     <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-dark">
         <div class="container position-relaive">
-            <a class="navbar-brand me-lg-5" href="main.cy">
+            <a class="navbar-brand me-lg-5" href="${pageContext.request.contextPath}/main.cy">
                 <img class="navbar-brand-dark" src="${pageContext.request.contextPath}/assets/img/brand/LOGO.svg" alt="Logo light">
             </a>
             <div class="navbar-collapse collapse me-auto" id="navbar_global">
@@ -50,26 +54,26 @@
                 <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" id="frontPagesDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="${pageContext.request.contextPath}/#" class="nav-link" id="frontPagesDropdown" aria-expanded="false" data-bs-toggle="dropdown">
                             HOME
                         </a>
                     </li>
                     
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" id="dashboardDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="${pageContext.request.contextPath}/#" class="nav-link" id="dashboardDropdown" aria-expanded="false" data-bs-toggle="dropdown">
                             PROJECT
                         </a>
                     </li>
                     
                     
                     <li class="nav-item dropdown">
-                        <a href="memberlist.cy" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="${pageContext.request.contextPath}/memberlist.cy" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
                             MEMBER
                         </a>
                     </li>
                     
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+                        <a href="${pageContext.request.contextPath}/#" class="nav-link" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
                             COMMUNITY
                         </a>
                     </li>
@@ -82,12 +86,13 @@
                     <!-- 로그인 안하면 -->
                     <se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 						<li class="nav-item dropdown">
-                        <a href="login.cy" class="nav-link">
+                        <a href="${pageContext.request.contextPath}/login.cy" class="nav-link">
                            	로그인 
                         </a>
                    		</li>
 					</se:authorize>
-
+					
+					<!-- 어드민  -->
 					<se:authorize access="hasRole('ROLE_ADMIN')">
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
@@ -104,7 +109,7 @@
 						
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
-	                        <a href="admin.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                        <a href="${pageContext.request.contextPath}/admin.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
 	                            관리자 페이지
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
@@ -117,9 +122,9 @@
 						
 					</se:authorize>
 					
-		
+					<!-- 기본 회원들 헤더 -->
 					<se:authentication property="name" var="LoginUser" />
-					<se:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MEMBER','ROLE_PREMEMBER')">
+					<se:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER')">
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
@@ -161,6 +166,7 @@
              </button>
         </div>
     </nav>
+    </div>
 </header>
 
     <main>
@@ -179,6 +185,7 @@
 
 <!-- 반응형 토글 -->
 <script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/vendor/headroom.js/dist/headroom.min.js"></script>
 
 <!-- Pixel JS -->
 <script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
@@ -189,7 +196,12 @@
 <!-- JQuesy -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
+
 
 
 /* ==============================================

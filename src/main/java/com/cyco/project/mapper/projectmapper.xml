@@ -30,15 +30,25 @@
 		select project_id, skill_name from view_psk_sk
 	</select>
 	
-	<select id="getAdrList">
+	<select id="getAdrList" resultType="com.cyco.project.vo.AdrVO">
 		select adr_code, adr_name from adr
 	</select>
 	
-	<select id="getFieldList">
-		select skill_code, skill_name, skill_enable from skill
+	<select id="getFieldList" resultType="com.cyco.project.vo.FieldVO">
+		select field_code, field_name, field_enabled from p_field
 	</select>
 	
-	<select id="getSkillList">
-		select field_code, field_name,field_enable from p_field
+	<select id="getSkillList" resultType="com.cyco.project.vo.SkillVO">
+		select skill_code, skill_name, skill_enabled from skill
 	</select>
+	
+	<select id="getPostion" resultType="com.cyco.member.vo.PositionVo">
+		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
+	</select>
+	
+	<select id="getDuration" resultType="com.cyco.project.vo.P_DurationVO">
+		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
+	</select>
+	
+	
 </mapper>

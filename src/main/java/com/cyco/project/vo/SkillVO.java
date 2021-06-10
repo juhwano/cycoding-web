@@ -7,7 +7,7 @@ public class SkillVO {
 	//select * from skill;
 	private String skill_code;
 	private String skill_name;
-	private String skille_enable;
+	private String skill_enabled;
 	
 
 }
