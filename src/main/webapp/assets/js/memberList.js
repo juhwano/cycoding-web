@@ -15,25 +15,24 @@ $(document).ready(function() {
 
       $.ajax({
          url: "memberPosition/" + position,
-         //data: {position:position},
          type: 'get',
-         //dataType: 'text',
          success: function(memberList) {
             console.log(memberList);
 
             $.each(memberList, function(index, member) {
-	
-			for(var index = 0; index < 8 ; index++){
-	               var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
-	               card += "<div class='card shadow'> <div class='m_img'>";
-	               card += "<img class='m_img_size' src='$&#123;pageContext.request.contextPath&#125;/assets/img/ain_test/" + member.m_image + "'> </div>";
-	               card += "<div class='card-body'>";
-	               card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
-	               card += "<p class='card-text'>";
-	               card += "- 선호포지션: " + member.position + " <br> - 기술스택: " + member.skill;
-	               card += "</p> </div> </div> </div>";
+	               let card = '<div class="cardNum">'
+					 card += '<div class="card shadow">'
+					 card += '<div class="m_img">'
+					 card += '<img class="m_img_size"'
+					 card += 'src="../assets/img/ain_test/' + member.m_image + '">'
+					 card += '</div>'
+					 card += '<div class="card-body">'
+					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
+					 card += '<p class="card-text">' + member.position + '</p>'
+					 card += '<p class="tags"># '+ member.skill +'</p>'
+					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '</div> </div> </div>'
 	               $(card_section).append(card);
-               }
             })
             
             startIndex = 1;
@@ -75,14 +74,18 @@ $(document).ready(function() {
             console.log(memberList);
 
             $.each(memberList, function(index, member) {
-               var card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
-               card += "<div class='card shadow'> <div class='m_img'>";
-               card += "<img class='m_img_size' src='${pageContext.request.contextPath}/assets/img/ain_test/" + member.m_image + "'> </div>";
-               card += "<div class='card-body'>";
-               card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
-               card += "<p class='card-text'>";
-               card += "- 선호포지션: " + member.position + " <br> - 기술스택: " + member.skill;
-               card += "</p> </div> </div> </div>";
+               let card = '<div class="cardNum">'
+					 card += '<div class="card shadow">'
+					 card += '<div class="m_img">'
+					 card += '<img class="m_img_size"'
+					 card += 'src="../assets/img/ain_test/' + member.m_image + '">'
+					 card += '</div>'
+					 card += '<div class="card-body">'
+					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
+					 card += '<p class="card-text">' + member.position + '</p>'
+					 card += '<p class="tags"># '+ member.skill +'</p>'
+					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '</div> </div> </div>'
                $(card_section).append(card);
 
             })
@@ -119,7 +122,6 @@ $(document).ready(function() {
 
 
    /* 더보기 memberMore.cy */
-
    //더보기 인덱스
    var startIndex = 1;
    var endIndex = 8;
@@ -138,10 +140,10 @@ $(document).ready(function() {
    $(".moreBtn").click(function() {
       startIndex += indexStep;
       endIndex += indexStep;
-      moreRead(startIndex);
+      moreRead();
    })
 
-   function moreRead(index) {
+   function moreRead() {
       $.ajax({
          url: "memberMore",
          type: 'get',
@@ -153,14 +155,18 @@ $(document).ready(function() {
                //console.log("member로우넘: " + member.rownum);
 
                if (startIndex <= member.rownum && member.rownum <= endIndex) {
-                  let card = "<div class='col-12 col-md-6 col-lg-4 mb-5'>";
-                  card += "<div class='card shadow'> <div class='m_img'>";
-                  card += "<img class='m_img_size' src='${pageContext.request.contextPath}/assets/img/ain_test/" + member.m_image + "'> </div>";
-                  card += "<div class='card-body'>";
-                  card += "<h3 class='h5 card-title mt-3'>" + member.m_nick + "</h3>";
-                  card += "<p class='card-text'>";
-                  card += "- 선호포지션: " + member.position + " <br> - 기술스택: " + member.skill;
-                  card += "</p> </div> </div> </div>";
+                  let card = '<div class="cardNum">'
+					 card += '<div class="card shadow">'
+					 card += '<div class="m_img">'
+					 card += '<img class="m_img_size"'
+					 card += 'src="../assets/img/ain_test/' + member.m_image + '">'
+					 card += '</div>'
+					 card += '<div class="card-body">'
+					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
+					 card += '<p class="card-text">' + member.position + '</p>'
+					 card += '<p class="tags"># '+ member.skill +'</p>'
+					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '</div> </div> </div>'
                   $(card_section).append(card);
                }
 
@@ -168,7 +174,7 @@ $(document).ready(function() {
             
             //더보기버튼 지우기
                //노출된 카드 개수
-               var new_cardNum = $('.cardNum').length + indexStep;
+               var new_cardNum = $('.cardNum').length;
                console.log("new_cardNum"+new_cardNum);
  			   console.log("endIndex"+endIndex);
                if (new_cardNum < endIndex) {
