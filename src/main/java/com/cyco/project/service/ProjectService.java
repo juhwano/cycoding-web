@@ -1,24 +1,30 @@
 package com.cyco.project.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
+import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+import com.cyco.project.vo.V_PjSk;
 
 @Service
 public class ProjectService {
-
 	
 	@Autowired
 	private SqlSession sqlsession;
@@ -31,17 +37,20 @@ public class ProjectService {
 //	adr_list
 //	skill_list
 //	field_list
-	public List<V_PjAdrField_Join_V_PDetail> getProjectList(){
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(String p_state){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
 		String where = "";
-		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(where);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("where","");
+		map.put("p_state", p_state);
 		
+		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(map);
+		System.out.println(project_list);
 		return project_list;
 	}
 //	ProjectList with Filter
 //	오버로딩 함수
-	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist){
+	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist, String p_state){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
 		String where =null;
@@ -60,7 +69,10 @@ public class ProjectService {
 		}
 		
 		System.out.println(where);
-		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(where);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("where",where);
+		map.put("p_state", p_state);
+		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(map);
 		System.out.println(list);
 		
 		return list;
@@ -79,7 +91,7 @@ public class ProjectService {
 		System.out.println("3개 필터링 : "+list.toString());
 		return list;
 	}
-	
+
 //	Filtered Project_id List
 //	P_Skill테이블에서 Project_id 뽑아오기
 	public List<String> getFilteredProjectSkillList(Map<String, String> data,List<String> Flist){
@@ -88,7 +100,7 @@ public class ProjectService {
 		String skill_code = data.get("skill_code");
 		List<String> idlist = new ArrayList<String>();
 		
-		if(skill_code.equals("")) {
+		if(skill_code.equals("") && Flist==null) {
 			return null;
 		}
 		
@@ -99,7 +111,7 @@ public class ProjectService {
 		
 		// list와 Flist에서 중복되는값 찾기
 		// Flist의 값이 존재할 경우
-		if(Flist.size()>0 && Flist!=null) {
+		if(Flist!=null) {
 			// list값도 존재할 경우
 			if(list.size()>0)
 			for(String l : list) {
@@ -142,4 +154,52 @@ public class ProjectService {
 		
 		return skill_list;
 	}
+	public List<V_PjSk> getPjSkList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PjSk> pjsk_list = dao.getPjSkList();
+		
+		return pjsk_list;
+	}
+	
+	public List<PositionVo> getPositionList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<PositionVo> position_list = dao.getPositionList();
+		
+		return position_list;
+	}
+	
+	public List<P_DurationVO> getDurationList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<P_DurationVO> duration_list = dao.getDurationList();
+		
+		return duration_list;
+	}
+	
+	//프로젝트 검색 - 제목으로만 검색
+	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(Map<String, String> word){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		Map<String, String> map = new HashMap<String, String>();
+		
+		//검색 where절
+		String where= "where vpd.p_title like '%" + word.get("word") + "%'";
+		
+		//map에 whrer절과 이미 위에서 사용된 dao를 사용하기 위해 파라미터로 사용되는 p_state도 같이 넣어준다.
+		//p_state는 '완료'가 아니어야 하기 때문에 다른 문자열을 넣어주낟.
+		map.put("where", where);
+		map.put("p_state", "검색");
+		
+		List<V_PjAdrField_Join_V_PDetail> searched_list = dao.getProjectList(map);
+		
+		return searched_list;
+	}
+	
+	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
+	public List<PmemberCountVo> getPmemberCountList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<PmemberCountVo> membercount_list = dao.getPmemberCountList();
+		
+		return membercount_list;
+	}
+	
 }

@@ -14,12 +14,14 @@
 	<http pattern="/resources/**" security="none"></http>
 
 	<http auto-config="true" use-expressions="true" create-session="never">
+	
 		<intercept-url pattern="/admin.cy" access="hasRole('ROLE_ADMIN')" />
 		<!-- <intercept-url pattern="/프로젝트 관리" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEAMMANGER')" />-->		
 		<!-- <intercept-url pattern="/프로젝트 상세" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<!-- <intercept-url pattern="/게시글 상세" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<!-- <intercept-url pattern="/회원 상세" access="hasAnyRole('ROLE_PREMEMBER', 'ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<intercept-url pattern="/**" access="permitAll" />
+		
 		<form-login login-page="/login.cy"
 			login-processing-url="/login.cy" 
 			authentication-success-handler-ref="userLoginSuccessHandler"
@@ -28,7 +30,7 @@
 		<session-management>
 			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="true"/>
 		</session-management>
-		<logout delete-cookies="true" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
+		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
 		<access-denied-handler ref="userDeniedHandler"/>
 		
 		<!-- 보안 토큰 -->
@@ -52,6 +54,10 @@
 	 
 		-->
 		
+	
+	<!-- users-by-username-query는 사용자를 인증하는 쿼리
+	authorities-by-username-query 는 사용자의 권한을 가져오는 쿼리
+	 -->
 
 	<authentication-manager>
 	<authentication-provider>
@@ -63,7 +69,11 @@
 											on ma.AUTHORITY_ID = a.AUTHORITY_ID
 											where m.MEMBER_EMAIL=?"
 		/>
-			  <!-- <password-encoder ref="bCryptPasswordEncoder"/> -->
+
+<!--  
+			  <password-encoder ref="bCryptPasswordEncoder"/>
+-->
+
 	</authentication-provider>
 
 </authentication-manager>				

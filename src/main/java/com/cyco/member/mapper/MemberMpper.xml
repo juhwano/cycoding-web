@@ -21,7 +21,7 @@
 	
 	</select>
 
-	<insert id="registMember" parameterType="com.cyco.member.vo.MemberVo">
+	<insert id="registMember" parameterType="com.cyco.common.vo.MemberVo">
 	
 		insert into member(MEMBER_ID, MEMBER_EMAIL,MEMBER_PWD,MEMBER_NAME,MEMBER_NICKNAME,MEMBER_PHONE,MEMBER_IMAGE,ENABLED) 
 		values (M_SEQ.nextval,#{MEMBER_EMAIL},#{MEMBER_PWD},#{MEMBER_NAME},#{MEMBER_NICKNAME},#{MEMBER_PHONE},'defualt.jpg',1)
