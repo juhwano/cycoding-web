@@ -69,7 +69,7 @@
 
 				<!-- 프로젝트이름검색 -->
 				<div class="input-group p_search">
-					<input type="text" class="form-control" id="" placeholder="프로젝트이름"
+					<input type="text" class="form-control" id="ProjectNameSearch" placeholder="프로젝트이름"
 						aria-label="Search" aria-describedby="basic-addon2"> <span
 						class="input-group-text" id="memberSearch"> <span
 						class="fas fa-search"></span>

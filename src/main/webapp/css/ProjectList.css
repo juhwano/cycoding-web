@@ -43,6 +43,12 @@
 	margin-right: 5px;
 }
 
+#ProjectNameSearch{
+	border-radius: 1rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 /* 카드디자인 */
 
 .m_img {
