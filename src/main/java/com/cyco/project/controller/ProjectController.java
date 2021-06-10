@@ -57,6 +57,10 @@ public class ProjectController {
 		
 		
 		
+		System.out.println(project_list);
+		System.out.println(adr_list);
+		System.out.println(field_list);
+		System.out.println(skill_list);
 		
 		return "Project/ProjectList";
 	}
