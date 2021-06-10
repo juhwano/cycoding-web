@@ -69,33 +69,35 @@ public class ProjectController {
 		return "Project/ProjectList";
 	}
 	
+	@RequestMapping(value="create",method = RequestMethod.GET)
+	public String ProjectAdd(Model model) {
+		
+		List<AdrVo> AdrList = service.getAdrList();
+		List<P_FieldVo> FieldList = service.getFieldList();
+		List<SkillVo> SkillList = service.getSkillList();
+		List<PositionVo> PositionList = service.getPositionList();
+		List<P_DurationVO> DurationList = service.getDurationList();
+		
+		
+		
+		model.addAttribute("AdrList", AdrList);
+		model.addAttribute("FieldList", FieldList);
+		model.addAttribute("SkillList", SkillList);
+		model.addAttribute("PositionList", PositionList);
+		model.addAttribute("DurationList", DurationList);
+		
+		return "Project/ProjectCreate";
+	}
 	
-	/*
-	 * @RequestMapping(value="create",method = RequestMethod.GET) public String
-	 * ProjectAdd(Model model) {
-	 * 
-	 * List<AdrVo> AdrList = service.getAdr(); List<P_FieldVo> FieldList =
-	 * service.getProjectField(); List<SkillVo> SkillList = service.getSkill();
-	 * List<PositionVo> PositionList = service.getPosition(); List<P_DurationVO>
-	 * DurationList = service.getDuration();
-	 * 
-	 * 
-	 * 
-	 * model.addAttribute("AdrList", AdrList); model.addAttribute("FieldList",
-	 * FieldList); model.addAttribute("SkillList", SkillList);
-	 * model.addAttribute("PositionList", PositionList);
-	 * model.addAttribute("DurationList", DurationList);
-	 * 
-	 * return "Project/ProjectCreate"; }
-	 * 
-	 * @RequestMapping(value="create",method = RequestMethod.POST) public String
-	 * ProjectAdd() {
-	 * 
-	 * 
-	 * 
-	 * System.out.println("프로젝트 생성 하기");
-	 * 
-	 * return null; }
-	 */
+	@RequestMapping(value="create",method = RequestMethod.POST)
+	public String ProjectAdd() {
+		
+		
+		
+		System.out.println("프로젝트 생성 하기");
+		
+		return null;
+	}
+
 	
 }
