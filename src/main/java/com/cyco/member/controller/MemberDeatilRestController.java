@@ -101,7 +101,7 @@ public class MemberDeatilRestController {
 		
 		List<PositionVo> list = new ArrayList<PositionVo>();
 
-		System.out.println(memberdetailservice.getSkills().toString());
+		System.out.println(memberdetailservice.getPositions().toString());
 			
 		list = memberdetailservice.getPositions();
 			
@@ -123,6 +123,12 @@ public class MemberDeatilRestController {
 		return list;
 
 	}
+	
+	//변경한 스탯 반영하기
+	//@Requestapping()
+	//public editSkills() {
+		
+	//}
 	
 
 }

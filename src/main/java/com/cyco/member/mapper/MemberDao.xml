@@ -7,15 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 멤버리스트 최초로딩-->
 	<select id="getMemberList" resultType="com.cyco.member.vo.V_MlistVo">
-		select rownum,
-			   m_id,
-			   m_nick,
-			   m_image,
-			   position,
-			   skill,
-			   p_enabled,
-			   s_enabled
-		from V_MLIST
+
+		select rownum, dis_mlist.*
+		from 
+			( select row_number() over
+				( partition by v_mlist.m_id order by v_mlist.m_id ) 
+			as rnum, v_mlist.* from v_mlist 
+			) dis_mlist
+		where rnum = 1
+
 	</select>
 
 	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
@@ -25,17 +25,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- getMemberPosition -->
-	<select id="getMemberPosition" resultType="com.cyco.member.vo.V_MlistVo">
-		select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
+
+
+	<!-- select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
 		from V_MLIST
-		where position like '%${position}%'
+		where position like '%${position}%' -->
+	<select id="getMemberPosition" resultType="com.cyco.member.vo.V_MlistVo">
+		SELECT rownum, dis_mlist.*
+		FROM 
+			( SELECT row_number() over
+				( partition by v_mlist.m_id order by v_mlist.m_id ) 
+			as rnum, v_mlist.* from v_mlist 
+			) dis_mlist
+		WHERE rnum = 1
+		  AND dis_mlist.position like '%${position}%'
 	</select>
 	
 	<!-- getMemberNickname -->
-	<select id="getMemberNickname" resultType="com.cyco.member.vo.V_MlistVo">
-		select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
+	<!-- select rownum, m_id, m_nick, m_image, position, skill, p_enabled, s_enabled
 		from V_MLIST
-		where m_nick like '%${nickname}%'
+		where m_nick like '%${nickname}%' -->
+	<select id="getMemberNickname" resultType="com.cyco.member.vo.V_MlistVo">
+		SELECT rownum, dis_mlist.*
+		FROM 
+			( SELECT row_number() over
+				( partition by v_mlist.m_id order by v_mlist.m_id ) 
+			as rnum, v_mlist.* from v_mlist 
+			) dis_mlist
+		WHERE rnum = 1
+		  AND dis_mlist.m_nick like '%${nickname}%'
 	</select>
 
 </mapper>

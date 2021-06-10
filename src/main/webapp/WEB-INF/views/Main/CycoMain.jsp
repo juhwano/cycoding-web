@@ -9,8 +9,10 @@
 		
 			<div class="container main_center">
 				<p>나와 맞는 <br> 프로젝트를 찾아보세요.</p>
-				<a href="project/list"><img src="${pageContext.request.contextPath}/assets/img/main_page/Project_arrow.png"></a>
-			
+
+				<a href="/project/list"><img src="${pageContext.request.contextPath}/assets/img/main_page/Project_arrow.png"></a>
+
+
 			</div>
 		</div>
 		

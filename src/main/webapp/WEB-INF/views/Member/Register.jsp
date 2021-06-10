@@ -6,17 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- Pixel CSS -->
-<link type="text/css" href="css/register_pixel.css" rel="stylesheet">
-<link type="text/css" href="css/register.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet">
 
 </head>
-
- 		<!--  header -->
- 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-
+<!--  header -->
+ <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
     <main> 
-  		
+
         <!-- Section -->
         <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
             <div class="container">
@@ -99,7 +97,11 @@
                                     <div class="condition">
                                         
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
+
                                         <span id="agreement" style="color:#CA8FAB; font-size:12px;margin:0;"><a href="#myModal" class="trigger-btn" data-toggle="modal">이용약관 동의(필수)</a></span>
+
+                                        <!-- <span class="agreement" style="color:#CA8FAB; font-size:12px;margin:0;"><a href="#mymodal" class="trigger-btn" data-toggle="modal">이용약관 동의(필수)</a></span> -->
+
                                                                  
 									</div>
 									
@@ -372,9 +374,10 @@
 		</div>
 	</div>
 </div>     
-<!-- 가입 정보 유효성 검사 -->
-<script src="${pageContext.request.contextPath}/assets/js/register.js"></script>
 
+<!-- 가입 정보 유효성 검사 -->
+
+<script src="${pageContext.request.contextPath}/assets/js/register.js"></script>
 
 </body>
 </html>

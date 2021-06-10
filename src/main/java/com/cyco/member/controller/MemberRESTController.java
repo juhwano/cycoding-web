@@ -12,6 +12,8 @@ import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.V_MlistVo;
 
 @RestController
+
+@RequestMapping("member")
 public class MemberRESTController {
 	MemberService memberservice;
 
@@ -25,6 +27,11 @@ public class MemberRESTController {
 	@RequestMapping(value = "memberPosition/{position}", method = RequestMethod.GET)
 	public List<V_MlistVo> getMemberPosition(@PathVariable("position") String position) {
 		System.out.println("RESTController, position: " + position);
+
+		if(position.equals("전체")) {
+			position = "";
+		}
+
 		List<V_MlistVo> memberPosition = memberservice.memberPosition(position);
 		
 		return memberPosition;

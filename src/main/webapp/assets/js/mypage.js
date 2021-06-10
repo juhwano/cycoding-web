@@ -259,7 +259,7 @@ $(document).ready(function() {
                         
                         $("#tagarea").append(
     
-                           "<div class='tags'>"+obj.skill_name+"</div>"
+                           "<div class='tags' id='"+obj.skill_code+"'>"+obj.skill_name+"</div>"
                         );
     
                    });
@@ -271,7 +271,7 @@ $(document).ready(function() {
                         
                         $("#tagarea").append(
 
-                            "<div class='positions'>"+obj.position_name+"</div>"
+                            "<div class='positions' id='"+obj.position_id+"'>"+obj.position_name+"</div>"
                         );
     
                    });
@@ -309,13 +309,57 @@ $("#cancel").on("click",function(){
 
 });
 
-//모달에서 선택한 태그 DB와 뷰단에 반영하기
+//모달에서 선택한 태그 DB와 뷰단에 반영하기(기술, 포지션, 기간)
 $("#edit").on("click",function(){
     console.log("수정버튼 클릭");
-    
-    $('div').attr("class","clicked").text()
+
+    newStat = $(".chosen").attr("id");
+
+    console.log(newStat);
+
 
 });
+
+//스탯 비동기 반영
+function editStat(keyword){
+
+    let url = "";
+
+    if(keyword == 'skill'){
+        
+        url="editSkills.ajax";
+
+    } else if(keyword = 'position'){
+
+        url="editPosition.ajax";
+
+    } else if(keyword='duration'){
+
+        url="editDurations.ajax";
+
+    }
+
+    
+    $.ajax({
+
+        url:url,
+        data:{
+            memberid:$("m_id").val()
+        },
+        type:"get",
+        dataType:"json",
+        success:function(data){
+            console.log(data);
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+        
+
+
+    });
+
+}
 
 
 
