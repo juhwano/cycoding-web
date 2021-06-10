@@ -85,11 +85,11 @@
 		group by project_id
 	</select>
 	
-	<select id="getPostion" resultType="com.cyco.member.vo.PositionVo">
+	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
 		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
 	</select>
 	
-	<select id="getDuration" resultType="com.cyco.project.vo.P_DurationVO">
+	<select id="getDurationList" resultType="com.cyco.project.vo.P_DurationVO">
 		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
 	</select>
 	

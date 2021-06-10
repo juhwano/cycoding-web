@@ -73,11 +73,11 @@ public class ProjectController {
 	@RequestMapping(value="create",method = RequestMethod.GET)
 	public String ProjectAdd(Model model) {
 		
-		List<AdrVo> AdrList = service.getAdr();
-		List<P_FieldVo> FieldList = service.getProjectField();
-		List<SkillVo> SkillList = service.getSkill();
-		List<PositionVo> PositionList = service.getPosition();
-		List<P_DurationVO> DurationList = service.getDuration();
+		List<AdrVo> AdrList = service.getAdrList();
+		List<P_FieldVo> FieldList = service.getFieldList();
+		List<SkillVo> SkillList = service.getSkillList();
+		List<PositionVo> PositionList = service.getPositionList();
+		List<P_DurationVO> DurationList = service.getDurationList();
 		
 		
 		
