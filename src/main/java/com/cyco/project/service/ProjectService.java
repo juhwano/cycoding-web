@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.SkillVo;
@@ -22,7 +23,6 @@ import com.cyco.project.vo.V_PjSk;
 
 @Service
 public class ProjectService {
-
 	
 	@Autowired
 	private SqlSession sqlsession;
@@ -89,7 +89,7 @@ public class ProjectService {
 		System.out.println("3개 필터링 : "+list.toString());
 		return list;
 	}
-	
+
 //	Filtered Project_id List
 //	P_Skill테이블에서 Project_id 뽑아오기
 	public List<String> getFilteredProjectSkillList(Map<String, String> data,List<String> Flist){

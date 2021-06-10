@@ -3,13 +3,14 @@ package com.cyco.project.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.cyco.project.vo.V_PmPosition;
+
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
+import com.cyco.project.vo.V_PmPosition;
 
 
 public interface ProjectDao {
@@ -39,7 +40,6 @@ public interface ProjectDao {
 	
 	//기술스택리스트
 	public List<SkillVo> getSkillList();
-	
 	
 
 }

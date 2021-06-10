@@ -11,6 +11,8 @@ import com.cyco.member.vo.V_MlistVo;
 @Repository
 public interface MemberDao {
 	
+	
+	public MemberVo getMember();
 	//멤버리스트 출력
 	public List<V_MlistVo> getMemberList();
 	//포지션리스트 출력(셀렉트태그용)
