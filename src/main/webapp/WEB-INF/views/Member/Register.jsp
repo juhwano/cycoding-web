@@ -5,6 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+
 <!-- Pixel CSS -->
 <link type="text/css" href="${pageContext.request.contextPath}/css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet">

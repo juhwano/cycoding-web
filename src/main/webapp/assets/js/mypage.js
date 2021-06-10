@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     });
 
-
+    let newStats = [];
 
     //detail영역 스탯 모달창
     $('.trigger').on('click', function() {
@@ -111,9 +111,11 @@ $(document).ready(function() {
 
             let name = $(this).text();
             selected= $(".clicked");
+            newStats.push($(".clicked").attr("id"));
 
             console.log(selected.length);
             console.log(selected);
+            console.log(newStats);
     
             console.log($(this).text(), " 태그 선택");
 
@@ -181,6 +183,10 @@ $(document).ready(function() {
 
    //모달창에 스탯 리스트 뿌리기
    function edit_modal(code){
+    
+    console.log("모달 실행");
+    console.log(code);
+    $("#stat").val(code);
 
     if(code == 'skill'){
     
@@ -226,7 +232,12 @@ $(document).ready(function() {
         
         } else if(key == "experience"){
 
-            link = "getexperiences.ajax";
+            $("#tagarea").empty();
+            $("#tagarea").append(
+                
+                "<div class='experience tags' id='never' >"+없음+"</div>"
+                +"<div class='experience tags' id='have' >"+있음+"</div>"
+            );     
 
         } else if(key == "position"){
         
@@ -283,7 +294,7 @@ $(document).ready(function() {
                         
                         $("#tagarea").append(
     
-                           "<div class='tags'>"+obj.du_date+"</div>"
+                           "<div class='tags' id='d"+(index+1)+"'>"+obj.du_date+"</div>"
                         );
     
                    });
@@ -310,20 +321,46 @@ $("#cancel").on("click",function(){
 });
 
 //모달에서 선택한 태그 DB와 뷰단에 반영하기(기술, 포지션, 기간)
+//스탯 비동기 반영
 $("#edit").on("click",function(){
     console.log("수정버튼 클릭");
 
-    newStat = $(".chosen").attr("id");
+    let first = $("#selectedarea :nth-child(1)").attr("id");
+    let second = $("#selectedarea :nth-child(2)").attr("id");
+    let third =  $("#selectedarea :nth-child(3)").attr("id");
 
-    console.log(newStat);
+    //let stats = [first, second, third];
+    console.log("1",first);
+    console.log("2",second);
+    console.log("3",third);
+
+
+    if(third != undefined){
+
+        edit(first);
+        edit(second);
+        edit(third);
+
+    } else if(third == undefined && second != undefined){
+        edit(first);
+        edit(second);
+    } else if(third == undefined && second == undefined && first != undefined){
+        edit(first);
+    } else if(third == undefined && second == undefined && first == undefined){
+        swal("수정할 내용이 없습니다","","error");
+    }
+
+    
 
 
 });
 
-//스탯 비동기 반영
-function editStat(keyword){
+function edit(stats){
 
     let url = "";
+    let keyword = $("#stat").val();
+    console.log(keyword);
+    console.log(stats);
 
     if(keyword == 'skill'){
         
@@ -344,7 +381,9 @@ function editStat(keyword){
 
         url:url,
         data:{
-            memberid:$("m_id").val()
+            memberid:$("m_id").val(),
+            useremail:"${member.member_email}",
+            stat:stats
         },
         type:"get",
         dataType:"json",
@@ -358,9 +397,4 @@ function editStat(keyword){
 
 
     });
-
 }
-
-
-
-

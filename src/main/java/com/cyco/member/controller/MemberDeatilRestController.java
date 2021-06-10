@@ -11,6 +11,7 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
 
 @RestController
@@ -125,10 +126,19 @@ public class MemberDeatilRestController {
 	}
 	
 	//변경한 스탯 반영하기
-	//@Requestapping()
-	//public editSkills() {
+	@RequestMapping(value="editSkills.ajax")
+	public List<MemberDetailPageVo> ListeditSkills(String memberid, String useremail, String stat) {
 		
-	//}
+		System.out.println("기술 비동기 변경");
+		System.out.println(memberid);
+		System.out.println(useremail);
+		System.out.println(stat);
+
+		
+		List<MemberDetailPageVo> list = memberdetailservice.getPreferPosition(useremail);
+		
+		return list;
+	}
 	
 
 }

@@ -66,6 +66,13 @@
 			where m.member_email=#{userid}		
 		
 	</select>
+	
+	
+	<update id="editSkills">
+	
+		update 
+	
+	</update>
 
 	
 </mapper>

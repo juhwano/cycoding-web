@@ -10,6 +10,17 @@ $(document).ready(function(){
     
     
 });
+	
+	
+
+      var csrfToken = $("meta[name='_csrf']").attr("content");
+	  $.ajaxPrefilter(function(options, originalOptions, jqXHR){
+	    if (options['type'].toLowerCase() === "post") {
+	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+	    }
+	  });
+
+
 
 //let email = $('#email').val();
 //let password = $('#password').val();
@@ -294,7 +305,7 @@ function validation() {
             data: {
                 email: email
             },
-            type: "GET",
+            type: "post",
             dataType: "text",
             success: function(data) {
                 console.log(data);
@@ -314,12 +325,8 @@ function validation() {
                         data: {
                             email: email
                         },
-                        type: "POST",
+                        type: "post",
                         dataType: "text",
-                        beforeSend : function(xhr)
-                          {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-                              xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
-                          },
                         success: function(data) {
                             console.log(data);
                             
@@ -333,7 +340,7 @@ function validation() {
                                 
                             } else {
 
-                                alert("인증메일이 발송되었습니다.");
+                                //alert("인증메일이 발송되었습니다.");
                                 swal("📨" , "메일을 발송하였습니다.");
 
                                 
