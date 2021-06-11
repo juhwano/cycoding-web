@@ -47,7 +47,6 @@
 
 	<!-- 스프링 시큐리티 설정 -->
 	<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
-
 <body>
 <header class="header-global">
 	<div class="header_">
@@ -146,38 +145,55 @@
 					
 					<!-- 기본 회원들 헤더 -->
 					<se:authentication property="name" var="LoginUser" />
+					
 					<se:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER')">
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
-	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                        <a href="#" class="nav-link" id="supportDropdown" >
 
 	                            <img src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
 	                        </a>
-	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
-	                            <div class="col-auto px-0">
-	                               
-	                            </div>
-	                        </div>
+	                       	
+	                       	<!-- 드랍 박스 -->
+	                       	<div class="user_info" style="display:none">
+				 					<div class="mypage">
+				 					<a href="mypage.cy?useremail=${LoginUser}">마이페이지</a>
+				 					
+				 					</div>
+				 					
+				 					<div class="gosu_register"><a href="${ path }/Gosuregister_1.go">고수로 가입하기</a></div>
+				 				
+								
+                                  	
+				 					<div class="logout"><a href="logout.cy">로그아웃</a></div>
+				 				</div>
+	                       	
+	                       	
 	                    </li>
 						
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
-	                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                        <a href="#" class="nav-link" id="info">
                  			    ${LoginUser}님
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
-		                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
-		                            <div class="col-auto px-0">
-		                                <div class="list-group list-group-flush">
-		                                 
-		                                  <form action="logout.cy" method="post">
-		                                  	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		                                  	<button type="submit">로그아웃</button>
-		                                  </form>
-		                                  <a href="mypage.cy?useremail=${LoginUser}">마이페이지</a>
-		                                </div>
-		                            </div>
-		                        </div>
+	                        
+	                        	<!-- 드랍 박스 -->
+	                        	<div class="user_info" style="display:none">
+				 					<div class="mypage">
+				 					<a href="${pageContext.request.contextPath}/mypage.cy?useremail=${LoginUser}">마이페이지</a>
+				 					
+				 					</div>
+				 					
+				 					
+				 					<div class="Nav_Drop_A"><a href="">북마크</a></div>
+				 					<div class="Nav_Drop_A"><a href="">지원 내역</a></div>
+				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create?userId=${LoginUser}">프로젝트 생성하기</a></div>
+								
+                                  	
+				 					<div class="logout"><a href="logout.cy">로그아웃</a></div>
+				 				</div>
+	                        
 	                   	 </li>
 					</se:authorize>   
 					
@@ -213,13 +229,14 @@
 <!-- Pixel JS -->
 <script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
 
+<script src="${pageContext.request.contextPath}/vendor/vivus/dist/vivus.min.js"></script>
+
 <!-- sweetalert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
@@ -241,6 +258,17 @@ $(function() {
 /* ==============================================
 Loader -->
 =============================================== */
+
+// 회원 정보
+$('#info').click(function() {
+	var toggle = $('.user_info').attr('style');
+	
+	if(toggle == "display:none"){
+		$('.user_info').attr('style','');
+	}else {
+		$('.user_info').attr('style','display:none');
+	}
+})
 
 
 </script>

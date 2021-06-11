@@ -22,7 +22,7 @@
 <c:set var="skillvo" value="${SkillList}"></c:set>
 <c:set var="positionvo" value="${PositionList}"></c:set>
 <c:set var="durationvo" value="${DurationList}"></c:set>
-
+<c:set var="membervo" value="${MemberVo}"></c:set>
 
 
 <body>
@@ -92,7 +92,15 @@
                     		<div class="NavBox"> 
                     		  <div class="ProjectNav">
                     			<div class="Leader_Detail">  
-                    				<p>리더 정보</p>
+                    				<p>✔️ 리더 정보</p>
+                    				<p class="Project_p"><b style="color:red;">*</b> 리더 정보는 마이페이지를 통해서 수정하시기 바랍니다.</p>
+                    				<div class="Leader_DetailBox">
+                    				<div class="LeaderImg_Box">
+                    				<img src="${pageContext.request.contextPath}/assets/img/defalutimg.jpeg">
+                    				</div>
+                    				<p><b>${membervo.MEMBER_NICKNAME}</b></p>
+                    				</div>
+                    				
                     			</div>
                     			<div class="Nav_Detail">
                     				<hr>
@@ -155,6 +163,7 @@
 							
 							<div class="CreateBtn_box">
 								<input type="button" class="CreateBtn" value="프로젝트 생성하기">
+								<p class="Project_p"><b style="color:red;">*</b> 프로젝트 생성시 50포인트가 소모됩니다.</p>
 							</div>
 							
 						</form>

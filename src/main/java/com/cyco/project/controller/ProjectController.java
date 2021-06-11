@@ -7,14 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.P_DurationVO;
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.service.MemberService;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
@@ -26,6 +28,11 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService service;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	
 	
 	
 	@RequestMapping(value="list")
@@ -69,14 +76,17 @@ public class ProjectController {
 		return "Project/ProjectList";
 	}
 	
+	
 	@RequestMapping(value="create",method = RequestMethod.GET)
-	public String ProjectAdd(Model model) {
+	public String ProjectAdd(Model model, @RequestParam("userId") String userId) {
+		
 		
 		List<AdrVo> AdrList = service.getAdrList();
 		List<P_FieldVo> FieldList = service.getFieldList();
 		List<SkillVo> SkillList = service.getSkillList();
 		List<PositionVo> PositionList = service.getPositionList();
 		List<P_DurationVO> DurationList = service.getDurationList();
+		MemberVo member = memberService.getMember(userId);
 		
 		
 		
@@ -85,6 +95,8 @@ public class ProjectController {
 		model.addAttribute("SkillList", SkillList);
 		model.addAttribute("PositionList", PositionList);
 		model.addAttribute("DurationList", DurationList);
+		model.addAttribute("MemberVo", member);
+		
 		
 		return "Project/ProjectCreate";
 	}
