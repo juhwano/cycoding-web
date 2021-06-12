@@ -19,14 +19,13 @@ public class MemberVo implements UserDetails{
 	private String MEMBER_NICKNAME;
 	private String MEMBER_PHONE;
 	private String MEMBER_IMAGE;
-	private Boolean ENABLED;
+	private String ENABLED;
 
 	//이건 포인트 테이블
 	private int HAVE_POINT;
 	private int USE_POINT;
 	
-
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -36,13 +35,13 @@ public class MemberVo implements UserDetails{
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return null;
+		return MEMBER_PWD;
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return null;
+		return MEMBER_NICKNAME;
 	}
 
 	@Override

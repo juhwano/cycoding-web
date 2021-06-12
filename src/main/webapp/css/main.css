@@ -7,23 +7,23 @@
 }
 
 .main_area_l{
-	height: 767px;
+	height: 100vh;
 	width: 50%;
    	float: left;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url("../assets/img/main_page/main_Project.jpeg");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     border: none;
     margin: 0;
 }
 
 .main_area_r{
-	height: 767px;
+	height: 100vh;
 	width: 50%;
 	float: right;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url("../assets/img/main_page/main_Member.jpeg");
     background-repeat: no-repeat; 
-    background-size: 100%;
+    background-size: cover;
     border: none;
     margin: 0;
 }
@@ -77,4 +77,68 @@
 
 .footer_cycoding{
 	color: gray;
+
+.user_info{
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    transform: translateY(99%);
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    padding: 1.3125rem;
+    width: 200px;
+    overflow: visible;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+    font-size: 12px;
+    z-index: 2;
+}
+
+.user_info >h4{
+    font-size: 1rem;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mypage{
+	border-bottom: 1px solid #e1e1e1;
+    margin-top: 1rem;
+    margin-bottom: 1.3125rem;
+    padding-bottom: 1.3125rem;
+}
+.mypage >a{
+	display: block;
+	margin: .65625rem 0 0 0;
+}
+
+.Nav_Drop_A{
+	font-size: .875rem;
+    line-height: 1.3125rem;
+    font-weight: 400;
+    letter-spacing: -.0125rem;
+}
+
+.logout{
+	padding: 0.5rem 0 0.5rem 0;
+	margin: 1.3125rem -1.3125rem -1.3125rem;
+    background-color: #fafafa;
+    text-align: center;
+}
+
+
+.Alram_box{
+    position: absolute;
+    bottom: 0;
+    right: -72px;
+    transform: translateY(99%);
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    padding: 1.3125rem;
+    width: 200px;
+    overflow: visible;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+    font-size: 12px;
+    z-index: 2;
 }

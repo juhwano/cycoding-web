@@ -3,6 +3,8 @@
 
 <mapper namespace="com.cyco.member.dao.MemberDao">
 
+
+	
 	<select id="checkEmail" resultType="integer">
 		
 		select MEMBER_ID from member where MEMBER_EMAIL = #{email}
