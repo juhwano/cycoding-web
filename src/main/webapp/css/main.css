@@ -49,3 +49,32 @@
 .plex_right{
 	justify-content: flex-end;
 }
+
+/* footer */
+.footer_img_box{
+	width: 150px;
+	height: auto;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.footer_img_box > img{
+	width: 150px;
+	margin-bottom: 30px;
+}
+
+.page-footer{
+	background-color: #f4f2f3;
+}
+
+.footer_icon i{
+	margin-right: 10px;
+}
+
+.footer_links{
+	padding-left: 50px;
+}
+
+.footer_cycoding{
+	color: gray;
+}
