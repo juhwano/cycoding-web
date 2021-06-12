@@ -22,6 +22,20 @@ public class MemberService {
 	}
 		
 	
+
+	
+	// 맴버정보가져오기
+	public MemberVo getMember(String email) {
+	      
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      MemberVo m = memberdao.getMember(email);
+	      
+	      
+	      return m;
+	      
+	}
+	
+	
 	//회원가입
 	public int regist(MemberVo member) {
 	      
