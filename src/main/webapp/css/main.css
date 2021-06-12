@@ -98,3 +98,20 @@
     background-color: #fafafa;
     text-align: center;
 }
+
+
+.Alram_box{
+    position: absolute;
+    bottom: 0;
+    right: -72px;
+    transform: translateY(99%);
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    padding: 1.3125rem;
+    width: 200px;
+    overflow: visible;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 10%);
+    font-size: 12px;
+    z-index: 2;
+}

@@ -148,24 +148,19 @@
 					
 					<se:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER')">
 						 <!--알림 -->
-	                     <li class="nav-item dropdown">
+	                     <li class="nav-item dropdown" id="alram">
 	                        <a href="#" class="nav-link" id="supportDropdown" >
 
 	                            <img src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
 	                        </a>
 	                       	
 	                       	<!-- 드랍 박스 -->
-	                       	<div class="user_info" style="display:none">
+	                       	<div class="Alram_box" style="display:none">
 				 					<div class="mypage">
-				 					<a href="mypage.cy?useremail=${LoginUser}">마이페이지</a>
 				 					
+				 					<p>알림창 추후 수정 예정</p>
 				 					</div>
 				 					
-				 					<div class="gosu_register"><a href="${ path }/Gosuregister_1.go">고수로 가입하기</a></div>
-				 				
-								
-                                  	
-				 					<div class="logout"><a href="logout.cy">로그아웃</a></div>
 				 				</div>
 	                       	
 	                       	
@@ -262,13 +257,33 @@ Loader -->
 // 회원 정보
 $('#info').click(function() {
 	var toggle = $('.user_info').attr('style');
+	var Alramtoggle = $('.Alram_box').attr('style');
 	
 	if(toggle == "display:none"){
 		$('.user_info').attr('style','');
+		if(Alramtoggle == ""){
+			$('.Alram_box').attr('style','display:none');
+		}
 	}else {
 		$('.user_info').attr('style','display:none');
+		
 	}
 })
+
+$('#alram').click(function() {
+	var toggle = $('.Alram_box').attr('style');
+	var infotoggle = $('.user_info').attr('style');
+	
+	if(toggle == "display:none"){
+		$('.Alram_box').attr('style','');
+		if(infotoggle == ""){
+			$('.user_info').attr('style','display:none');
+		}
+	}else {
+		$('.Alram_box').attr('style','display:none');
+	}
+})
+
 
 
 </script>

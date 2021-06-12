@@ -2,15 +2,23 @@ package com.cyco.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.project.service.ProjectService;
+import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_SkillVo;
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
@@ -19,8 +27,10 @@ import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberService;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.PmemberCountVo;
+import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
+import com.cyco.utils.UtilFile;
 
 @Controller
 @RequestMapping(value="project/")
@@ -101,14 +111,29 @@ public class ProjectController {
 		return "Project/ProjectCreate";
 	}
 	
+	
 	@RequestMapping(value="create",method = RequestMethod.POST)
-	public String ProjectAdd() {
+	public String ProjectAdd(P_DetailVo detail, ProjectVo projectvo, P_SkillVo skillvo, P_FieldVo fieldvo, P_DurationVO duration,
+			@RequestParam("uploadFile") MultipartFile uploadFile, MultipartHttpServletRequest request) {
+		
+		// 파일 유틸 생성
+		UtilFile utilFile = new UtilFile();
+		
+		// 받아오는 파일 받아오기
+		String UploadFile = utilFile.FileUpload(request, uploadFile);
+		String UploadFilename = utilFile.getFilename();
+		
+		detail.setP_image(UploadFilename);
 		
 		
+		System.out.println(detail);
+		System.out.println(projectvo);
+		System.out.println(skillvo);
+		System.out.println(fieldvo);
+		System.out.println(duration);
 		
-		System.out.println("프로젝트 생성 하기");
 		
-		return null;
+		return "Main/CycoMain";
 	}
 
 	

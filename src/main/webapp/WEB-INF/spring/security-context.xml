@@ -28,7 +28,8 @@
 			authentication-failure-handler-ref="userLoginFailureHandler"
 			username-parameter="username" password-parameter="password" />
 		<session-management>
-			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="true"/>
+			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="false"/>
+			
 		</session-management>
 		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
 		<access-denied-handler ref="userDeniedHandler"/>
