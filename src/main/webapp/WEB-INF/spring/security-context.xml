@@ -22,20 +22,22 @@
 		<!-- <intercept-url pattern="/회원 상세" access="hasAnyRole('ROLE_PREMEMBER', 'ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<intercept-url pattern="/**" access="permitAll" />
 		
-		<form-login login-page="/login.cy"
+		
+		<form-login login-page="/login.cy" 
 			login-processing-url="/login.cy" 
 			authentication-success-handler-ref="userLoginSuccessHandler"
 			authentication-failure-handler-ref="userLoginFailureHandler"
 			username-parameter="username" password-parameter="password" />
 		<session-management>
 			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="false"/>
-			
 		</session-management>
-		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
+		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true" success-handler-ref="" />
 		<access-denied-handler ref="userDeniedHandler"/>
 		
+
 		<!-- 보안 토큰 -->
 		<csrf disabled="true"/>
+
 	</http>
 	
 	<beans:bean id="userDeniedHandler" 	class="com.cyco.member.security.UserDeniedHandler"></beans:bean>
@@ -70,7 +72,8 @@
 											where m.MEMBER_EMAIL=?"
 		/>
 
-			  <password-encoder ref="bCryptPasswordEncoder"/>
+
+			  <!-- <password-encoder ref="bCryptPasswordEncoder"/> -->
 
 	</authentication-provider>
 

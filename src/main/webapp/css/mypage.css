@@ -74,7 +74,8 @@ ul {
 
 .sub_title{
 	color:#94A7AE;
-	font-size:14px;
+	font-size:16px;
+	font-weight:bold;
 }
 
 .item{
@@ -322,7 +323,7 @@ top:-5px;
 	padding: 10px;
 	margin:10px;
 }
-#edit{
+#edit-btn{
 	background-color:#94A7AE;
 	color:#F4F2F3;
 }
@@ -334,6 +335,8 @@ top:-5px;
 }
 
 /*여기까지 모달창*/
+
+
 
 .detail_section{
 	margin: 50px auto;
@@ -367,10 +370,10 @@ display: inline-block;
 	font-weight: bold;
 }
 #star{
-    position: relative;
+	position: relative;
     top: -12px;
-    left: -78px;
-    width: 10px;
+    left: 38px;
+    color: #CA8FAB;
 }
 
 .moerdetails{
@@ -381,3 +384,25 @@ display: inline-block;
 	width:100%;
 }
 
+.insert{
+	text-align:center;
+		/*background-color:#F4F2F3;*/
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color:#94A7AE;	
+	width:150px;
+	height:50px;
+	font-size:16px;
+	padding:10px;
+	margin:30px auto;
+	
+	}
+	
+	.insert:hover{
+		border: 2px solid #CA8FAB;
+		box-sizing: border-box;
+		color:#CA8FAB;
+	position:relative;
+	top:-5px;
+	
+	}

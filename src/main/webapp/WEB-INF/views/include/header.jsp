@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -210,19 +210,21 @@
 		<div class="loader-container">
 			<div class="progress-br float shadow">
 				<div class="progress__item"></div>
+
 			</div>
 		</div>
-	</div>
-	<!-- END LOADER -->	
-	
-    </main>
+		<!-- END LOADER -->
 
-<!-- 반응형 토글 -->
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/vendor/headroom.js/dist/headroom.min.js"></script>
+	</main>
 
-<!-- Pixel JS -->
-<script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
+	<!-- 반응형 토글 -->
+	<script
+		src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/vendor/headroom.js/dist/headroom.min.js"></script>
+
+	<!-- Pixel JS -->
+	<script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
 
 <script src="${pageContext.request.contextPath}/vendor/vivus/dist/vivus.min.js"></script>
 
@@ -234,7 +236,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 
 

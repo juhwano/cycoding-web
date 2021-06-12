@@ -31,6 +31,7 @@
 				on s.skill_code = ms.skill_code left join member m
 				on ms.member_id = m.member_id
 				 where s.skill_enabled=1 and m.member_email=#{userid}
+				 order by ms_count
 		
 	</select>
 
@@ -59,13 +60,50 @@
 		
 	</select>
 	
-	<select id="getPreferDurations" resultType="com.cyco.member.vo.V_Duration">
+	<select id="getPreferDurations" resultType="com.cyco.member.vo.MemberDetailPageVo">
 		
 		select d.du_date from v_duration d left join member m
 			on d.m_id = m.member_id
 			where m.member_email=#{userid}		
 		
 	</select>
+	
+	
+	<delete id="deleteSkills">
+	
+		delete from m_skill where MEMBER_ID=${memberid}
+	
+	</delete>
+	
+	<insert id="insertSkills" parameterType="String">
+	
+		INSERT INTO m_skill (ms_count, member_id, skill_code)
+	VALUES(
+		(SELECT NVL(MAX(ms_count),0)+1 FROM m_skill where member_id=${param1}),
+    	${param1},#{param2}	)
+
+	
+	</insert>
+	
+		<update id="updatePosition">
+	
+		update m_detail set position_id=#{param2} where member_id=${param1}
+	
+	</update>
+	
+	
+	<delete id="deleteDurations">
+	
+		delete from v_duration where M_ID=${param1}
+	
+	</delete>
+	
+	<insert id="insertDurations" parameterType="String">
+	
+		INSERT INTO v_duration (du_date, m_id) values (${param1},#{param2})
+
+	
+	</insert>
 
 	
 </mapper>

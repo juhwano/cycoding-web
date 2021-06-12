@@ -5,6 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+
 <!-- Pixel CSS -->
 <link type="text/css" href="${pageContext.request.contextPath}/css/register_pixel.css" rel="stylesheet">
 <link type="text/css" href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet">
@@ -14,7 +15,7 @@
  <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
     <main> 
-
+  
         <!-- Section -->
         <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
             <div class="container">
@@ -31,9 +32,6 @@
 
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <!-- 스프링 시큐리티를 사용하면서 post 전송을 하려면 보안토큰을 context에 설정 후 모든 form에 이 태그를 적용해야 한다 -->
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
                                    <div>
                                     <div class="input-group">

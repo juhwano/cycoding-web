@@ -52,7 +52,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		logger.info(String.valueOf(user.isEnabled()));
 		
 		
-		res.sendRedirect(req.getContextPath()+"/");
+		res.sendRedirect(req.getContextPath()+"/main.cy");
 	}
 
 }

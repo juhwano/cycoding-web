@@ -69,10 +69,10 @@ private SqlSession sqlsession;
 
 	
 	//선호 기간 리스트 뽑기
-	public List<V_Duration> getPreferDurations(String userid){
+	public List<MemberDetailPageVo> getPreferDurations(String userid){
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		List<V_Duration> list = new ArrayList<V_Duration>();
+		List<MemberDetailPageVo> list = new ArrayList<MemberDetailPageVo>();
 		
 		list = memberdao.getPreferDurations(userid);
 		
@@ -115,5 +115,102 @@ private SqlSession sqlsession;
 		return list;
 		
 	}
+	
+	//기존에 선택했던 기술 삭제
+	public String deleteSkills(String memberid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.deleteSkills(memberid);
+		String result = "fail";
+		if(row > 0) {
+			result = "success";
+		}
+		return result;
+	}
+	
+	
+	//뷰단에서 변경한 기술 스탯 디비에 반영하기
+	public String editSkills(String memberid, String stat) {
+		
+		System.out.println("스탯 비동기 변경하기 editSkills");
+		System.out.println(memberid);
+		System.out.println(stat);
+		
+		String result = "fail";
+
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row =  memberdao.insertSkills(memberid, stat);
+			
+		System.out.println("기술 변경하기 왜 세 번 찍히지 editSkills");	
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		
+		System.out.println("반영 결과 : " + result);
+		
+		return result;
+		
+	}
+	
+	//뷰단에서 변경한 포지션 업데이트
+	public String updatePosition(String memberid, String stat) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.updatePosition(memberid, stat);
+		
+		String result = "fail";
+		if(row > 0) {
+			result = "success";
+		}
+		return result;
+	}
+	
+	
+	//기존에 선택했던 선호기간 삭제
+	public String deleteDurations(String memberid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.deleteDurations(memberid);
+		
+		String result = "fail";
+		if(row > 0) {
+			result = "success";
+		}
+		return result;
+	}
+	
+	
+	//뷰단에서 변경한 스탯 디비에 반영하기
+	public String editDurations(String memberid, String stat) {
+		
+		System.out.println("스탯 비동기 변경하기 editDurations");
+		System.out.println(memberid);
+		System.out.println(stat);
+		
+		String result = "fail";
+
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row =  memberdao.insertDurations(memberid, stat);
+			
+		System.out.println("선호 기간 데이터 변경하기");	
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		
+		System.out.println("반영 결과 : " + result);
+		
+		return result;
+		
+	}
+
+	
+	
+	
+
 
 }

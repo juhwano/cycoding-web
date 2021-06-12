@@ -13,6 +13,7 @@ public class MemberDetailPageVo {
 	private String position_name;
 	private String position_enabled;
 	private String position_id;
+	private String du_date;
 	
 	
 	

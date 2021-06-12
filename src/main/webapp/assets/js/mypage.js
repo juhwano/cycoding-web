@@ -50,7 +50,7 @@ $(document).ready(function() {
 
             $.ajax({
 
-                url:"editmydetail.ajax",
+                url:"memberdetail/editmydetail.ajax",
                 data:{
                    code:code,
                    info:atfer,
@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     });
 
-
+    let newStats = [];
 
     //detail영역 스탯 모달창
     $('.trigger').on('click', function() {
@@ -111,9 +111,11 @@ $(document).ready(function() {
 
             let name = $(this).text();
             selected= $(".clicked");
+            newStats.push($(".clicked").attr("id"));
 
             console.log(selected.length);
             console.log(selected);
+            console.log(newStats);
     
             console.log($(this).text(), " 태그 선택");
 
@@ -140,6 +142,7 @@ $(document).ready(function() {
             $(this).removeClass("chosen");
             $(this).addClass("tags");
             $("#tagarea").append($(this));
+            
         });
 
         //클릭하면 포지션 태그 선택
@@ -157,12 +160,14 @@ $(document).ready(function() {
                 if(selected.length>0){
 
                     swal("하나만 선택 가능합니다");
+                    
     
                 } else{
     
                     $(this).addClass("p_clicked");
                     $(this).addClass("chosen");
                     $(this).removeClass("positions");
+                    $("#selectedarea").append($(this));
                 }
 
         });
@@ -173,6 +178,7 @@ $(document).ready(function() {
             $(this).removeClass("p_clicked");
             $(this).removeClass("chosen");
             $(this).addClass("positions");
+            $("#tagarea").append($(this));
         });
 
        
@@ -181,11 +187,18 @@ $(document).ready(function() {
 
    //모달창에 스탯 리스트 뿌리기
    function edit_modal(code){
+    
+    console.log("모달 실행");
+    console.log(code);
+    $("#stat").val(code);
 
     if(code == 'skill'){
     
 		$("#modal-title").empty();
-        $("#modal-title").append("보유하고 계신 기술을 선택해주세요");
+        $("#modal-title").append(
+            "보유하고 계신 기술을 선택해주세요<br>"
+            +"<span style='font-size:16px; color:#CA8FAB'>첫번째 기술이 대표기술로 소개됩니다</span>"
+            );
 
         getStat('skill');
 
@@ -193,6 +206,7 @@ $(document).ready(function() {
 
         $("#modal-title").empty();
         $("#modal-title").append("프로젝트 경험 여부를 선택해주세요");
+
 
         getStat('experience');
     
@@ -204,7 +218,7 @@ $(document).ready(function() {
         getStat('position');
     
     }else if(code == 'duration'){
-		
+
 		$("#modal-title").empty();
 		$("#modal-title").append("선호하는 프로젝트 기간을 선택해주세요");
 
@@ -214,7 +228,7 @@ $(document).ready(function() {
 
 
     let key ="";
-
+    let originStat =[];
     function getStat(key){
         console.log("모달에 태그 뿌리기 실행");
         key = key;
@@ -222,19 +236,19 @@ $(document).ready(function() {
 
         if(key == "skill"){
         
-            link = "getskills.ajax";
+            link = "memberdetail/getskills.ajax";
         
         } else if(key == "experience"){
 
-            link = "getexperiences.ajax";
+            
 
         } else if(key == "position"){
         
-            link = "getposition.ajax";
+            link = "memberdetail/getposition.ajax";
         
         } else if(key == "duration"){
             
-            link = "getdurations.ajax";
+            link = "memberdetail/getdurations.ajax";
         
         }
 
@@ -252,15 +266,28 @@ $(document).ready(function() {
                 console.log(response);
                 $("#tagarea").empty();
 
+
+
+                console.log("현재 this!!!");
                 if(key == "skill"){
 
                     $.each(response, function(index, obj){
                         console.log("each??");
                         
-                        $("#tagarea").append(
+                        //if( $(".trigger-btn").find(".skill").text().indexOf(obj.skill_name) != -1){
+                          //  $("#selectedarea").append(
     
-                           "<div class='tags' id='"+obj.skill_code+"'>"+obj.skill_name+"</div>"
-                        );
+                          //      "<div class='clicked' id='"+obj.skill_code+"'>"+obj.skill_name+"</div>"
+                          //   );
+                        //} else{
+
+                            $("#tagarea").append(
+    
+                                "<div class='tags' id='"+obj.skill_code+"'>"+obj.skill_name+"</div>"
+                             );
+
+                       // }
+                        
     
                    });
 
@@ -268,23 +295,39 @@ $(document).ready(function() {
 
                     $.each(response, function(index, obj){
                         console.log("each??");
-                        
-                        $("#tagarea").append(
 
-                            "<div class='positions' id='"+obj.position_id+"'>"+obj.position_name+"</div>"
-                        );
+                       // if( $(".trigger-btn").find(".position").text().indexOf(obj.position_name) != -1){
+                            //$("#selectedarea").append(
     
+                            //    "<div class='p_clicked' id='"+obj.position_id+"'>"+obj.position_name+"</div>"
+                            // );
+                        //} else{
+                        
+                            $("#tagarea").append(
+
+                                "<div class='positions' id='"+obj.position_id+"'>"+obj.position_name+"</div>"
+                            );
+                       // }
+                            
                    });
 
                 }else if(key == "duration"){
 
                     $.each(response, function(index, obj){
                         console.log("each??");
-                        
-                        $("#tagarea").append(
+
+                        //if( $(".trigger-btn").find(".duration").text().indexOf(obj.du_date) != -1){
+                           // $("#selectedarea").append(
     
-                           "<div class='tags'>"+obj.du_date+"</div>"
-                        );
+                            //    "<div class='clicked' id='d"+(index+1)+"'>"+obj.du_date+"</div>"
+                            // );
+                       // } else{
+                        
+                            $("#tagarea").append(
+        
+                                "<div class='tags' id='d"+(index+1)+"'>"+obj.du_date+"</div>"
+                            );
+                       // }
     
                    });
                 }
@@ -301,6 +344,11 @@ $(document).ready(function() {
 }
 
 
+
+
+
+
+
 //모달창 닫으며 데이터 태그 초기화하기
 $("#cancel").on("click",function(){
 
@@ -310,32 +358,147 @@ $("#cancel").on("click",function(){
 });
 
 //모달에서 선택한 태그 DB와 뷰단에 반영하기(기술, 포지션, 기간)
-$("#edit").on("click",function(){
+//스탯 비동기 반영
+$("#edit-btn").on("click",function(){
     console.log("수정버튼 클릭");
 
-    newStat = $(".chosen").attr("id");
+    let first = $("#selectedarea :nth-child(1)").attr("id");
+    let second = $("#selectedarea :nth-child(2)").attr("id");
+    let third =  $("#selectedarea :nth-child(3)").attr("id");
 
-    console.log(newStat);
+    console.log("1",first);
+    console.log("2",second);
+    console.log("3",third);
 
+    let arr = [];
 
+    if(third == undefined && second == undefined && first == undefined){
+        swal("수정할 내용이 없습니다","","error");
+
+    } else{
+        
+        if($("#stat").val() != "position"){
+        
+            del($("#stat").val());
+
+            if(third == undefined && second == undefined && first != undefined){
+    
+                console.log("하나 선택했을 때");            
+       
+                edit(first);
+    
+        
+            } else if(third == undefined && second != undefined){
+    
+                arr.push(first);
+                arr.push(second);
+    
+                console.log("두 개 선택했을 때");
+                
+                $.each(arr, function(index, item){
+                    edit(item);
+                });
+                //edit(first);
+                //edit(second);
+    
+        
+            } else if(third != undefined ){
+                
+                console.log("세 개 선택했을 때");
+        
+                //edit(first);
+                //edit(second);
+                //edit(third);
+    
+                
+                arr.push(first);
+                arr.push(second);
+                arr.push(third);
+                
+                $.each(arr, function(index, item){
+                    edit(item);
+                });
+    
+            } 
+
+        } else if($("#stat").val() == "position"){
+
+            edit(first);
+
+        }
+           
+
+        console.log("마지막에 실행될 구간");
+        modifyStatView($("#stat").val());
+
+    } 
+    
+    
 });
 
-//스탯 비동기 반영
-function editStat(keyword){
+//기존 스탯들 삭제하는 함수
+function del(type){
 
     let url = "";
+    console.log("1번 시작");
+    console.log(type, " 삭제 ");
+/*
+    if(type == 'skill'){
+        
+        url="deleteskills.ajax";
+
+    } else if(type='duration'){
+
+        url="deletedurations.ajax";
+
+    }
+*/
+    
+    $.ajax({
+
+        //url:url,
+        url:"memberdetail/deletestat.ajax",
+        data:{
+            memberid:$("#m_id").val(),
+            type:type
+        },
+        type:"get",
+        dataType:"text",
+        async: false,
+        success:function(data){
+            console.log("1. 삭제 결과 : ", data);
+            console.log("1번 끝");
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+}
+
+
+//새로 선택된 스탯들 인서트 하는 함수
+function edit(stats){
+
+    let url = "";
+    let keyword = $("#stat").val();
+    console.log(keyword);
+    console.log(stats);
+    console.log("2번 시작");
 
     if(keyword == 'skill'){
         
-        url="editSkills.ajax";
+        url="memberdetail/editskills.ajax";
 
-    } else if(keyword = 'position'){
+    } else if(keyword == 'position'){
 
-        url="editPosition.ajax";
+        console.log("키워드 ",keyword);
+        console.log("왜 여길 들어와?");
+        url="memberdetail/updateposition.ajax";
 
-    } else if(keyword='duration'){
-
-        url="editDurations.ajax";
+    } else if(keyword == 'duration'){
+        console.log("여기 타나");
+        url="memberdetail/editdurations.ajax";
 
     }
 
@@ -344,23 +507,125 @@ function editStat(keyword){
 
         url:url,
         data:{
-            memberid:$("m_id").val()
+            memberid:$("#m_id").val(),
+            stat:stats
         },
-        type:"get",
-        dataType:"json",
+        type:"post",
+        dataType:"text",
+        async: false,
         success:function(data){
-            console.log(data);
+            console.log("2. 인서트 결과  ",data);
+            console.log("2번 끝");
         },
         error:function(xhr){
             console.log(xhr);
         }
-        
-
 
     });
-
 }
 
+//스탯 변경사항 뷰단에 반영하는 함수
+function modifyStatView(type){
+
+    console.log("3번 시작")
+    console.log("3. 비동기 반영 실행", $("#m_email").val());
+
+    $.ajax({
+
+        url:"memberdetail/modifystatview.ajax",
+        data:{
+
+            userid:$("#m_email").val(),
+            type:type
+
+        },
+        type:"post",
+        dataType:"json",
+        async: false,
+        success:function(data){
+
+            console.log("화면 비동기 반영결과 : ",data);
+            
+            if(type == "skill"){
+
+                $(".skillarea").empty();
+
+                $.each(data, function(index,obj){
+    
+                    if(index == 0){
+    
+    
+                        $(".skillarea").append(
+    
+                            '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
+                            +'<span id="star">★</span>'
+                            +'<div class="info_tags main_skill skill">'
+                            +obj.skill_name+'</div></a>'
+    
+                        );
+    
+                    } else{
+    
+                        $(".skillarea").append(
+    
+                            '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
+                            +'<div class="info_tags skill">'
+                            +obj.skill_name+'</div></a>'
+    
+                        );
+    
+                    }
+                    
+    
+                });
+
+            } else if(type == "position"){
+
+                $(".positionarea").empty();
+
+                $.each(data, function(index,obj){
+                
+                $(".positionarea").append(
+                    '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
+					+'<div class="info_tags position">'+obj.position_name+'</div></a>'
+                );
+
+            });
+
+            } else if(type=="duration"){
+
+
+                $(".durationarea").empty();
+
+                $.each(data, function(index,obj){
+
+    
+                        $(".durationarea").append(
+    
+                            '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
+                            +'<div class="info_tags duration">'
+                            +obj.du_date+'</div></a>'
+    
+                        );
+    
+                });
+
+            }
 
 
 
+            swal("수정되었습니다","","success");
+            console.log("3번 끝");
+
+            
+    $("#tagarea").empty();
+    $("#selectedarea").empty();
+
+
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+}

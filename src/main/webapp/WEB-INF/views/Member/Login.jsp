@@ -50,8 +50,6 @@
                             <form id="form" action="login.cy" method="post" class="loginForm">
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	
 									
                                    <!--   <label for="exampleInputIcon4">Your email</label>-->
                                     <div class="input-group mb-4">
@@ -104,10 +102,7 @@
                             <form id="form" action="logout.cy" method="post">
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-									
-									                               
+                             
                                 
                                 <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 
