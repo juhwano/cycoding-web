@@ -100,7 +100,7 @@
 	
 	<insert id="insertDurations" parameterType="String">
 	
-		INSERT INTO v_duration (du_date, m_id) values (${param1},#{param2})
+		INSERT INTO m_duration (duration_id, member_id) values (#{param2},${param1})
 
 	
 	</insert>

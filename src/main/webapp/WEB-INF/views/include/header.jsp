@@ -169,7 +169,7 @@
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link" id="info">
-                 			    ${LoginUser}님
+                 			    ${nickname}님
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
 	                        

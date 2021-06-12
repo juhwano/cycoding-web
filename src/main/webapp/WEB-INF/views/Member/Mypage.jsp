@@ -82,7 +82,7 @@
 
 				<div id="info" class="details">
 					<p class="cycoder_title">DETAIL</p>
-					<p class="sub_title">모든 항목을 입력해야 원하는 프로젝트에 지원할 수 있어요!</p>
+					<p class="sub_title"></p>
 
 					<div class="infolist">
 
@@ -141,32 +141,35 @@
 
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails experience" onclick="edit_modal('experience')">
+							<div class="moerdetails experience"
+								onclick="edit_modal('experience')">
 								<c:choose>
 
-	
+
 
 
 									<c:when test="${empty skills}">
 
-										
-											<div style="display: flex; align-items: center; width: 350px; margin: auto; justify-content:space-btween;">
-												<div class="insert experience">없음</div>
-												<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience">있음</div>
-												</a>
-											</div>
-										
+
+										<div
+											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
+											<div class="insert experience" id="never">없음</div>
+											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience" id="have">있음</div>
+											</a>
+										</div>
+
 
 									</c:when>
 									<c:otherwise>
 
-									<div style="display: flex; align-items: center; width: 350px; margin: auto; justify-content:space-btween;">
-												<div class="insert experience">없음</div>
-												<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience">있음</div>
-												</a>
-											</div>
+										<div
+											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;" id="ex_toggle">
+											<div class="insert experience" id="never">없음</div>
+											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience" id="have">있음</div>
+											</a>
+										</div>
 
 
 									</c:otherwise>
@@ -181,7 +184,8 @@
 
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails positionarea" onclick="edit_modal('position')">
+							<div class="moerdetails positionarea"
+								onclick="edit_modal('position')">
 								<c:choose>
 
 
@@ -216,9 +220,10 @@
 							</div>
 
 							<!-- 기간 입력 안 했으면 -->
-							<div class="moerdetails durationarea" onclick="edit_modal('duration')">
+							<div class="moerdetails durationarea"
+								onclick="edit_modal('duration')">
 								<c:choose>
-									<c:when test="${empty duration}">
+									<c:when test="${empty durations}">
 
 										<a href="#m_stat" class="trigger-btn" data-toggle="modal">
 											<div class="insert">입력하기</div>
@@ -326,14 +331,17 @@
 					<input type="hidden" id="stat"> <input type="hidden"
 						id="first"> <input type="hidden" id="second"> <input
 						type="hidden" id="third">
-					<div id="tagarea"></div>
-					<div id="selectedarea"></div>
 
+					<div id="contentarea">
+						<div id="tagarea"></div>
+						<div id="selectedarea"></div>
+					</div>
 					<div id="buttonarea">
 						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-						<button id="edit-btn">수정</button></a>
-						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-						<button	id="cancel">닫기</button></a>
+							<button id="edit-btn">수정</button>
+						</a> <a href="#m_stat" class="trigger-btn" data-toggle="modal">
+							<button id="cancel">닫기</button>
+						</a>
 					</div>
 
 				</div>
@@ -343,23 +351,7 @@
 		</div>
 	</div>
 
-
-	<!-- 선호 기간 모달창 
-    <div id="m_duration" class="modal fade">
-	<div class="modal-dialog modal-login">
-		<div class="modal-content">
-			<div class="modal-header">				
-				<p id="modal-title">선호하시는 프로젝트 기간을 골라주세요</p>
-			</div>
-			<div id="modal-body">
-			<div class="tagarea"></div>
-			</div>
-		</div>
-	</div>
-</div> 
--->
-
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=7"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=1"></script>
 </body>
 </html>

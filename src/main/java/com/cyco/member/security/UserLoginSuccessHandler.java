@@ -50,9 +50,10 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		logger.info(String.valueOf(user.isAccountNonLocked()));
 		logger.info(String.valueOf(user.isCredentialsNonExpired()));
 		logger.info(String.valueOf(user.isEnabled()));
+		req.setAttribute("username", auth.getName());
 		
-		
-		res.sendRedirect(req.getContextPath()+"/main.cy");
+		//res.sendRedirect(req.getContextPath()+"/main.cy");
+		req.getRequestDispatcher("/login.cy").forward(req, res);
 	}
 
 }

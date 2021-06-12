@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
+    // 개인정보 담을 변수
     let before;
     let atfer;
+
     //수정 버튼 누르면 수정창 생성
     $(document).on("click",".m-btn",function(){
     
@@ -205,7 +207,7 @@ $(document).ready(function() {
     } else if(code == 'experience'){
 
         $("#modal-title").empty();
-        $("#modal-title").append("프로젝트 경험 여부를 선택해주세요");
+        $("#modal-title").append("경험하신 프로젝트에 대해 알려주세요");
 
 
         getStat('experience');
@@ -230,9 +232,15 @@ $(document).ready(function() {
     let key ="";
     let originStat =[];
     function getStat(key){
-        console.log("모달에 태그 뿌리기 실행");
+        console.log("프로젝트 경험 모달에 뿌리기");
         key = key;
         let link;
+
+        $("#contentarea").append(
+
+            '<div id="tagarea"></div><div id="selectedarea"></div>'
+
+        );
 
         if(key == "skill"){
         
@@ -240,7 +248,33 @@ $(document).ready(function() {
         
         } else if(key == "experience"){
 
-            
+            $("#contentarea").empty();
+
+            $("#contentarea").append(
+
+                `<div class="exarea">
+                <div class="ex_title">
+                    <input type="text" class="exinput" placeholder="프로젝트명"></input>
+                    <span class="index"></span>
+                </div>
+
+                <div class="ex_title"><input type="text" class="exinput" placeholder="담당 업무/포지션"></input> </div>
+
+                <div class="ex_title"><input type="text" class="exinput" placeholder="사용기술"></input> </div>
+
+                <div class="ex_title"><input type="text" class="exinput" placeholder="소요 기간"></input> </div>
+
+                <div class="ex_content"><input type="text" class="exinput" placeholder="간단한 설명"></input> </div>
+
+            </div>`
+
+            );
+
+            //$(".index").text("#"+$(this).parent().parent().find(".exarea").index(this));
+
+
+            return;
+
 
         } else if(key == "position"){
         
@@ -266,9 +300,6 @@ $(document).ready(function() {
                 console.log(response);
                 $("#tagarea").empty();
 
-
-
-                console.log("현재 this!!!");
                 if(key == "skill"){
 
                     $.each(response, function(index, obj){
@@ -325,7 +356,7 @@ $(document).ready(function() {
                         
                             $("#tagarea").append(
         
-                                "<div class='tags' id='d"+(index+1)+"'>"+obj.du_date+"</div>"
+                                "<div class='tags' id='D"+(index+1)+"'>"+obj.du_date+"</div>"
                             );
                        // }
     
@@ -344,14 +375,10 @@ $(document).ready(function() {
 }
 
 
-
-
-
-
-
 //모달창 닫으며 데이터 태그 초기화하기
 $("#cancel").on("click",function(){
 
+    $(".exarea").remove();
     $("#tagarea").empty();
     $("#selectedarea").empty();
 
@@ -442,17 +469,6 @@ function del(type){
     let url = "";
     console.log("1번 시작");
     console.log(type, " 삭제 ");
-/*
-    if(type == 'skill'){
-        
-        url="deleteskills.ajax";
-
-    } else if(type='duration'){
-
-        url="deletedurations.ajax";
-
-    }
-*/
     
     $.ajax({
 
@@ -612,8 +628,6 @@ function modifyStatView(type){
 
             }
 
-
-
             swal("수정되었습니다","","success");
             console.log("3번 끝");
 
@@ -628,4 +642,47 @@ function modifyStatView(type){
         }
 
     });
+
+}
+// 여기까지가 보유 기술, 선호 포지션, 기간 수정 및 화면 반영
+///////////////////////////////////////////////////////////////////////////////////////
+
+//프로젝트 경험 여부 관련 함수
+
+// '없음' 선택하면 입력 완료로 바꾸기
+$("#never").on("click",function(){
+
+    $(this).toggleClass("insert");
+    $(this).toggleClass("info_tags");
+    $(this).css("margin","10px auto");
+
+    console.log($(".moredetails").find("#have").length);
+
+    if( $(".trigger-btn").find("#have").length == 1){
+        console.log("태그 없애기!");
+        $("#have").remove();
+
+    } else{
+
+        console.log("태그 만들기")
+        $("#ex_toggle").append(
+
+         `<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience" id="have">있음ㅎ</div>
+											</a>`
+
+        );
+    }
+    
+
+
+
+});
+
+
+//추가 버튼 클릭시 폼 생성
+function addEx(){
+
+    $("#contentarea").append();
+
 }
