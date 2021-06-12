@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- post 방식을 위한 시큐리티 토큰 설정 -->
-	<meta name="_csrf" content="${_csrf.token}"/>
 
 <!-- Primary Meta Tags -->
 <title>사이좋게 코딩하자</title>

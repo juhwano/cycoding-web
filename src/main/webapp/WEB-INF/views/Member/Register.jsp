@@ -32,9 +32,6 @@
 
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <!-- 스프링 시큐리티를 사용하면서 post 전송을 하려면 보안토큰을 context에 설정 후 모든 form에 이 태그를 적용해야 한다 -->
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
                                    <div>
                                     <div class="input-group">

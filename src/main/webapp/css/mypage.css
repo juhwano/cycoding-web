@@ -323,7 +323,7 @@ top:-5px;
 	padding: 10px;
 	margin:10px;
 }
-#edit{
+#edit-btn{
 	background-color:#94A7AE;
 	color:#F4F2F3;
 }
@@ -335,6 +335,8 @@ top:-5px;
 }
 
 /*여기까지 모달창*/
+
+
 
 .detail_section{
 	margin: 50px auto;

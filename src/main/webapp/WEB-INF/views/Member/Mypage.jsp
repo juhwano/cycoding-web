@@ -54,7 +54,8 @@
 					<ul>
 
 						<li class="itemlist"><span class="item">이메일</span><input
-							type="text" class="info" value="${member.MEMBER_EMAIL}" readonly>
+							type="text" class="info" id="m_email"
+							value="${member.MEMBER_EMAIL}" readonly>
 							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
 						<li class="itemlist"><span class="item">비밀번호</span><input
 							type="password" class="info" value="${member.MEMBER_PWD}"
@@ -93,7 +94,7 @@
 							<!-- 스탯 입력 안 했으면 -->
 
 
-							<div class="moerdetails" onclick="edit_modal('skill')">
+							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
 								<c:choose>
 
 
@@ -108,7 +109,7 @@
 												<c:when test="${status.index eq 0 }">
 													<a href="#m_stat" class="trigger-btn" data-toggle="modal">
 														<span id="star">★</span>
-														<div class="info_tags main_skill">
+														<div class="info_tags main_skill skill">
 
 															<c:out value="${sarr.skill_name}" />
 
@@ -117,7 +118,7 @@
 												</c:when>
 												<c:otherwise>
 													<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-														<div class="info_tags">
+														<div class="info_tags skill">
 															<c:out value="${sarr.skill_name}" />
 														</div>
 													</a>
@@ -140,20 +141,32 @@
 
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails" onclick="edit_modal('experience')">
+							<div class="moerdetails experience" onclick="edit_modal('experience')">
 								<c:choose>
+
+	
 
 
 									<c:when test="${empty skills}">
 
-										<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-											<div class="insert">입력하기</div>
-										</a>
+										
+											<div style="display: flex; align-items: center; width: 350px; margin: auto; justify-content:space-btween;">
+												<div class="insert experience">없음</div>
+												<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience">있음</div>
+												</a>
+											</div>
+										
 
 									</c:when>
 									<c:otherwise>
 
-
+									<div style="display: flex; align-items: center; width: 350px; margin: auto; justify-content:space-btween;">
+												<div class="insert experience">없음</div>
+												<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience">있음</div>
+												</a>
+											</div>
 
 
 									</c:otherwise>
@@ -168,7 +181,7 @@
 
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails" onclick="edit_modal('position')">
+							<div class="moerdetails positionarea" onclick="edit_modal('position')">
 								<c:choose>
 
 
@@ -183,7 +196,7 @@
 
 										<c:forEach var="position" items="${position}">
 											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="info_tags">
+												<div class="info_tags position">
 													<c:out value="${position.position_name}" />
 												</div>
 											</a>
@@ -203,7 +216,7 @@
 							</div>
 
 							<!-- 기간 입력 안 했으면 -->
-							<div class="moerdetails" onclick="edit_modal('duration')">
+							<div class="moerdetails durationarea" onclick="edit_modal('duration')">
 								<c:choose>
 									<c:when test="${empty duration}">
 
@@ -217,7 +230,7 @@
 
 										<c:forEach var="darr" items="${durations}">
 											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="info_tags">
+												<div class="info_tags duration">
 													<c:out value="${darr.du_date}" />
 												</div>
 											</a>
@@ -310,18 +323,17 @@
 					<p id="modal-title"></p>
 				</div>
 				<div id="modal-body">
-				<input type="hidden" id="stat">
-				
-				<input type="hidden" id="first">
-				<input type="hidden" id="second">
-				<input type="hidden" id="third">
+					<input type="hidden" id="stat"> <input type="hidden"
+						id="first"> <input type="hidden" id="second"> <input
+						type="hidden" id="third">
 					<div id="tagarea"></div>
 					<div id="selectedarea"></div>
 
 					<div id="buttonarea">
-						<button id="edit">수정</button>
-						<a href="#m_stat" class="trigger-btn" data-toggle="modal"><button
-								id="cancel">닫기</button></a>
+						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+						<button id="edit-btn">수정</button></a>
+						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+						<button	id="cancel">닫기</button></a>
 					</div>
 
 				</div>
@@ -348,6 +360,6 @@
 -->
 
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=5"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=7"></script>
 </body>
 </html>

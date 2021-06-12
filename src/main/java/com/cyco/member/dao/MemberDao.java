@@ -54,6 +54,16 @@ public interface MemberDao {
 	
 	public List<V_Duration> getDurations();
 	
-	public List<V_Duration> getPreferDurations(String userid);
+	public List<MemberDetailPageVo> getPreferDurations(String userid);
+	
+	public Integer deleteSkills(String memberid);
+	
+	public Integer insertSkills(String memberid, String stat);
+	
+	public Integer updatePosition(String memberid, String stats);
+	
+	public Integer deleteDurations(String memberid);
+	
+	public Integer insertDurations(String memberid, String stat);
 	
 }
