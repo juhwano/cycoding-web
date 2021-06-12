@@ -266,6 +266,8 @@ $(document).ready(function() {
 
                 <div class="ex_content"><input type="text" class="exinput" placeholder="간단한 설명"></input> </div>
 
+                <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
+
             </div>`
 
             );
@@ -574,7 +576,7 @@ function modifyStatView(type){
                         $(".skillarea").append(
     
                             '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
-                            +'<span id="star">★</span>'
+                            +'<i class="fa fa-star" id=star></i>'
                             +'<div class="info_tags main_skill skill">'
                             +obj.skill_name+'</div></a>'
     
@@ -679,10 +681,42 @@ $("#never").on("click",function(){
 
 });
 
+// 프로젝트 경험 추가 기입
+$(document).on("click",".add_ex",function(){
+
+    addEx();
+
+});
+
+//프로젝트 경험 추가기입 삭제
+$(documnet).on("click",".del_ex",function(){
+    console.log("폼 삭제")
+    $(this).parent().remove();
+
+});
 
 //추가 버튼 클릭시 폼 생성
 function addEx(){
+    console.log("경험 입력 폼 생성");
+    $("#contentarea").append(
 
-    $("#contentarea").append();
+        `<div class="exarea">
+        <div class="ex_title">
+            <input type="text" class="exinput" placeholder="프로젝트명"></input>
+            <span class="index"></span>
+        </div>
 
+        <div class="ex_title"><input type="text" class="exinput" placeholder="담당 업무/포지션"></input> </div>
+
+        <div class="ex_title"><input type="text" class="exinput" placeholder="사용기술"></input> </div>
+
+        <div class="ex_title"><input type="text" class="exinput" placeholder="소요 기간"></input> </div>
+
+        <div class="ex_content"><input type="text" class="exinput" placeholder="간단한 설명"></input> </div>
+
+        <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
+
+    </div>`
+
+    );
 }

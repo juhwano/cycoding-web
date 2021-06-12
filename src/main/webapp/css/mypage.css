@@ -374,10 +374,11 @@ display: inline-block;
 	font-weight: bold;
 }
 #star{
-	position: relative;
-    top: -12px;
-    left: 38px;
+    position: relative;
+    top: -10px;
+    left: 22px;
     color: #CA8FAB;
+    width: 0
 }
 
 .moerdetails{

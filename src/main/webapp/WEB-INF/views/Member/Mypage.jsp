@@ -108,7 +108,8 @@
 											<c:choose>
 												<c:when test="${status.index eq 0 }">
 													<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-														<span id="star">★</span>
+														<!-- <span id="star">★</span> -->
+														<i class="fa fa-star" id=star></i>
 														<div class="info_tags main_skill skill">
 
 															<c:out value="${sarr.skill_name}" />
@@ -352,6 +353,6 @@
 	</div>
 
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=1"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=6"></script>
 </body>
 </html>

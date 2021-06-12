@@ -18,6 +18,8 @@
 
 	</update>
 	
+	
+	
 	<select id="getSkills" resultType="com.cyco.common.vo.SkillVo">
 		
 		select skill_name, skill_code, skill_enabled from skill where skill_enabled=1

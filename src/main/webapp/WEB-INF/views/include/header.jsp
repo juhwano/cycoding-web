@@ -36,7 +36,8 @@
 
 	<!-- JQuesy -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
 
 	
 	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
@@ -169,7 +170,7 @@
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link" id="info">
-                 			    ${nickname}님
+                 			    ${sessionScope.nickname}님
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
 	                        
