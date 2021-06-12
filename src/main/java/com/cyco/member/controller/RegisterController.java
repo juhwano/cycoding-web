@@ -51,15 +51,6 @@ public class RegisterController {
 		}
         
     }
-
 	  
-	  @RequestMapping(value="admin.cy")
-	  public String admintest() {
-		  System.out.println("어드민 페이지 요청");
-		  return "admin";
-	  }
-	 
-
-
 
 }

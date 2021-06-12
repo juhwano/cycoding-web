@@ -15,8 +15,6 @@
 
 	<http auto-config="true" use-expressions="true" create-session="never">
 	
-		<csrf disabled="true"/>
-	
 		<intercept-url pattern="/admin.cy" access="hasRole('ROLE_ADMIN')" />
 		<!-- <intercept-url pattern="/프로젝트 관리" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEAMMANGER')" />-->		
 		<!-- <intercept-url pattern="/프로젝트 상세" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
@@ -37,13 +35,15 @@
 		<access-denied-handler ref="userDeniedHandler"/>
 		
 
+		<!-- 보안 토큰 -->
+		<csrf disabled="true"/>
+
 	</http>
 	
 	<beans:bean id="userDeniedHandler" 	class="com.cyco.member.security.UserDeniedHandler"></beans:bean>
 	<beans:bean id="userLoginSuccessHandler" class="com.cyco.member.security.UserLoginSuccessHandler"></beans:bean>
 	<beans:bean id="userLoginFailureHandler" class="com.cyco.member.security.UserLoginFailureHandler"></beans:bean>
 	
-
 <!-- 
 	   <authentication-manager>
 		<authentication-provider>
@@ -72,10 +72,9 @@
 											where m.MEMBER_EMAIL=?"
 		/>
 
-<!-- 
-			  <password-encoder ref="bCryptPasswordEncoder"/>
 
- -->
+			  <!-- <password-encoder ref="bCryptPasswordEncoder"/> -->
+
 	</authentication-provider>
 
 </authentication-manager>				

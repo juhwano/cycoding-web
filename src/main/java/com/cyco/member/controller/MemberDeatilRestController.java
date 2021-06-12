@@ -141,8 +141,6 @@ public class MemberDeatilRestController {
 			
 		}  else if(type.equals("duration")) {
 			
-			System.out.println("여기 탑니까ㄴ");
-			
 			result = memberdetailservice.deleteDurations(memberid);
 		}
 		

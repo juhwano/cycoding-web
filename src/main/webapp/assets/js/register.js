@@ -11,16 +11,6 @@ $(document).ready(function(){
     
 });
 	
-	
-
-      var csrfToken = $("meta[name='_csrf']").attr("content");
-	  $.ajaxPrefilter(function(options, originalOptions, jqXHR){
-	    if (options['type'].toLowerCase() === "post") {
-	        jqXHR.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-	    }
-	  });
-
-
 
 //let email = $('#email').val();
 //let password = $('#password').val();
@@ -134,10 +124,7 @@ function validation() {
 
         //이메일 체크
         if (!email_check(email)) {
-            /* swal({
-                title: "이메일을 입력하세요",
-                icon: "error"
-            }); */
+
             swal("올바른 이메일을 입력해주세요." , "" ,"error");
             checking = false;
             $("#email").focus();
@@ -147,10 +134,7 @@ function validation() {
         
         //이름 체크
         if (name == '') {
-            /* swal({
-                title: "이름을 입력하세요",
-                icon: "error"
-            }); */
+
             swal("이름을 입력하세요." , "" ,"error");
             checking = false;
             $("#name").focus();
@@ -162,30 +146,21 @@ function validation() {
         let eng = password.search(/[a-z]/ig);
 
         if (password.length < 8 || password.length > 13) {
-            /* swal({
-                title: "비밀번호는 8-20자리 이내로 입력하세요",
-                icon: "error"
-            }); */
+
             swal("비밀번호는 8-20자리 이내로 입력하세요." , "" ,"error");
             checking = false;
             $("#password").focus();
             return;
 
         } else if (password.search(/\s/) != -1) {
-            /* swal({
-                title: "비밀번호는 공백을 입력할 수 없습니다",
-                icon: "error"
-            }); */
+
             swal("비밀번호는 공백을 입력할 수 없습니다." , "" ,"error");
             checking = false;
             $("#password").focus();
             return;
 
         } else if (num < 0 || eng < 0 ) {
-            /* swal({
-                title: "영문, 숫자를 포함하여 입력하세요",
-                icon: "error"
-            }); */
+
             swal("영문, 숫자를 포함하여 입력하세요." , "" ,"error");
             checking = false;
             $("#password").focus();
@@ -193,10 +168,7 @@ function validation() {
         }
 
         if (password == '') {
-            /* swal({
-                title: "비밀번호를 입력하세요",
-                icon: "error"
-            }); */
+
             swal("비밀번호를 입력하세요." , "" ,"error");
             checking = false;
             $("#password").focus();
@@ -219,10 +191,7 @@ function validation() {
         }
 */
         if (passwordC == "") {
-            /* swal({
-                title: "비밀번호 확인란을 입력하세요",
-                icon: "error"
-            }); */
+
             swal("비밀번호를 확인해주세요." , "" ,"error");
             checking = false;
             $("#passwordC").focus();
@@ -233,10 +202,7 @@ function validation() {
 
         //닉네임 체크
         if (nickName == '') {
-            /* swal({
-                title: "닉네임 을 입력하세요",
-                icon: "error"
-            }); */
+
             swal("닉네임을 입력하세요." , "" ,"error");
             $("#nickName").focus();
             checking = false;
@@ -247,27 +213,18 @@ function validation() {
         if (!($('#emailCheckBtn').html() == '인증완료')) {
             console.log($('#emailCheckBtn').html());
             swal("이메일을 인증해주세요." , "" ,"error");
-             /* swal({
-                title: "이메일 중복체크를 해주세요",
-                icon: "error"
-            }); */ 
+
             return;
         }
          if (!($('#nickNameCheckBtn').html() == '체크완료')) {
              swal("닉네임 중복확인을 해주세요." , "" ,"error");
-            /* swal({
-                title: "상점이름 중복체크를 해주세요",
-                icon: "error"
-            }); */
+
             return;
         } 
         if (!($('#phoneCheckBtn').html() == '체크완료')) {
             
              swal("휴대폰 번호 중복확인을 해주세요." , "" ,"error");
-            /* swal({
-                title: "핸드폰 번호 인증을 해주세요",
-                icon: "error"
-            }); */
+
             return;
         }
         
@@ -292,16 +249,13 @@ function validation() {
 
         console.log(email);
         if (email == '') {
-            /* swal({
-                title: "이메일을 입력해주세요",
-                icon: "error"
-            }); */
+
             swal("인증할 이메일을 입력해주세요." , "" ,"error");
             return;
         }
         
         $.ajax({
-            url: "emailcheckajax.cy",
+            url: "register/emailcheck.ajax",
             data: {
                 email: email
             },
@@ -310,18 +264,14 @@ function validation() {
             success: function(data) {
                 console.log(data);
                 if (data == 'disable') {
-                    /* swal({
-                        title: "이미 존재하는 이메일입니다",
-                        icon: "error"
-                    }); */
+
                     swal("이미 가입된 이메일입니다." , "" ,"error");
                     
                 } else {
                     
-                    //alert("사용 가능한 이메일입니다");
                     
                     $.ajax({
-                        url: "emailcheckajax.cy",
+                        url: "register/emailcheck.ajax",
                         data: {
                             email: email
                         },
@@ -332,10 +282,7 @@ function validation() {
                             
                             let result = data.split("-");
                             if (result[0] == 'fail') {
-                                /* swal({
-                                    title: "이미 존재하는 이메일입니다",
-                                    icon: "error"
-                                }); */
+
                                 swal("인증 메일 발송에 실패했습니다." , "" ,"error");
                                 
                             } else {
@@ -355,7 +302,7 @@ function validation() {
                                 dice = result[1];
                                 console.log("랜덤 숫자 : ",dice);
                                 
-                                //이메일 인증법호 확인
+                                //이메일 인증번호 확인
                                 $("#emailCheckNumberBtn").click(function(){
                                     
                                     $("#emailCheckNumber").val();
@@ -398,17 +345,14 @@ function validation() {
         let nickName = $('#nickName').val();
 
         if (nickName == '') {
-            /* swal({
-                title: "닉네임 을 입력해주세요",
-                icon: "error"
-            }); */
+
             swal("닉네임을 입력해주세요." , "" ,"error");
             $("#nickName").focus();
             return;
         }
 
         $.ajax({
-            url: "nicknamecheckajax.cy",
+            url: "register/nicknamecheck.ajax",
             data: {
                 nickName: nickName
             },
@@ -416,10 +360,7 @@ function validation() {
             dataType: "text",
             success: function(data) {
                 if (data == 'able') {
-                    /* swal({
-                        title: "사용 가능한 닉네임입니다",
-                        icon: "success"
-                    }); */
+
                     swal("사용 가능한 닉네임입니다." , "" ,"success");
                     $('#nickNameCheckBtn').html('체크완료');
                     $('#nickNameCheckBtn').attr('disabled', 'true');
@@ -428,10 +369,7 @@ function validation() {
                     $("#nickNameCheck").text("✔사용 가능한 닉네임입니다");
                     
                 } else {
-                    /* swal({
-                        title: "이미 존재하는 닉네임 입니다",
-                        icon: "error"
-                    }); */
+
                     swal("이미 존재하는 닉네임입니다." , "" ,"error");
                 }
             },
@@ -446,17 +384,14 @@ function validation() {
         let phone = $('#phone').val();
 
         if (phone == '') {
-            /* swal({
-                title: "닉네임 을 입력해주세요",
-                icon: "error"
-            }); */
+
             swal("휴대폰 번호를 입력해주세요." , "" ,"error");
             $("#phone").focus();
             return;
         }
 
         $.ajax({
-            url: "phonecheckajax.cy",
+            url: "register/phonecheck.ajax",
             data: {
                 phone: phone
             },
@@ -464,10 +399,7 @@ function validation() {
             dataType: "text",
             success: function(data) {
                 if (data == 'able') {
-                    /* swal({
-                        title: "사용 가능한 번호입니다",
-                        icon: "success"
-                    }); */
+
                     swal("사용 가능한 번호입니다." , "" ,"success");
                     $('#phoneCheckBtn').html('체크완료');
                     $('#phoneCheckBtn').attr('disabled', 'true');
@@ -475,10 +407,7 @@ function validation() {
                     $("#phoneCheck").css("color","green");
                     $("#phoneCheck").text("✔ 사용 가능한 번호입니다");
                 } else {
-                    /* swal({
-                        title: "사용할 수 없는 번호입니다",
-                        icon: "error"
-                    }); */
+
                     swal("사용할 수 없는 번호입니다." , "" ,"success");
                 }
             },

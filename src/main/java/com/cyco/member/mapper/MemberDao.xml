@@ -5,6 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.cyco.member.dao.MemberDao">
 	
+	<select id="getMember" resultType="com.cyco.common.vo.MemberVo">
+		
+		SELECT MEMBER_ID, MEMBER_EMAIL, MEMBER_IMAGE, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_PHONE FROM MEMBER WHERE MEMBER_EMAIL = #{email}
+	
+	</select>
+	
 	<!-- 멤버리스트 최초로딩-->
 	<select id="getMemberList" resultType="com.cyco.member.vo.V_MlistVo">
 
