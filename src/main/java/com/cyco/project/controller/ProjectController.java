@@ -15,8 +15,10 @@ import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 
+import net.sf.json.JSONArray;
+
 @Controller
-@RequestMapping(value="project")
+@RequestMapping(value="/project")
 public class ProjectController {
 	
 	@Autowired
@@ -24,15 +26,17 @@ public class ProjectController {
 	
 	
 	
-	@RequestMapping(value="list")
+	@RequestMapping(value="/list")
 	public String getProjectList(Model m) {
 		System.out.println("this is /list");
 		// 프로젝트 리스트 첫 페이지
 		// 모든 프로젝트 리스트 바로 뿌려주기.
 		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList("");
+		JSONArray json_project_list = JSONArray.fromObject(project_list);
 		
 		//각 프로젝트의 기술스택 리스트
 		List<V_PjSk> pjsk_list = service.getPjSkList();
+		JSONArray json_pjsk_list = JSONArray.fromObject(pjsk_list);
 		
 		//지역 리스트
 		List<AdrVo> adr_list = service.getAdrList();
@@ -45,15 +49,19 @@ public class ProjectController {
 		
 		//프로젝트 멤버 자리 개수 리스트
 		List<PmemberCountVo> membercount_list = service.getPmemberCountList();
+		JSONArray json_membercout_list = JSONArray.fromObject(membercount_list);
 		
 		
 		
-		m.addAttribute("project_list",project_list);
-		m.addAttribute("pjsk_list",pjsk_list);
+		m.addAttribute("project_list",json_project_list);
+		m.addAttribute("pjsk_list",json_pjsk_list);
+		
 		m.addAttribute("adr_list",adr_list);
 		m.addAttribute("field_list",field_list);
 		m.addAttribute("skill_list",skill_list);
-		m.addAttribute("membercount_list",membercount_list);
+		
+		m.addAttribute("membercount_list",json_membercout_list);
+		
 		
 		
 		

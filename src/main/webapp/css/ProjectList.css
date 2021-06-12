@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+
+body{
+	overflow-anchor: none;
+}
 .top_area {
 	width: 100%;
 	/*
@@ -165,4 +169,11 @@
 .more_sec{
 	width: 100%;
 	text-align: center;
+}
+/* 프로젝트 제목 링크 */
+.title_a{
+	font-weight: 600!important;
+}
+#card_section{
+	overflow-anchor: none;
 }

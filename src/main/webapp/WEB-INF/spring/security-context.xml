@@ -26,13 +26,13 @@
 			authentication-failure-handler-ref="userLoginFailureHandler"
 			username-parameter="username" password-parameter="password" />
 		<session-management>
-			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="true"/>
+			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="false"/>
 		</session-management>
 		<logout delete-cookies="true" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
 		<access-denied-handler ref="userDeniedHandler"/>
 		
 		<!-- 보안 토큰 -->
-		<csrf/>
+		<csrf disabled="false"/>
 	</http>
 	
 	<beans:bean id="userDeniedHandler" 	class="com.cyco.member.security.UserDeniedHandler"></beans:bean>
@@ -63,7 +63,7 @@
 											on ma.AUTHORITY_ID = a.AUTHORITY_ID
 											where m.MEMBER_EMAIL=?"
 		/>
-			  <!-- <password-encoder ref="bCryptPasswordEncoder"/> -->
+			   <password-encoder ref="bCryptPasswordEncoder"/>
 	</authentication-provider>
 
 </authentication-manager>				

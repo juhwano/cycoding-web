@@ -76,7 +76,7 @@
 	
 	<select id="getPjSkList" resultType="com.cyco.project.vo.V_PjSk">
 		select project_id, skill_name 
-		from v_psk_sk;
+		from v_psk_sk
 	</select>
 	
 	<select id="getPmemberCountList" resultType="com.cyco.project.vo.PmemberCountVo">
