@@ -92,11 +92,18 @@ public class ProjectController {
 	@RequestMapping(value="create",method = RequestMethod.POST)
 	public String ProjectAdd() {
 		
-		
-		
 		System.out.println("프로젝트 생성 하기");
 		
 		return null;
+	}
+	
+	//해당 프로젝트로 링크 변경해야됨
+	@RequestMapping(value="detail",method = RequestMethod.GET)
+	public String ProjectDetail() {
+		
+		System.out.println("프로젝트 상세페이지");
+		
+		return "Project/ProjectDetail";
 	}
 
 	

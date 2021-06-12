@@ -81,6 +81,7 @@
 		</div>
 	</div>
 </body>
+<jsp:include page="../include/footer.jsp"></jsp:include>
 <!-- MemberList Javascript -->
 <script
 	src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=2"></script>
