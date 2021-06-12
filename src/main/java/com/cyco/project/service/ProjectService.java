@@ -176,12 +176,12 @@ public class ProjectService {
 	}
 	
 	//프로젝트 검색 - 제목으로만 검색
-	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(Map<String, String> word){
+	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(Map<String, String> projectname){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		Map<String, String> map = new HashMap<String, String>();
 		
 		//검색 where절
-		String where= "where vpd.p_title like '%" + word.get("word") + "%'";
+		String where= "where vpd.p_title like '%" + projectname.get("projectname") + "%'";
 		
 		//map에 whrer절과 이미 위에서 사용된 dao를 사용하기 위해 파라미터로 사용되는 p_state도 같이 넣어준다.
 		//p_state는 '완료'가 아니어야 하기 때문에 다른 문자열을 넣어주낟.

@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cyco.project.service.ProjectService;
+import com.cyco.project.vo.ProjectNameVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+
+import net.sf.json.JSONArray;
 
 @RestController
 @RequestMapping("ajaxproject")
@@ -67,12 +70,13 @@ public class RestProjectController {
 	}
 	
 	@RequestMapping(value = "search", method=RequestMethod.GET)
-	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(@RequestBody Map<String, String> word){
+	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(@RequestParam Map<String,String> projectname){
 		//리턴할 List객체 초기화
-		System.out.println(word);
+		System.out.println(projectname);
 		List<V_PjAdrField_Join_V_PDetail> searched_list =null;
-		searched_list = service.getSearchedProjectList(word);
+		searched_list = service.getSearchedProjectList(projectname);
 		
 		return searched_list;
+		
 	}
 }
