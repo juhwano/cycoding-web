@@ -9,7 +9,6 @@
 
 
 	<!-- properties 파일 위치 -->
-	
 	<context:property-placeholder location="classpath:config/*" />
 
 

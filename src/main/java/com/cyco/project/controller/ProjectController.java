@@ -2,23 +2,15 @@ package com.cyco.project.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.cyco.project.service.ProjectService;
-import com.cyco.project.vo.P_DetailVo;
-import com.cyco.project.vo.P_DurationVO;
-import com.cyco.project.vo.P_SkillVo;
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
@@ -26,6 +18,9 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberService;
 import com.cyco.project.service.ProjectService;
+import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
@@ -125,6 +120,7 @@ public class ProjectController {
 		
 		detail.setP_image(UploadFilename);
 		
+		System.out.println("프로젝트 생성 하기");
 		
 		System.out.println(detail);
 		System.out.println(projectvo);
@@ -134,6 +130,15 @@ public class ProjectController {
 		
 		
 		return "Main/CycoMain";
+	}
+	
+	//해당 프로젝트로 링크 변경해야됨
+	@RequestMapping(value="detail",method = RequestMethod.GET)
+	public String ProjectDetail() {
+		
+		System.out.println("프로젝트 상세페이지");
+		
+		return "Project/ProjectDetail";
 	}
 
 	
