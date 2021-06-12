@@ -6,10 +6,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.member.dao.MemberDao;
-import com.cyco.member.vo.MemberVo;
 import com.cyco.member.vo.V_MlistVo;
+
 
 @Service
 public class MemberService {
@@ -19,7 +20,35 @@ public class MemberService {
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
+		
 	
+
+	
+	// 맴버정보가져오기
+	public MemberVo getMember(String email) {
+	      
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      MemberVo m = memberdao.getMember(email);
+	      
+	      
+	      return m;
+	      
+	}
+	
+	
+	//회원가입
+	public int regist(MemberVo member) {
+	      
+	      int result =0;
+	      
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      result = memberdao.registMember(member);
+	      
+	      return result;
+	      
+	}
+	
+
 	//기본 회원리스트 호출
 	public List<V_MlistVo> memberList() {
 		
@@ -55,17 +84,7 @@ public class MemberService {
 		List<V_MlistVo> memberNickname = memberdao.getMemberNickname(nickname);
 		
 		return memberNickname;
+
 	}
-	
-   public int regist(MemberVo member) {
-	      
-	      int result =0;
-	      
-	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-	      result = memberdao.registMember(member);
-	      
-	      return result;
-	      
-	   }
 	
 }

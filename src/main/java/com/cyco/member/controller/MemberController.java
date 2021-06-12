@@ -36,4 +36,11 @@ public class MemberController {
 		
 		return "Member/MemberList"; 
 	}
+	
+	//임시 에러페이지 경로설정
+	@RequestMapping("error")
+	public String errorPage(Model m) {
+		
+		return "Main/ErrorPage"; 
+	}
 }

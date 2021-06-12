@@ -5,13 +5,18 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.cyco.common.vo.MemberVo;
+import com.cyco.member.service.MemberService;
 
 
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
@@ -19,12 +24,14 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 	private static final Logger logger = LoggerFactory.getLogger(UserLoginSuccessHandler.class);
 
 	
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req,
 			HttpServletResponse res, Authentication auth) throws IOException,
 			ServletException {
 		
 		System.out.println("로그인 성공");
+		
 		
 		// TODO Auto-generated method stub
 		//MemberVo member = (MemberVo) auth.getPrincipal();
@@ -44,7 +51,8 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		logger.info(String.valueOf(user.isCredentialsNonExpired()));
 		logger.info(String.valueOf(user.isEnabled()));
 		
-		res.sendRedirect(req.getContextPath()+"/");
+		
+		res.sendRedirect(req.getContextPath()+"/main.cy");
 	}
 
 }

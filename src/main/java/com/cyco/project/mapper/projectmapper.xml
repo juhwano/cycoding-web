@@ -84,4 +84,16 @@
 		from p_member
 		group by project_id
 	</select>
+	
+
+	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
+
+		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
+	</select>
+	
+	<select id="getDurationList" resultType="com.cyco.project.vo.P_DurationVO">
+		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
+	</select>
+	
+	
 </mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cyco.member.dao.MemberDao">
+	
+	<select id="getMyDetail" resultType="com.cyco.common.vo.MemberVo">
+		
+		select  m.MEMBER_ID, m.MEMBER_EMAIL, m.MEMBER_NICKNAME, m.MEMBER_NAME, m.MEMBER_PWD, m.MEMBER_PHONE, m.MEMBER_EMAIL, p.HAVE_POINT
+			    from member m left join point p
+			    on m.MEMBER_ID=p.MEMBER_ID
+			    where member_email=#{useremail}
+		
+	</select>
+	
+	<update id="editPersnalInfo">
+		
+		update member set ${param1}=#{param2} where MEMBER_ID=#{param3}
+
+	</update>
+	
+	<select id="getSkills" resultType="com.cyco.common.vo.SkillVo">
+		
+		select skill_name, skill_code, skill_enabled from skill where skill_enabled=1
+		
+	</select>
+	
+		
+		<select id="getPreferSkills" resultType="com.cyco.member.vo.MemberDetailPageVo">
+		
+		select s.skill_name, s.skill_enabled from skill s left join m_skill ms
+				on s.skill_code = ms.skill_code left join member m
+				on ms.member_id = m.member_id
+				 where s.skill_enabled=1 and m.member_email=#{userid}
+				 order by ms_count
+		
+	</select>
+
+	
+	<select id="getPositions" resultType="com.cyco.common.vo.PositionVo">
+		
+		select position_name, position_id, position_enabled from position where position_enabled=1
+		
+	</select>
+	
+		
+		<select id="getPreferPosition" resultType="com.cyco.member.vo.MemberDetailPageVo">
+		
+			select p.position_id, p.position_name, p.position_enabled from position p left join m_detail md
+			    on p.position_id=md.position_id left join member m
+			    on md.member_id=m.member_id
+			    where m.member_email=#{userid}
+		
+	</select>
+	
+	
+	
+	<select id="getDurations" resultType="com.cyco.member.vo.V_Duration">
+		
+		select du_date from v_duration group by du_date
+		
+	</select>
+	
+	<select id="getPreferDurations" resultType="com.cyco.member.vo.MemberDetailPageVo">
+		
+		select d.du_date from v_duration d left join member m
+			on d.m_id = m.member_id
+			where m.member_email=#{userid}		
+		
+	</select>
+	
+	
+	<delete id="deleteSkills">
+	
+		delete from m_skill where MEMBER_ID=${memberid}
+	
+	</delete>
+	
+	<insert id="insertSkills" parameterType="String">
+	
+		INSERT INTO m_skill (ms_count, member_id, skill_code)
+	VALUES(
+		(SELECT NVL(MAX(ms_count),0)+1 FROM m_skill where member_id=${param1}),
+    	${param1},#{param2}	)
+
+	
+	</insert>
+	
+		<update id="updatePosition">
+	
+		update m_detail set position_id=#{param2} where member_id=${param1}
+	
+	</update>
+	
+	
+	<delete id="deleteDurations">
+	
+		delete from v_duration where M_ID=${param1}
+	
+	</delete>
+	
+	<insert id="insertDurations" parameterType="String">
+	
+		INSERT INTO v_duration (du_date, m_id) values (${param1},#{param2})
+
+	
+	</insert>
+
+	
+</mapper>

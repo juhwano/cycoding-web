@@ -1,0 +1,358 @@
+
+.ProjectPage{
+    padding: 4rem;
+    margin: 3rem;
+    background-color: white;
+    border: 1px solid #f7e8d7;
+    /* box-shadow: 5px 5px 5px 5px #efeced; */
+}
+
+
+.project_area {
+    width: 100%;
+    height: 300px;
+}
+
+.area-img{
+	width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url(../assets/img/project/project_main.jpg);
+    background-repeat: no-repeat;
+    
+}
+
+.ma-l{
+    text-align: left;
+    margin-left: 2rem !important;
+}
+
+.area-img > p{
+	color: white;
+	font-size: 3rem;
+	font-weight: 700;
+	padding: 140px 0 0 20px;
+	margin: 0;
+}
+
+.area-img > p:last-child{
+	color: white;
+	font-size: 1rem;
+	font-weight: 600;	
+	padding: 0 0 0 45px;;
+	
+}
+
+.ProjectHeader{
+	text-align: center;	
+}
+
+.ProjectHeader_Left{
+	width: 70%;
+    float: left;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.ProjectHeader_Right{
+	text-align: left;
+    width: 25%;
+    height: 300px;
+    float: right;
+    margin: 0 0 0 30px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    padding-top: 1rem;
+}
+
+#target_img{
+	width: 100%;
+	height: 200px;
+    border: 0.0625rem solid #D1D5DB;
+    background-color: #F9FAFB;
+    cursor: pointer;
+}
+
+.Project_title_p{
+	margin: 0;
+    font-size: 1.2rem;
+    text-align: justify;
+    margin-left: 2rem;
+}
+
+.Project_p{
+	margin: 0;
+	font-size: 0.7rem;
+}
+
+.project_boxdiv{
+    width: 330px;
+    display: flex;
+}
+
+
+.BtnWarp{
+	display: inline-flex;
+}
+
+.Up_num{
+	margin: 5px 5px 5px 30px !important;
+}
+
+.BtnWarp >input{
+	background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    margin: 5px;
+    padding: 0;
+    width: 43px;
+    height: 28px;
+}
+
+
+
+.BtnWarp >input:hover{
+	background-color: #bdc8d3;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+}
+
+.number{
+	margin: 5px;
+	color: red;
+}
+
+.Project_SelectBox{
+	width: 100%;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    margin: 5px;
+    text-align-last: center;
+}
+
+
+.ProjectTitle{
+	width: 100%;
+	margin: auto;
+	padding: 6px;
+	text-align: center;
+}
+
+.ProjectMember{
+	width: 70%;
+	float: left;
+	font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 2rem;
+}
+
+.NavBox{
+    width: 25%;
+    height: 1300px;
+    float: right;
+}
+
+
+
+.ProjectNav{
+	position: -webkit-sticky;
+    position: sticky;
+    top: 4px;
+    margin: 0;
+    height: 560px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 20px;
+}
+
+.Leader_Detail{
+	width: 100%;
+}
+
+.Leader_DetailBox{
+	width: 100%;
+	margin: 10px 0 0 10px;
+	
+}
+
+.LeaderImg_Box{
+	width: 15%;
+	height: 15%;
+	border-radius: 15px;
+	border: 0.0625rem solid #D1D5DB;
+	display: inline-block;
+	
+}
+.LeaderImg_Box >img{
+	border-radius: 15px;
+	object-fit: cover;
+}
+
+.Leader_DetailBox > p{
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.ProjectContent{
+    width: 70%;
+    height: 600px;
+    float: left;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 2rem;
+    margin-top: 20px;
+}
+
+.ProjectContent >textarea{
+	width: 100%;
+    height: 80%;
+    border: none;
+    background-color: #F9FAFB;
+    outline-style: none;
+    word-break: break-all;
+}
+
+.PositionBtn{
+	display: inline-block;
+    width: 100%;
+    text-align: end;
+}
+
+
+.PositionBtn >input{ 
+ 	color: #C0A9BD;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #C0A9BD;
+    padding: 3px;
+    width: 10%;
+}
+
+.PositionBtn >input:hover{ 
+ 	color: #F9FAFB;
+    background-color: #C0A9BD;
+    background-clip: padding-box;
+    border: 0.0625rem solid #C0A9BD;
+    padding: 3px;
+    width: 10%;
+}
+
+
+.ProjectSkill{
+	width: 70%;
+    float: left;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 2rem;
+    margin-top: 20px;
+}
+
+
+#tagarea{
+
+	display:flex;
+	flex-wrap: wrap;
+	text-align:center;
+	/*justify-content:space-between;*/
+}
+
+#selectedarea{
+
+	display:flex;
+	flex-wrap: wrap;
+	text-align:center;
+	margin-top: 30px;
+}
+
+.tags{
+	text-align:center;
+	border: 3px solid #94A7AE;
+	box-sizing: border-box;
+	color:#94A7AE;	
+	width:150px;
+	font-size:16px;
+	padding:10px;
+	margin:10px;
+border-radius: 25px;
+}
+
+.tags:hover, .clicked:hover{
+position:relative;
+top:-5px;
+
+}
+
+.clicked{
+	border: 3px solid #CA8FAB;
+	color:#CA8FAB;
+	width:150px;
+	font-size:16px;
+	padding:10px;
+	margin:10px;
+	text-align:center;
+    border-radius: 25px;
+}
+
+
+#buttonarea{
+	position:absolute;
+	bottom:30px;
+	right:50px;
+}
+
+#buttonarea button{
+	border:none;
+	width:70px;
+	padding: 10px;
+	margin:10px;
+}
+
+
+.CreateBtn_box{
+	width: 100%;
+    float: left;
+    text-align: center;
+}
+.CreateBtn{
+    width: 50%;
+    background-color: #f5f5f5;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 8px;
+}
+
+.CreateBtn_box >input:hover {
+	background-color: #c4c4c4;
+}
+
+
+

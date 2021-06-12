@@ -12,17 +12,19 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
+import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 
 @Service
 public class ProjectService {
-
 	
 	@Autowired
 	private SqlSession sqlsession;
@@ -89,7 +91,7 @@ public class ProjectService {
 		System.out.println("3개 필터링 : "+list.toString());
 		return list;
 	}
-	
+
 //	Filtered Project_id List
 //	P_Skill테이블에서 Project_id 뽑아오기
 	public List<String> getFilteredProjectSkillList(Map<String, String> data,List<String> Flist){
@@ -157,6 +159,20 @@ public class ProjectService {
 		List<V_PjSk> pjsk_list = dao.getPjSkList();
 		
 		return pjsk_list;
+	}
+	
+	public List<PositionVo> getPositionList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<PositionVo> position_list = dao.getPositionList();
+		
+		return position_list;
+	}
+	
+	public List<P_DurationVO> getDurationList(){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<P_DurationVO> duration_list = dao.getDurationList();
+		
+		return duration_list;
 	}
 	
 	//프로젝트 검색 - 제목으로만 검색

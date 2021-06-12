@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.MemberVo;
+
 
 
 @Controller
@@ -50,15 +51,6 @@ public class RegisterController {
 		}
         
     }
-
 	  
-	  @RequestMapping(value="admin.cy")
-	  public String admintest() {
-		  System.out.println("어드민 페이지 요청");
-		  return "admin";
-	  }
-	 
-
-
 
 }

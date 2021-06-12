@@ -1,7 +1,6 @@
 package com.cyco.member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -19,47 +18,49 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.member.dao.MemberDao;
 
+@RequestMapping(value="register/")
 @RestController
 public class RegisterRestComtroller {
    
    private SqlSession sqlsession;
 
-   @Autowired
-   public void setSqlsession(SqlSession sqlsession) {
-      this.sqlsession = sqlsession;
-   }
-   
-   @Autowired
-   JavaMailSender mailSender;
-   
-   @RequestMapping(value="emailcheckajax.cy", method=RequestMethod.GET)
-   public String checkEmail(String email) {
-      
-      System.out.println("This is checkEmail");
-      String mail = email.replace("email=","").replace("%40","@");
-      
-      System.out.println("중복체크할 메일 : " + mail );
-      
-      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-      
-      String result = "able";
-      
-      if(memberdao.checkEmail(mail) != null) {
-         result = "disable";
-      } else {
-         result = "able";
-      }
-      
+	@Autowired
+	public void setSqlsession(SqlSession sqlsession) {
+		this.sqlsession = sqlsession;
+	}
+	
+	@Autowired
+	JavaMailSender mailSender;
+	
+	@RequestMapping(value="emailcheck.ajax", method=RequestMethod.GET)
+	public String checkEmail(String email) {
+		
+		System.out.println("This is checkEmail");
+		String mail = email.replace("email=","").replace("%40","@");
+		
+		System.out.println("중복체크할 메일 : " + mail );
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = "able";
+		
+		if(memberdao.checkEmail(mail) != null) {
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
 
-      System.out.println("결과값 : " + result);
-      
-      return result;
-   }
-   
-   @RequestMapping(value="emailcheckajax.cy", method=RequestMethod.POST)
-   public String mailSending(HttpServletRequest request, String email, HttpServletResponse response_email) throws IOException {
-       
-      System.out.println("인증메일 발송 컨트롤러");
+		System.out.println("결과값 : " + result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="emailcheck.ajax", method=RequestMethod.POST)
+	public String mailSending(HttpServletRequest request, String email, HttpServletResponse response_email) throws IOException {
+		 
+		System.out.println("인증메일 발송 컨트롤러");
+
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; //이메일로 받는 인증코드 부분 (난수)
         
@@ -122,55 +123,56 @@ public class RegisterRestComtroller {
         return result;
         
     }
-   
-   
-   @RequestMapping(value="nicknamecheckajax.cy")
-   public String checkNickName(String nickName) {
-      
-      System.out.println("This is checkNickName");
-      
-      
-      System.out.println("중복체크할 닉네임 : " + nickName );
-      
-      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-      
-      String result = "able";
-      
-      if(memberdao.checkNickName(nickName) != null) {
-         result = "disable";
-      } else {
-         result = "able";
-      }
-      
 
-      System.out.println("결과값 : " + result);
-      
-      return result;
-   }
-   
-   @RequestMapping(value="phonecheckajax.cy")
-   public String checkPhone(String phone) {
-      
-      System.out.println("This is checkPhone");
-      
-      
-      System.out.println("중복체크할 번호 : " + phone );
-      
-      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-      
-      String result = "able";
-      
-      if(memberdao.checkPhone(phone) != null) {
-         result = "disable";
-      } else {
-         result = "able";
-      }
-      
+	
+	
+	@RequestMapping(value="nicknamecheck.ajax")
+	public String checkNickName(String nickName) {
+		
+		System.out.println("This is checkNickName");
+		
+		
+		System.out.println("중복체크할 닉네임 : " + nickName );
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = "able";
+		
+		if(memberdao.checkNickName(nickName) != null) {
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
 
-      System.out.println("결과값 : " + result);
-      
-      return result;
-   }
-   
+		System.out.println("결과값 : " + result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="phonecheck.ajax")
+	public String checkPhone(String phone) {
+		
+		System.out.println("This is checkPhone");
+		
+		
+		System.out.println("중복체크할 번호 : " + phone );
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = "able";
+		
+		if(memberdao.checkPhone(phone) != null) {
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
+
+		System.out.println("결과값 : " + result);
+		
+		return result;
+	}
+
 
 }

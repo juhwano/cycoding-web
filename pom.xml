@@ -21,7 +21,7 @@
       <url>http://maven.jahia.org/maven2</url>
       </repository>
    </repositories>
-   <dependencies>
+   <dependencies> 
    <!-- Oracle 추가 -->
       <dependency>
          <groupId>com.oracle</groupId>
@@ -102,7 +102,7 @@
            <groupId>org.mybatis</groupId>
            <artifactId>mybatis-spring</artifactId>
            <version>2.0.1</version>
-        </dependency>   
+        </dependency> 
 
         <!-- Spring Security  작업  -->   
         <dependency> 
@@ -325,7 +325,7 @@
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
-            <plugin>
+         	   <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>

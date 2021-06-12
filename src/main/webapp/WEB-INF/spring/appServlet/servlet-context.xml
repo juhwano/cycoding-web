@@ -22,11 +22,10 @@
 	
 
 
-	
-	
+
 	<context:component-scan base-package="com.cyco.main" />
 	<context:component-scan base-package="com.cyco.admin" />
-	<context:component-scan base-package="com.cyco.member.*" />
+	<context:component-scan base-package="com.cyco.member" />
 	<context:component-scan base-package="com.cyco.project" />
 	<context:component-scan base-package="com.cyco.utils" />
 	<context:component-scan base-package="com.cyco.common" />

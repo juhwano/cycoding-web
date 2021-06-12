@@ -14,13 +14,16 @@
 	<http pattern="/resources/**" security="none"></http>
 
 	<http auto-config="true" use-expressions="true" create-session="never">
+	
 		<intercept-url pattern="/admin.cy" access="hasRole('ROLE_ADMIN')" />
 		<!-- <intercept-url pattern="/프로젝트 관리" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEAMMANGER')" />-->		
 		<!-- <intercept-url pattern="/프로젝트 상세" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<!-- <intercept-url pattern="/게시글 상세" access="hasAnyRole('ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<!-- <intercept-url pattern="/회원 상세" access="hasAnyRole('ROLE_PREMEMBER', 'ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')" />-->
 		<intercept-url pattern="/**" access="permitAll" />
-		<form-login login-page="/login.cy"
+		
+		
+		<form-login login-page="/login.cy" 
 			login-processing-url="/login.cy" 
 			authentication-success-handler-ref="userLoginSuccessHandler"
 			authentication-failure-handler-ref="userLoginFailureHandler"
@@ -28,18 +31,19 @@
 		<session-management>
 			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="false"/>
 		</session-management>
-		<logout delete-cookies="true" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true"/>
+		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true" success-handler-ref="" />
 		<access-denied-handler ref="userDeniedHandler"/>
 		
+
 		<!-- 보안 토큰 -->
-		<csrf disabled="false"/>
+
+		<csrf disabled="true"/>
 	</http>
 	
 	<beans:bean id="userDeniedHandler" 	class="com.cyco.member.security.UserDeniedHandler"></beans:bean>
 	<beans:bean id="userLoginSuccessHandler" class="com.cyco.member.security.UserLoginSuccessHandler"></beans:bean>
 	<beans:bean id="userLoginFailureHandler" class="com.cyco.member.security.UserLoginFailureHandler"></beans:bean>
 	
-
 <!-- 
 	   <authentication-manager>
 		<authentication-provider>
@@ -52,6 +56,10 @@
 	 
 		-->
 		
+	
+	<!-- users-by-username-query는 사용자를 인증하는 쿼리
+	authorities-by-username-query 는 사용자의 권한을 가져오는 쿼리
+	 -->
 
 	<authentication-manager>
 	<authentication-provider>
