@@ -23,15 +23,15 @@
 		<intercept-url pattern="/**" access="permitAll" />
 		
 		
-		<form-login login-page="/login.cy" 
-			login-processing-url="/login.cy" 
+		<form-login login-page="/login" 
+			login-processing-url="/login" 
 			authentication-success-handler-ref="userLoginSuccessHandler"
 			authentication-failure-handler-ref="userLoginFailureHandler"
 			username-parameter="username" password-parameter="password" />
 		<session-management>
-			<concurrency-control max-sessions="1" expired-url="/login.cy" error-if-maximum-exceeded="false"/>
+			<concurrency-control max-sessions="1" expired-url="/login" error-if-maximum-exceeded="false"/>
 		</session-management>
-		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout.cy" invalidate-session="true" success-handler-ref="" />
+		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout" invalidate-session="true" success-handler-ref="" />
 		<access-denied-handler ref="userDeniedHandler"/>
 		
 

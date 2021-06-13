@@ -1,5 +1,6 @@
 package com.cyco.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -46,6 +47,25 @@ public class MemberService {
 	      
 	      return result;
 	      
+	}
+	
+	//닉네임, 회원 번호 가져오기
+	public HashMap<String, String> getLoginedName(String useremail) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		HashMap<String, String> member = memberdao.getLoginedName(useremail);
+		
+		return member;
+	}
+	
+	//로그인시 탈퇴날짜 체크
+	public void checkDeleteDate(String memeberid) {
+		
+		System.out.println("로그인 했으니까 탈퇴 무르기");
+		
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      memberdao.checkDeleteDate(memeberid);
+		
 	}
 	
 

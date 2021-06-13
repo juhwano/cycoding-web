@@ -30,4 +30,15 @@
 		
 	</insert>
 	
+	<select id="getLoginedName" resultType="java.util.HashMap">
+		select member_nickname, member_id from member where member_email=#{memberemail}
+	</select>
+	
+	<update id="checkDeleteDate">
+	
+		update m_detail set delete_count=null where member_id=${memberid}
+	
+	</update>
+	
+
 </mapper>

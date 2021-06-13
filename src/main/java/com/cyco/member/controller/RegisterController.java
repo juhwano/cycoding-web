@@ -22,7 +22,7 @@ public class RegisterController {
 	@Autowired
 	private MemberService service;
 
-	@RequestMapping(value = "register.cy", method = RequestMethod.GET)
+	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public String join() {
 
 		System.out.println("This is join by get");
@@ -32,7 +32,7 @@ public class RegisterController {
 	}
 
 	
-	@RequestMapping(value = "register.cy", method = RequestMethod.POST)
+	@RequestMapping(value = "register", method = RequestMethod.POST)
     public String joinOK(MemberVo member) {
 		
 		System.out.println("This is joinOK");
