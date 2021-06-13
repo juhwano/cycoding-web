@@ -129,7 +129,7 @@ function previewImage(targetObj, View_area) {
 						</c:forEach>					
 						
 						<input type="file" id="uploadfile" name="uploadfile" multiple="" onchange="previewImage(this,'View_area')"/>
-						<div id='View_area' style='position:relative; width: 100px; height: 100px; color: black; border: 0px solid black; dispaly: inline; '></div>
+						<div id='View_area' style='position:relative; width: 300px; height: 300px; color: black; border: 0px solid black; dispaly: inline; '></div>
 					</td> 
 				</tr>
 			</tbody>
