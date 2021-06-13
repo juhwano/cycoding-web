@@ -89,7 +89,6 @@
 			</props>
 		</property>
 	</bean>
-
 	<!-- velocityEngine -->
 	<bean id="velocityEngine"
 		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
