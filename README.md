@@ -1,4 +1,4 @@
-![로고](https://user-images.githubusercontent.com/77667889/121818011-9d9c0600-ccbf-11eb-9bce-864588b99cfa.png)
+![로고](https://user-images.githubusercontent.com/77667889/121818059-eeabfa00-ccbf-11eb-9b3d-f2d1906ed839.png)
 # CYCODING (사이좋게 코딩하자)
 
 
