@@ -36,7 +36,7 @@
 			<div class="select_section">
 				<!-- select 필터링 -->
 				<!-- 지역 -->
-				<select class="form-select p_sel" id="inlineFormCustomSelectPref"
+				<select class="form-select p_sel" id="adrSelect"
 					aria-label="Default select example">
 					<option value="">지역: 전체</option>
 					<c:forEach var="adr" items="${adr_list}">
@@ -44,7 +44,7 @@
 	               </c:forEach>
 				</select>
 				<!-- 분야 -->
-				<select class="form-select p_sel" id="inlineFormCustomSelectPref"
+				<select class="form-select p_sel" id="fieldSelect"
 					aria-label="Default select example">
 					<option value="">분야: 전체</option>
 					<c:forEach var="field" items="${field_list}">
@@ -54,7 +54,7 @@
 	               </c:forEach>
 				</select>
 				<!-- 주언어 -->
-				<select class="form-select p_sel" id="inlineFormCustomSelectPref"
+				<select class="form-select p_sel" id="skillSelect"
 					aria-label="Default select example">
 					<option value="">주언어: 전체</option>
 					<c:forEach var="skill" items="${skill_list}">
@@ -64,7 +64,7 @@
 	               </c:forEach>
 				</select>
 				<!-- 상태 -->
-				<select class="form-select p_sel" id="inlineFormCustomSelectPref"
+				<select class="form-select p_sel" id="stateSelect"
 					aria-label="Default select example">
 					<option value="">상태: 전체</option>
 					<option value="모집중">모집중</option>

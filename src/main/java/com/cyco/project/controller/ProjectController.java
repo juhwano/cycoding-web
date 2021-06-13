@@ -115,7 +115,7 @@ public class ProjectController {
 	}
 	
 	
-	@RequestMapping(value="create",method = RequestMethod.POST)
+	@RequestMapping(value="create",method = RequestMethod.POST) 
 	public String ProjectAdd(P_DetailVo detail, ProjectVo projectvo, P_SkillVo skillvo, P_FieldVo fieldvo, P_DurationVO duration,
 			@RequestParam("uploadFile") MultipartFile uploadFile, MultipartHttpServletRequest request) {
 		
