@@ -6,7 +6,22 @@
  
  /* 페이지 모두 로딩 후 실행 */
  $(document).ready(function(){
-     
+        /* 탑버튼 */
+    $(function() {
+        $(window).scroll(function() {
+        if ($(this).scrollTop() > 280) {
+            $('#topBtn').fadeIn();
+        } else {
+            $('#topBtn').fadeOut();
+        }
+        });
+        $("#topBtn").click(function() {
+	        $('html, body').animate({
+	            scrollTop: 0
+	        }, 10);
+	        return false;
+        });
+    });
     /* 필터링 함수 실행 */
     function filter(adr_code,field_code,skill_code,p_state){
         $.ajax({
@@ -20,8 +35,8 @@
                 p_state :p_state
             },
             success:function(filtered_list){
-            console.log(filtered_list);
                 project_list = JSON.parse(filtered_list);
+                console.log(project_list);
 
                 /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
                 $('#card_section').empty();
@@ -45,6 +60,7 @@
                  console.log(project_list);
                  
                  /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
+                 $('.form-select').val('').prop('selected', true);
                  $('#card_section').empty();
                  start=0;
                  moreBtn(project_list, start);

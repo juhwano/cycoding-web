@@ -27,7 +27,7 @@ public class RestProjectController {
 	
 	@RequestMapping(value="filter", method = RequestMethod.GET)
 	public List<V_PjAdrField_Join_V_PDetail> getFiltedProjectList(@RequestParam Map<String, String> data){
-		
+		System.out.println("@RestController : /project/filter");
 		//리턴할 List객체 초기화
 		List<V_PjAdrField_Join_V_PDetail> list =new ArrayList<V_PjAdrField_Join_V_PDetail>();
 
@@ -81,6 +81,7 @@ public class RestProjectController {
 	
 	@RequestMapping(value = "search", method=RequestMethod.GET)
 	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(@RequestParam Map<String,String> projectname){
+		System.out.println("@RestController : /project/search");
 		//리턴할 List객체 초기화
 		System.out.println(projectname);
 		List<V_PjAdrField_Join_V_PDetail> searched_list =null;
