@@ -108,7 +108,7 @@
                     <!-- 로그인 안하면 -->
                     <se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 						<li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/login.cy" class="nav-link">
+                        <a href="${pageContext.request.contextPath}/login" class="nav-link">
                            	로그인 
                         </a>
                    		</li>
@@ -119,7 +119,7 @@
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
 
-	                        <a href="register.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                        <a href="register" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
 	                            <img src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
@@ -177,7 +177,7 @@
 	                        	<!-- 드랍 박스 -->
 	                        	<div class="user_info" style="display:none">
 				 					<div class="mypage">
-				 					<a href="${pageContext.request.contextPath}/mypage.cy?useremail=${LoginUser}">마이페이지</a>
+				 					<a href="${pageContext.request.contextPath}/mypage?useremail=${LoginUser}">마이페이지</a>
 				 					
 				 					</div>
 				 					
@@ -187,7 +187,7 @@
 				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create?userId=${LoginUser}">프로젝트 생성하기</a></div>
 								
                                   	
-				 					<div class="logout"><a href="logout.cy">로그아웃</a></div>
+				 					<div class="logout"><a href="logout">로그아웃</a></div>
 				 				</div>
 	                        
 	                   	 </li>

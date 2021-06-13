@@ -40,7 +40,7 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler{
 		//res.sendRedirect("login.cy");
 		//req.getRequestDispatcher("/login.cy").forward(req, res);
 
-		res.sendRedirect("login.cy?error=true");
+		res.sendRedirect("login?error=true");
 
 	}
 	

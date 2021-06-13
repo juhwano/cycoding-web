@@ -664,13 +664,14 @@ $("#never").on("click",function(){
         console.log("태그 없애기!");
         $("#have").remove();
 
+
     } else{
 
         console.log("태그 만들기")
         $("#ex_toggle").append(
 
          `<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience" id="have">있음ㅎ</div>
+												<div class="insert experience" id="have">있음</div>
 											</a>`
 
         );
@@ -689,7 +690,7 @@ $(document).on("click",".add_ex",function(){
 });
 
 //프로젝트 경험 추가기입 삭제
-$(documnet).on("click",".del_ex",function(){
+$(document).on("click",".del_ex",function(){
     console.log("폼 삭제")
     $(this).parent().remove();
 

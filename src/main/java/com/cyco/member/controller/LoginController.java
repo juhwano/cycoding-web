@@ -28,7 +28,7 @@ public class LoginController {
 	}
 	
 	
-	  @RequestMapping(value="login.cy", method = RequestMethod.GET)
+	  @RequestMapping(value="login", method = RequestMethod.GET)
 	  public String login() {
 		  
 		  System.out.println("This is login by get");
@@ -39,7 +39,7 @@ public class LoginController {
 	  }
 	  
 	  
-	  @RequestMapping(value="login.cy", method = RequestMethod.POST)
+	  @RequestMapping(value="checkLogin", method = RequestMethod.POST)
 	  public ModelAndView checkInfo(String username, HttpSession session) {
 		  
 		  

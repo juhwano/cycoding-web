@@ -53,7 +53,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		req.setAttribute("username", auth.getName());
 		
 		//res.sendRedirect(req.getContextPath()+"/main.cy");
-		req.getRequestDispatcher("/login.cy").forward(req, res);
+		req.getRequestDispatcher("checkLogin").forward(req, res);
 	}
 
 }

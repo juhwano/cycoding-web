@@ -21,7 +21,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>사이좋게 코딩하자</title>
 
-<link type="text/css" href="css/mypage.css?ver=1" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/css/mypage.css" rel="stylesheet">
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
