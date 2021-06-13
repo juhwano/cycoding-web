@@ -19,27 +19,24 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import net.sf.json.JSONArray;
 
 @RestController
-@RequestMapping("ajaxproject")
+@RequestMapping("project")
 public class RestProjectController {
 
 	@Autowired
 	private ProjectService service;
 	
 	@RequestMapping(value="filter", method = RequestMethod.GET)
-	public List<V_PjAdrField_Join_V_PDetail> getFiltedProjectList(@RequestBody Map<String, String> data){
-		
+	public List<V_PjAdrField_Join_V_PDetail> getFiltedProjectList(@RequestParam Map<String, String> data){
+		System.out.println("@RestController : /project/filter");
 		//리턴할 List객체 초기화
-		List<V_PjAdrField_Join_V_PDetail> list =null;
-		
-		List<String> FSK_list;
-		
-		
+		List<V_PjAdrField_Join_V_PDetail> list =new ArrayList<V_PjAdrField_Join_V_PDetail>();
+
 		//data : view에서 선택한 필터링
 		System.out.println(data.toString());
 
 		//3개필터링(분야, 지역, 상태)
 		List<String> Flist= service.getFilteredProjectList(data);
-		
+		System.out.println(Flist);
 		
 		//결과 Flist가 null이라는건 input이 하나도 없다는 뜻.
 		//빈 배열로 초기화 해준다.
@@ -59,11 +56,24 @@ public class RestProjectController {
 //		}
 		
 //		Flist : 3개를 필터링 한 값이 있고
-//		FSK_list skill을 필터링 한 값이 있으면
+//		skill을 필터링 한 값이 있으면
 		if(Flist!=null) {
-			 list =service.getProjectList(Flist,data.get("p_state"));
+			//3개필터링과 skill필터링의 중복되는 결과값이 있을때
+			if(Flist.size()>0) {
+				System.out.println("Flist is not null");
+				System.out.println("Flist size : " + Flist.size());
+				 list =service.getProjectList(Flist,data.get("p_state"));
+			}
+			//중복되는 결과값이 없을때
+			else {
+				System.out.println("중복되는결과가 없습니다. VIEW x");
+				System.out.println("Flist size : " + Flist.size());
+				//비어있는 list return
+			}
 		}
+		//input값이 아무것도 없을떄 null => 전체검색
 		else if(Flist == null) {
+			System.out.println("Flist is NULL");
 			list = service.getProjectList(data.get("p_state"));
 		}
 		return list;
@@ -71,10 +81,12 @@ public class RestProjectController {
 	
 	@RequestMapping(value = "search", method=RequestMethod.GET)
 	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(@RequestParam Map<String,String> projectname){
+		System.out.println("@RestController : /project/search");
 		//리턴할 List객체 초기화
 		System.out.println(projectname);
 		List<V_PjAdrField_Join_V_PDetail> searched_list =null;
 		searched_list = service.getSearchedProjectList(projectname);
+		System.out.println(searched_list);
 		
 		return searched_list;
 		

@@ -45,7 +45,7 @@ public class ProjectService {
 		map.put("p_state", p_state);
 		
 		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(map);
-		System.out.println(project_list);
+		System.out.println("dao : " + project_list);
 		return project_list;
 	}
 //	ProjectList with Filter
@@ -99,10 +99,20 @@ public class ProjectService {
 		
 		String skill_code = data.get("skill_code");
 		List<String> idlist = new ArrayList<String>();
+		System.out.println("service Flist : " + Flist);
 		
+		//input값이 아무것도 없을떄 return null
 		if(skill_code.equals("") && Flist==null) {
+			System.out.println("아무 input도없을때 return null입니당");
 			return null;
 		}
+		//skill_code inpupt값이 없다면 Flist를 다시 return
+		else if(skill_code.equals("") && Flist!=null) {
+			return Flist;
+		}
+		
+		
+		//skill_code input값이 하나라도 있다면 밑에 코드 실행
 		
 		//skill_code로 필터링된 리스트 뽑기
 		List<String> list = dao.getFilteredProjectSkillList(skill_code);
@@ -110,26 +120,39 @@ public class ProjectService {
 		
 		
 		// list와 Flist에서 중복되는값 찾기
-		// Flist의 값이 존재할 경우
+		// Flist의 값이 존재할 경우(3개 필터링 결과값이 있다.)
 		if(Flist!=null) {
-			// list값도 존재할 경우
-			if(list.size()>0)
-			for(String l : list) {
-				//contains()를 이용하여 Flist에 list의 l값이 있으면 중복.
-				if(Flist.contains(l)) {
-					System.out.println("중복값 발생!!! ");
-					System.out.println("l : " + l);
-					idlist.add(l);
+			System.out.println("Flist 값이 존재");
+			
+			//list값이 하나라도 있으면
+			if(list.size()>0) {
+				for(String l : list) {
+					//contains()를 이용하여 Flist에 list의 l값이 있으면 중복.
+					if(Flist.contains(l)) {
+						System.out.println("중복값 발생!!! ");
+						System.out.println("l : " + l);
+						idlist.add(l);
+					}
 				}
+				//for문을 다 돌았지만 중복되는 값이 없을때 처리 필요
 			}
-			//list값이 없을경우
+			//list값이 하나도 없을때 => 중복검사할 필요도 없이 비어있는 list return
 			else {
-				idlist.addAll(Flist);
+				idlist.addAll(list);
 			}
 		}
-		// Flist에 값이 없다면 skill_code 필터링한 list만 넣어준다.
+		// Flist에 값이 없다(3개 필터링 값이 없다)면 skill_code 필터링한 list만 넣어준다.
 		else {
-			idlist.addAll(list);
+			//list값이 하나라도 존재한다면
+			if(list.size()>0) {
+				System.out.println("Flist 존재x   size>0" );
+				idlist.addAll(list);
+			}
+//			skill_code 필터링 list도 없다면 비어있는 list return
+			else {
+				System.out.println("Flist 존재x   size<0" );
+				idlist.addAll(list);
+			}
 		}
 		System.out.println("idlist : " + idlist);
 		//중복제거된 리스트 리턴
