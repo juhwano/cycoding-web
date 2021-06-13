@@ -2,10 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                           http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context 
-                           http://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -14,13 +16,12 @@
 	<context:property-placeholder
 		location="classpath:config/*" />
 
-
 	<!-- Hikari -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="${db.driver}" />
-		<property name="jdbcUrl" value="${db.url}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
@@ -59,6 +60,10 @@
   	  <property name="dataSource" ref="dataSource"></property>
       <property name="mapperLocations" value="classpath*:com/cyco/**/*xml" />
 	</bean>
+	
+	<!-- dao(persistence) 자동으로 만들어 주기 위한 위치 -->
+	<mybatis-spring:scan base-package="com.cyco"/>
+	<context:component-scan base-package="com.cyco"/>
 	
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
                 <property name="annotationClass"
@@ -99,6 +104,20 @@
 			</value>
 		</property>
 	</bean>
+	
+	<!-- Transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	
 	
 	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 
