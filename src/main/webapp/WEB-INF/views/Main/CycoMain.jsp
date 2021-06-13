@@ -21,8 +21,7 @@
 			
 			<div class="container main_center">
 				<p>함께 할<br> 팀원을 찾아보세요.</p>
-				<a href="mypage.cy?useremail=${LoginUser}"><img src="${pageContext.request.contextPath}/assets/img/main_page/Member_arrow.png"></a>
-
+				<a href="/member/list"><img src="${pageContext.request.contextPath}/assets/img/main_page/Member_arrow.png"></a>
 			</div>
 		</div>
 	</div>

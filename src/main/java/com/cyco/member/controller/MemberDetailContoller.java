@@ -23,7 +23,7 @@ public class MemberDetailContoller {
 	}
 	
 	//마이페이지 정보 불러오기
-	@RequestMapping(value="mypage.cy")
+	@RequestMapping(value="mypage")
 	public ModelAndView getMyDetail(@RequestParam("useremail") String useremail){
 		
 		System.out.println("클라이언트에서 로그인 한 이메일 : " + useremail);

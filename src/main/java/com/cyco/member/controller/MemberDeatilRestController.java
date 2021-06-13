@@ -11,8 +11,10 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
 
+@RequestMapping("memberdetail/")
 @RestController
 public class MemberDeatilRestController {
 	
@@ -124,11 +126,101 @@ public class MemberDeatilRestController {
 
 	}
 	
-	//변경한 스탯 반영하기
-	//@Requestapping()
-	//public editSkills() {
+	@RequestMapping(value="deletestat.ajax")
+	public String deleteStat(String memberid, String type) {
 		
-	//}
+		System.out.println("deleteStat");
+		System.out.println(memberid);
+		System.err.println("delete " + type);
+		
+		String result = "fail";
+		
+		if(type.equals("skill")) {
+			
+			result = memberdetailservice.deleteSkills(memberid);
+			
+		}  else if(type.equals("duration")) {
+			
+			result = memberdetailservice.deleteDurations(memberid);
+		}
+		
+		
+		return result;
+	}
+	
+	//변경한 기술 스탯 디비에 반영하기
+	@RequestMapping(value="editskills.ajax")
+	public String editSkills(String memberid, String stat) {
+		
+		System.out.println("기술 비동기 변경");
+		System.out.println(memberid);
+		System.out.println(stat);
+		
+		String result = memberdetailservice.editSkills(memberid, stat);		
+		
+		return result;
+	}
+	
+	//변경할 포지션 디비 반영
+	@RequestMapping(value="updateposition.ajax")
+	public String updatePosition(String memberid, String stat) {
+		
+		System.out.println("포지션 비동기 변경");
+		System.out.println(memberid);
+		System.out.println(stat);
+		
+		String result = memberdetailservice.updatePosition(memberid, stat);		
+		
+		return result;
+	}
+	
+	//변경한 선호기간 스탯 디비에 반영하기
+	@RequestMapping(value="editdurations.ajax")
+	public String editDurations(String memberid, String stat) {
+		
+		System.out.println("기간 비동기 변경");
+		System.out.println(memberid);
+		System.out.println(stat);
+		
+		String result = memberdetailservice.editDurations(memberid, stat);		
+		
+		return result;
+	}
+	
+	
+	//디비에서 변경된 스탯 뷰단에 반영(공통)
+	@RequestMapping(value="modifystatview.ajax")
+	public List<MemberDetailPageVo> modifyStatView(String userid, String type) {
+		
+		
+		System.out.println("변경한 기술 비동기로 상세페이지에 반영");
+
+		
+		List<MemberDetailPageVo> list = new ArrayList<MemberDetailPageVo>();
+		
+		if( type.equals("skill")) {
+			
+			System.out.println("modifyStatView skill");
+			
+			list = memberdetailservice.getPreferSkills(userid);
+			
+		} else if( type.equals("position")) {
+			
+			System.out.println("modifyStatView position");
+			
+			list = memberdetailservice.getPreferPosition(userid);
+			
+		} else if( type.equals("duration")) {
+			
+			System.out.println("modifyStatView duration");
+			
+			list = memberdetailservice.getPreferDurations(userid);
+			
+		}
+		
+		
+		return list;
+	}
 	
 
 }

@@ -47,11 +47,9 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">로그인</h1>
                             </div>
-                            <form id="form" action="login.cy" method="post" class="loginForm">
+                            <form id="form" action="login" method="post" class="loginForm">
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	
 									
                                    <!--   <label for="exampleInputIcon4">Your email</label>-->
                                     <div class="input-group mb-4">
@@ -87,7 +85,7 @@
                            
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
-                                    <a href="register.cy" style="color:#C0A9BD">계정이 없으신가요?</a>
+                                    <a href="register" style="color:#C0A9BD">계정이 없으신가요?</a>
                                     <!--  <a href="admin.cy" style="color:#C0A9BD">어드민 페이지</a>-->
                                 </span>
                             </div>
@@ -101,13 +99,10 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">CYCODING</h1>
                                 </div>
-                            <form id="form" action="logout.cy" method="post">
+                            <form id="form" action="logout" method="post">
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-									
-									                               
+                             
                                 
                                 <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 

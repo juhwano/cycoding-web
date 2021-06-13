@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -36,7 +36,8 @@
 
 	<!-- JQuesy -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">	
 
 	
 	<link type="text/css" href="${pageContext.request.contextPath}/css/pixel.css" rel="stylesheet">
@@ -107,7 +108,7 @@
                     <!-- 로그인 안하면 -->
                     <se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 						<li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/login.cy" class="nav-link">
+                        <a href="${pageContext.request.contextPath}/login" class="nav-link">
                            	로그인 
                         </a>
                    		</li>
@@ -118,7 +119,7 @@
 						 <!--알림 -->
 	                     <li class="nav-item dropdown">
 
-	                        <a href="register.cy" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+	                        <a href="register" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
 	                            <img src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
@@ -169,14 +170,14 @@
 					  	 <!-- 로그인 -->
 	                     <li class="nav-item dropdown">
 	                        <a href="#" class="nav-link" id="info">
-                 			    ${LoginUser}님
+                 			    ${sessionScope.nickname}님
 	                            <span class="fas fa-angle-down nav-link-arrow ms-1"></span>
 	                        </a>
 	                        
 	                        	<!-- 드랍 박스 -->
 	                        	<div class="user_info" style="display:none">
 				 					<div class="mypage">
-				 					<a href="${pageContext.request.contextPath}/mypage.cy?useremail=${LoginUser}">마이페이지</a>
+				 					<a href="${pageContext.request.contextPath}/mypage?useremail=${LoginUser}">마이페이지</a>
 				 					
 				 					</div>
 				 					
@@ -186,7 +187,7 @@
 				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create?userId=${LoginUser}">프로젝트 생성하기</a></div>
 								
                                   	
-				 					<div class="logout"><a href="logout.cy">로그아웃</a></div>
+				 					<div class="logout"><a href="logout">로그아웃</a></div>
 				 				</div>
 	                        
 	                   	 </li>
@@ -210,19 +211,21 @@
 		<div class="loader-container">
 			<div class="progress-br float shadow">
 				<div class="progress__item"></div>
+
 			</div>
 		</div>
-	</div>
-	<!-- END LOADER -->	
-	
-    </main>
+		<!-- END LOADER -->
 
-<!-- 반응형 토글 -->
-<script src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/vendor/headroom.js/dist/headroom.min.js"></script>
+	</main>
 
-<!-- Pixel JS -->
-<script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
+	<!-- 반응형 토글 -->
+	<script
+		src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/vendor/headroom.js/dist/headroom.min.js"></script>
+
+	<!-- Pixel JS -->
+	<script src="${pageContext.request.contextPath}/assets/js/pixel.js"></script>
 
 <script src="${pageContext.request.contextPath}/vendor/vivus/dist/vivus.min.js"></script>
 
@@ -234,7 +237,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 
 

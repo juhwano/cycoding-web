@@ -74,7 +74,8 @@ ul {
 
 .sub_title{
 	color:#94A7AE;
-	font-size:14px;
+	font-size:16px;
+	font-weight:bold;
 }
 
 .item{
@@ -154,7 +155,7 @@ width:70px;*/
 /*모달창*/
 .modal.fade .modal-dialog{
 	margin: auto;
-	height:1000px;
+	height:800px;
 	width:800px;
 	max-width:1000px;
 }
@@ -187,7 +188,7 @@ width:70px;*/
 	text-align: center;
 }
 .modal-content{
-	height:500px;
+
 	margin-top:200px;
 }
 
@@ -201,7 +202,6 @@ width:70px;*/
 }
 
 #modal-body{
-	height:400px;
 	overflow:auto;
 	padding:30px;
 }
@@ -228,8 +228,8 @@ width:70px;*/
 	display:flex;
 	flex-wrap: wrap;
 	text-align:center;
-	/*justify-content:space-between;*/
-	margin-top: 30px;
+	/*justify-content:space-between;
+	margin: 10px 0;*/
 }
 
 .tags{
@@ -311,9 +311,14 @@ top:-5px;
 
 
 #buttonarea{
+	/*
 	position:absolute;
 	bottom:30px;
-	right:50px;
+	right:15px;
+	*/
+	margin-top: auto;
+    margin-left: auto;
+    width: 200px;
 }
 
 #buttonarea button{
@@ -322,7 +327,7 @@ top:-5px;
 	padding: 10px;
 	margin:10px;
 }
-#edit{
+#edit-btn{
 	background-color:#94A7AE;
 	color:#F4F2F3;
 }
@@ -334,6 +339,8 @@ top:-5px;
 }
 
 /*여기까지 모달창*/
+
+
 
 .detail_section{
 	margin: 50px auto;
@@ -368,9 +375,10 @@ display: inline-block;
 }
 #star{
     position: relative;
-    top: -12px;
-    left: -78px;
-    width: 10px;
+    top: -10px;
+    left: 22px;
+    color: #CA8FAB;
+    width: 0
 }
 
 .moerdetails{
@@ -381,3 +389,83 @@ display: inline-block;
 	width:100%;
 }
 
+.insert{
+	text-align:center;
+		/*background-color:#F4F2F3;*/
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color:#94A7AE;	
+	width:150px;
+	height:50px;
+	font-size:16px;
+	padding:10px;
+	margin:10px auto;
+	
+	}
+	
+	.insert:hover{
+		border: 2px solid #CA8FAB;
+		box-sizing: border-box;
+		color:#CA8FAB;
+	position:relative;
+	top:-5px;
+	
+	}
+
+/*프로젝트 경험 모달창*/
+.exarea{
+	background-color:#F4F2F3;
+	padding:15px;
+	font-size:14px;
+
+}
+.exarea button{
+	border:none;
+	width:30px;
+	height:30px;
+	margin:10px;
+	align-items: center;
+	font-weight: bold;
+}
+
+.exarea input{
+	border:none;
+	outline:none;
+	background-color:white;
+	padding:10px;
+	color:#94A7AE;
+	margin:10px 0;
+	width:300px;
+
+}
+
+.ex_button{
+	margin-left: auto;
+	width:100px;
+}
+.add_ex{
+	background-color:#94A7AE;
+	color:#F4F2F3;
+}
+.del_ex{
+	background-color:#cdd7db;
+	color:#F4F2F3;
+}
+
+.ex_tags{
+		text-align:center;
+			/*background-color:#F4F2F3;*/
+		border: 2px solid #94A7AE;
+		box-sizing: border-box;
+		color:#94A7AE;	
+		width:150px;
+		height:50px;
+		font-size:14px;
+		padding:10px;	
+
+}
+
+#middle_tag{
+	margin:10px 0;
+}
+/**/

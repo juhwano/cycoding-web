@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.member.dao.MemberDao;
 
+@RequestMapping(value="register/")
 @RestController
 public class RegisterRestComtroller {
    
@@ -31,7 +32,7 @@ public class RegisterRestComtroller {
 	@Autowired
 	JavaMailSender mailSender;
 	
-	@RequestMapping(value="emailcheckajax.cy", method=RequestMethod.GET)
+	@RequestMapping(value="emailcheck.ajax", method=RequestMethod.GET)
 	public String checkEmail(String email) {
 		
 		System.out.println("This is checkEmail");
@@ -55,7 +56,7 @@ public class RegisterRestComtroller {
 		return result;
 	}
 	
-	@RequestMapping(value="emailcheckajax.cy", method=RequestMethod.POST)
+	@RequestMapping(value="emailcheck.ajax", method=RequestMethod.POST)
 	public String mailSending(HttpServletRequest request, String email, HttpServletResponse response_email) throws IOException {
 		 
 		System.out.println("인증메일 발송 컨트롤러");
@@ -125,7 +126,7 @@ public class RegisterRestComtroller {
 
 	
 	
-	@RequestMapping(value="nicknamecheckajax.cy")
+	@RequestMapping(value="nicknamecheck.ajax")
 	public String checkNickName(String nickName) {
 		
 		System.out.println("This is checkNickName");
@@ -149,7 +150,7 @@ public class RegisterRestComtroller {
 		return result;
 	}
 	
-	@RequestMapping(value="phonecheckajax.cy")
+	@RequestMapping(value="phonecheck.ajax")
 	public String checkPhone(String phone) {
 		
 		System.out.println("This is checkPhone");
