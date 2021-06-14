@@ -156,6 +156,7 @@
 	</div>
 	</div>
 </body>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
 /* projectList에서 필요한 데이터들 미리 선언 */
 	let membercount_list = JSON.parse('${membercount_list}');
