@@ -40,8 +40,6 @@ public class ProjectController {
 	private MemberService memberService;
 	
 	
-	
-	
 	@RequestMapping(value="list")
 	public String getProjectList(Model m) {
 		System.out.println("this is /list");
@@ -142,9 +140,28 @@ public class ProjectController {
 	
 	//해당 프로젝트로 링크 변경해야됨
 	@RequestMapping(value="detail",method = RequestMethod.GET)
-	public String ProjectDetail() {
+	public String ProjectDetail(@RequestParam("project_id") String project_id) {
+		System.out.println("/project/detail");
+	/*
+	 	필요한 데이터
+	 	1. 모집현황 - 모집 포지션 , 구인 인원, 현재 확정인원 --> 포지션별로 group.
+	 		--> P_MEMBER 테이블 : project_id, position_id, count(member_id), count(*)
+	 	
+	 	7. 확정된 팀원 목록 - 프로필사진, member_id, 닉네임
+	 		--> getPmemberCountLIst(project_id)
+	 	
+	 	밑에는 V_PjAdrField_Join_V_PDetail에서 가져오면 될듯.
+	 	2. 프로젝트 모집분야 - PROJECT테이블 : field_code
+	 	3. 프로젝트 모집상태 - P_DETAILE 테이블 : p_state
+	 	4. 프로젝트 제목 --> P_DETAILE 테이블 : p_title
+	 	5. 프로젝트 본문 --> p_content
+	 	6. 프로젝트 기간 - P_DETAILE 테이블 : duration_id
+	 	7. 프로젝트 생성자 정보 - 프로필사진, member_id, 닉네임
+	 	
+	 */
 		
-		System.out.println("프로젝트 상세페이지");
+		
+		
 		
 		return "Project/ProjectDetail";
 	}

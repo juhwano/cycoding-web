@@ -220,7 +220,7 @@ public class ProjectService {
 	public List<PmemberCountVo> getPmemberCountList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
-		List<PmemberCountVo> membercount_list = dao.getPmemberCountList();
+		List<PmemberCountVo> membercount_list = dao.getPmemberCountList("all");
 		
 		return membercount_list;
 	}

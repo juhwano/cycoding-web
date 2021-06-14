@@ -19,7 +19,7 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import net.sf.json.JSONArray;
 
 @RestController
-@RequestMapping("project")
+@RequestMapping("ajaxproject")
 public class RestProjectController {
 
 	@Autowired
@@ -38,22 +38,13 @@ public class RestProjectController {
 		List<String> Flist= service.getFilteredProjectList(data);
 		System.out.println(Flist);
 		
-		//결과 Flist가 null이라는건 input이 하나도 없다는 뜻.
-		//빈 배열로 초기화 해준다.
-//		if(Flist==null) {
-//			Flist = new ArrayList<String>();
-//		}
-		
-		
-		//skill_code에 값이 있을 경우
-//		if(!data.get("skill_code").equals("")) {
+
 			
 			//기술 필터링
 			//위에서받은 Flist도 같이 넣어준다.
 //		Flist = service.getFilteredProjectSkillList(data,Flist);
 		Flist = service.getFilteredProjectSkillList(data,Flist);
-			System.out.println("skill list : " + Flist);
-//		}
+		System.out.println("skill list : " + Flist);
 		
 //		Flist : 3개를 필터링 한 값이 있고
 //		skill을 필터링 한 값이 있으면

@@ -25,7 +25,7 @@
     /* 필터링 함수 실행 */
     function filter(adr_code,field_code,skill_code,p_state){
         $.ajax({
-            url:'/project/filter',
+            url:'/ajaxproject/filter',
             type: 'get',
             dataType:"text",
             data: {
@@ -51,7 +51,7 @@
      /* 검색 함수 실행 */
      function search(project_name){
          $.ajax({
-             url:'/project/search',
+             url:'/ajaxproject/search',
              type: 'get',
              dataType:"text",
              data: {projectname:project_name},

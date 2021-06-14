@@ -32,7 +32,7 @@ public interface ProjectDao {
 	public List<V_PjSk> getPjSkList();
 	
 	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
-	public List<PmemberCountVo> getPmemberCountList();
+	public List<PmemberCountVo> getPmemberCountList(String project_id);
 	
 	//지역리스트
 	public List<AdrVo> getAdrList();

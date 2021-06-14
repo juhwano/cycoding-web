@@ -79,9 +79,14 @@
 		from v_psk_sk
 	</select>
 	
-	<select id="getPmemberCountList" resultType="com.cyco.project.vo.PmemberCountVo">
+	<select id="getPmemberCountList" parameterType="string" resultType="com.cyco.project.vo.PmemberCountVo">
 		select count(member_id)as m_count, count(*) as total_count, project_id
 		from p_member
+		<choose>
+			<when test='project_id != "all"'>
+				where project_id=#{project_id}
+			</when>
+		</choose>
 		group by project_id
 	</select>
 	
@@ -94,6 +99,8 @@
 	<select id="getDurationList" resultType="com.cyco.project.vo.P_DurationVO">
 		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
 	</select>
+	
+	
 	
 	
 </mapper>
