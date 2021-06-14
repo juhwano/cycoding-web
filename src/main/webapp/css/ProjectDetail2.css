@@ -1,0 +1,354 @@
+@charset "utf-8";
+
+body {
+	margin-top: 100px;
+	font-family: 'Roboto', serif;
+	line-height: 1.6
+}
+.rootcontainer{
+	display:flex;
+	max-width:1300px;
+	padding:30px;
+	margin:auto;
+}
+/* 탭기능 */
+.containe {
+	width: 100%;
+	margin: 0 auto;
+	margin-right:80px;
+}
+
+ul.tabs {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+ul.tabs li {
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+
+ul.tabs li.current {
+	background: #f4f2f3;
+	color: #222;
+}
+
+.tab-content {
+	display: none;
+	background: #f4f2f3;
+	padding: 15px;
+	margin-bottom: 100px;
+}
+
+.tab-content.current {
+	display: inherit;
+}
+
+/* 프로젝트상세 헤더영역 */
+div{
+	display: block;
+}
+
+.projectPageHeaderWrap{
+	background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 40px 0 44px;
+    position: relative;
+    background-size: cover;
+}
+
+.projectPurposeWrap {
+	width: 100%;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.projectPageHeaderWrap .projectPurposeWrap div {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 8px 20px;
+    border-radius: 2px;
+    border: 1px solid #c0a9bd;
+    background-color: #fff;
+    display: inline-block;
+}
+
+.projectPageHeaderWrap .projectPurposeWrap div span {
+    color: #c0a9bd;
+    font-size: 14px;
+    line-height: 15px;
+}
+
+.projectPageHeaderWrap .projectPageHeaderContent {
+    max-width: 1040px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.projectPageHeaderWrap .projectTit {
+    text-align: center;
+    color: #222;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 34px;
+}
+
+.projectPageHeaderWrap .projectLeaderWrap {
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    list-style: none;
+}
+
+.projectPageHeaderWrap .projectLeaderWrap .userIdWrap {
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+    position: relative;
+}
+
+.projectPageHeaderWrap .projectLeaderWrap .userIdWrap .leaderImg {
+    width: 37px;
+    height: 37px;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.projectPageHeaderWrap .projectLeaderWrap .userIdWrap .leaderImg img {
+    width: 100%;
+    height: auto;
+}
+
+.projectPageHeaderWrap .projectLeaderWrap .userIdWrap .userIdTxt {
+    font-size: 14px;
+    color: #666;
+    margin-left: 11.5px;
+    margin-right: 6.5px;
+}
+
+.projectPageHeaderWrap .statusTagWrap {
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    justify-content: center;
+}
+
+.projectPageHeaderWrap .statusTagWrap .statusTag {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 3px 9px;
+    color: #fff;
+    border-radius: 100px;
+    margin-right: 6px;
+    font-size: .7rem;
+    
+    background-color: #94a7ae;
+}
+
+/* 프로젝트 정보탭 */
+.projectDetailWrap {
+    position: relative;
+    overflow: hidden;
+}
+
+.projectInfoTabContents .section.statusSection {
+    border: 1px solid #e6e6e6;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 29px 24px 16px;
+}
+
+.projectInfoTabContents .section {
+    margin-bottom: 15px;
+}
+
+/* 모집현황박스 */
+.projectDetailWrap .projectTab .section h3.tabTit {
+    font-size: 1.375rem;
+    line-height: 1.4375rem;
+    color: #42495b;
+    font-weight: 700;
+    padding-bottom: 15px;
+    
+}
+
+.projectInfoTabContents .section {
+    background-color: #fff;
+    margin-bottom: 35px;
+}
+
+.projectInfoTabContents .section.statusSection h3 {
+    font-size: 19px!important;
+    font-weight: 550!important;
+    color: #424251!important;
+    border-bottom: 1px solid #e6e6e6;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-bottom: 11px;
+}
+
+.projectInfoTabContents .section.statusSection ul li .positionTxt {
+    font-size: 15px;
+    line-height: 1.3125rem;
+    color: #424251;
+    margin-right: 30px;
+    width: 221px;
+}
+
+.projectInfoTabContents .section.statusSection ul li .positionNum1 {
+    font-size: 15px;
+    line-height: 1.3125rem;
+    color: #ea6560!important;
+    margin-right: 34px;
+}
+
+ 
+ .positionApplyBtn{
+	margin-left: 30px;
+	border: 1px solid #c0a9bd;
+	color: #c0a9bd;
+	background-color: #fff;
+ }
+ 
+ .positionApplyBtn:hover{
+	margin-left: 30px;
+	border: 1px solid #c0a9bd;
+	color: #fff;
+	background-color: #c0a9bd;
+ }
+ 
+ /* 오른쪽 박스영역 */
+.projectRightInfoContetns {
+    max-width: 280px;
+    width: 100%;
+}
+.projectRightInfoContetns  h3{
+	font-size: 19px;
+    font-weight: 550;
+    color: #424251!important;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.projectRightInfoContetns .projectRightInfoWrap {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 51px;
+}
+
+.projectRightInfoWrap .infoWrap {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 20px 0;
+}
+
+
+.projectRightInfoContetns .projectRightInfoWrap .infoWrap .checkboxTit {
+    font-size: 16px;
+    color: #424251;
+    font-weight: 500;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+}
+
+ .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .userIdWrap {
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+}
+
+ .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .leaderImg {
+    width: 54px;
+    height: 54px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 14px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+}
+
+.projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .rightBox .userIdTxt {
+    font-size: 15px;
+    font-weight: 400;
+    color: #61b4c7;
+    position: relative;
+    width: auto;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+}
+
+ .projectRightInfoContetns .projectRightInfoWrap .infoWrap .checkboxTit {
+    font-size: 16px;
+    color: #424251;
+    font-weight: 500;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+}
+
+.projectRightInfoContetns .infoWrap .tabTxt {
+    font-size: 14px;
+    line-height: 14px;
+    color: #8e8ea2;
+    margin-top: 16px;
+}
+

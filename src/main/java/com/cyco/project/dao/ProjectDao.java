@@ -13,11 +13,15 @@ import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
+import com.cyco.project.vo.V_PmPostion_Count;
 
 
 public interface ProjectDao {
 	//프로젝트 리스트 가져오기
 	public List<V_PjAdrField_Join_V_PDetail> getProjectList(Map<String, String> data);
+	
+	//프로젝트 하나만 가져오기(상세)
+	public V_PjAdrField_Join_V_PDetail getOneProject(String project_id);
 	
 	//지역, 분야, 상태로 필터링된 project_id리스트 가져오기
 	public List<String> getFilteredProjectList(Map<String, String> data);
@@ -25,14 +29,17 @@ public interface ProjectDao {
 	//기술스택으로 필터링된 project_id리스트 가져오기
 	public List<String> getFilteredProjectSkillList(String skill_code);
 	
-	
-	public List<V_PmPosition> getProjectMemberList();
+	//프로젝트 멤버 검색. project_id를 통한 조건검색 가능
+	public List<V_PmPosition> getProjectMemberList(String project_id);
 	
 	//각 프로젝트의 기술스택 리스트 가져오기
 	public List<V_PjSk> getPjSkList();
 	
 	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
 	public List<PmemberCountVo> getPmemberCountList(String project_id);
+	
+	//프로젝트 상세에서 전체 자리수와 남은 자리수를 가져옴
+	public List<V_PmPostion_Count> getPmemberCount(String project_id);
 	
 	//지역리스트
 	public List<AdrVo> getAdrList();

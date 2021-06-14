@@ -22,6 +22,8 @@ import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
+import com.cyco.project.vo.V_PmPosition;
+import com.cyco.project.vo.V_PmPostion_Count;
 
 @Service
 public class ProjectService {
@@ -48,6 +50,7 @@ public class ProjectService {
 		System.out.println("dao : " + project_list);
 		return project_list;
 	}
+	
 //	ProjectList with Filter
 //	오버로딩 함수
 	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist, String p_state){
@@ -216,7 +219,7 @@ public class ProjectService {
 		return searched_list;
 	}
 	
-	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
+	//전체프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
 	public List<PmemberCountVo> getPmemberCountList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
@@ -225,4 +228,28 @@ public class ProjectService {
 		return membercount_list;
 	}
 	
+	//프로젝트 상셍에서 포지션 별 전체 자리수와 남은 자리수 뽑기
+	public List<V_PmPostion_Count> getPmemberCount(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<V_PmPostion_Count> pmcountlist = dao.getPmemberCount(project_id);
+		
+		return pmcountlist;
+	}
+	
+	
+	//	프로젝트 상세 - 프로젝트 id를 통해 하나만 가져오기
+	public V_PjAdrField_Join_V_PDetail getOneProject(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		V_PjAdrField_Join_V_PDetail project = dao.getOneProject(project_id);
+		System.out.println("dao : " + project);
+		return project;
+	}
+	
+	//프로젝트 멤버 검색. project_id를 통한 조건검색 가능
+	public List<V_PmPosition> getProjectMemberList(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
+		return pmlist;
+	}
 }

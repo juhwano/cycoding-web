@@ -25,6 +25,8 @@ import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
+import com.cyco.project.vo.V_PmPosition;
+import com.cyco.project.vo.V_PmPostion_Count;
 import com.cyco.utils.UtilFile;
 
 import net.sf.json.JSONArray;
@@ -140,12 +142,16 @@ public class ProjectController {
 	
 	//해당 프로젝트로 링크 변경해야됨
 	@RequestMapping(value="detail",method = RequestMethod.GET)
-	public String ProjectDetail(@RequestParam("project_id") String project_id) {
+	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m) {
 		System.out.println("/project/detail");
 	/*
 	 	필요한 데이터
 	 	1. 모집현황 - 모집 포지션 , 구인 인원, 현재 확정인원 --> 포지션별로 group.
-	 		--> P_MEMBER 테이블 : project_id, position_id, count(member_id), count(*)
+	 		--> select count(member_id) as curr,count(*) as max,position_name ,position_id 
+				from v_pm_position
+				where project_id=1
+				group by position_name,position_id
+				;
 	 	
 	 	7. 확정된 팀원 목록 - 프로필사진, member_id, 닉네임
 	 		--> getPmemberCountLIst(project_id)
@@ -159,9 +165,22 @@ public class ProjectController {
 	 	7. 프로젝트 생성자 정보 - 프로필사진, member_id, 닉네임
 	 	
 	 */
+		//프로젝트 멤버 검색
+		 List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
+		
+		//프로젝트 상세의 포지션별 자리수
+		List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
+		
+		//프로젝트 상세 내용을 담은 객체
+		V_PjAdrField_Join_V_PDetail project = service.getOneProject(project_id);
 		
 		
-		
+		m.addAttribute("project",project);
+		m.addAttribute("pmcountlist",pmcountlist);
+		m.addAttribute("pmlist",pmlist);
+		System.out.println(project);
+		System.out.println(pmcountlist);
+		System.out.println(pmlist);
 		
 		return "Project/ProjectDetail";
 	}
