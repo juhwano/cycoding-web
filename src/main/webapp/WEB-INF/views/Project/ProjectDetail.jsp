@@ -8,9 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>사이좋게 코딩하자</title>
 
-<link type="text/css" href="${pageContext.request.contextPath}/css/ProjectDetail.css?ver=1" rel="stylesheet">
+<link type="text/css"
+	href="${pageContext.request.contextPath}/css/ProjectDetail.css?ver=1"
+	rel="stylesheet">
 </head>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include
+	page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 	<div class="projectPageHeaderWrap">
 		<div class="projectPurposeWrap">
@@ -23,10 +26,10 @@
 			<li class="projectLeaderWrap">
 				<div class="userIdWrap">
 					<div class="leaderImg">
-						<img width="20px" height="20px" src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
+						<img width="20px" height="20px"
+							src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
 					</div>
-					<span class="right Txt userId">
-						<span class="userIdTxt">닉네임</span>
+					<span class="right Txt userId"> <span class="userIdTxt">팀장닉네임</span>
 					</span>
 				</div>
 			</li>
@@ -35,42 +38,69 @@
 			</div>
 		</div>
 	</div>
-	
-		<!--  -->
-		<div class="container">
 
-			<ul class="tabs">
-				<li class="tab-link current" data-tab="tab-1">정보</li>
-				<li class="tab-link" data-tab="tab-2">Q&A</li>
-			</ul>
+	<!--  -->
+	<div class="container">
 
-			<div id="tab-1" class="tab-content current">
-				모집현황 소개 등등 이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				<div class="testBox"> 
-				안ㅇㅔ 디브 넣을 수 있나용
-				<button>버튼도?</button>
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">정보</li>
+			<li class="tab-link" data-tab="tab-2">Q&A</li>
+		</ul>
+
+		<div id="tab-1" class="tab-content current">
+			<div class="projectDatailWrap">
+				<div class="projectTab projectInfoTabContents active">
+					<div class="section statusSection">
+						<h3 class="tabTit">모집 현황</h3>
+						<ul>
+							<li><span class="positionTxt">안드로이드</span> <span
+								class="positionNum">0/2</span>
+								<button value="지원" class="positionApplyBtn">지원</button></li>
+						</ul>
+					</div>
 				</div>
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				<hr>
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				이러쿵저러쿵이러쿵저러쿵
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
 			</div>
-			<div id="tab-2" class="tab-content">
-				---- ---- ★------ ---- ----
-				---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- --------
-				---- ---- ---- ★-- ---- ---- ------★ ---- ---- ---- ---- ---- ----
-				-------- ---- ---- ---- ---- ---- ---- ★------ ---- ---- ---- ----
-			</div>
-
 		</div>
-		<!--  -->
 
-	
+		<div id="tab-2" class="tab-content">---- ---- ★------ ---- ----
+			---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- --------
+			---- ---- ---- ★-- ---- ---- ------★ ---- ---- ---- ---- ---- ----
+			-------- ---- ---- ---- ---- ---- ---- ★------ ---- ---- ---- ----
+		</div>
+		
+		<div class="projectRightBox">
+			<div class="projectRightInfoWrap">
+				<div class="basicInfoWrap infoWrap">
+					<p class="checkBoxTit"> ✔ 리더 정보 </p>
+					<div class="leaderInfo">
+						<div class="leaderImg">
+							<img width="20px" height="20px"
+							src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
+						</div>
+						<div class="rightBox">
+							<span class="userIdTxt">팀장닉네임</span>
+						</div>
+					</div>
+				</div>
+				<div class="projectDate infoWrap">
+					<p class="checkboxTit">프로젝트 기간</p>
+					<p class="tabTxt">1~3개월</p>
+				</div>
+				<div class="infoWrap">
+					<p class="checkboxTit">프로젝트 분야</p>
+					<p class="rightTxt tabTxt"> 안드로이드 </p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!--  -->
+
+
 	<%-- <script src="${pageContext.request.contextPath}/assets/js/js파일명"></script> --%>
 </body>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
+<jsp:include
+	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
 $(document).ready(function(){
 	
