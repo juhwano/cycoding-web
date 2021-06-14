@@ -275,5 +275,7 @@ public class MemberDeatilRestController {
 		
 	}
 	
+	
+	
 
 }

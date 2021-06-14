@@ -58,8 +58,6 @@
 								<span class="item">보유기술</span>
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-
-
 							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
 								<c:choose>
 

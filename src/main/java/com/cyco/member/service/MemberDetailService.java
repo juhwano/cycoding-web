@@ -3,8 +3,11 @@ package com.cyco.member.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +21,26 @@ import com.cyco.member.vo.V_Duration;
 @Service
 public class MemberDetailService {
 	
-private SqlSession sqlsession;
+	private SqlSession sqlsession;
 	
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
+	}
+	
+	@Autowired
+	PasswordEncoder pwdEncoder;
+	
+	//마이페이지 진입시 비밀번호 체크
+	
+	public boolean checkPwd(String useremail, String userPwd) {
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		MemberVo member = memberdao.getMyDetail(useremail);
+
+		boolean checkpassword = pwdEncoder.matches(userPwd, member.getMEMBER_PWD());
+		System.out.println("테스트중: " + checkpassword);
+		
+		return checkpassword;
 	}
 	
 
@@ -30,9 +48,11 @@ private SqlSession sqlsession;
 	public MemberVo getMyDetail(String useremail) {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		MemberVo memeber = memberdao.getMyDetail(useremail);
+		MemberVo member = memberdao.getMyDetail(useremail);
 		
-		return memeber;
+		System.out.println("테스트중: " + member);
+		
+		return member;
 	}
 	
 	//프로필 이미지 변경
@@ -55,8 +75,6 @@ private SqlSession sqlsession;
 	}
 	
 	//암호화된 비밀번호 수정
-	@Autowired
-	PasswordEncoder pwdEncoder;
 	public int editPwd(String column, String info, int userid) {
 		
 		//클라이언트에서 회원이 변경한 비밀번호를 암호화한다
