@@ -83,9 +83,10 @@ public class UtilFile {
 		
 		// 기본 파일 경로
 		String uploadpath = request.getSession().getServletContext().getRealPath("/");
-		
+		System.out.println("uploadpath : " + uploadpath);
 		// 어떤 파일에 저장할것인지
-		String attachpath = "upload/";
+		//String attachpath = "upload/";
+		String attachpath = "resources/";
 		
 		
 		return uploadpath + attachpath;

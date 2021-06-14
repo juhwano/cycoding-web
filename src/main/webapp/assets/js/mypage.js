@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+    //About Cycoder 부분의 정보 각각 비동기로 변경하기
     // 개인정보 담을 변수
     let before;
     let atfer;
@@ -11,11 +12,15 @@ $(document).ready(function() {
         console.log($(this));
         console.log($(this).prev());
 
+        //바꾸기 전의 input 태그의 값 미리 담아두고
         before = $(this).prev().val();
 
+            //input 태그의 읽기 전용 비활성화, 기존 값은 placeholder로 바꾼다
             $(this).prev().prop("readonly",false);
             $(this).prev().attr("placeholder",before);
             $(this).prev().addClass("info-mdf");
+
+            //버튼 글씨 바꾸기
             $(this).text("확인");
             $(this).removeClass("m-btn");
             $(this).addClass("c-btn");
@@ -32,6 +37,8 @@ $(document).ready(function() {
 
         atfer = $(this).prev().val();
         console.log(atfer);
+
+        //수정 눌렀는데 값이 변한게 없을 때
         if(before == $(this).prev().val()){
             //swal("수정할 내용이 없습니다");
 
@@ -44,6 +51,7 @@ $(document).ready(function() {
                         $(this).addClass("m-btn");
                         
 
+        //값이 변했을 때
         }else{
 
             let code = $(this).prev().prev().text();
@@ -52,7 +60,7 @@ $(document).ready(function() {
 
             $.ajax({
 
-                url:"memberdetail/editmydetail.ajax",
+                url:"ajax/editmydetail.ajax",
                 data:{
                    code:code,
                    info:atfer,
@@ -62,7 +70,7 @@ $(document).ready(function() {
                 dataType:"text",
                 success:function(data){
 
-                    if(data == "success"){
+                    if(data == "success" && code != "비밀번호"){
 
                         button.prev().empty();
                         button.prev().val(atfer);
@@ -81,7 +89,21 @@ $(document).ready(function() {
                             console.log($("#cycoder").children().text());
                         }
 
-                    } else{
+                    } else if(data == "success" && code == "비밀번호"){
+                    
+                        //비밀번호가 변경되었을 때는 인풋 태그의 값을 굳이 바꾸지 않는다
+                        //암호화 된 거 엄청 길어서 사용자한테 그대로 보여주지 않을 것
+                        console.log("여기 안 타나");
+                        button.prev().val("password");
+                        button.prev().prop("readonly",true);
+                        button.prev().removeClass("info-mdf");
+                        button.text("수정");
+                        button.removeClass("c-btn");
+                        button.addClass("m-btn");
+
+                        swal("수정되었습니다" , "" ,"success");
+
+                    }else{
                         swal("수정에 실패했습니다","","error");
                     }
 
@@ -244,9 +266,10 @@ $(document).ready(function() {
 
         if(key == "skill"){
         
-            link = "memberdetail/getskills.ajax";
+            link = "ajax/getskills.ajax";
         
         } else if(key == "experience"){
+
 
             $("#contentarea").empty();
 
@@ -272,6 +295,11 @@ $(document).ready(function() {
 
             );
 
+            if($("#have").length == 0){
+                console.log("그냥 프로젝트 경험이 없는 사람");
+                $("#contentarea").empty();
+            }
+
             //$(".index").text("#"+$(this).parent().parent().find(".exarea").index(this));
 
 
@@ -280,11 +308,11 @@ $(document).ready(function() {
 
         } else if(key == "position"){
         
-            link = "memberdetail/getposition.ajax";
+            link = "ajax/getposition.ajax";
         
         } else if(key == "duration"){
             
-            link = "memberdetail/getdurations.ajax";
+            link = "ajax/getdurations.ajax";
         
         }
 
@@ -475,7 +503,7 @@ function del(type){
     $.ajax({
 
         //url:url,
-        url:"memberdetail/deletestat.ajax",
+        url:"ajax/deletestat.ajax",
         data:{
             memberid:$("#m_id").val(),
             type:type
@@ -506,17 +534,17 @@ function edit(stats){
 
     if(keyword == 'skill'){
         
-        url="memberdetail/editskills.ajax";
+        url="ajax/editskills.ajax";
 
     } else if(keyword == 'position'){
 
         console.log("키워드 ",keyword);
         console.log("왜 여길 들어와?");
-        url="memberdetail/updateposition.ajax";
+        url="ajax/updateposition.ajax";
 
     } else if(keyword == 'duration'){
         console.log("여기 타나");
-        url="memberdetail/editdurations.ajax";
+        url="ajax/editdurations.ajax";
 
     }
 
@@ -550,7 +578,7 @@ function modifyStatView(type){
 
     $.ajax({
 
-        url:"memberdetail/modifystatview.ajax",
+        url:"ajax/modifystatview.ajax",
         data:{
 
             userid:$("#m_email").val(),
@@ -658,11 +686,12 @@ $("#never").on("click",function(){
     $(this).toggleClass("info_tags");
     $(this).css("margin","10px auto");
 
-    console.log($(".moredetails").find("#have").length);
+    console.log($("#have").length);
 
-    if( $(".trigger-btn").find("#have").length == 1){
-        console.log("태그 없애기!");
+    if( $("#have").length != 0){
+        console.log("태그 없애기~");
         $("#have").remove();
+        $("#ex_btn").find("a").remove();
 
 
     } else{
@@ -692,7 +721,7 @@ $(document).on("click",".add_ex",function(){
 //프로젝트 경험 추가기입 삭제
 $(document).on("click",".del_ex",function(){
     console.log("폼 삭제")
-    $(this).parent().remove();
+    $(this).parent().parent().remove();
 
 });
 
@@ -721,3 +750,94 @@ function addEx(){
 
     );
 }
+
+
+// 프로필 이미지 파일 업로드
+$('#target_img').click(function (e) {
+    
+    console.log("프로필 이미지 클릭");
+    $('#file').click();
+}); 
+
+$('#file').change(function(event) {
+
+    var reader = new FileReader();
+	
+	console.log("프로필 이미지 업로드");
+	
+    reader.onload = function(event) {
+        $('#target_img').attr("src", event.target.result);
+       
+    }
+
+   reader.readAsDataURL(event.target.files[0]);
+   //swal("프로필 이미지가 변경되었습니다!");
+
+   $("#img_form").submit();
+
+    console.log("리다이렉트");
+});
+
+
+//비동기로 이미지 바뀌도록 이미지 폼태그가 submit 될 때 작동할 스크립트 추가
+/*
+$("#img_form").submit(function(e){
+
+    //동기로 전송되는 것 막고
+    e.preventDefault();
+
+    //직렬화 해서 이미지 폼 안의 정보를 키/값 쌍으로 만듦
+    let imgdata = $("#img_form").serialize();
+    console.log(imgdata);
+
+    //애증의 비동기...
+    $.ajax({
+
+        url:$("#img_form").attr("action"),
+        type:"post",
+        data:imgdata,
+        dataType:"text",
+        processData: false,
+        contentType:'multipart/form-data',
+        success:function(data){
+            console.log(data);
+
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+
+});
+*/
+//회원 탈퇴
+$("#quit").on("click",function(){
+
+    console.log("회원탈퇴 버튼 클릭");
+    
+    $.ajax({
+
+        url:"ajax/updatedeletecount.ajax",
+        data:{
+            quit_id : $("#m_id").val()
+        },
+        type:"post",
+        dataType:"text",
+        success:function(response){
+            console.log(response);
+            if(response == "success"){
+                swal("탈퇴 신청이 완료되었습니다","7일 이내 로그인시 철회 가능합니다","success")
+            }else{
+                swal("탈퇴 신청을 실패했습니다","","error");
+            }
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+
+    });
+
+
+});

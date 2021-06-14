@@ -34,6 +34,16 @@ private SqlSession sqlsession;
 		return memeber;
 	}
 	
+	//프로필 이미지 변경
+	public int editProfile(String id, String filename) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.editProfile(id, filename);
+		
+		return row;
+		
+	}
+	
 	//개인정보 수정
 	public int editInfo(String column, String info, int userid) {
 		
@@ -206,6 +216,25 @@ private SqlSession sqlsession;
 		
 		return result;
 		
+	}
+	
+	//마이페이지에서 회원 탈퇴날짜 업데이트
+	public Integer updateDeleteDate(String quit_id) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int result = memberdao.updateDeleteDate(quit_id);
+		
+		return result;
+	}
+	
+	
+	//회원상세 기본정보 가져오기
+	public MemberVo getMemberDetail(String memberid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		MemberVo member = memberdao.getMemberDetail(memberid);
+		
+		return member;
 	}
 
 	
