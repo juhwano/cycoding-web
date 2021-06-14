@@ -64,6 +64,7 @@
 }
 
 .page-footer{
+	border-top: 0.0625rem solid #D1D5DB;
 	background-color: #f4f2f3;
 }
 

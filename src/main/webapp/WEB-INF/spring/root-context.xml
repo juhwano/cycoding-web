@@ -54,8 +54,8 @@
 	<bean id="bCryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
-
-	</bean>
+	</bean>	  
+	
 
 	<bean id="sqlSessionFactoryBean"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -115,7 +115,6 @@
 			</value>
 		</property>
 	</bean>
-
 	<!-- 공통 파일 업로드 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

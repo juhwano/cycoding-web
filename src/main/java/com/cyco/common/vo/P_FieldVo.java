@@ -1,5 +1,7 @@
 package com.cyco.common.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -10,4 +12,6 @@ public class P_FieldVo {
 	private String field_enabled;
 	
 
+	private List<P_FieldVo>  FieldVoList;
+	
 }
