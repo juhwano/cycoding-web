@@ -31,7 +31,7 @@
 		<div id="wrap">
 			<div id="profile_img">
 				<!-- <img src="assets/img/member_detail/cycoding_img.png"> -->
-				<img src="${pageContext.request.contextPath}/resources/upload/${member.MEMBER_IMAGE}">
+				<img src="${pageContext.request.contextPath}/resources/${member.MEMBER_IMAGE}">
 			</div>
 			<div id="cycoder">
 				<p>${member.MEMBER_NICKNAME}</p>
@@ -58,8 +58,6 @@
 								<span class="item">보유기술</span>
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-
-
 							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
 								<c:choose>
 

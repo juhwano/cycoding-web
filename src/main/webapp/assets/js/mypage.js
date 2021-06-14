@@ -1,5 +1,19 @@
 $(document).ready(function() {
 
+
+    //추가 정보 모두 기입하면 문구 사라지게 하기
+    $("a").on("click",function(){
+
+        if($(document).find(".insert").length == -1){
+            console.log("detail 다 입력했는지 체크 이벤트");
+            $(".sub_title").css("display","none");
+
+        }else{
+            $(".sub_title").css("display","block");
+        }
+
+    });
+
     //About Cycoder 부분의 정보 각각 비동기로 변경하기
     // 개인정보 담을 변수
     let before;
@@ -132,8 +146,8 @@ $(document).ready(function() {
         //기술/기간 클릭하면 태그 선택
         $(document).on("click",".tags",function(){
 
-
-            let name = $(this).text();
+           // let name = $(this).text();
+           //선택된 태그를 담을 배열
             selected= $(".clicked");
             newStats.push($(".clicked").attr("id"));
 
@@ -160,7 +174,7 @@ $(document).ready(function() {
         //기술/기간 클릭하면 태그 선택 해제
         $(document).on("click",".clicked",function(){
 
-            let name = $(this).text();
+           // let name = $(this).text();
              
             $(this).removeClass("clicked");
             $(this).removeClass("chosen");

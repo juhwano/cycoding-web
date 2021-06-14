@@ -24,7 +24,6 @@
 <c:set var="durationvo" value="${DurationList}"></c:set>
 <c:set var="membervo" value="${MemberVo}"></c:set>
 
-
 <body>
 
 	<div class="project_area">
@@ -54,7 +53,7 @@
 								<p class="Project_p"><b style="color:red;">*</b> 프로젝트 썸네일에 사용될 이미지를 선택해주세요.</p>
 								
                     			<img id ="target_img" src="${pageContext.request.contextPath}/assets/img/project/Project_defalutImg.png">
-								    <input type="file" id="file" name="uploadFile" style="display:none;" onchange="changeValue(this)" >
+								    <input type="file" id="file" name="uploadFile" style="display:none;" >
 								    <input type="hidden" name = "target_url">
                     			</div>
                     			
@@ -73,8 +72,8 @@
 								</div>	
                     				
                     			<div class="project_boxdiv">
-                    			<select class="Project_SelectBox">
-							    	<c:forEach items="${positionvo}" var="position">
+                    			<select class="Project_SelectBox" name="position_code">
+							    	<c:forEach items="${positionvo}" var="position" >
 							    		 <c:if test="${position.position_enabled eq 1}">
 									 	 	<option value="${position.position_id}">${position.position_name}</option>
 									 	 </c:if>	
@@ -82,7 +81,7 @@
 								</select>
 									<div class="BtnWarp">
 									<input type="button" class="Up_num" value="+" >
-										<p class="number">1</p>
+										<input type="text" class="number" name="field_selectCount" value="1" readonly="readonly">
 									<input type="button" class="Down_num" value="-">
 									</div>
                     			</div>
@@ -95,10 +94,10 @@
                     			<div class="Leader_Detail">  
                     				<p>✔️ 리더 정보</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 리더 정보는 마이페이지를 통해서 수정하시기 바랍니다.</p>
-                    				<input type="text" value="${membervo.MEMBER_EMAIL}" name="member_id" hidden>
+                    				<input type="text" value="${membervo.MEMBER_ID}" name="member_id" hidden>
                     				<div class="Leader_DetailBox">
                     				<div class="LeaderImg_Box">
-                    				<img src="${pageContext.request.contextPath}/assets/img/defalutimg.jpeg">
+                    				<img src="${pageContext.request.contextPath}/resources/upload/${membervo.MEMBER_IMAGE}">
                     				</div>
                     				<p><b>${membervo.MEMBER_NICKNAME}</b></p>
                     				</div>
@@ -140,7 +139,7 @@
                     			<p>프로젝트 내용</p>
                     			<p class="Project_p"><b style="color:red;">*</b> 설명이 풍부한 프로젝트는, 아닌 프로젝트에 비해 지원율이 50% 높습니다.</p>
                     			<hr>
-                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요." name="p_content"></textarea>
+                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요." name="p_content" class="ProjectContents"></textarea>
                     		</div>
                     		
                     		<div class="ProjectSkill">
@@ -152,13 +151,16 @@
 										<div id="tagarea">
 											<c:forEach items="${skillvo}" var="skill">
 										 	 	<c:if test="${skill.skill_enabled eq 1}">
-									 				<div class="tags">${skill.skill_name}</div>
+										 	 		<div class="tags">
+									 				<input type="text" value="${skill.skill_name}" readonly="readonly">
+									 				<input type="text" value="${skill.skill_code}" hidden="">
+									 				</div>
 												</c:if>
 											</c:forEach>
 										</div>
 										<hr>
 										<p class="Project_p"><b style="color:red;">*</b> 추후 수정이 가능합니다.</p>
-										<div id="selectedarea" name="skill_code"></div>
+										<div id="selectedarea"></div>
 									</div>
 								</div>
 							</div>
@@ -174,31 +176,19 @@
          </div>
        </section> 
 </body>
+	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 	<script type="text/javascript">
-		var selectBox = "<div class='project_boxdiv'><select class='Project_SelectBox'><c:forEach items='${positionvo}' var='position'><c:if test='${position.position_enabled eq 1}'><option value='${position.position_id}'>${position.position_name}</option>"
-			+ "</c:if></c:forEach></select> <div class='BtnWarp'><input type='button' class='Up_num' value='+'><p class='number'>1</p><input type='button' class='Down_num' value='-'></div></div>";
-	
-
+		var selectBox = "<div class='project_boxdiv'><select class='Project_SelectBox' name='position_code'><c:forEach items='${positionvo}' var='position'><c:if test='${position.position_enabled eq 1}'><option value='${position.position_id}'>${position.position_name}</option>"
+			+ "</c:if></c:forEach></select> <div class='BtnWarp'><input type='button' class='Up_num' value='+'><input type='text' class='number' name='field_selectCount' value='1' readonly='readonly'><input type='button' class='Down_num' value='-'></div></div>";
 			
+			var Msg = "${errorMsg}";
 			
-		
-		$('.CreateBtn').click(function(){
-			swal({
-				  title: "프로젝트를 생성하시겠습니까?",
-				  text: "* 프로젝트 생성시 50포인트가 소모됩니다.",
-				  icon: "warning",
-				  buttons: true,
-				  dangerMode: true,
-				})
-				.then((willDelete) => {
-				  if (willDelete) {
-					  $('.Project_createForm').submit();
-				  } else {
-					  return false;
-				  }
+			if(Msg != ""){
+				swal("포인트가 부족하여 생성 할 수 없습니다.","* 프로젝트를 생성하는데 50포인트가 필요합니다.","error")
+				.then((value) => {
+				  location.href = "${pageContext.request.contextPath}/main";
 				});
-		})
-			
+			}
 			
 			
 	</script>

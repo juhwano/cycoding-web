@@ -6,7 +6,26 @@ body{
 /* 페이지헤더이미지 */
 .top_area {
 	width: 100%;
+	height: 300px;
 }
+
+.area-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url(../assets/img/ain_test/MemberListHeader.jpeg);
+    background-repeat: no-repeat;
+}
+
+.area-img > p {
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    padding: 115px 0 0 60px;
+    margin: 0;
+}
+ 
 
 #memberListHeader {
 	max-width: 100%;
@@ -143,6 +162,7 @@ body{
 #card_section{
 	flex-wrap:wrap;
 	justify-content: space-between;
+    display: -webkit-inline-box;
 }
 
 .cardNum{

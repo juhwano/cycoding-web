@@ -14,7 +14,7 @@
 <title>사이좋게 코딩하자</title>
 
 <link type="text/css"
-	href="${pageContext.request.contextPath}/css/ProjectDetail2.css"
+	href="${pageContext.request.contextPath}/css/ProjectDetail.css"
 	rel="stylesheet"> 
 	<%-- <link type="text/css" href="${pageContext.request.contextPath}/css/ProjectDetail.css" rel="sytlesheet"> --%>
 </head>

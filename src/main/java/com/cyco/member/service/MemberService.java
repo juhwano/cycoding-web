@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cyco.common.vo.MemberVo;
+import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.V_MlistVo;
@@ -105,6 +106,14 @@ public class MemberService {
 		
 		return memberNickname;
 
+	}
+	
+	// 포인트 관리 
+	public int updatePoint(PointVo point) {
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int result = memberdao.updatePoint(point);
+		
+		return result;
 	}
 	
 }
