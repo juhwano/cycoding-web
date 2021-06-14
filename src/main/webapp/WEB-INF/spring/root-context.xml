@@ -121,9 +121,6 @@
 		<property name="maxUploadSize" value="10485760"></property>
 		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
-
-	<bean name="jsonview"
-		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 	
 	<!-- Transaction -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
@@ -137,7 +134,6 @@
 			<tx:method name="*" rollback-for="Exception"/>
 		</tx:attributes>
 	</tx:advice>
-	
 	
 
 	<!-- <bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
