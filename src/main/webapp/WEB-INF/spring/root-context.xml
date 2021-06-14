@@ -2,10 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                           http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context 
-                           http://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -14,13 +16,12 @@
 	<context:property-placeholder
 		location="classpath:config/*" />
 
-
 	<!-- Hikari -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="${db.driver}" />
-		<property name="jdbcUrl" value="${db.url}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
@@ -55,11 +56,27 @@
 		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
 	</bean>	  
 	
-	
-	<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
-  	  <property name="dataSource" ref="dataSource"></property>
-      <property name="mapperLocations" value="classpath*:com/cyco/**/*xml" />
+
 	</bean>
+
+	<bean id="sqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations"
+			value="classpath*:com/cyco/**/*xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="annotationClass"
+			value="org.springframework.stereotype.Repository" />
+		<property name="basePackage" value="com.cyco.**.dao.*" />
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory" />
+	</bean>
+	
+	<!-- dao(persistence) 자동으로 만들어 주기 위한 위치 -->
+	<mybatis-spring:scan base-package="com.cyco"/>
+	<context:component-scan base-package="com.cyco"/>
 	
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
                 <property name="annotationClass"
@@ -100,18 +117,31 @@
 			</value>
 		</property>
 	</bean>
-		
-	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
-	
 	<!-- 공통 파일 업로드 -->
-	 <bean  id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	      <property name="maxUploadSize"    value="10485760"></property>
-	      <property name="defaultEncoding"  value="UTF-8"></property>
-	</bean>   
-	
-	<!-- 트랜잭션 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		  <property name="dataSource" ref="dataSource"></property>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
 
+	<bean name="jsonview"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	
+	<!-- Transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	
+
+	<!-- <bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+ -->
 </beans>

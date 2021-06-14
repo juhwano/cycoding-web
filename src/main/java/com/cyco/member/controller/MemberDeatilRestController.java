@@ -1,11 +1,19 @@
 package com.cyco.member.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.cyco.common.vo.MemberVo;
 
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -13,17 +21,20 @@ import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.utils.UtilFile;
 
-@RequestMapping("memberdetail/")
+@RequestMapping("memberdetail/ajax/")
 @RestController
 public class MemberDeatilRestController {
 	
 	MemberService memberservice;
 	MemberDetailService memberdetailservice;
+	//MemberVo member;
 	
 	@Autowired
 	public void setMemberDetailService(MemberDetailService memberdetailservice) {
 		this.memberdetailservice = memberdetailservice;
+		//this.member = member;
 	}
 	
 	//회원 개인정보 수정
@@ -81,8 +92,31 @@ public class MemberDeatilRestController {
 		
 		return result;
 	}
+	/*
+	//회원 프로필 이미지 바꾸기
+	@RequestMapping(value="editprofile",method = {RequestMethod.POST,RequestMethod.GET})
+	public String changeProfile(@RequestParam(value="id",required=false)String id, @RequestParam(value="uploadFile",required=false) MultipartFile uploadFile, MultipartHttpServletRequest request) {
+	//public String changeProfile(String id, MultipartFile uploadFile, MultipartHttpServletRequest request) {	
+		System.out.println("프로필 이미지 변경");
+		
+		// 파일 유틸 생성
+		UtilFile utilFile = new UtilFile();
+		
+		// 받아오는 파일 받아오기
+		String UploadFile = utilFile.FileUpload(request, uploadFile);
+		String UploadFilename = utilFile.getFilename();
+			
+		
+		int row = memberdetailservice.editProfile(id, UploadFilename);
+		String result = "fail";
+		if(row > 0) {
+			result = "success";
+		}
+		
+		return result;
+	}
 	
-	
+	*/
 	//모달창에 기술 태그 뿌리기
 	@RequestMapping(value="getskills.ajax")
 	public List<SkillVo> getSkills(){
@@ -220,6 +254,25 @@ public class MemberDeatilRestController {
 		
 		
 		return list;
+	}
+	
+	//회원이 탈퇴 누르면 DB에 있는 탈퇴날짜 업데이트 하는 함수
+	@RequestMapping(value="updatedeletecount.ajax", method = RequestMethod.POST)
+	public String submitQuit(String quit_id){
+		
+		System.out.println("탈퇴하려는 id : " + quit_id);
+		
+		int result = memberdetailservice.updateDeleteDate(quit_id);
+		String msg = "fail";
+		
+		System.out.println("탈퇴 날짜 반영된 행 : " + result);
+		
+		if(result > 0) {
+			msg = "success";
+		} 
+		
+		return msg;
+		
 	}
 	
 

@@ -51,6 +51,10 @@ public interface MemberDao {
 	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
+	
+	//마이페이지 프로필 이미지 수정
+	public Integer editProfile(String id, String filename);
+	
 	//마이페이지 개인정보 수정
 	public Integer editPersnalInfo(String column, String info, int userid);
 	//마이페이지 개인정보 수정 시 닉네임 중복체크
@@ -84,6 +88,13 @@ public interface MemberDao {
 	public Integer deleteDurations(String memberid);
 	
 	public Integer insertDurations(String memberid, String stat);
+	
+	//마이페이지 회원 탈퇴시 탈퇴날짜 업데이트
+	public Integer updateDeleteDate(String quit_id);
+	
+	
+	//회원 상세 페이지 이메일 가져오기
+	public MemberVo getMemberDetail(String memberid);
 	
 	
 	// 포인트 관리 쿼리

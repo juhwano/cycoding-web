@@ -31,7 +31,7 @@
 		<session-management>
 			<concurrency-control max-sessions="1" expired-url="/login" error-if-maximum-exceeded="false"/>
 		</session-management>
-		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/logout" invalidate-session="true" success-handler-ref="" />
+		<logout delete-cookies="JSESSIONID" logout-success-url="/main.cy" logout-url="/**/logout" invalidate-session="true" success-handler-ref="" />
 		<access-denied-handler ref="userDeniedHandler"/>
 		
 
@@ -71,7 +71,7 @@
 											on ma.AUTHORITY_ID = a.AUTHORITY_ID
 											where m.MEMBER_EMAIL=?"
 		/>
-			   <password-encoder ref="bCryptPasswordEncoder"/>
+			    <password-encoder ref="bCryptPasswordEncoder"/> 
 	</authentication-provider>
 
 </authentication-manager>				
