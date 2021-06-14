@@ -10,7 +10,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +32,7 @@ public class BoardController {
     @RequestMapping(value = "list")
    	public String boardList(SearchVO searchVO, ModelMap modelMap) throws Exception {
 //    	페이징 호출1(컨트롤러에서 호출하고 JSP에서 호출)
+    	System.out.println("게시판 리스트");
     	searchVO.pageCalculate( boardSvc.selectBoardCount(searchVO) ); 
 
     	List<?> listview   = boardSvc.selectBoardList(searchVO);
@@ -44,6 +44,7 @@ public class BoardController {
 //	글쓰기 + 글수정 + 파일삭제 양식
 	@RequestMapping(value = "/form")
    	public String boardForm(HttpServletRequest request, ModelMap modelMap) throws Exception {
+		System.out.println("게시판 등록폼 호출");
     	String FREE_ID = request.getParameter("FREE_ID");
     	if (FREE_ID!=null) {
     		BoardVo boardInfo = boardSvc.selectBoardOne(FREE_ID);
@@ -60,7 +61,7 @@ public class BoardController {
 	 @RequestMapping(value = "/save")
 	   	public String boardSave(HttpServletRequest request, BoardVo boardInfo) throws Exception {
 	    	String[] fileno = request.getParameterValues("fileno");
-	    	
+	    	System.out.println("게시판 등록");
 	    	FileUtil fs = new FileUtil();
 			List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile());
 
@@ -71,7 +72,7 @@ public class BoardController {
 //	읽기
 	@RequestMapping(value = "/read")
 	public String boardRead(HttpServletRequest request, ModelMap modelMap) throws Exception {
-	       
+		System.out.println("게시판 읽기");
 			String FREE_ID = request.getParameter("FREE_ID");
 	        
 //	        조회수증가
@@ -94,7 +95,7 @@ public class BoardController {
 //	삭제
 	@RequestMapping(value = "/delete")
     public String boardDelete(HttpServletRequest request) throws Exception {
-    
+		System.out.println("게시판 삭제");
      String FREE_ID = request.getParameter("FREE_ID");
     
      boardSvc.deleteBoardOne(FREE_ID);
@@ -104,6 +105,7 @@ public class BoardController {
 //	파일 다운로드
     @RequestMapping(value = "fileDownload")
     public void fileDownload(HttpServletRequest request,HttpServletResponse response) {
+    	System.out.println("파일 다운로드");
         String path = "c:\\workspace\\fileupload\\"; 
         
         String filename = request.getParameter("filename");
@@ -149,7 +151,7 @@ public class BoardController {
 //    댓글 저장
     @RequestMapping(value = "/replysave")
     public String boardReplySave(HttpServletRequest request, BoardReplyVo boardReplyInfo) {
-       
+    	System.out.println("댓글 저장");
         boardSvc.insertBoardReply(boardReplyInfo);
 
         return "redirect:read?FREE_ID=" + boardReplyInfo.getFREE_ID();
@@ -158,7 +160,7 @@ public class BoardController {
 //    댓글 삭제
     @RequestMapping(value = "/replydelete")
     public String boardReplyDelete(HttpServletRequest request, BoardReplyVo boardReplyInfo) {
-        
+    	System.out.println("댓글 삭제");
     	boardSvc.deleteBoardReply(boardReplyInfo.getREPLY_ID());
 
         return "redirect:read?FREE_ID=" + boardReplyInfo.getFREE_ID();

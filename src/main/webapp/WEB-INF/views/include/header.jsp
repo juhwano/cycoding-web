@@ -95,7 +95,7 @@
                     </li>
                     
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/#" class="nav-link">
+                        <a href="${pageContext.request.contextPath}/board/list" class="nav-link">
                             COMMUNITY
                         </a>
                     </li>
