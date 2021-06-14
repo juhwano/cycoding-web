@@ -77,26 +77,18 @@ function validation() {
     //비밀번호 일치 체크
     $("#passwordC").keyup(function(){
         
-        let password = $('#password').val().trim();
-        let passwordC = $('#passwordC').val().trim();
-        
         console.log("이벤트 발생");
         console.log("비밀번호 ", password);
         console.log("비밀번호 확인 ", passwordC);
         
-        if(password =! "" && passwordC != "" ){
-            
-            if(password. passwordC){
-                
-                $("#pwdcCheck").css("color","green");
-                $("#pwdcCheck").text("✔ 비밀번호가 일치합니다");
-                
-            } else if(password != passwordC){
-                $("#pwdcCheck").css("color","#CA8FAB");
-                $("#pwdcCheck").text("비밀번호가 일치하지 않습니다");
-            }
-            
-        }
+        if($('#password').val() != $('#passwordC').val()) {
+			$("#pwdcCheck").css("color","#CA8FAB");
+            $("#pwdcCheck").text("비밀번호가 일치하지 않습니다");
+		} else {
+			 $("#pwdcCheck").css("color","green");
+             $("#pwdcCheck").text("✔ 비밀번호가 일치합니다");
+		}
+		
     });
     
     //유효성
