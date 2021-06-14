@@ -1,9 +1,15 @@
 package com.cyco.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,12 +20,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
+import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.V_MlistVo;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
@@ -38,7 +47,6 @@ public class ProjectController {
 	
 	@Autowired
 	private MemberService memberService;
-	
 	
 	
 	
@@ -91,54 +99,125 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value="create",method = RequestMethod.GET)
-	public String ProjectAdd(Model model, @RequestParam("userId") String userId) {
+	public String ProjectAdd(Model model, Authentication auth) {
 		
+		MemberVo member = memberService.getMember(auth.getName());
 		
-		List<AdrVo> AdrList = service.getAdrList();
-		List<P_FieldVo> FieldList = service.getFieldList();
-		List<SkillVo> SkillList = service.getSkillList();
-		List<PositionVo> PositionList = service.getPositionList();
-		List<P_DurationVO> DurationList = service.getDurationList();
-		MemberVo member = memberService.getMember(userId);
+		if(member.getHAVE_POINT() < 50) {
+			model.addAttribute("errorMsg", "포인트부족");
+			
+		}else {
+			
+			List<AdrVo> AdrList = service.getAdrList();
+			List<P_FieldVo> FieldList = service.getFieldList();
+			List<SkillVo> SkillList = service.getSkillList();
+			List<PositionVo> PositionList = service.getPositionList();
+			List<P_DurationVO> DurationList = service.getDurationList();
+			
+			model.addAttribute("AdrList", AdrList);
+			model.addAttribute("FieldList", FieldList);
+			model.addAttribute("SkillList", SkillList);
+			model.addAttribute("PositionList", PositionList);
+			model.addAttribute("DurationList", DurationList);
+			
+			
+		}
 		
-		
-		
-		model.addAttribute("AdrList", AdrList);
-		model.addAttribute("FieldList", FieldList);
-		model.addAttribute("SkillList", SkillList);
-		model.addAttribute("PositionList", PositionList);
-		model.addAttribute("DurationList", DurationList);
 		model.addAttribute("MemberVo", member);
-		
-		
 		return "Project/ProjectCreate";
 	}
 	
 	
+	@Transactional
 	@RequestMapping(value="create",method = RequestMethod.POST) 
-	public String ProjectAdd(P_DetailVo detail, ProjectVo projectvo, P_SkillVo skillvo, P_FieldVo fieldvo, P_DurationVO duration,
-			@RequestParam("uploadFile") MultipartFile uploadFile, MultipartHttpServletRequest request) {
+	public String ProjectAdd(P_DetailVo detail, ProjectVo projectvo,
+			@RequestParam("skil_code") String[] skil_code,
+			@RequestParam("position_code") String[] position_code, 
+			@RequestParam("field_selectCount") int[] field_selectCount,
+			@RequestParam("uploadFile") MultipartFile uploadFile, 
+			MultipartHttpServletRequest request,
+			Authentication auth,
+			Model model) {
 		
-		// 파일 유틸 생성
-		UtilFile utilFile = new UtilFile();
+		MemberVo member = memberService.getMember(auth.getName());
 		
-		// 받아오는 파일 받아오기
-		String UploadFile = utilFile.FileUpload(request, uploadFile);
-		String UploadFilename = utilFile.getFilename();
+		if(member.getHAVE_POINT() < 50) {
+			model.addAttribute("msg", "false");
+		}else {
+			// 파일 유틸 생성
+			UtilFile utilFile = new UtilFile();
+			
+			// 받아오는 파일 받아오기
+			String UploadFile = utilFile.FileUpload(request, uploadFile);
+			String UploadFilename = utilFile.getFilename();
+			detail.setP_image(UploadFilename);
+
+			List<P_MemberVo> MemberList = new ArrayList<>();
+			List<P_SkillVo> SkillList = new ArrayList<>();
+			
+			
+			// 프로젝트 insert  // insert 한 프로젝트 ID값 가져옴
+			String ProjectId = service.setProjectInsert(projectvo);
+			
+			// 가져온 ID 값 디테일 VO에 넣어주기
+			detail.setProject_id(ProjectId);
+			
+			// 프로젝트 디테일 insert
+			service.setProjectDetail(detail);
+			
+			// 포지션VO 받아온대로  List에 add 
+			for(int i = 0 ; i < position_code.length; i++) {
+				for(int j = 0; j < field_selectCount[i]; j++) {
+					MemberList.add(new P_MemberVo(null, ProjectId, position_code[i]));
+				}
+				
+			}	
+			
+			// 스킬VO 받아온대로 List에 add
+			for(String skill : skil_code) {
+				SkillList.add(new P_SkillVo(ProjectId,skill));
+			}
+			
+			// 포지션 insert
+			service.setProjectMemberList(MemberList);
+			// 스킬 insert
+			service.setProjectSkillList(SkillList);
+			
+			
+			int memberID = member.getMEMBER_ID();
+			int have_Point = member.getHAVE_POINT();
+			int use_Point = member.getUSE_POINT();
+			
+			// 포인트 처리
+			PointVo point = new PointVo(memberID, have_Point -= 50, use_Point += 50);
+			
+			memberService.updatePoint(point);
+			
+			model.addAttribute("msg", "true");
+			model.addAttribute("projectId",ProjectId);
+		}
 		
-		detail.setP_image(UploadFilename);
 		
-		System.out.println("프로젝트 생성 하기");
-		
-		System.out.println(detail);
-		System.out.println(projectvo);
-		System.out.println(skillvo);
-		System.out.println(fieldvo);
-		System.out.println(duration);
-		
-		
-		return "Main/CycoMain";
+		return "redirect:/project/projectCreateok";
 	}
+	
+	@RequestMapping(value="projectCreateok",method = RequestMethod.GET) 
+	public String ProjectAdd(String msg, String projectId, Model model, Authentication auth) {
+		
+		
+		
+		//기본회원목록넘기기
+		List<V_MlistVo> memberList = memberService.memberList();
+		
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("msg", msg);
+		model.addAttribute("id", projectId);
+		
+		
+		
+		return "Project/ProjectCreateOk";
+	}
+	
 	
 	//해당 프로젝트로 링크 변경해야됨
 	@RequestMapping(value="detail",method = RequestMethod.GET)

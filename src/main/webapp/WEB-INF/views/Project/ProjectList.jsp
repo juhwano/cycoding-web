@@ -12,21 +12,21 @@
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 	<c:set var="project_list" value="${project_list}" />
-	
 	<c:set var="adr_list" value="${adr_list}" />
 	<c:set var="field_list" value="${field_list}" />
 	<c:set var="skill_list" value="${skill_list}" />
-	
 	<c:set var="pjsk_list" value="${pjsk_list}" />
 	<c:set var="membercount_list" value="${membercount_list}" />
+	
 	
 	<!-- 탑버튼 -->
 	<img id="topBtn"
 		src="${pageContext.request.contextPath}/assets/img/ain_test/topBtn.png">
 
 	<div class="top_area">
-		<img id="projectListHeader"
-			src="${pageContext.request.contextPath}/assets/img/ain_test/projectListHeader.png">
+		<div class="area-img">
+		<p>나와 맞는 <br> 프로젝트를 찾아보세요.</p>
+      	</div>
 	</div>
 	
 	<div class="section section-md">
@@ -156,6 +156,7 @@
 	</div>
 	</div>
 </body>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
 /* projectList에서 필요한 데이터들 미리 선언 */
 	let membercount_list = JSON.parse('${membercount_list}');
