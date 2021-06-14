@@ -14,7 +14,7 @@ import com.cyco.member.vo.V_MlistVo;
 @RestController
 
 @RequestMapping("member")
-public class MemberRESTController {
+public class MemberRestController {
 	MemberService memberservice;
 
 	@Autowired

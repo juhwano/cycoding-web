@@ -56,19 +56,18 @@ public class MemberController {
 			
 			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
 			
-			System.out.println("상세 페이지 보여줄 회원 이메일 : " + useremail);
-			
 			ModelMap mmp = new ModelMap();
 			
 			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));
+			
+			//리뷰목록
+			mmp.addAttribute("reviewList", memberdetailservice.getReviewList(memberid));
+			System.out.println("리뷰목록: " + memberdetailservice.getReviewList(memberid));
+			
 			mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 			mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
 			
-			System.out.println(memberdetailservice.getMemberDetail(memberid));
-			System.out.println(memberdetailservice.getPreferSkills(useremail));
-			System.out.println(memberdetailservice.getPreferDurations(useremail));
-			
-			return new ModelAndView("/Member/MemberDetail",mmp) ;
+			return new ModelAndView("/Member/MemberDetail",mmp);
 		}
 }

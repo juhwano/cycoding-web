@@ -10,6 +10,7 @@ import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
 
@@ -92,11 +93,12 @@ public interface MemberDao {
 	//마이페이지 회원 탈퇴시 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id);
 	
-	
 	//회원 상세 페이지 이메일 가져오기
 	public MemberVo getMemberDetail(String memberid);
 	
-	
 	// 포인트 관리 쿼리
 	public int updatePoint(PointVo point);
+	
+	//회원 상세 페이지 리뷰목록 가져오기
+	public List<ReviewVo> getReviewList(String userid);
 }
