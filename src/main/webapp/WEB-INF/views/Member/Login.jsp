@@ -1,33 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!-- 스프링 시큐리티 설정 -->
-<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="se" %>
 <!DOCTYPE html>
 <html>
 	
 <head>
+	
+	<!-- 카카오 
+	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script> 
+	-->
+	<script src="./lib/kakao.min.js"></script>
+	
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- Primary Meta Tags -->
 <title>사이좋게 코딩하자</title>
 
 <!-- Pixel CSS -->
-<link type="text/css" href="html&css/css/register_pixel.css" rel="stylesheet">
-<link type="text/css" href="html&css/css/register.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/css/register_pixel.css" rel="stylesheet">
+<link type="text/css" href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet">
+
 
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 </head>
 
+<!--  header -->
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
     <main>
- 		<!--  header -->
- 		
- 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
- 		
+
  		
         <!-- Section -->
         <section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
@@ -43,11 +47,9 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">로그인</h1>
                             </div>
-                            <form id="form" action="login.cy" method="post" class="loginForm">
+                            <form id="form" action="login" method="post" class="loginForm">
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />	
 									
                                    <!--   <label for="exampleInputIcon4">Your email</label>-->
                                     <div class="input-group mb-4">
@@ -65,16 +67,25 @@
                                         <div>
                                         <p id="find">이메일 찾기/비밀번호 찾기</p>
                                         </div>
-
-  
+                                
+                                <!--  
+                                
+                                <a href="https://kauth.kakao.com/oauth/authorize
+            ?client_id=25d56d8cc547216af9df8aabb4c0ada4
+            &redirect_uri=http://localhost:8090/login.cy
+            &response_type=code">
+				<button type="button" id="kakaobtn" style="background-color:#fef01b; color:#3A1D1D; margin-top:10px">카카오 계정으로 로그인</button>
+        </a>
+               -->                 
+                                
                                 <button type="button" class="btn-color" >로그인</button>
-                                <button type="button" id="kakaobtn" onclick="kakaoLogin();" style="background-color:#fef01b; color:#3A1D1D; margin-top:10px">카카오 계정으로 로그인</button>
+
                                 </div>
                             </form>
                            
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">
-                                    <a href="register.cy" style="color:#C0A9BD">계정이 없으신가요?</a>
+                                    <a href="register" style="color:#C0A9BD">계정이 없으신가요?</a>
                                     <!--  <a href="admin.cy" style="color:#C0A9BD">어드민 페이지</a>-->
                                 </span>
                             </div>
@@ -88,13 +99,10 @@
                             <div class="text-center text-md-center mb-4 mt-md-0">
                                 <h1 class="mb-0 h3" id="title">CYCODING</h1>
                                 </div>
-                            <form id="form" action="logout.cy" method="post">
+                            <form id="form" action="logout" method="post">
                             <div id="formbox">
                                 <!-- Form -->
-                                
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-									
-									                               
+                             
                                 
                                 <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 
@@ -119,91 +127,52 @@
             </div>
             </div>
         </section>
-    </main>
-    
-    
+    </main>  
 
 <% String err = request.getParameter("error"); %>   
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script>
+/*
 Kakao.init('25d56d8cc547216af9df8aabb4c0ada4'); //발급받은 키 중 javascript키 사용
-console.log(Kakao.isInitialized()); // sdk초기화여부판단
-//$("#kakaobtn").on("click",function(){
-	
+console.log(Kakao.isInitialized());// sdk초기화여부판단
+
 	//카카오로그인
-	function kakaoLogin() {
-	    Kakao.Auth.login({
-	    	
-	      success: function (response) {
-	    	  
-	    	//로그인 성공시 API 호출
-	        Kakao.API.request({
-	        url:'kakaologin.cy',
-	          success: function (response) {
-	        	  console.log("응답 : " ,response)
-	        	  
-	        	  let email = response.email
-	        	  
-	        	  $.ajax({
-	        		  
-	        		  url : "kakaologinajax.cy/"+email,
-	                  headers : {
-	                      "Accept" : "application/json",
-	                      "Content-Type" : "application/json"
-	                    },
-	                    success : function(idChk){
-	                        
-	                    	console.log(idChk);
-	                    	
-	                        if(idChk==true){ //DB에 아이디가 없을 경우 => 회원가입
-	                            console.log("회원가입중...");
-	                        	
-	                        	location.href="register.cy"
-	                        
-	                            /* $.ajax({
-	                                url : "/user/json/addUser",
-	                                method : "POST",
-	                                headers : {
-	                                  "Accept" : "application/json",
-	                                  "Content-Type" : "application/json"
-	                                },
-	                                data : JSON.stringify({
-	                                userId : res.id,
-	                                userName : res.properties.nickname,
-	                                  password : "kakao123",
-	                                }),
-	                                success : function(JSONData){
-	                                   alert("회원가입이 정상적으로 되었습니다.");
-	                                   $("form").attr("method","POST").attr("action","/user/snsLogin/"+res.id).attr("target","_parent").submit();
-	                                }
-	                            }) */
-	                        }
-	                        if(idChk==false){ //DB에 아이디가 존재할 경우 => 로그인
-	                            console.log("로그인중...");
-	                            $("form").attr("method","POST").attr("action","kakaologin.cy/"+email).attr("target","_parent").submit();
-	                        }
-	                    }
-	        		  
-	        	  });
-	            },
-	            fail: function(error) {
-	              alert(JSON.stringify(error));
-	            }
-	          });
-	        	  
-	          },
-	          fail: function (error) {
-	            console.log(error)
-	          }
-	        });
-		}	
+function kakaoLogin() {
+    //로그인하고
+    Kakao.Auth.loginForm({
+    	
+    	//console.log("여기는 들어오냐????");
+      success: function (response) {
+        //사용자 정보 가져오기
+        Kakao.API.request({
+          url: '/v2/user/me', //계정 정보를 가져오는 request url
+          success: function (response) {
+            //let user = response.kakao_account //카카오 계정 정보
+            //console.log(user)
+            //user.host = 'kakao' //다른 로그인 서비스와 구분하기 위해서 개인적으로 추가했음
+            // 해당 페이지에서 객체를 만들고 곧바로 user 정보를 사용할 수 도 있고,
+            // input 엘리먼트에 json으로 저장해뒀다가 나중에 사용할 수도 있음. 여기서는 input에 저장
+            const userinfo = document.querySelector('#userinfo')
+            //if (userinfo) userinfo.value = JSON.stringify(user) //user를 json문자열로 변환해서 저장해두기
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
 	//});
 //카카오로그아웃  
 function kakaoLogout() {
     if (Kakao.Auth.getAccessToken()) {
       Kakao.API.request({
-        url: '/logout.cy',
+        url: '/v2/user/me',
         success: function (response) {
         	console.log(response)
         },
@@ -213,8 +182,10 @@ function kakaoLogout() {
       })
       Kakao.Auth.setAccessToken(undefined)
     }
-  }  
- 
+<<<<<<< HEAD
+  } 
+*/
+
 // 아이디 혹은 비밀번호 불일치시 얼럿창. 
 var err = <%=err%>
 
@@ -243,6 +214,7 @@ function enterkey() {
 	
 	} 	
 }			
+
 </script>
 </body>
 </html>

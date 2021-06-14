@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.MemberVo;
+
 
 
 @Controller
@@ -21,7 +22,7 @@ public class RegisterController {
 	@Autowired
 	private MemberService service;
 
-	@RequestMapping(value = "register.cy", method = RequestMethod.GET)
+	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public String join() {
 
 		System.out.println("This is join by get");
@@ -31,7 +32,7 @@ public class RegisterController {
 	}
 
 	
-	@RequestMapping(value = "register.cy", method = RequestMethod.POST)
+	@RequestMapping(value = "register", method = RequestMethod.POST)
     public String joinOK(MemberVo member) {
 		
 		System.out.println("This is joinOK");
@@ -50,15 +51,6 @@ public class RegisterController {
 		}
         
     }
-
 	  
-	  @RequestMapping(value="admin.cy")
-	  public String admintest() {
-		  System.out.println("어드민 페이지 요청");
-		  return "admin";
-	  }
-	 
-
-
 
 }

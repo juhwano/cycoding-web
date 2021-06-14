@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+/* append 발생시 (스크롤 할 영역이 밑으로 더 생길때) 스크롤을 위로 올리는것이 아니라 밑으로 내릴수 있게 함.*/
+body{
+	overflow-anchor: none;
+}
+.top_area {
+	width: 100%;
+	/*
+	max-width: 100%;
+	height: auto;
+	*/
+
+	/* 
+	background-color: #C0A9BD; 
+	background-image: url("../assets/img/ain_test/MemberListHeader.png");
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100%; 
+    */
+}
+
+#projectListHeader {
+	max-width: 100%;
+	height: auto;
+}
+
+/* 
+.p_container {
+	max-width: 960px;
+	margin: auto;
+}
+ */
+ 
+.select_section {
+	height: 100px;
+}
+
+.p_search {
+	width: 200px !important;
+	float: right;
+}
+
+.p_sel {
+	width: 150px !important;
+	float: left;
+	margin-right: 5px;
+}
+
+#ProjectNameSearch{
+	border-radius: 1rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* 카드디자인 */
+
+.m_img {
+	/* width: 300px;
+	height: 300px; */
+	width: 100%;
+    position: relative;
+    margin: 0;
+    text-align: center;
+    height: 218px;
+    border-radius: 8px;
+    overflow: hidden;
+    
+    border-radius: 0 !important;
+}
+
+.m_img_size {
+	/* object-fit: cover;
+	width: 300px; 
+	height: 100%;*/
+	height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    -webkit-transform: translateX(-50%) scale(1.5);
+    -moz-transform: translateX(-50%) scale(1.5);
+    transform: translateX(-50%) scale(1.5);
+    
+    border-radius: 0 !important;
+}
+
+.p_state{
+	float: left;
+}
+
+.p_views{
+	float: right;
+	font-size: 15px;
+	color: #b3b3b3;
+	margin-top: 5px;
+}
+
+.p_skill{
+	float: left;
+}
+
+.p_team_memNum{
+	float: right;
+}
+
+.m_img_top{
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: inline-flex;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    justify-content: space-between;
+    padding: 12px 20px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    z-index: 899;
+}
+
+.bookmark{
+	margin-left: auto;
+	
+	font-size: 30px;
+	
+	width: 30px;
+	height: 30px;
+	color: white;
+	cursor: pointer;
+}
+
+.bookmark:hover{
+	color: #ca8fab;	
+}
+
+/* 탑버튼 */
+#topBtn {
+	position: fixed;
+	right: 22px;
+	bottom: 22px;
+	display: none;
+	z-index: 100;
+	width: 50px;
+}
+
+/* 더보기버튼 */
+.moreBtn {
+	width: 40%;
+	
+	border-radius: 7px;
+	color: #c0a9bd;
+	font-size: 18px;
+	padding: 10px 20px 10px 20px;
+	border: solid #c0a9bd 2px;
+	background: white;
+}
+
+.moreBtn:hover {
+	background: #c0a9bd;
+	color: white;
+}
+
+.more_sec{
+	width: 100%;
+	text-align: center;
+}

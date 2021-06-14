@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 public class MainController {
 	@RequestMapping(value="/main")
-	public String login() {
+	public String MainToGo() {
 		System.out.println("this is main");
 		
 		return "Main/CycoMain";

@@ -3,6 +3,8 @@
 
 <mapper namespace="com.cyco.member.dao.MemberDao">
 
+
+	
 	<select id="checkEmail" resultType="integer">
 		
 		select MEMBER_ID from member where MEMBER_EMAIL = #{email}
@@ -21,11 +23,22 @@
 	
 	</select>
 
-	<insert id="registMember" parameterType="com.cyco.member.vo.MemberVo">
+	<insert id="registMember" parameterType="com.cyco.common.vo.MemberVo">
 	
 		insert into member(MEMBER_ID, MEMBER_EMAIL,MEMBER_PWD,MEMBER_NAME,MEMBER_NICKNAME,MEMBER_PHONE,MEMBER_IMAGE,ENABLED) 
 		values (M_SEQ.nextval,#{MEMBER_EMAIL},#{MEMBER_PWD},#{MEMBER_NAME},#{MEMBER_NICKNAME},#{MEMBER_PHONE},'defualt.jpg',1)
 		
 	</insert>
 	
+	<select id="getLoginedName" resultType="java.util.HashMap">
+		select member_nickname, member_id from member where member_email=#{memberemail}
+	</select>
+	
+	<update id="checkDeleteDate">
+	
+		update m_detail set delete_count=null where member_id=${memberid}
+	
+	</update>
+	
+
 </mapper>
