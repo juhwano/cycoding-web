@@ -246,6 +246,7 @@ function validation() {
     //중복체크, 인증메일링 두 가지
     $('#emailCheckBtn').click(function() {
         let email = $('#email').val().trim();
+        console.log("이메일 인증 버튼");
 
         console.log(email);
         if (email == '') {

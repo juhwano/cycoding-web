@@ -66,7 +66,7 @@ public class MemberDeatilRestController {
 			
 			column="MEMBER_PWD";
 			
-			row = memberdetailservice.editInfo(column, info, id);
+			row = memberdetailservice.editPwd(column, info, id);
 			
 			//중복검사 해야 함
 		} else if(code.equals("닉네임")) {

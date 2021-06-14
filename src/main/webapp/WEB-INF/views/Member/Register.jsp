@@ -373,75 +373,7 @@
 	</div>
 </div>     
 
-<!-- 가입 정보 유효성 검사 -->
-<script type="text/javascript">
-	$(document).ready(function(){
-		validation();
-		
-		
-		//이용약관 모달창
-		  $('.agreement').on('click', function() {
-			     $('.modal-wrapper').toggleClass('open');
-			     return false;
-		});
-	
-	});
-	
-	//let email = $('#email').val();
-	//let password = $('#password').val();
-	//let passwordC = $('#passwordC').val();
-	//let name = $('#name').val();
-	//let nickName = $('#nickName').val();
-	//let phone =  $('#phone').val();
-	
-	let dice = '';
-
-	function validation() {
-		
-		//이메일 체크
-		function email_check( email ) {    
-    		let regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-   			return (email != '' && email != 'undefined' && regex.test(email)); 
-		}
-		
-		$("#email").on("propertychange change keyup paste input",function(){
-			
-			let email = $('#email').val();
-			
-			if(!email_check(email)){
-				$("#emailCheck").css("color","#CA8FAB");
-				$("#emailCheck").text("올바른 이메일을 입력해주세요");
-			} else{
-				$("#emailCheck").css("color","green");
-				$("#emailCheck").text("✔ 올바른 형식의 이메일입니다");
-			}
-			
-		});
-		
-		
-		//비밀번호 체크
-		$("#password").on("propertychange change keyup paste input",function(){
-			
-			let password = $('#password').val();
-			let num = password.search(/[0-9]/g);
-			let eng = password.search(/[a-z]/ig);
-			
-			console.log("이벤트 발생");
-			
-			if(password.length < 8 || password.length > 20 ){
-				$("#pwdCheck").css("color","#CA8FAB");
-				$("#pwdCheck").text("비밀번호는 8-20 글자로 입력해주세요");
-			} else{
-				if( num< 0 || eng < 0){
-					$("#pwdCheck").css("color","#CA8FAB");
-					$("#pwdCheck").text("비밀번호는 영문, 숫자를 포함해야 합니다");
-					
-				} else if(password.search(/\s/) != -1){
-					$("#pwdCheck").css("color","#CA8FAB");
-					$("#pwdCheck").text("비밀번호는 공백을 포함할 수 없습니다");
-				} else{
-					$("#pwdCheck").css("color","green");
-					$("#pwdCheck").text("✔ 사용 가능한 비밀번호 입니다");
-				}
 </body>
+<!-- 가입 정보 유효성 검사 -->
+<script src="${pageContext.request.contextPath}/assets/js/register.js"></script>
 </html>

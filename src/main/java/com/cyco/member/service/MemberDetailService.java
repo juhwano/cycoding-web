@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cyco.common.vo.MemberVo;
@@ -46,6 +47,20 @@ private SqlSession sqlsession;
 	
 	//개인정보 수정
 	public int editInfo(String column, String info, int userid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.editPersnalInfo(column, info, userid);
+		
+		return row;
+	}
+	
+	//암호화된 비밀번호 수정
+	@Autowired
+	PasswordEncoder pwdEncoder;
+	public int editPwd(String column, String info, int userid) {
+		
+		//클라이언트에서 회원이 변경한 비밀번호를 암호화한다
+		info = pwdEncoder.encode(info);
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		int row = memberdao.editPersnalInfo(column, info, userid);
