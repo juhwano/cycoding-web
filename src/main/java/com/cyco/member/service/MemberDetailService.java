@@ -2,6 +2,7 @@ package com.cyco.member.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -33,11 +34,11 @@ public class MemberDetailService {
 	
 	//마이페이지 진입시 비밀번호 체크
 	
-	public boolean checkPwd(String useremail, String userPwd) {
+	public boolean checkPwd(Map<String, String> data) {
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		MemberVo member = memberdao.getMyDetail(useremail);
+		MemberVo member = memberdao.getMyDetail(data.get("useremail"));
 
-		boolean checkpassword = pwdEncoder.matches(userPwd, member.getMEMBER_PWD());
+		boolean checkpassword = pwdEncoder.matches(data.get("userPwd"), member.getMEMBER_PWD());
 		System.out.println("테스트중: " + checkpassword);
 		
 		return checkpassword;

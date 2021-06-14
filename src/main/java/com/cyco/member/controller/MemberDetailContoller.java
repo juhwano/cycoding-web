@@ -40,6 +40,7 @@ public class MemberDetailContoller {
 		return "/Member/MypageCheck";
 	}
 	
+	/*
 	@RequestMapping(value = "mypageCheck", method = RequestMethod.POST)
     public void MypageCheck(String useremail, String userPwd, Model model, HttpServletResponse response) {
 		System.out.println("컨트롤러 오니..?");
@@ -65,6 +66,7 @@ public class MemberDetailContoller {
 		}
 		
 	}
+	*/
 	
 	//마이페이지 정보 불러오기
 	@RequestMapping(value="mypage")

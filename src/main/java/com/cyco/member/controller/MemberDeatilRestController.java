@@ -1,11 +1,14 @@
 package com.cyco.member.controller;
 
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -276,6 +279,22 @@ public class MemberDeatilRestController {
 	}
 	
 	
-	
+	//마이페이지 진입 전 비밀번호체크
+	@RequestMapping(value="mypageCheck", method = RequestMethod.POST)
+	public boolean pwdCheck(@RequestParam Map<String, String> data){
+		
+		String useremail = data.get("useremail");
+		String userPwd = data.get("userPwd");
+		
+		System.out.println("비동기컨트롤러 mypageCheck 진입");
+		System.out.println("useremail: " + useremail);
+		System.out.println("userPwd: " + userPwd);
+		
+		if(memberdetailservice.checkPwd(data)) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }
