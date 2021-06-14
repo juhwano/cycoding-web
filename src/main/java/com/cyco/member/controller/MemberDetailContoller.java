@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.utils.UtilFile;
 
@@ -32,9 +34,44 @@ public class MemberDetailContoller {
 		this.memberdetailservice = memberdetailservice;
 	}
 	
+	//마이페이지 진입시 비밀번호 체크 페이지
+	@RequestMapping(value="mypageCheck")
+	public String MypageCheck() {
+		return "/Member/MypageCheck";
+	}
+	
+	/*
+	@RequestMapping(value = "mypageCheck", method = RequestMethod.POST)
+    public void MypageCheck(String useremail, String userPwd, Model model, HttpServletResponse response) {
+		System.out.println("컨트롤러 오니..?");
+		System.out.println("useremail " + useremail);
+		System.out.println("userPwd " + userPwd);
+		
+		if(memberdetailservice.checkPwd(useremail, userPwd)) {
+			try {
+				response.sendRedirect("mypage?useremail="+useremail);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('비밀번호를 잘못 입력하셨습니다.'); history.go(-1);</script>");
+				out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	*/
+	
 	//마이페이지 정보 불러오기
 	@RequestMapping(value="mypage")
 	public ModelAndView getMyDetail(@RequestParam("useremail") String useremail){
+		
 		
 		System.out.println("클라이언트에서 로그인 한 이메일 : " + useremail);
 		

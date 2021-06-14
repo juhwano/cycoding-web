@@ -239,7 +239,6 @@ function validation() {
     $('#emailCheckBtn').click(function() {
         let email = $('#email').val().trim();
 		
-		
         console.log(email);
         if (email == '') {
 

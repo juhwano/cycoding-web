@@ -33,7 +33,7 @@ public interface MemberDao {
 	//public List<V_MlistVo> getFilterMemberSkill(List<V_MlistVo> list);
 	
 	/////////////////////////////////////////////////////////////////////////
-	//회원가인용
+	//회원가입용
 	public Integer checkEmail(String email);
 	
 	public Integer checkNickName(String nickName);

@@ -88,7 +88,7 @@
 
 				<div id="info" class="details">
 					<p class="cycoder_title">DETAIL</p>
-					<p class="sub_title"></p>
+					<p class="sub_title">모든 항목을 입력해야 프로젝트에 지원할 수 있어요!</p>
 
 					<div class="infolist">
 
