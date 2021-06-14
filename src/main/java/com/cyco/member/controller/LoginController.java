@@ -43,14 +43,12 @@ public class LoginController {
 	  public ModelAndView checkInfo(String username, HttpSession session) {
 		  
 		  
-		  System.out.println("탈퇴날짜 null, 닉네임 가져오기");
 		  HashMap<String, String> map = memberservice.getLoginedName(username);
-		  System.out.println(map.toString());
+		  
 		  memberservice.checkDeleteDate(String.valueOf(map.get("MEMBER_ID")));
 		  
 		  ModelMap mmp = new ModelMap();
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
-
 	  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  

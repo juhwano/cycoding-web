@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.cyco.common.vo.MemberVo;
+import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.vo.MemberDetailPageVo;
@@ -16,9 +17,10 @@ import com.cyco.member.vo.V_MlistVo;
 @Repository
 public interface MemberDao {
 	
-	// 멤버 가져오기
+	//멤버 정보 가져오기
 	public MemberVo getMember(String email);
 	//멤버리스트 출력
+	
 	public List<V_MlistVo> getMemberList();
 	//포지션리스트 출력(셀렉트태그용)
 	public List<PositionVo> getPositionList();
@@ -84,4 +86,6 @@ public interface MemberDao {
 	public Integer insertDurations(String memberid, String stat);
 	
 	
+	// 포인트 관리 쿼리
+	public int updatePoint(PointVo point);
 }

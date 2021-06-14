@@ -95,5 +95,32 @@
 		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
 	</select>
 	
+	<!-- 프로젝트 생성  -->
+	<insert id="setProjectInsert">
+		 <selectKey keyProperty="project_id" resultType="String" order="BEFORE">
+		    select P_SEQ.nextval FROM DUAL 
+		  </selectKey>
+		insert into project (PROJECT_ID, MEMBER_ID,FIELD_CODE, ADR_CODE ) values (#{project_id}, #{member_id}, #{field_code}, #{adr_code})
+	</insert>
+	
+	
+	<insert id="setProjectDetail">
+		insert into P_DETAIL (PROJECT_ID,P_TITLE,P_IMAGE,DURATION_ID, P_CONTENT, P_STATE,P_VIEWS,P_DATE) values (#{project_id}, #{p_title}, #{p_image}, #{duration_id}, #{p_content}, '모집중', 0, sysdate)
+	</insert>
+	
+	<insert id="setProjectMemberList">
+		<foreach collection="list" item="member" open="INSERT ALL" close="SELECT * FROM DUAL">
+			into P_MEMBER (MEMBER_ID,PROJECT_ID, POSITION_ID) 
+			values (null, #{member.project_id}, #{member.position_id})
+		</foreach>
+	</insert>
+	
+	<insert id="setProjectSkillList">
+		<foreach collection="list" item="skill" open="INSERT ALL" close="SELECT * FROM DUAL">
+			into P_SKILL (PROJECT_ID, SKILL_CODE) 
+			values (#{skill.project_id}, #{skill.skill_code})
+		</foreach>
+	</insert>
+	<!-- 프로젝트 생성 -->
 	
 </mapper>

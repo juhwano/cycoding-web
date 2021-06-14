@@ -18,8 +18,12 @@ import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_MemberVo;
+import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
+import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 
@@ -225,4 +229,39 @@ public class ProjectService {
 		return membercount_list;
 	}
 	
+	// ----------------------------------------------------------
+	// 프로젝트 생성
+	public String setProjectInsert(ProjectVo p) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		dao.setProjectInsert(p);
+		
+		return p.getProject_id();
+		
+	}
+	
+	// 프로젝트 상세정보
+	public void setProjectDetail(P_DetailVo p) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		dao.setProjectDetail(p);;
+		
+	}
+	
+	// 프로젝트 + 기술
+	public void setProjectSkillList(List<P_SkillVo> p) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		dao.setProjectSkillList(p);;
+		
+	}
+	
+	// 프로젝트 맴버
+		public void setProjectMemberList(List<P_MemberVo> m) {
+			ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+			
+			dao.setProjectMemberList(m);;
+			
+		}
+	// ---------------------------------------------------------
 }

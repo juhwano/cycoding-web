@@ -6,31 +6,34 @@ body{
 }
 .top_area {
 	width: 100%;
-	/*
-	max-width: 100%;
-	height: auto;
-	*/
+	height: 300px;
+}
 
-	/* 
-	background-color: #C0A9BD; 
-	background-image: url("../assets/img/ain_test/MemberListHeader.png");
-	background-repeat: no-repeat;
+.area-img {
+    width: 100%;
+    height: 100%;
     background-size: cover;
-    background-size: 100%; 
-    */
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url(../assets/img/ain_test/projectListHeader.jpeg);
+    background-repeat: no-repeat;
 }
 
-#projectListHeader {
-	max-width: 100%;
-	height: auto;
+.area-img > p {
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    padding: 115px 0 0 60px;
+    margin: 0;
 }
+  
 
-/* 
+
+
 .p_container {
-	max-width: 960px;
-	margin: auto;
+	max-width: 1200px;
+    margin: auto;
 }
- */
+ 
  
 .select_section {
 	height: 100px;
@@ -97,6 +100,8 @@ body{
 
 .p_skill{
 	float: left;
+    display: block;
+    width: 100%;
 }
 
 .p_team_memNum{

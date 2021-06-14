@@ -17,8 +17,9 @@
 		src="${pageContext.request.contextPath}/assets/img/ain_test/topBtn.png">
 
 	<div class="top_area">
-		<img id="memberListHeader"
-			src="${pageContext.request.contextPath}/assets/img/ain_test/MemberListHeader.png">
+		<div class="area-img">
+		<p>함께 할 <br> 팀원을 찾아보세요</p>
+      	</div>
 	</div>
 
 	<c:set var="memberList" value="${memberList}" />
