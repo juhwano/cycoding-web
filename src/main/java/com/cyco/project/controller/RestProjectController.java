@@ -19,7 +19,7 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import net.sf.json.JSONArray;
 
 @RestController
-@RequestMapping("project")
+@RequestMapping("ajaxproject")
 public class RestProjectController {
 
 	@Autowired
