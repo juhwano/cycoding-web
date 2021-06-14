@@ -54,6 +54,7 @@
 	<bean id="bCryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
+
 	</bean>
 
 	<bean id="sqlSessionFactoryBean"
@@ -139,6 +140,7 @@
 	</tx:advice>
 	
 	
-	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 
+	<!-- <bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+ -->
 </beans>

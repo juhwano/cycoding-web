@@ -34,6 +34,7 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler{
 		}
 		
 		System.out.println("로그인 실패");
+		System.out.println("사유 : " + auth.getMessage());
 		System.out.println(req.getParameter("username"));
 		req.setAttribute("errMsg",auth.getMessage());
 

@@ -1,17 +1,27 @@
 package com.cyco.member.controller;
 
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.member.service.MemberDetailService;
-import com.cyco.member.service.MemberService;
+import com.cyco.utils.UtilFile;
 
 
+@RequestMapping("memberdetail/")
 @Controller
 public class MemberDetailContoller {
 	
@@ -34,14 +44,48 @@ public class MemberDetailContoller {
 		mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 		mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 		mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
-		
+		System.out.println(memberdetailservice.getMyDetail(useremail));
 		System.out.println(memberdetailservice.getPreferSkills(useremail));
 		System.out.println(memberdetailservice.getPreferDurations(useremail));
 		
 		return new ModelAndView("/Member/Mypage",mmp) ;
 	}
 	
+	//회원 프로필 이미지 바꾸기
+	@RequestMapping(value="editprofile",method = {RequestMethod.POST,RequestMethod.GET})
+	public void changeProfile(@RequestParam(value="id",required=false)String id, @RequestParam(value="uploadFile",required=false) MultipartFile uploadFile,
+			MultipartHttpServletRequest request, HttpServletResponse res) throws IOException {
+	//public String changeProfile(String id, MultipartFile uploadFile, MultipartHttpServletRequest request) {	
+		System.out.println("프로필 이미지 변경 changeProfile");
+		
+		// 파일 유틸 생성
+		UtilFile utilFile = new UtilFile();
+		
+		// 받아오는 파일 받아오기
+		String UploadFile = utilFile.FileUpload(request, uploadFile);
+		String UploadFilename = utilFile.getFilename();
+			
+		
+		int row = memberdetailservice.editProfile(id, UploadFilename);
+		String result = "fail";
+		String icon = "error";
+		if(row > 0) {
+			result = "success";
+			icon ="success";
+		}
+		
+		/*
+		 * ModelMap mmp = new ModelMap(); mmp.addAttribute("result", result);
+		 * mmp.addAttribute("icon", icon); mmp.addAttribute("url", "main.cy");
+		 */
+		
+		System.out.println("업로드 후 리다이렉트");
+		//System.out.println(mmp.toString());
+		
+		//return new ModelAndView("Redirect/Redirect", mmp);
+		//return "Redirect/Redirect";
+		
+		res.sendRedirect("mypage?useremail="+id);
+	}
 
-
-	
 }
