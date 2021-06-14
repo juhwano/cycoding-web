@@ -8,109 +8,99 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>사이좋게 코딩하자</title>
 
-<!--  -->
-<style>
-body {
-	margin-top: 100px;
-	font-family: 'Trebuchet MS', serif;
-	line-height: 1.6
-}
-
-.container {
-	width: 500px;
-	margin: 0 auto;
-}
-
-ul.tabs {
-	margin: 0px;
-	padding: 0px;
-	list-style: none;
-}
-
-ul.tabs li {
-	background: none;
-	color: #222;
-	display: inline-block;
-	padding: 10px 15px;
-	cursor: pointer;
-}
-
-ul.tabs li.current {
-	background: #ededed;
-	color: #222;
-}
-
-.tab-content {
-	display: none;
-	background: #ededed;
-	padding: 15px;
-}
-
-.tab-content.current {
-	display: inherit;
-}
-
-.top_area{
-	width: 100%;
-	height: 400px;
-}
-
-.testBox{
-	width:80%;
-	height: 100px;
-	background-color: white;
-}
-</style>
-
-<link type="text/css" href="css/ProjectDetail.css" rel="stylesheet">
+<link type="text/css"
+	href="${pageContext.request.contextPath}/css/ProjectDetail.css?ver=1"
+	rel="stylesheet">
 </head>
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include
+	page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
-	<div class="top_area">
-	</div>
-	
-		<!--  -->
-		<div class="container">
-
-			<ul class="tabs">
-				<li class="tab-link current" data-tab="tab-1">정보</li>
-				<li class="tab-link" data-tab="tab-2">Q&A</li>
-				<li class="tab-link" data-tab="tab-3">멤버관리</li>
-				<li class="tab-link" data-tab="tab-4">수정</li>
-			</ul>
-
-			<div id="tab-1" class="tab-content current">
-				모집현황 소개 등등 이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				<div class="testBox"> 
-				안ㅇㅔ 디브 넣을 수 있나용
-				<button>버튼도?</button>
-				</div>
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				<hr>
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
-				이러쿵저러쿵이러쿵저러쿵
-				이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵이러쿵저러쿵
+	<div class="projectPageHeaderWrap">
+		<div class="projectPurposeWrap">
+			<div>
+				<span class="rightTxt">안드로이드</span>
 			</div>
-			<div id="tab-2" class="tab-content">---- ---- ★------ ---- ----
-				---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- --------
-				---- ---- ---- ★-- ---- ---- ------★ ---- ---- ---- ---- ---- ----
-				-------- ---- ---- ---- ---- ---- ---- ★------ ---- ---- ---- ----</div>
-			<div id="tab-3" class="tab-content">---- ★-- -------- ---- ----
-				---- -★- ---- ---- -------- ---- -★★- ---- ---- ---- ---- --------
-				---- ---- ---- ---- ---- --★ -------- ★-- ---- ---- ---- ---- ----
-				-------- ---- ---- --★ ---- ---- ---- -------- ---- ---- ---- --★</div>
-			<div id="tab-4" class="tab-content">---- ★-- ------★-- ---★- ----
-				--★-- -★★- ---- ---- ----★---- ---- -★- ---- ---- ---- --★-- --------
-				---- --★-- ---- ---- ---- --★ -------- ★-- ---- --★-- ---- ---- ----
-				-------- ---- ---- --★ ---- ---- ---- -------- ---- ---- ---- --★</div>
-
 		</div>
-		<!--  -->
+		<div class="ProjectPageHeaderContent">
+			<h3 class="projectTit">프로젝트이름</h3>
+			<li class="projectLeaderWrap">
+				<div class="userIdWrap">
+					<div class="leaderImg">
+						<img width="20px" height="20px"
+							src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
+					</div>
+					<span class="right Txt userId"> <span class="userIdTxt">팀장닉네임</span>
+					</span>
+				</div>
+			</li>
+			<div class="statusTagWrap">
+				<span class="statusTag">모집중</span>
+			</div>
+		</div>
+	</div>
 
-	
+	<!--  -->
+	<div class="container">
+
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">정보</li>
+			<li class="tab-link" data-tab="tab-2">Q&A</li>
+		</ul>
+
+		<div id="tab-1" class="tab-content current">
+			<div class="projectDatailWrap">
+				<div class="projectTab projectInfoTabContents active">
+					<div class="section statusSection">
+						<h3 class="tabTit">모집 현황</h3>
+						<ul>
+							<li><span class="positionTxt">안드로이드</span> <span
+								class="positionNum">0/2</span>
+								<button value="지원" class="positionApplyBtn">지원</button></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="tab-2" class="tab-content">---- ---- ★------ ---- ----
+			---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- --------
+			---- ---- ---- ★-- ---- ---- ------★ ---- ---- ---- ---- ---- ----
+			-------- ---- ---- ---- ---- ---- ---- ★------ ---- ---- ---- ----
+		</div>
+		
+		<div class="projectRightBox">
+			<div class="projectRightInfoWrap">
+				<div class="basicInfoWrap infoWrap">
+					<p class="checkBoxTit"> ✔ 리더 정보 </p>
+					<div class="leaderInfo">
+						<div class="leaderImg">
+							<img width="20px" height="20px"
+							src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
+						</div>
+						<div class="rightBox">
+							<span class="userIdTxt">팀장닉네임</span>
+						</div>
+					</div>
+				</div>
+				<div class="projectDate infoWrap">
+					<p class="checkboxTit">프로젝트 기간</p>
+					<p class="tabTxt">1~3개월</p>
+				</div>
+				<div class="infoWrap">
+					<p class="checkboxTit">프로젝트 분야</p>
+					<p class="rightTxt tabTxt"> 안드로이드 </p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!--  -->
+
+
 	<%-- <script src="${pageContext.request.contextPath}/assets/js/js파일명"></script> --%>
 </body>
+<jsp:include
+	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
 $(document).ready(function(){
 	

@@ -8,7 +8,7 @@
 	href="${pageContext.request.contextPath}/css/member.css?ver=1"
 	rel="stylesheet">
 </head>
-<jsp:include page="../include/header.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
 	<!-- http://localhost:8090/memberlist.cy -->
 
@@ -66,7 +66,7 @@
 									<h3 class="h5 mt-3 card-title">${member.m_nick}</h3>
 									<p class="card-text">${member.position}</p>
 									<p class="tags"># ${member.skill}</p>
-									<a href="" class="card_link">VIEW MORE</a>
+									<a href="memberdetailpage?memberid=${member.m_id}" class="card_link">VIEW MORE</a>
 								</div>
 							</div>
 						</div>
@@ -81,7 +81,7 @@
 		</div>
 	</div>
 </body>
-<jsp:include page="../include/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <!-- MemberList Javascript -->
 <script
 	src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=2"></script>

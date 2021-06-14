@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.common.vo.PositionVo;
+import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.V_MlistVo;
 
@@ -15,10 +19,12 @@ import com.cyco.member.vo.V_MlistVo;
 @RequestMapping("member")
 public class MemberController {
 	MemberService memberservice;
+	MemberDetailService memberdetailservice;
 	
 	@Autowired
-	public void setMemberService(MemberService memberservice) {
+	public void setMemberService(MemberService memberservice, MemberDetailService memberdetailservice) {
 		this.memberservice = memberservice;
+		this.memberdetailservice = memberdetailservice;
 	}
 	
 	@RequestMapping("list")
@@ -43,4 +49,26 @@ public class MemberController {
 		
 		return "Main/ErrorPage"; 
 	}
+	
+	//회원 상세 정보 불러오기
+		@RequestMapping(value="memberdetailpage")
+		public ModelAndView getMemberDetail(@RequestParam("memberid") String memberid){
+			
+			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
+			
+			System.out.println("상세 페이지 보여줄 회원 이메일 : " + useremail);
+			
+			ModelMap mmp = new ModelMap();
+			
+			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));
+			mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
+			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
+			mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
+			
+			System.out.println(memberdetailservice.getMemberDetail(memberid));
+			System.out.println(memberdetailservice.getPreferSkills(useremail));
+			System.out.println(memberdetailservice.getPreferDurations(useremail));
+			
+			return new ModelAndView("/Member/MemberDetail",mmp) ;
+		}
 }

@@ -5,7 +5,7 @@
 	
 	<select id="getMyDetail" resultType="com.cyco.common.vo.MemberVo">
 		
-		select  m.MEMBER_ID, m.MEMBER_EMAIL, m.MEMBER_NICKNAME, m.MEMBER_NAME, m.MEMBER_PWD, m.MEMBER_PHONE, m.MEMBER_EMAIL, p.HAVE_POINT
+		select  m.MEMBER_ID, m.MEMBER_EMAIL, m.MEMBER_NICKNAME, m.MEMBER_NAME, m.MEMBER_PWD, m.MEMBER_PHONE, m.MEMBER_EMAIL, m.MEMBER_IMAGE, p.HAVE_POINT
 			    from member m left join point p
 			    on m.MEMBER_ID=p.MEMBER_ID
 			    where member_email=#{useremail}
@@ -16,6 +16,12 @@
 		
 		update member set ${param1}=#{param2} where MEMBER_ID=#{param3}
 
+	</update>
+	
+	<update id="editProfile">
+	
+		update member set MEMBER_IMAGE=#{param2} where MEMBER_EMAIL=#{param1}
+	
 	</update>
 	
 	
@@ -106,6 +112,19 @@
 
 	
 	</insert>
+	
+	
+		<select id="getMemberDetail" resultType="com.cyco.common.vo.MemberVo">
+		
+		select member_email, member_nickname, MEMBER_IMAGE from member where member_id=${memberid}
+		
+	</select>
+	
+	<update id="updateDeleteDate">
+	
+		update m_detail set delete_count=sysdate where member_id=${quit_id}
+	
+	</update>
 
 	
 </mapper>
