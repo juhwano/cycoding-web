@@ -103,7 +103,7 @@
 	
 		INSERT INTO m_skill (ms_count, member_id, skill_code)
 	VALUES(
-		(SELECT NVL(MAX(ms_count),0)+1 FROM m_skill where member_id=${param1}),
+		(SELECT MAX(ms_count)+1 FROM m_skill where member_id=${param1}),
     	${param1},#{param2}	)
 
 	

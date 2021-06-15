@@ -20,6 +20,7 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
 
@@ -245,8 +246,8 @@ public class MyPageRestController {
 	
 	//프로젝트 경험 기입한 내용 폼 태그로 날린 거 받아서 인서트하기
 	@RequestMapping(value="insertexperiences", method= {RequestMethod.POST,RequestMethod.GET})
-	//public String insertExperiences(@RequestBody M_ExperienceVo mex){
-	public String insertExperiences(@RequestBody String mex){
+	public String insertExperiences(@RequestBody M_ExperienceVo mex){
+	//public String insertExperiences(@RequestBody String mex){
 	//public String insertExperiences(@RequestBody List<M_ExperienceVo> mex){
 	//public String insertExperiences(@RequestBody Map<String,String> mex){
 	//public String insertExperiences(@RequestBody String mex) {
