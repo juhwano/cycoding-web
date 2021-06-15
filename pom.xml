@@ -147,11 +147,6 @@
          <version>2.9.8</version>
       </dependency>
       
-      <dependency>
-          <groupId>com.fasterxml.jackson.datatype</groupId>
-    <artifactId>jackson-datatype-jsr310</artifactId>
-</dependency>
-      
       <!-- JSON -->
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
@@ -296,6 +291,13 @@
             <artifactId>velocity-tools</artifactId>
             <version>2.0</version>
         </dependency>
+
+    <!-- log4jdbc -->    
+	<dependency>
+	    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+	    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+	    <version>1.16</version>
+	</dependency>
    </dependencies>
     <build>
     

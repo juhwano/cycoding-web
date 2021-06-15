@@ -30,7 +30,7 @@ $(document).ready(function() {
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
 					 card += '</div> </div> </div>'
 	               $(card_section).append(card);
             })
@@ -84,7 +84,7 @@ $(document).ready(function() {
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
 					 card += '</div> </div> </div>'
                $(card_section).append(card);
 
@@ -165,7 +165,7 @@ $(document).ready(function() {
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
 					 card += '</div> </div> </div>'
                   $(card_section).append(card);
                }

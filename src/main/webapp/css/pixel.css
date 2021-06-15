@@ -4970,14 +4970,15 @@ textarea.form-control-lg {
 }
 
 .btn-outline-primary {
-    color: #242e4c;
-    border-color: #242e4c;
+    color: #ffffff;
+    background-color: #CA8FAB;
+    border-color: #CA8FAB;
 }
 
 .btn-outline-primary:hover {
     color: #ffffff;
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #C0A9BD;
+    border-color: #C0A9BD;
 }
 
 .btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
@@ -4987,8 +4988,8 @@ textarea.form-control-lg {
 .btn-check:checked + .btn-outline-primary,
   .btn-check:active + .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show {
     color: #ffffff;
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #C0A9BD;
+    border-color: #C0A9BD;
 }
 
 .btn-check:checked + .btn-outline-primary:focus,
@@ -7080,8 +7081,8 @@ textarea.form-control-lg {
 .page-item.active .page-link {
     z-index: 3;
     color: #ffffff;
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #CA8FAB;
+    border-color: #CA8FAB;
 }
 
 .page-item.disabled .page-link {

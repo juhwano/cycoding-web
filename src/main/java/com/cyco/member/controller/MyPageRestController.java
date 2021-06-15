@@ -1,32 +1,28 @@
 package com.cyco.member.controller;
 
 
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.vote.AuthenticatedVoter;
+
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.cyco.common.vo.MemberVo;
 
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
-import com.cyco.member.dao.MemberDao;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
-import com.cyco.utils.UtilFile;
+
 
 @RequestMapping("mypage/ajax/")
 @RestController
@@ -312,5 +308,23 @@ public class MyPageRestController {
 		
 	}
 	
+	
+	//마이페이지 진입 전 비밀번호체크
+	@RequestMapping(value="mypageCheck", method = RequestMethod.POST)
+	public boolean pwdCheck(@RequestParam Map<String, String> data){
+		
+		String useremail = data.get("useremail");
+		String userPwd = data.get("userPwd");
+		
+		System.out.println("비동기컨트롤러 mypageCheck 진입");
+		System.out.println("useremail: " + useremail);
+		System.out.println("userPwd: " + userPwd);
+		
+		if(memberdetailservice.checkPwd(data)) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }
