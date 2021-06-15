@@ -21,8 +21,6 @@ public class MemberService {
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-		
-	
 
 	
 	// 맴버정보가져오기
@@ -49,7 +47,7 @@ public class MemberService {
 	      
 	}
 	
-	//닉네임, 회원 번호 가져오기
+	//로그인시 닉네임, 회원 번호 가져오기
 	public HashMap<String, String> getLoginedName(String useremail) {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);

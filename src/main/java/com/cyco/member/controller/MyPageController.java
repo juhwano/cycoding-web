@@ -6,8 +6,11 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +24,9 @@ import com.cyco.member.service.MemberDetailService;
 import com.cyco.utils.UtilFile;
 
 
-@RequestMapping("memberdetail/")
+@RequestMapping("mypage/")
 @Controller
-public class MemberDetailContoller {
+public class MyPageController {
 	
 	MemberDetailService memberdetailservice;
 	
@@ -34,8 +37,10 @@ public class MemberDetailContoller {
 	
 	//마이페이지 정보 불러오기
 	@RequestMapping(value="mypage")
-	public ModelAndView getMyDetail(@RequestParam("useremail") String useremail){
+	//public ModelAndView getMyDetail(@RequestParam("useremail") String useremail, HttpSession session){
+	public ModelAndView getMyDetail(Authentication auth){
 		
+		String useremail = auth.getName();
 		System.out.println("클라이언트에서 로그인 한 이메일 : " + useremail);
 		
 		ModelMap mmp = new ModelMap();
@@ -44,9 +49,37 @@ public class MemberDetailContoller {
 		mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 		mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 		mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
-		System.out.println(memberdetailservice.getMyDetail(useremail));
-		System.out.println(memberdetailservice.getPreferSkills(useremail));
-		System.out.println(memberdetailservice.getPreferDurations(useremail));
+		
+		System.out.println("경험 있는지? " + memberdetailservice.getExperiences(useremail).size());
+		
+		//프로젝트 경험 없는 경우
+		//빈 배열은 null이 아니라 []로 리턴되므로 배열 길이로 비교해야 한다
+		if(memberdetailservice.getExperiences(useremail).size() == 0) {
+			
+			//입력 자체를 안 한건지, 프로젝트 경험 없을이라고 입력한건지 확인해야 한다
+			System.out.println("프로젝트 경험 테이블에 데이터 없음");
+			String result = memberdetailservice.haveExperience(useremail);
+			System.out.println(result);
+			
+			if(result==null) {
+			
+				//경험 아예 체크 안 한 경우 mmp에 experiences를 비워서 보낸다
+				
+			}else if(result.equals("0")) {
+				
+				//경험 없음이라고 체크한 경우
+				mmp.addAttribute("experiences", "none");
+			} 
+			
+			
+		} else {
+			
+			mmp.addAttribute("experiences", memberdetailservice.getExperiences(useremail));
+			
+		}
+
+
+		System.out.println("경험 : " + mmp.get("experiences"));
 		
 		return new ModelAndView("/Member/Mypage",mmp) ;
 	}
@@ -68,10 +101,12 @@ public class MemberDetailContoller {
 		
 		int row = memberdetailservice.editProfile(id, UploadFilename);
 		String result = "fail";
-		String icon = "error";
+		//String icon = "error";
+		
 		if(row > 0) {
 			result = "success";
-			icon ="success";
+			//icon ="success";
+			
 		}
 		
 		/*
@@ -85,7 +120,7 @@ public class MemberDetailContoller {
 		//return new ModelAndView("Redirect/Redirect", mmp);
 		//return "Redirect/Redirect";
 		
-		res.sendRedirect("mypage?useremail="+id);
+		res.sendRedirect("mypage");
 	}
 
 }

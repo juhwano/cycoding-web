@@ -22,9 +22,6 @@ $(document).ready(function() {
     //수정 버튼 누르면 수정창 생성
     $(document).on("click",".m-btn",function(){
     
-        console.log("클릭");
-        console.log($(this));
-        console.log($(this).prev());
 
         //바꾸기 전의 input 태그의 값 미리 담아두고
         before = $(this).prev().val();
@@ -44,13 +41,9 @@ $(document).ready(function() {
     //확인 버튼 누르면 수정 내용 확정
     $(document).on("click",".c-btn",function(){
         
-
         console.log("확인");
-        console.log($(this));
-        console.log($(this).prev());
 
         atfer = $(this).prev().val();
-        console.log(atfer);
 
         //수정 눌렀는데 값이 변한게 없을 때
         if(before == $(this).prev().val()){
@@ -74,7 +67,7 @@ $(document).ready(function() {
 
             $.ajax({
 
-                url:"ajax/editmydetail.ajax",
+                url:"ajax/editmydetail",
                 data:{
                    code:code,
                    info:atfer,
@@ -151,12 +144,6 @@ $(document).ready(function() {
             selected= $(".clicked");
             newStats.push($(".clicked").attr("id"));
 
-            console.log(selected.length);
-            console.log(selected);
-            console.log(newStats);
-    
-            console.log($(this).text(), " 태그 선택");
-
                 if(selected.length>2){
 
                     swal("세 개까지만 선택 가능합니다");
@@ -189,11 +176,6 @@ $(document).ready(function() {
 
             let name = $(this).text();
             selected= $(".p_clicked");
-
-            console.log(selected.length);
-            console.log(selected);
-    
-            console.log($(this).text(), " 태그 선택");
 
                 if(selected.length>0){
 
@@ -242,10 +224,6 @@ $(document).ready(function() {
 
     } else if(code == 'experience'){
 
-        $("#modal-title").empty();
-        $("#modal-title").append("경험하신 프로젝트에 대해 알려주세요");
-
-
         getStat('experience');
     
     }else if(code == 'position'){
@@ -268,65 +246,34 @@ $(document).ready(function() {
     let key ="";
     let originStat =[];
     function getStat(key){
-        console.log("프로젝트 경험 모달에 뿌리기");
+
         key = key;
         let link;
 
-        $("#contentarea").append(
-
-            '<div id="tagarea"></div><div id="selectedarea"></div>'
-
-        );
-
         if(key == "skill"){
         
-            link = "ajax/getskills.ajax";
+            link = "ajax/getskills";
         
         } else if(key == "experience"){
 
-
-            $("#contentarea").empty();
-
-            $("#contentarea").append(
-
-                `<div class="exarea">
-                <div class="ex_title">
-                    <input type="text" class="exinput" placeholder="프로젝트명"></input>
-                    <span class="index"></span>
-                </div>
-
-                <div class="ex_title"><input type="text" class="exinput" placeholder="담당 업무/포지션"></input> </div>
-
-                <div class="ex_title"><input type="text" class="exinput" placeholder="사용기술"></input> </div>
-
-                <div class="ex_title"><input type="text" class="exinput" placeholder="소요 기간"></input> </div>
-
-                <div class="ex_content"><input type="text" class="exinput" placeholder="간단한 설명"></input> </div>
-
-                <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
-
-            </div>`
-
-            );
+            $("#m_experience").addClass("show");
+            $("#ex_contentarea").empty();
+            addEx();
 
             if($("#have").length == 0){
                 console.log("그냥 프로젝트 경험이 없는 사람");
-                $("#contentarea").empty();
+                $("#ex_contentarea").empty();
             }
-
-            //$(".index").text("#"+$(this).parent().parent().find(".exarea").index(this));
-
 
             return;
 
-
         } else if(key == "position"){
         
-            link = "ajax/getposition.ajax";
+            link = "ajax/getposition";
         
         } else if(key == "duration"){
             
-            link = "ajax/getdurations.ajax";
+            link = "ajax/getdurations";
         
         }
 
@@ -347,62 +294,34 @@ $(document).ready(function() {
                 if(key == "skill"){
 
                     $.each(response, function(index, obj){
-                        console.log("each??");
-                        
-                        //if( $(".trigger-btn").find(".skill").text().indexOf(obj.skill_name) != -1){
-                          //  $("#selectedarea").append(
-    
-                          //      "<div class='clicked' id='"+obj.skill_code+"'>"+obj.skill_name+"</div>"
-                          //   );
-                        //} else{
 
-                            $("#tagarea").append(
+                        
+                           $("#tagarea").append(
     
                                 "<div class='tags' id='"+obj.skill_code+"'>"+obj.skill_name+"</div>"
-                             );
-
-                       // }
-                        
+                             );                   
     
                    });
 
                 } else if(key == "position"){
 
                     $.each(response, function(index, obj){
-                        console.log("each??");
-
-                       // if( $(".trigger-btn").find(".position").text().indexOf(obj.position_name) != -1){
-                            //$("#selectedarea").append(
-    
-                            //    "<div class='p_clicked' id='"+obj.position_id+"'>"+obj.position_name+"</div>"
-                            // );
-                        //} else{
                         
                             $("#tagarea").append(
 
                                 "<div class='positions' id='"+obj.position_id+"'>"+obj.position_name+"</div>"
                             );
-                       // }
-                            
+                           
                    });
 
                 }else if(key == "duration"){
 
                     $.each(response, function(index, obj){
-                        console.log("each??");
-
-                        //if( $(".trigger-btn").find(".duration").text().indexOf(obj.du_date) != -1){
-                           // $("#selectedarea").append(
-    
-                            //    "<div class='clicked' id='d"+(index+1)+"'>"+obj.du_date+"</div>"
-                            // );
-                       // } else{
                         
                             $("#tagarea").append(
         
                                 "<div class='tags' id='D"+(index+1)+"'>"+obj.du_date+"</div>"
                             );
-                       // }
     
                    });
                 }
@@ -468,20 +387,12 @@ $("#edit-btn").on("click",function(){
                 
                 $.each(arr, function(index, item){
                     edit(item);
-                });
-                //edit(first);
-                //edit(second);
-    
+                });   
         
             } else if(third != undefined ){
                 
                 console.log("세 개 선택했을 때");
-        
-                //edit(first);
-                //edit(second);
-                //edit(third);
-    
-                
+                 
                 arr.push(first);
                 arr.push(second);
                 arr.push(third);
@@ -496,14 +407,12 @@ $("#edit-btn").on("click",function(){
 
             edit(first);
 
-        }
-           
+        }          
 
         console.log("마지막에 실행될 구간");
         modifyStatView($("#stat").val());
 
-    } 
-    
+    }     
     
 });
 
@@ -512,12 +421,12 @@ function del(type){
 
     let url = "";
     console.log("1번 시작");
-    console.log(type, " 삭제 ");
+
     
     $.ajax({
 
         //url:url,
-        url:"ajax/deletestat.ajax",
+        url:"ajax/deletestat",
         data:{
             memberid:$("#m_id").val(),
             type:type
@@ -542,23 +451,20 @@ function edit(stats){
 
     let url = "";
     let keyword = $("#stat").val();
-    console.log(keyword);
-    console.log(stats);
+
     console.log("2번 시작");
 
     if(keyword == 'skill'){
         
-        url="ajax/editskills.ajax";
+        url="ajax/editskills";
 
     } else if(keyword == 'position'){
 
-        console.log("키워드 ",keyword);
-        console.log("왜 여길 들어와?");
-        url="ajax/updateposition.ajax";
+        url="ajax/updateposition";
 
     } else if(keyword == 'duration'){
-        console.log("여기 타나");
-        url="ajax/editdurations.ajax";
+
+        url="ajax/editdurations";
 
     }
 
@@ -574,7 +480,7 @@ function edit(stats){
         dataType:"text",
         async: false,
         success:function(data){
-            console.log("2. 인서트 결과  ",data);
+
             console.log("2번 끝");
         },
         error:function(xhr){
@@ -588,11 +494,10 @@ function edit(stats){
 function modifyStatView(type){
 
     console.log("3번 시작")
-    console.log("3. 비동기 반영 실행", $("#m_email").val());
 
     $.ajax({
 
-        url:"ajax/modifystatview.ajax",
+        url:"ajax/modifystatview",
         data:{
 
             userid:$("#m_email").val(),
@@ -604,8 +509,7 @@ function modifyStatView(type){
         async: false,
         success:function(data){
 
-            console.log("화면 비동기 반영결과 : ",data);
-            
+        
             if(type == "skill"){
 
                 $(".skillarea").empty();
@@ -674,11 +578,9 @@ function modifyStatView(type){
 
             swal("수정되었습니다","","success");
             console.log("3번 끝");
-
             
     $("#tagarea").empty();
     $("#selectedarea").empty();
-
 
         },
         error:function(xhr){
@@ -690,9 +592,7 @@ function modifyStatView(type){
 }
 // 여기까지가 보유 기술, 선호 포지션, 기간 수정 및 화면 반영
 ///////////////////////////////////////////////////////////////////////////////////////
-
 //프로젝트 경험 여부 관련 함수
-
 // '없음' 선택하면 입력 완료로 바꾸기
 $("#never").on("click",function(){
 
@@ -703,68 +603,131 @@ $("#never").on("click",function(){
     console.log($("#have").length);
 
     if( $("#have").length != 0){
-        console.log("태그 없애기~");
+
         $("#have").remove();
         $("#ex_btn").find("a").remove();
 
+        // 회원 상세 테이블에 프로젝트 경험컬럼 null에서 0으로 업데이트
+        haveExperience("never");
 
     } else{
 
-        console.log("태그 만들기")
         $("#ex_toggle").append(
 
-         `<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience" id="have">있음</div>
-											</a>`
+         `<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience" id="have">있음</div></a>`
 
         );
-    }
-    
-
-
-
+    }    
 });
+
+//회원 상세 테이블에 프로젝트 경험여부 업데이트 하기
+function haveExperience(answer){
+
+    $.ajax({
+
+        url:"ajax/updateexperience",
+        data:{
+            memberid:$("#m_id").val(),
+            answer:answer
+        },
+        type:"post",
+        dataType:"text",
+        success:function(res){         
+
+        },
+        erroe:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+
+}
 
 // 프로젝트 경험 추가 기입
 $(document).on("click",".add_ex",function(){
 
+    // + 버튼 눌러서 폼 추가
     addEx();
 
 });
 
-//프로젝트 경험 추가기입 삭제
+//프로젝트 경험 기입한 것 삭제
 $(document).on("click",".del_ex",function(){
-    console.log("폼 삭제")
+
     $(this).parent().parent().remove();
 
 });
 
 //추가 버튼 클릭시 폼 생성
 function addEx(){
-    console.log("경험 입력 폼 생성");
-    $("#contentarea").append(
+
+    //왜인지 form 을 서버에 넘기면 첫번째 인풋 태그의 값을 못 받아서
+    //아무 의미 없는 인풋태그를 맨 앞에 하나 추가한다
+    $("#ex_contentarea").append(
 
         `<div class="exarea">
+        <form class="ex_form" method="post" action="ajax/insertexperiences">
+        <input type="hidden" calss="MEMBER_ID" name="MEMBER_ID" id="ex_member_id"></input>
         <div class="ex_title">
-            <input type="text" class="exinput" placeholder="프로젝트명"></input>
+            <input type="text" class="exinput EXP_TITLE" id="EXP_TITLE" placeholder="프로젝트명"></input>
             <span class="index"></span>
         </div>
 
-        <div class="ex_title"><input type="text" class="exinput" placeholder="담당 업무/포지션"></input> </div>
-
-        <div class="ex_title"><input type="text" class="exinput" placeholder="사용기술"></input> </div>
-
-        <div class="ex_title"><input type="text" class="exinput" placeholder="소요 기간"></input> </div>
-
-        <div class="ex_content"><input type="text" class="exinput" placeholder="간단한 설명"></input> </div>
-
+        <div class="ex_title"><input type="text" class="exinput EX_POSITION" name="EX_POSITION" id="EX_POSITION" placeholder="담당 업무/포지션"></input> </div>
+        <div class="ex_title"><input type="text" class="exinput EX_SKILL" name="EX_SKILL" id="EX_SKILL" placeholder="사용기술"></input> </div>
+        <div class="ex_title"><input type="text" class="exinput EX_DURATION" name="EX_DURATION" id="EX_DURATION" placeholder="소요 기간"></input> </div>
+        <div class="ex_content"><input type="text" class="exinput EX_CONTENT" name="EX_CONTENT" id="EX_CONTENT" placeholder="간단한 설명"></input> </div>
         <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
-
+        </form>
     </div>`
 
     );
+
+    //인풋 태그에 바로 넣어주면 첫번째 폼에서는 회원번호를 못 가져온다
+    $("#ex_member_id").val($("#m_id").val().trim());
 }
 
+//수정 버튼 누르면 폼에 입력한 프로젝트 경험들 인서트
+$("#insert_ex").on("click", function(){
+    console.log("걸리나?A!!");
+    insertExperiences();
+})
+
+//폼에 입력한 프로젝트 경험들 비동기로 날리고 받은 거 뷰단에 반영하기
+function insertExperiences(){
+
+    //var ex_data =$(".ex_form").serialize();
+    //var ex_data = new FormData(document.getElementsByClassName("ex_form"));
+
+    var ex_data = {
+        MEMBER_ID : $("#ex_member_id").val(),
+        EXP_TITLE : $(".EXP_TITLE").val(),
+        EX_POSITION : $(".EX_POSITION").val(),
+        EX_SKILL : $(".EX_SKILL").val(),
+        EX_CONTENT : $(".EX_CONTENT").val(),
+        EX_DURATION : $(".EX_DURATION").val()
+    }
+
+    $.ajax({
+
+        url:$(".ex_form").attr("action"),
+        type:"post",
+        dataType:"text",
+        traditional : true,
+        data:JSON.stringify(ex_data),
+        contentType:"application/json",
+        success:function(res){
+            console.log(res);
+
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+
+}
 
 // 프로필 이미지 파일 업로드
 $('#target_img').click(function (e) {
@@ -827,12 +790,10 @@ $("#img_form").submit(function(e){
 */
 //회원 탈퇴
 $("#quit").on("click",function(){
-
-    console.log("회원탈퇴 버튼 클릭");
     
     $.ajax({
 
-        url:"ajax/updatedeletecount.ajax",
+        url:"ajax/updatedeletecount",
         data:{
             quit_id : $("#m_id").val()
         },
@@ -850,8 +811,6 @@ $("#quit").on("click",function(){
             console.log(xhr);
         }
 
-
     });
-
 
 });

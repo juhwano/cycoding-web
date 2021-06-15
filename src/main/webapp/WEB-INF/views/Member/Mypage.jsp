@@ -8,10 +8,7 @@
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
 <c:set var="durations" value="${durations}" />
-
-<!-- 배열에서 값 뽑아내기 -->
-
-
+<c:set var="experiences" value="${experiences}" />
 
 
 
@@ -31,7 +28,7 @@
 		<div id="wrap">
 			<div id="profile_img">
 				<!-- <img src="assets/img/member_detail/cycoding_img.png"> -->
-				<img id ="target_img" src="${pageContext.request.contextPath}/resources/${member.MEMBER_IMAGE}">
+				<img id ="target_img" src="${pageContext.request.contextPath}/resources/upload/${member.MEMBER_IMAGE}">
 				<form action="editprofile" method="post" enctype="multipart/form-data" id="img_form">
 				<input type="hidden" id="id" name="id" value="${member.MEMBER_EMAIL}">
 				<input type="file" id="file" name="uploadFile" style="display:none;">
@@ -152,33 +149,32 @@
 								onclick="edit_modal('experience')">
 								<c:choose>
 
-
-
-
-									<c:when test="${empty skills}">
+									<c:when test="${empty experiences}">
 
 
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
 											<div class="insert experience" id="never">없음</div>
-											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+											<a href="m_experience" class="trigger-btn" data-toggle="modal">
 												<div class="insert experience" id="have">있음</div>
 											</a>
 										</div>
 
 
 									</c:when>
-									<c:otherwise>
+									<c:when test="${experiences eq 'none'}">
 
 										<div
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;" id="ex_toggle">
-											<div class="insert experience" id="never">없음</div>
-											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience" id="have">있음</div>
-											</a>
+											<div class="info_tags experience" id="never" style="margin:10px auto">없음</div>
 										</div>
-
-
+									</c:when>
+									<c:otherwise>
+									
+									<div id="exlist">
+										이제 이걸 어케 뿌려주지
+									</div>
+									
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -289,7 +285,7 @@
 					</div>
 					<div id="buttonarea">
 						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button id="edit-btn">수정</button>
+							<button id="edit-btn" class="insert_ex">수정</button>
 						</a> <a href="#m_stat" class="trigger-btn" data-toggle="modal">
 							<button id="cancel">닫기</button>
 						</a>
@@ -301,6 +297,35 @@
 			</div>
 		</div>
 	</div>
+	
+	
+		<!-- 프로젝트 경험 모달창 -->
+	<div id="m_experience" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">경험하신 프로젝트에 대해 알려주세요</p>
+				</div>
+				<div id="modal-body">
+
+					<div id="ex_contentarea">
+
+					</div>
+					<div id="buttonarea">
+						<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+							<button id="insert_ex">수정</button>
+						</a> <a href="#m_experience" class="trigger-btn" data-toggle="modal">
+							<button id="cancel">닫기</button>
+						</a>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
 	
 	<div id="quit_modal" class="modal fade">
 		<div class="modal-dialog modal-login">

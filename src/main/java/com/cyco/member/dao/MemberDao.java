@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
@@ -76,6 +77,12 @@ public interface MemberDao {
 	//마이페이지+회원상세 선호 기간 가져오기
 	public List<MemberDetailPageVo> getPreferDurations(String userid);
 	
+	//마이페이지+회원상세 프로젝트 경험 가져오기
+	public List<M_ExperienceVo> getExperiences(String userid);
+	
+	//마이페이지에서 프로젝트 경험 없음이 없음이라고 입력한건지 확인
+	public String haveExperience(String userid);
+	
 	//마이페이지+회원상세 기술, 기간, 포지션 수정 시 삭제 및 재등록
 	public Integer deleteSkills(String memberid);
 	
@@ -86,6 +93,12 @@ public interface MemberDao {
 	public Integer deleteDurations(String memberid);
 	
 	public Integer insertDurations(String memberid, String stat);
+	
+	//마이페이지 프로젝트 경험 있/없 업데이트
+	public Integer updateExperience(String memberid, int answer);
+	
+	//마이페이지 프로젝트 경험 있는 사람은 기입하기^^
+	public Integer insertExperiences(List<M_ExperienceVo> mex);
 	
 	//마이페이지 회원 탈퇴시 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id);

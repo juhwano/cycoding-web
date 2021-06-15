@@ -99,149 +99,6 @@ function validation() {
         }
     });
     
-    //유효성
-    $('#register').click(function() {
-        
-        console.log("가입하기 클릭");
-        
-        let email = $('#email').val();
-        let password = $('#password').val();
-        let passwordC = $('#passwordC').val();
-        let name = $('#name').val();
-        let nickName = $('#nickName').val();
-        let phone =  $('#phone').val();
-
-
-        console.log("이메일 ",email);
-        console.log("비밀번호 ",password);
-        console.log("비밀번호 확인 ",passwordC);
-        console.log("이름 ",name);
-        console.log("닉네임 ",nickName);
-        console.log("전화번호 ",phone);
-
-
-        let checking = true;
-
-        //이메일 체크
-        if (!email_check(email)) {
-
-            swal("올바른 이메일을 입력해주세요." , "" ,"error");
-            checking = false;
-            $("#email").focus();
-            
-            return;
-        }
-        
-        //이름 체크
-        if (name == '') {
-
-            swal("이름을 입력하세요." , "" ,"error");
-            checking = false;
-            $("#name").focus();
-            return;
-        }
-
-        //비밀번호 체크 
-        let num = password.search(/[0-9]/g);
-        let eng = password.search(/[a-z]/ig);
-
-        if (password.length < 8 || password.length > 13) {
-
-            swal("비밀번호는 8-20자리 이내로 입력하세요." , "" ,"error");
-            checking = false;
-            $("#password").focus();
-            return;
-
-        } else if (password.search(/\s/) != -1) {
-
-            swal("비밀번호는 공백을 입력할 수 없습니다." , "" ,"error");
-            checking = false;
-            $("#password").focus();
-            return;
-
-        } else if (num < 0 || eng < 0 ) {
-
-            swal("영문, 숫자를 포함하여 입력하세요." , "" ,"error");
-            checking = false;
-            $("#password").focus();
-            return;
-        }
-
-        if (password == '') {
-
-            swal("비밀번호를 입력하세요." , "" ,"error");
-            checking = false;
-            $("#password").focus();
-            return;
-        }
-
-
-        //비밀번호 일치 체크
-        /*if (!(password == passwordC)) {
-             swal({
-                title: "비밀번호가 일치하지 않습니다",
-                icon: "error"
-            });
-            alert("비밀번호가 일치하지 않습니다");
-            console.log(password);
-            console.log(passwordC);
-            $("#passwordC").focus();
-            checking = false;
-            return;
-        }
-*/
-        if (passwordC == "") {
-
-            swal("비밀번호를 확인해주세요." , "" ,"error");
-            checking = false;
-            $("#passwordC").focus();
-            return;
-        }
-
-
-
-        //닉네임 체크
-        if (nickName == '') {
-
-            swal("닉네임을 입력하세요." , "" ,"error");
-            $("#nickName").focus();
-            checking = false;
-            return;
-        }
-
-
-        if (!($('#emailCheckBtn').html() == '인증완료')) {
-            console.log($('#emailCheckBtn').html());
-            swal("이메일을 인증해주세요." , "" ,"error");
-
-            return;
-        }
-         if (!($('#nickNameCheckBtn').html() == '체크완료')) {
-             swal("닉네임 중복확인을 해주세요." , "" ,"error");
-
-            return;
-        } 
-        if (!($('#phoneCheckBtn').html() == '체크완료')) {
-            
-             swal("휴대폰 번호 중복확인을 해주세요." , "" ,"error");
-
-            return;
-        }
-        
-        if($("#defaultCheck6").is(":checked")!=true){
-            swal("약관 동의를 해주세요." , "" ,"error");
-            return;
-        }
-
-        if (checking) {
-            
-            console.log("가입하기");
-            
-            document.getElementById('form').submit();
-        }
-    });
-
-
     //이메일 인증
     //중복체크, 인증메일링 두 가지
     $('#emailCheckBtn').click(function() {
@@ -260,7 +117,7 @@ function validation() {
             data: {
                 email: email
             },
-            type: "post",
+            type: "get",
             dataType: "text",
             success: function(data) {
                 console.log(data);
@@ -288,9 +145,7 @@ function validation() {
                                 
                             } else {
 
-                                //alert("인증메일이 발송되었습니다.");
                                 swal("📨" , "메일을 발송하였습니다.");
-
                                 
                                 $("#mailcheck").empty();
                                 $("#mailcheck").append(
@@ -409,7 +264,7 @@ function validation() {
                     $("#phoneCheck").text("✔ 사용 가능한 번호입니다");
                 } else {
 
-                    swal("사용할 수 없는 번호입니다." , "" ,"success");
+                    swal("사용할 수 없는 번호입니다." , "" ,"error");
                 }
             },
             error: function(error) {
@@ -417,5 +272,149 @@ function validation() {
             }
         });
     });
+
+
+
+
+        //유효성
+        $('#register').click(function() {
+        
+            console.log("가입하기 클릭");
+            
+            let email = $('#email').val();
+            let password = $('#password').val();
+            let passwordC = $('#passwordC').val();
+            let name = $('#name').val();
+            let nickName = $('#nickName').val();
+            let phone =  $('#phone').val();
+    
+    
+            console.log("이메일 ",email);
+            console.log("비밀번호 ",password);
+            console.log("비밀번호 확인 ",passwordC);
+            console.log("이름 ",name);
+            console.log("닉네임 ",nickName);
+            console.log("전화번호 ",phone);
+    
+    
+            let checking = true;
+    
+            //이메일 체크
+            if (!email_check(email)) {
+    
+                swal("올바른 이메일을 입력해주세요." , "" ,"error");
+                checking = false;
+                $("#email").focus();
+                
+                return;
+            }
+            
+            //이름 체크
+            if (name == '') {
+    
+                swal("이름을 입력하세요." , "" ,"error");
+                checking = false;
+                $("#name").focus();
+                return;
+            }
+    
+            //비밀번호 체크 
+            let num = password.search(/[0-9]/g);
+            let eng = password.search(/[a-z]/ig);
+    
+            if (password.length < 8 || password.length > 13) {
+    
+                swal("비밀번호는 8-20자리 이내로 입력하세요." , "" ,"error");
+                checking = false;
+                $("#password").focus();
+                return;
+    
+            } else if (password.search(/\s/) != -1) {
+    
+                swal("비밀번호는 공백을 입력할 수 없습니다." , "" ,"error");
+                checking = false;
+                $("#password").focus();
+                return;
+    
+            } else if (num < 0 || eng < 0 ) {
+    
+                swal("영문, 숫자를 포함하여 입력하세요." , "" ,"error");
+                checking = false;
+                $("#password").focus();
+                return;
+            }
+    
+            if (password == '') {
+    
+                swal("비밀번호를 입력하세요." , "" ,"error");
+                checking = false;
+                $("#password").focus();
+                return;
+            }
+    
+    
+            //비밀번호 일치 체크
+            if (password != passwordC) {
+                 swal({
+                    title: "비밀번호가 일치하지 않습니다",
+                    icon: "error"
+                });
+                console.log(password);
+                console.log(passwordC);
+                $("#passwordC").focus();
+                checking = false;
+                return;
+            }
+    
+            if (passwordC == "") {
+    
+                swal("비밀번호를 확인해주세요." , "" ,"error");
+                checking = false;
+                $("#passwordC").focus();
+                return;
+            }
+     
+    
+            //닉네임 체크
+            if (nickName == '') {
+    
+                swal("닉네임을 입력하세요." , "" ,"error");
+                $("#nickName").focus();
+                checking = false;
+                return;
+            }
+    
+    
+            if (!($('#emailCheckBtn').html() == '인증완료')) {
+                console.log($('#emailCheckBtn').html());
+                swal("이메일을 인증해주세요." , "" ,"error");
+    
+                return;
+            }
+             if (!($('#nickNameCheckBtn').html() == '체크완료')) {
+                 swal("닉네임 중복확인을 해주세요." , "" ,"error");
+    
+                return;
+            } 
+            if (!($('#phoneCheckBtn').html() == '체크완료')) {
+                
+                 swal("휴대폰 번호 중복확인을 해주세요." , "" ,"error");
+    
+                return;
+            }
+            
+            if($("#defaultCheck6").is(":checked")!=true){
+                swal("약관 동의를 해주세요." , "" ,"error");
+                return;
+            }
+    
+            if (checking) {
+                
+                console.log("가입하기");
+                
+                document.getElementById('form').submit();
+            }
+        });
+    
 
 }

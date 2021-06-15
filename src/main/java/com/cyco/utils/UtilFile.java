@@ -86,7 +86,7 @@ public class UtilFile {
 		System.out.println("uploadpath : " + uploadpath);
 		// 어떤 파일에 저장할것인지
 		//String attachpath = "upload/";
-		String attachpath = "resources/";
+		String attachpath = "resources/upload/";
 		
 		
 		return uploadpath + attachpath;
