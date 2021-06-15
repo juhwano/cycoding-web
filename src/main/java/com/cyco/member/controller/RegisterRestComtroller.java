@@ -139,6 +139,7 @@ public class RegisterRestComtroller {
 		String result = "able";
 		
 		if(memberdao.checkNickName(nickName) != null) {
+			
 			result = "disable";
 		} else {
 			result = "able";

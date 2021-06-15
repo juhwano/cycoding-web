@@ -178,7 +178,8 @@
 	                        	<div class="user_info" style="display:none">
 				 					<div class="mypage">
 				 					<%-- <a href="${pageContext.request.contextPath}/memberdetail/mypage?useremail=${LoginUser}">마이페이지</a> --%>
-				 					<a href="${pageContext.request.contextPath}/memberdetail/mypageCheck">마이페이지</a>
+				 					<a href="${pageContext.request.contextPath}/mypage/mypage">마이페이지</a>
+
 				 					</div>
 				 					
 				 					
