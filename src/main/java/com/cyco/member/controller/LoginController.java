@@ -47,7 +47,11 @@ public class LoginController {
 		  memberservice.checkDeleteDate(String.valueOf(map.get("MEMBER_ID")));
 		  ModelMap mmp = new ModelMap();
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
-	  
+		  session.setAttribute("member_id", map.get("MEMBER_ID"));
+		  
+		  System.out.println("현재 session : " + session.getAttribute("nickname"));
+		  System.out.println("현재 session : " + session.getAttribute("member_id"));
+		  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  
 	  }

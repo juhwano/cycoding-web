@@ -690,16 +690,16 @@ function addEx(){
 
 //수정 버튼 누르면 폼에 입력한 프로젝트 경험들 인서트
 $("#insert_ex").on("click", function(){
-    console.log("걸리나?A!!");
+    console.log("아몬드 넥스트레블");
     insertExperiences();
 })
 
 //폼에 입력한 프로젝트 경험들 비동기로 날리고 받은 거 뷰단에 반영하기
 function insertExperiences(){
 
-    //var ex_data =$(".ex_form").serialize();
+    var ex_data = $(".ex_form").serialize();
     //var ex_data = new FormData(document.getElementsByClassName("ex_form"));
-
+/*
     var ex_data = {
         MEMBER_ID : $("#ex_member_id").val(),
         EXP_TITLE : $(".EXP_TITLE").val(),
@@ -708,7 +708,7 @@ function insertExperiences(){
         EX_CONTENT : $(".EX_CONTENT").val(),
         EX_DURATION : $(".EX_DURATION").val()
     }
-
+*/
     $.ajax({
 
         url:$(".ex_form").attr("action"),
@@ -716,7 +716,7 @@ function insertExperiences(){
         dataType:"text",
         traditional : true,
         data:JSON.stringify(ex_data),
-        contentType:"application/json",
+        contentType:"application/json;chrset=uft-8",
         success:function(res){
             console.log(res);
 
@@ -744,7 +744,7 @@ $('#file').change(function(event) {
 	
     reader.onload = function(event) {
         $('#target_img').attr("src", event.target.result);
-       
+
     }
 
    reader.readAsDataURL(event.target.files[0]);
