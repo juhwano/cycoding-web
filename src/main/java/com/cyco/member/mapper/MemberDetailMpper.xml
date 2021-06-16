@@ -78,11 +78,14 @@
 	
 	<select id="getExperiences" resultType="com.cyco.member.vo.M_ExperienceVo">
 	
-		select e.exp_title, e.ex_position, e.ex_skill, e.ex_duration, e.ex_content from m_experience e left join member m
+		select e.exp_title, e.ex_position, e.ex_skill, e.ex_duration, e.ex_content, e.ex_count from m_experience e left join member m
     		on e.member_id=m.member_id
-    		where m.member_email=#{userid}	
+    		where m.member_email=#{userid}
+    		order by e.ex_count	
 	
 	</select>
+	
+	
 	
 	<select id="haveExperience" resultType="String">
 	
@@ -111,10 +114,16 @@
 	
 	<insert id="insertExperiences" parameterType="com.cyco.member.vo.M_ExperienceVo">
 	
-		insert into m_experience (MEMBER_ID,EXP_TITLE,EX_POSITION,EX_SKILL,EX_DURATION,EX_CONTENT) 
-			values(${MEMBER_ID},#{EXP_TITLE},#{EX_POSITION},#{EX_SKILL},#{EX_DURATION},#{EX_CONTENT})
+		insert into m_experience (MEMBER_ID,EXP_TITLE,EX_POSITION,EX_SKILL,EX_DURATION,EX_CONTENT,EX_COUNT) 
+			values(${MEMBER_ID},#{EXP_TITLE},#{EX_POSITION},#{EX_SKILL},#{EX_DURATION},#{EX_CONTENT},(SELECT nvl(MAX(EX_COUNT),0)+1 FROM m_experience where MEMBER_ID=${MEMBER_ID}))
 	
 	</insert>
+	
+	<delete id="deleteExperience">
+	
+		delete m_experience where ex_count=${param1} and member_id=${param2}
+	
+	</delete>
 	
 		<update id="updatePosition">
 	
@@ -142,12 +151,34 @@
 	
 	</update>
 	
+	<update id="updateExperiences" parameterType="com.cyco.member.vo.M_ExperienceVo">
+	
+		update m_experience set exp_title=#{EXP_TITLE},
+                        ex_position=#{EX_POSITION},
+                        ex_skill=#{EX_SKILL},
+                        ex_duration=#{EX_DURATION},
+                        ex_content=#{EX_CONTENT}
+        where ex_count=${ex_count} and member_id=${MEMBER_ID}
+	
+	</update>
 	
 	<select id="getMemberDetail" resultType="com.cyco.common.vo.MemberVo">
 		
 		select member_email, member_nickname, MEMBER_IMAGE from member where member_id=${memberid}
 		
 	</select>
+	
+	<select id="checkPoint" resultType="Integer">
+	
+		select member_id from point where member_id=${member_id} and have_point=0 and use_point=0
+	
+	</select>
+	
+	<update id="givePointFirstTime">
+		
+		update point set have_point=50 where member_id=${member_id}
+	
+	</update>
 	
 	<update id="updateDeleteDate">
 	

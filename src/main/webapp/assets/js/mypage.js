@@ -1,19 +1,22 @@
 $(document).ready(function() {
 
-
-    //추가 정보 모두 기입하면 문구 사라지게 하기
-    $("a").on("click",function(){
-
-        if($(document).find(".insert").length == -1){
-            console.log("detail 다 입력했는지 체크 이벤트");
-            $(".sub_title").css("display","none");
-
-        }else{
-            $(".sub_title").css("display","block");
-        }
-
-    });
-
+	//추가항목 기입 여부에 따라 문구 노출
+	$("#ex_toggle").on("click",function(){
+		
+        console.log("프로젝트 경험 클릭");
+        //입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
+		let insert_btn = $(".detail_section").children().children().children(".insert");
+		
+		console.log(insert_btn);
+		if(insert_btn.length==0){
+			$(".sub_title").empty();
+			givePoint();
+		} else{
+			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
+		}
+	
+	});
+	
     //About Cycoder 부분의 정보 각각 비동기로 변경하기
     // 개인정보 담을 변수
     let before;
@@ -64,8 +67,108 @@ $(document).ready(function() {
             let code = $(this).prev().prev().text();
             console.log(code);
             let button = $(this);
+            
+            
+            //닉네임은 중복체크 먼저
+            if(code == "닉네임"){
+				$.ajax({
+		            url: "ajax/nicknamecheck",
+		            data: {
+		                nickName:$("#nick").val()
+		            },
+		            type: "get",
+		            dataType: "text",
+		            success: function(data) {
+                if (data == 'able') {
 
-            $.ajax({
+					editMyDetail(code,button);	
+                    
+                } else {
+
+                    swal("이미 존재하는 닉네임입니다." , "" ,"error");
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+   	
+			//휴대폰 번호도 중복체크 먼저
+			} else if(code == "휴대폰"){
+				
+			$.ajax({
+            url: "ajax/phonecheck",
+            data: {
+                phone: $("#phone").val()
+            },
+            type: "get",
+            dataType: "text",
+            success: function(data) {
+                if (data == 'able') {
+
+					editMyDetail(code,button);
+					
+                } else {
+
+                    swal("사용할 수 없는 번호입니다." , "" ,"error");
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+				//비밀번호는 유효성 검사도 해야 한다
+			} else if(code == "비밀번호"){
+				
+				let checking = true;
+				let password = $("#password").val();
+				let num = password.search(/[0-9]/g);
+            	let eng = password.search(/[a-z]/ig);
+    
+            if (password.length < 8 || password.length > 13) {
+    
+                swal("비밀번호는 8-20자리 이내로 입력하세요." , "" ,"error");
+                checking = false;
+
+
+    
+            } else if (password.search(/\s/) != -1) {
+    
+                swal("비밀번호는 공백을 입력할 수 없습니다." , "" ,"error");
+                checking = false;
+
+
+    
+            } else if (num < 0 || eng < 0 ) {
+    
+                swal("영문, 숫자를 포함하여 입력하세요." , "" ,"error");
+                checking = false;
+
+
+            }
+				
+				
+				if(checking){
+					editMyDetail(code,button);
+				}
+				
+				
+			} else{
+				
+				editMyDetail(code,button);
+				
+			}
+           
+
+        }
+            
+    });
+    
+    
+    //수정 버튼 누르면 바뀌는 개인정보 디비에 실반영 하는 함수
+    function editMyDetail(code,button){
+	
+	            $.ajax({
 
                 url:"ajax/editmydetail",
                 data:{
@@ -100,7 +203,6 @@ $(document).ready(function() {
                     
                         //비밀번호가 변경되었을 때는 인풋 태그의 값을 굳이 바꾸지 않는다
                         //암호화 된 거 엄청 길어서 사용자한테 그대로 보여주지 않을 것
-                        console.log("여기 안 타나");
                         button.prev().val("password");
                         button.prev().prop("readonly",true);
                         button.prev().removeClass("info-mdf");
@@ -121,11 +223,9 @@ $(document).ready(function() {
                 }
 
             });
-
-        }
-            
-
-    });
+	
+}
+    
 
     let newStats = [];
 
@@ -173,14 +273,12 @@ $(document).ready(function() {
         //클릭하면 포지션 태그 선택
         $(document).on("click",".positions",function(){
 
-
             let name = $(this).text();
             selected= $(".p_clicked");
 
                 if(selected.length>0){
 
                     swal("하나만 선택 가능합니다");
-                    
     
                 } else{
     
@@ -199,17 +297,16 @@ $(document).ready(function() {
             $(this).removeClass("chosen");
             $(this).addClass("positions");
             $("#tagarea").append($(this));
-        });
-
-       
+        });  
 
 }); //document.ready 끝
 
    //모달창에 스탯 리스트 뿌리기
    function edit_modal(code){
-    
+
     console.log("모달 실행");
     console.log(code);
+    
     $("#stat").val(code);
 
     if(code == 'skill'){
@@ -256,13 +353,13 @@ $(document).ready(function() {
         
         } else if(key == "experience"){
 
-            $("#m_experience").addClass("show");
-            $("#ex_contentarea").empty();
+             $("#m_experience").addClass("show");
+            $(".exarea").remove();
             addEx();
 
             if($("#have").length == 0){
-                console.log("그냥 프로젝트 경험이 없는 사람");
-                $("#ex_contentarea").empty();
+
+                $(".exarea").remove();
             }
 
             return;
@@ -411,6 +508,17 @@ $("#edit-btn").on("click",function(){
 
         console.log("마지막에 실행될 구간");
         modifyStatView($("#stat").val());
+        
+        //수정 버튼 눌렀을 때 아직 미입력 스탯 있는지 체크해서 문구 보여주기
+        let insert_btn = $(".detail_section").children().children().children(".insert");
+		
+		console.log(insert_btn);
+		if(insert_btn.length==0){
+			$(".sub_title").empty();
+			givePoint();
+		} else{
+			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
+		}
 
     }     
     
@@ -422,7 +530,6 @@ function del(type){
     let url = "";
     console.log("1번 시작");
 
-    
     $.ajax({
 
         //url:url,
@@ -467,7 +574,6 @@ function edit(stats){
         url="ajax/editdurations";
 
     }
-
     
     $.ajax({
 
@@ -508,7 +614,6 @@ function modifyStatView(type){
         dataType:"json",
         async: false,
         success:function(data){
-
         
             if(type == "skill"){
 
@@ -517,8 +622,7 @@ function modifyStatView(type){
                 $.each(data, function(index,obj){
     
                     if(index == 0){
-    
-    
+     
                         $(".skillarea").append(
     
                             '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
@@ -538,8 +642,7 @@ function modifyStatView(type){
     
                         );
     
-                    }
-                    
+                    }                
     
                 });
 
@@ -558,11 +661,9 @@ function modifyStatView(type){
 
             } else if(type=="duration"){
 
-
                 $(".durationarea").empty();
 
                 $.each(data, function(index,obj){
-
     
                         $(".durationarea").append(
     
@@ -652,73 +753,97 @@ $(document).on("click",".add_ex",function(){
 
 });
 
-//프로젝트 경험 기입한 것 삭제
+// 프로젝트 경험 추가폼 삭제
 $(document).on("click",".del_ex",function(){
 
-    $(this).parent().parent().remove();
+    // - 버튼 눌러서 폼 삭제
+   $(this).parent().parent().remove();
 
 });
 
 //추가 버튼 클릭시 폼 생성
 function addEx(){
 
-    //왜인지 form 을 서버에 넘기면 첫번째 인풋 태그의 값을 못 받아서
-    //아무 의미 없는 인풋태그를 맨 앞에 하나 추가한다
-    $("#ex_contentarea").append(
+   $(".ex_form").append(
 
         `<div class="exarea">
-        <form class="ex_form" method="post" action="ajax/insertexperiences">
-        <input type="hidden" calss="MEMBER_ID" name="MEMBER_ID" id="ex_member_id"></input>
-        <div class="ex_title">
-            <input type="text" class="exinput EXP_TITLE" id="EXP_TITLE" placeholder="프로젝트명"></input>
-            <span class="index"></span>
-        </div>
-
-        <div class="ex_title"><input type="text" class="exinput EX_POSITION" name="EX_POSITION" id="EX_POSITION" placeholder="담당 업무/포지션"></input> </div>
-        <div class="ex_title"><input type="text" class="exinput EX_SKILL" name="EX_SKILL" id="EX_SKILL" placeholder="사용기술"></input> </div>
-        <div class="ex_title"><input type="text" class="exinput EX_DURATION" name="EX_DURATION" id="EX_DURATION" placeholder="소요 기간"></input> </div>
-        <div class="ex_content"><input type="text" class="exinput EX_CONTENT" name="EX_CONTENT" id="EX_CONTENT" placeholder="간단한 설명"></input> </div>
-        <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
-        </form>
-    </div>`
-
+            <input type="hidden" class="MEMBER_ID" name="ID" value=""></input> 
+            <input type="text" class="exinput EXP_TITLE" id="EXP_TITLE" name="EXP_TITLE" placeholder="프로젝트명"></input>    
+            <input type="text" class="exinput EX_POSITION" name="EX_POSITION" id="EX_POSITION" placeholder="담당 업무/포지션"></input>
+            <input type="text" class="exinput EX_SKILL" name="EX_SKILL" id="EX_SKILL" placeholder="사용기술"></input> 
+            <input type="text" class="exinput EX_DURATION" name="EX_DURATION" id="EX_DURATION" placeholder="소요 기간"></input> 
+           <input type="text" class="exinput EX_CONTENT" name="EX_CONTENT" id="EX_CONTENT" placeholder="간단한 설명"></input>
+            <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
+        </div>`
     );
 
-    //인풋 태그에 바로 넣어주면 첫번째 폼에서는 회원번호를 못 가져온다
-    $("#ex_member_id").val($("#m_id").val().trim());
+    // //인풋 태그에 바로 넣어주면 첫번째 폼에서는 회원번호를 못 가져온다
+    $(".MEMBER_ID").val($("#m_id").val().trim());
 }
+
+let check = "true";
+//모든 항목 입력 전에는 수정 버튼을 누를 수 없다
+$(document).on("input",".exinput",function(){ 
+    
+    $.each($(".exinput"),function(index,obj){
+
+        if($(this).val() == ""){
+
+            check = false;
+            $("#insert_ex").text("대기");
+       		$("#insert_ex").attr("disabled",true);
+           
+        } else {
+			check = true;
+		}
+
+    });
+
+    if(check){
+        console.log("모든 항목 입력");
+        $("#insert_ex").text("수정");
+        $("#insert_ex").attr("disabled",false);
+    }
+
+})
 
 //수정 버튼 누르면 폼에 입력한 프로젝트 경험들 인서트
 $("#insert_ex").on("click", function(){
-    console.log("아몬드 넥스트레블");
-    insertExperiences();
+    
+    console.log(check);
+
+    let mex = [];
+    $.each($("div[class=exarea]"),function(index,item){
+
+        console.log($(this));
+        
+        var ex_data = {
+            ID : $(this).children(".MEMBER_ID").val(),
+            EXP_TITLE :  $(this).children(".EXP_TITLE").val(),
+            EX_POSITION : $(this).children(".EX_POSITION").val(),
+            EX_SKILL :  $(this).children(".EX_SKILL").val(),
+            EX_CONTENT :  $(this).children(".EX_CONTENT").val(),
+            EX_DURATION :  $(this).children(".EX_DURATION").val()
+        }
+
+        insertExperiences(ex_data);
+    }); 
+
 })
 
-//폼에 입력한 프로젝트 경험들 비동기로 날리고 받은 거 뷰단에 반영하기
-function insertExperiences(){
-
-    var ex_data = $(".ex_form").serialize();
-    //var ex_data = new FormData(document.getElementsByClassName("ex_form"));
-/*
-    var ex_data = {
-        MEMBER_ID : $("#ex_member_id").val(),
-        EXP_TITLE : $(".EXP_TITLE").val(),
-        EX_POSITION : $(".EX_POSITION").val(),
-        EX_SKILL : $(".EX_SKILL").val(),
-        EX_CONTENT : $(".EX_CONTENT").val(),
-        EX_DURATION : $(".EX_DURATION").val()
-    }
-*/
+//폼에 입력한 프로젝트 경험들 서버에 보내기
+function insertExperiences(ex_data){
+    
     $.ajax({
 
         url:$(".ex_form").attr("action"),
         type:"post",
         dataType:"text",
-        traditional : true,
-        data:JSON.stringify(ex_data),
-        contentType:"application/json;chrset=uft-8",
+        data:ex_data,
         success:function(res){
             console.log(res);
+
+            getNewExperiences();
 
         },
         error:function(xhr){
@@ -728,6 +853,185 @@ function insertExperiences(){
     });
 
 }
+
+//서버에서 비동기로 새로 추가된 경험 불러오기
+function getNewExperiences(){
+
+    $.ajax({
+
+        url:"ajax/getnewexperiences",
+        type:"post",
+        dataType:"json",
+        data:{ useremail : $("#m_email").val()},
+        success:function(res){
+
+            console.log(res);
+
+            $("#exlistarea").empty();
+            $("#exlistarea").append(
+                `<div id="exlist"></div>`
+            );
+
+            $.each(res, function(index,obj){
+
+                $("#exlistarea").append(
+
+                    `<form action="ajax/updateexperiences" class="ex_edit_form">
+                    <div class="ex_box" id="`+obj.ex_count+`">										
+                        <div class="ex ex_titlebox">
+                            <div id="exicons">
+                                <i class="fas fa-edit edit_exbox"></i>
+                                <i class="fas fa-eraser del_exbox"></i>
+                            </div>
+                            <span class="ex_count">#`+obj.ex_count+`</span>
+                            <input type="text" class="ex_title exp_title_input" name="exp_title_input" value="`+obj.exp_TITLE+`" readonly/>
+                            </div>
+                            <div class="ex"><input type="text"  name="ex_position" class="ex_position_input" name="ex_position_input" value="`+obj.ex_POSITION+`" readonly/></div>
+                            <div class="ex"><input type="text"  name="ex_skill" class="ex_skill_input" name="ex_skill_input" value="`+obj.ex_SKILL+`" readonly/></div>
+                            <div class="ex"><input type="text"  name="ex_duration" class="ex_duration_input" name="ex_duration_input" value="`+obj.ex_DURATION+`" readonly/></div>
+                            <div class="ex"><input type="text"  name="ex_content"  class="ex_content_input" name="ex_content_input" value="`+obj.ex_CONTENT+`" readonly/></div>               
+                    </div></form>`
+
+                );
+
+            });
+
+            $("#exlistarea").append(
+                `<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+                <div class="add experience" id="have">추가</div></a>`
+            );
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+
+}
+
+//클릭하면 경험 수 체크하고 삭제 모든 경험 삭제는 안되게 막기(뷰단처리)
+$(document).on("click",".del_exbox",function(){
+	
+		console.log("삭제");
+		if($(".ex_box").length == 1){
+			
+			swal("경험을 모두 삭제하실 수는 없습니다");
+            
+		}else{
+
+            $(this).parent().parent().parent().remove();
+
+            $.each($(".ex_count"),function(index,item){
+ 
+                 $(this).empty();
+                 $(this).text("#"+(index+1));
+ 
+             });
+
+             deleteExperience($(this));           
+        }
+
+});
+//프로젝트 경험 삭제 디비 반영
+function deleteExperience(del_btn){
+    
+		let boxid = del_btn.parent().parent().parent().attr("id");
+		console.log(boxid);
+		
+		$.ajax({
+			
+			url:"ajax/deleteexperience",
+			type:"post",
+			dataType:"text",
+			data:{
+				ex_id : boxid,
+				memberid:$("#m_id").val()
+			},
+			success:function(res){
+				console.log(res);
+			},
+			error:function(xhr){
+				console.log(xhr);
+			}
+		});
+}
+
+//프로젝트 경험 수정!!!!!!!!!!!!
+$(document).on("click",".edit_exbox",function(){
+
+    console.log("무야호");
+    let exbox = $(this).parent().parent().parent().children();
+
+	//클릭한 버튼이 속한 박스의 인풋태그들을 활성화시킨다
+    $(this).parent().parent().parent().children().children("input").prop("readonly",false);
+    $(this).removeClass("edit_exbox");
+    $(this).addClass("confirm_edit");
+    $(this).css("color","#94A7AE");
+    $(this).parent().parent().parent().children().children("input").addClass("ex_mdf");
+})
+
+//수정한 거 디비에 반영하기
+$(document).on("click",".confirm_edit",function(){
+	
+    let id = $(this).parent().parent().parent().attr("id");
+    let m_id = $(".member_id_input").val();
+    let exbox = $(this).parent().parent().parent().children();
+	console.log(m_id);
+	
+	var newEx = {
+		member_id_input:m_id,
+		ex_count_input:id,
+		exp_title_input: exbox.children(".exp_title_input").val(),
+		ex_position_input: exbox.children(".ex_position_input").val(),
+		ex_skill_input: exbox.children(".ex_skill_input").val(),
+		ex_duration_input: exbox.children(".ex_duration_input").val(),
+		ex_content_input: exbox.children(".ex_content_input").val()
+	}
+	
+	console.log(newEx);
+	console.log(exbox.parent().parent().attr("action"));
+	
+	$.ajax({
+		
+		//url:"ajax/updateexperiences",
+        url:exbox.parent().parent().attr("action"),
+		//data:JSON.stringify(newEx),
+		data:newEx,
+		/*data:{
+			m_id:m_id,
+			ex_count_input:id,
+			exp_title_input: exbox.children(".exp_title_input").val(),
+			ex_position_input: exbox.children(".ex_position_input").val(),
+			ex_skill_input: exbox.children(".ex_skill_input").val(),
+			ex_duration_input: exbox.children(".ex_duration_input").val(),
+			ex_content_input: exbox.children(".ex_content_input").val()
+		},*/
+		type:"post",
+		//contentType: "application/json",
+		//contentType:'application/json; charset=utf-8',
+		success:function(res){
+			console.log(res);
+			if(res == "success"){
+				swal("프로젝트 경험 내용이 수정되었습니다","","success");
+			} else{
+				swal("프로젝트 경험을 수정하지 못했습니다","","error");
+			}
+		},
+		error:function(xhr){
+			console.log(xhr);
+			console.log("newEx : ", newEx);
+		}
+		
+	});
+	
+	
+    $(this).removeClass("confirm_edit");
+    $(this).addClass("edit_exbox");
+    $(this).css("color","#CA8FAB");
+    $(this).parent().parent().parent().children().children("input").removeClass("ex_mdf");
+    
+
+})
 
 // 프로필 이미지 파일 업로드
 $('#target_img').click(function (e) {
@@ -755,39 +1059,6 @@ $('#file').change(function(event) {
     console.log("리다이렉트");
 });
 
-
-//비동기로 이미지 바뀌도록 이미지 폼태그가 submit 될 때 작동할 스크립트 추가
-/*
-$("#img_form").submit(function(e){
-
-    //동기로 전송되는 것 막고
-    e.preventDefault();
-
-    //직렬화 해서 이미지 폼 안의 정보를 키/값 쌍으로 만듦
-    let imgdata = $("#img_form").serialize();
-    console.log(imgdata);
-
-    //애증의 비동기...
-    $.ajax({
-
-        url:$("#img_form").attr("action"),
-        type:"post",
-        data:imgdata,
-        dataType:"text",
-        processData: false,
-        contentType:'multipart/form-data',
-        success:function(data){
-            console.log(data);
-
-        },
-        error:function(xhr){
-            console.log(xhr);
-        }
-
-    });
-
-});
-*/
 //회원 탈퇴
 $("#quit").on("click",function(){
     
@@ -814,3 +1085,33 @@ $("#quit").on("click",function(){
     });
 
 });
+
+//추가 정보 모두 기입시 포인트 지급
+function givePoint(){
+	
+	//디비에서 이중 체크를 해야 하나?
+	//회원상세(포지션, 경험), 회원기간, 회원기술 테이블을 조회해서 값이 있는지 중복체크를 해야 할까ㅓ??
+	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 확인
+	$.ajax({
+		
+		url:"ajax/givepoint",
+		type:"post",
+		data:{
+			member_id:$("#m_id").val()
+		},
+		success:function(res){
+			console.log(res);
+			
+			if(res == "success"){
+				swal("🎉🎉모든 정보를 입력한 기념으로\n보너스 포인트가 지급되었습니다🎉🎉","","success");	
+				$("#point").val("50점");		
+			}
+			
+		},
+		error:function(xhr){
+			console.log(xhr);
+		}
+		
+	});
+	
+}

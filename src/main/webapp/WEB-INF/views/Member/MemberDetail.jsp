@@ -9,10 +9,9 @@
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
 <c:set var="durations" value="${durations}" />
-
+<c:set var="experiences" value="${experiences}" />
 <c:set var="reviewList" value="${reviewList}" />
 
-<!-- 배열에서 값 뽑아내기 -->
 
 <!DOCTYPE html>
 <html>
@@ -60,7 +59,7 @@
 							<div class="detail_title">
 								<span class="item">보유기술</span>
 							</div>
-							<!-- 스탯 입력 안 했으면 -->
+
 							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
 								<c:choose>
 									<c:when test="${empty skills}">
@@ -90,28 +89,49 @@
 
 						<div class="detail_section itmelist">
 							<div class="detail_title">
-								<span class="item">프로젝트 경험여부</span>
+
+								<span class="item">프로젝트 경험</span>
+
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
 							<div class="moerdetails experience"
 								onclick="edit_modal('experience')">
 								<c:choose>
-									<c:when test="${empty skills}">
+									<c:when test="${empty experiences}">
+
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
-											<div class="none experience" id="never">미입력</div>
+											<div class="none experience" id="never">없음</div>
 
 										</div>
 									</c:when>
 									<c:otherwise>
-										<div
-											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;"
-											id="ex_toggle">
-											<div id="ex_btn"
-												style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
-												<div class="none experience" id="never">미입력</div>
+
+									<div id="exlist">
+									
+									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+									<form action="ajax/updateexperiences" class="ex_edit_form">
+									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
+										<div class="ex_box" id="${experiences.ex_count}">
+										<div class="ex ex_titlebox">
+											<div id="exicons">
+												<i class="fas fa-edit edit_exbox"></i>
+												<i class="fas fa-eraser del_exbox"></i>
 											</div>
+										
+											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
 										</div>
+										<div class="ex"><input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
+										
+										</div>
+										</form>
+										</c:forEach>
+
+									</div>
+
 									</c:otherwise>
 								</c:choose>
 							</div>

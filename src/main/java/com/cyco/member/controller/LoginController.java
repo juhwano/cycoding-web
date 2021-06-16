@@ -49,23 +49,8 @@ public class LoginController {
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
 		  session.setAttribute("member_id", map.get("MEMBER_ID"));
 		  
-		  System.out.println("현재 session : " + session.getAttribute("nickname"));
-		  System.out.println("현재 session : " + session.getAttribute("member_id"));
-		  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  
 	  }
-	
-	  
-	  
-	  
-	  
-		/*
-		 * @RequestMapping(value="kakaologin.cy") public String
-		 * kakaoLogin(@RequestParam(value="code", required=false) String code) {
-		 * System.out.println("code : " + code);
-		 * 
-		 * return "Main/CycoMain"; }
-		 */
 
 }

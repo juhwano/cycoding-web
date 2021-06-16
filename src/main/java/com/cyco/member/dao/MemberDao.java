@@ -87,28 +87,36 @@ public interface MemberDao {
 	public String haveExperience(String userid);
 	
 	//마이페이지+회원상세 기술, 기간, 포지션 수정 시 삭제 및 재등록
-	public Integer deleteSkills(String memberid);
-	
-	public Integer insertSkills(String memberid, String stat);
-	
-	public Integer updatePosition(String memberid, String stats);
-	
+	public Integer deleteSkills(String memberid);	
+	public Integer insertSkills(String memberid, String stat);	
+	public Integer updatePosition(String memberid, String stats);	
 	public Integer deleteDurations(String memberid);
-	
 	public Integer insertDurations(String memberid, String stat);
 	
 	//마이페이지 프로젝트 경험 있/없 업데이트
 	public Integer updateExperience(String memberid, int answer);
 	
 	//마이페이지 프로젝트 경험 있는 사람은 기입하기^^
-	public Integer insertExperiences(List<M_ExperienceVo> mex);
+	public Integer insertExperiences(M_ExperienceVo mex);
+	
+	//마이페이지 프로젝트 경험 삭제
+	public Integer deleteExperience(String ex_id, String memberid);
+	
+	//마이페이지 프로젝트 경험 수정하기
+	public Integer updateExperiences(M_ExperienceVo mex);
+	
+	//마이페이지 모든 정보 입력시 포인트 지급 이전에 체크
+	public Integer checkPoint(String member_id);
+	
+	//위의 함수로 체크했을 때, 보너스 포인트 받은 적 없으면포인트 지급(최초 1회)
+	public Integer givePointFirstTime(String member_id);
 	
 	//마이페이지 회원 탈퇴시 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id);
 	
 	//회원 상세 페이지 이메일 가져오기
 	public MemberVo getMemberDetail(String memberid);
-	
+
 	// 포인트 관리 쿼리
 	public int updatePoint(PointVo point);
 	

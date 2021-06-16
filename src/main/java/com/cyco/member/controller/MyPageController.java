@@ -86,15 +86,12 @@ public class MyPageController {
 		mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 		mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 		mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
-		
-		System.out.println("경험 있는지? " + memberdetailservice.getExperiences(useremail).size());
-		
+	
 		//프로젝트 경험 없는 경우
 		//빈 배열은 null이 아니라 []로 리턴되므로 배열 길이로 비교해야 한다
 		if(memberdetailservice.getExperiences(useremail).size() == 0) {
 			
 			//입력 자체를 안 한건지, 프로젝트 경험 없을이라고 입력한건지 확인해야 한다
-			System.out.println("프로젝트 경험 테이블에 데이터 없음");
 			String result = memberdetailservice.haveExperience(useremail);
 			System.out.println(result);
 			
@@ -103,20 +100,15 @@ public class MyPageController {
 				//경험 아예 체크 안 한 경우 mmp에 experiences를 비워서 보낸다
 				
 			}else if(result.equals("0")) {
-				
 				//경험 없음이라고 체크한 경우
 				mmp.addAttribute("experiences", "none");
-			} 
-			
+			} 		
 			
 		} else {
 			
 			mmp.addAttribute("experiences", memberdetailservice.getExperiences(useremail));
 			
 		}
-
-
-		System.out.println("경험 : " + mmp.get("experiences"));
 		
 		return new ModelAndView("/Member/Mypage",mmp) ;
 	}
@@ -146,18 +138,20 @@ public class MyPageController {
 			
 		}
 		
-		/*
-		 * ModelMap mmp = new ModelMap(); mmp.addAttribute("result", result);
-		 * mmp.addAttribute("icon", icon); mmp.addAttribute("url", "main.cy");
-		 */
-		
 		System.out.println("업로드 후 리다이렉트");
-		//System.out.println(mmp.toString());
-		
-		//return new ModelAndView("Redirect/Redirect", mmp);
-		//return "Redirect/Redirect";
 		
 		res.sendRedirect("mypage");
+	}
+	
+	//충전 페이지 이동
+	@RequestMapping(value="charge",method=RequestMethod.GET)
+	public ModelAndView goToCharge(HttpSession session) {
+		
+		ModelMap mmp = new ModelMap();
+		mmp.addAttribute("member_id",session.getAttribute("member_id"));
+		
+		return new ModelAndView("/Member/Charge",mmp);
+		
 	}
 
 }
