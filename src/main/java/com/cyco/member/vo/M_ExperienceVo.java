@@ -1,6 +1,5 @@
 package com.cyco.member.vo;
 
-import java.util.List;
 
 import lombok.Data;
 
@@ -15,6 +14,7 @@ public class M_ExperienceVo {
 	private String EX_CONTENT;
 	private String EX_DURATION;
 	private int ex_count;
+	
 	
 	/*
 	 * private List<Integer> MEMBER_ID; private List<String> EXP_TITLE; private

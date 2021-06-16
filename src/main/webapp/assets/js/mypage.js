@@ -257,12 +257,12 @@ $(document).ready(function() {
         } else if(key == "experience"){
 
             $("#m_experience").addClass("show");
-            $("#ex_contentarea").empty();
+            $(".exarea").remove();
             addEx();
 
             if($("#have").length == 0){
-                console.log("그냥 프로젝트 경험이 없는 사람");
-                $("#ex_contentarea").empty();
+                console.log("그냥 프로젝트 경험이 없는 사람~~");
+                $(".exarea").remove();
             }
 
             return;
@@ -662,61 +662,62 @@ $(document).on("click",".del_ex",function(){
 //추가 버튼 클릭시 폼 생성
 function addEx(){
 
-    //왜인지 form 을 서버에 넘기면 첫번째 인풋 태그의 값을 못 받아서
-    //아무 의미 없는 인풋태그를 맨 앞에 하나 추가한다
-    $("#ex_contentarea").append(
+   $(".ex_form").append(
 
         `<div class="exarea">
-        <form class="ex_form" method="post" action="ajax/insertexperiences">
-        <input type="hidden" calss="MEMBER_ID" name="MEMBER_ID" id="ex_member_id"></input>
-        <div class="ex_title">
-            <input type="text" class="exinput EXP_TITLE" id="EXP_TITLE" placeholder="프로젝트명"></input>
-            <span class="index"></span>
-        </div>
+            <input type="hidden" class="MEMBER_ID" name="ID" value=""></input> 
+            <input type="text" class="exinput EXP_TITLE" id="EXP_TITLE" name="EXP_TITLE" placeholder="프로젝트명"></input>    
+            <input type="text" class="exinput EX_POSITION" name="EX_POSITION" id="EX_POSITION" placeholder="담당 업무/포지션"></input>
+            <input type="text" class="exinput EX_SKILL" name="EX_SKILL" id="EX_SKILL" placeholder="사용기술"></input> 
+            <input type="text" class="exinput EX_DURATION" name="EX_DURATION" id="EX_DURATION" placeholder="소요 기간"></input> 
+           <input type="text" class="exinput EX_CONTENT" name="EX_CONTENT" id="EX_CONTENT" placeholder="간단한 설명"></input>
+            <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
+        </div>`
 
-        <div class="ex_title"><input type="text" class="exinput EX_POSITION" name="EX_POSITION" id="EX_POSITION" placeholder="담당 업무/포지션"></input> </div>
-        <div class="ex_title"><input type="text" class="exinput EX_SKILL" name="EX_SKILL" id="EX_SKILL" placeholder="사용기술"></input> </div>
-        <div class="ex_title"><input type="text" class="exinput EX_DURATION" name="EX_DURATION" id="EX_DURATION" placeholder="소요 기간"></input> </div>
-        <div class="ex_content"><input type="text" class="exinput EX_CONTENT" name="EX_CONTENT" id="EX_CONTENT" placeholder="간단한 설명"></input> </div>
-        <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
-        </form>
-    </div>`
 
     );
 
-    //인풋 태그에 바로 넣어주면 첫번째 폼에서는 회원번호를 못 가져온다
-    $("#ex_member_id").val($("#m_id").val().trim());
+    // //인풋 태그에 바로 넣어주면 첫번째 폼에서는 회원번호를 못 가져온다
+    $(".MEMBER_ID").val($("#m_id").val().trim());
 }
 
 //수정 버튼 누르면 폼에 입력한 프로젝트 경험들 인서트
 $("#insert_ex").on("click", function(){
-    console.log("아몬드 넥스트레블");
-    insertExperiences();
+    
+    let mex = [];
+    $.each($("div[class=exarea]"),function(index,item){
+
+        console.log($(this));
+
+        console.log("자식들",$(this).children(".EX_POSITION").val())
+        
+        var ex_data = {
+            ID : $(this).children(".MEMBER_ID").val(),
+            EXP_TITLE :  $(this).children(".EXP_TITLE").val(),
+            EX_POSITION : $(this).children(".EX_POSITION").val(),
+            EX_SKILL :  $(this).children(".EX_SKILL").val(),
+            EX_CONTENT :  $(this).children(".EX_CONTENT").val(),
+            EX_DURATION :  $(this).children(".EX_DURATION").val()
+        }
+
+        insertExperiences(ex_data);
+        //mex.push(ex_data);  
+    
+    });
+     
+    //insertExperiences(mex); 
+
 })
 
 //폼에 입력한 프로젝트 경험들 비동기로 날리고 받은 거 뷰단에 반영하기
-function insertExperiences(){
-
-    var ex_data = $(".ex_form").serialize();
-    //var ex_data = new FormData(document.getElementsByClassName("ex_form"));
-/*
-    var ex_data = {
-        MEMBER_ID : $("#ex_member_id").val(),
-        EXP_TITLE : $(".EXP_TITLE").val(),
-        EX_POSITION : $(".EX_POSITION").val(),
-        EX_SKILL : $(".EX_SKILL").val(),
-        EX_CONTENT : $(".EX_CONTENT").val(),
-        EX_DURATION : $(".EX_DURATION").val()
-    }
-*/
+function insertExperiences(mex){
+   
     $.ajax({
 
         url:$(".ex_form").attr("action"),
         type:"post",
         dataType:"text",
-        traditional : true,
-        data:JSON.stringify(ex_data),
-        contentType:"application/json;chrset=uft-8",
+        data:mex,
         success:function(res){
             console.log(res);
 

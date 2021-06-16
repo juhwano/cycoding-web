@@ -100,7 +100,7 @@ public interface MemberDao {
 	public Integer updateExperience(String memberid, int answer);
 	
 	//마이페이지 프로젝트 경험 있는 사람은 기입하기^^
-	public Integer insertExperiences(List<M_ExperienceVo> mex);
+	public Integer insertExperiences(M_ExperienceVo mex);
 	
 	//마이페이지 회원 탈퇴시 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id);

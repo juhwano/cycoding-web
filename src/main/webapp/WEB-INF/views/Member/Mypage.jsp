@@ -172,7 +172,16 @@
 									<c:otherwise>
 									
 									<div id="exlist">
-										이제 이걸 어케 뿌려주지
+									
+									<c:forEach var="experiences" items="${experiences}">
+										<div class="ex_box">
+										<div>${experiences.EXP_TITLE}</div>
+										<div>${experiences.EX_POSITION}</div>
+										<div>${experiences.EX_SKILL}</div>
+										<div>${experiences.EX_CONTENT}</div>
+										<div>${experiences.EX_DURATION}</div>
+										</div>
+										</c:forEach>
 									</div>
 									
 									</c:otherwise>
@@ -299,7 +308,6 @@
 	</div>
 	
 	
-		<!-- 프로젝트 경험 모달창 -->
 	<div id="m_experience" class="modal fade">
 		<div class="modal-dialog modal-login">
 			<div class="modal-content">
@@ -309,6 +317,10 @@
 				<div id="modal-body">
 
 					<div id="ex_contentarea">
+					
+				        <form class="ex_form" method="post" action="ajax/insertexperiences">
+				               
+				        </form>
 
 					</div>
 					<div id="buttonarea">
@@ -325,7 +337,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	
 	<div id="quit_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
@@ -363,6 +375,6 @@
 	</div>
 
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=1"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=3"></script>
 </body>
 </html>

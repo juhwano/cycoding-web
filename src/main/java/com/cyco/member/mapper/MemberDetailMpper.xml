@@ -111,8 +111,8 @@
 	
 	<insert id="insertExperiences" parameterType="com.cyco.member.vo.M_ExperienceVo">
 	
-		insert into m_experience (MEMBER_ID,EXP_TITLE,EX_POSITION,EX_SKILL,EX_DURATION,EX_CONTENT) 
-			values(${MEMBER_ID},#{EXP_TITLE},#{EX_POSITION},#{EX_SKILL},#{EX_DURATION},#{EX_CONTENT})
+		insert into m_experience (MEMBER_ID,EXP_TITLE,EX_POSITION,EX_SKILL,EX_DURATION,EX_CONTENT,EX_COUNT) 
+			values(${MEMBER_ID},#{EXP_TITLE},#{EX_POSITION},#{EX_SKILL},#{EX_DURATION},#{EX_CONTENT},(SELECT nvl(MAX(EX_COUNT),0)+1 FROM m_experience where MEMBER_ID=${MEMBER_ID}))
 	
 	</insert>
 	
