@@ -484,3 +484,58 @@ display: inline-block;
 		margin:10px auto;
 
 }
+
+.ex input{
+	border:none;
+	outline:none;
+	font-size:16px;
+	background-color: #F4F2F3;
+	width:350px;
+}
+
+.ex_box{
+	margin:10px auto;
+	padding:10px 20px 20px 20px;
+	border:2px solid white;
+	font-size:14px;
+}
+
+.ex_box span{
+	font-weight:bold;
+}
+
+.ex_titlebox{
+	margin:10px auto;
+	text-align:left;
+	padding:0 150px;
+	display:flex;
+
+}
+
+.ex{
+	margin:10px auto;
+	text-align:left;
+	padding:0 150px;
+}
+
+.ex_count{
+	color:#CA8FAB;
+	font-size:21px;
+	margin-right:5px;
+}
+.exp_title_input{
+	font-size:16px;
+	font-weight:bold;
+}
+
+/*제목 위치 때문에 아이콘 있어야 하는데 활성화 안 할 거라서 안 보기에 한다*/
+	#exicons{
+		border:none;
+		outline:none;
+		color:#F4F2F3;
+		background: none;
+		position: relative;
+    	top: -10px;
+    	right: -475px;
+		font-size:16px;
+	}

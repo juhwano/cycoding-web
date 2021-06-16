@@ -235,6 +235,7 @@ public class MemberDetailService {
 		return result;
 	}
 	
+	//프로젝트 경험 삭제하기
 	public String  deleteExperience(String ex_id, String memberid) {
 		
 		String result = "fail";
@@ -247,6 +248,21 @@ public class MemberDetailService {
 		}
 		return result;
 		
+	}
+	
+	//프로젝트 경험 업데이트 하기
+	public String updateExperiences(M_ExperienceVo mex) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.updateExperiences(mex);
+		
+		if(row > 0) {
+			result = "success";
+		}
+		
+		return result;
 	}
 	
 	//뷰단에서 변경한 포지션 업데이트
@@ -316,6 +332,28 @@ public class MemberDetailService {
 		}
 		
 		return result;
+	}
+	
+	//회원 추가정보 모두 기입시 최초 입력인지 체크해서 맞으면 포인트 지급
+	public String givePointFirstTime(String member_id) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		if(memberdao.checkPoint(member_id) != null) {
+			
+			//포인트 컬럼에서 회원 아이디로 사용포인트, 보유포인트가 모두 0인지 확인했을 때 결과가 있으면 포인트 지급
+			int row = memberdao.givePointFirstTime(member_id);
+			
+			if(row > 0) {
+				result = "success";
+			}
+					
+		}
+		
+		return result;
+		
 	}
 	
 	//마이페이지에서 회원 탈퇴날짜 업데이트

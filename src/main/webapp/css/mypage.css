@@ -504,9 +504,15 @@ display: inline-block;
 
 }
 
-#ex{
-	text-align:right;
+.ex input{
+	border:none;
+	outline:none;
+	font-size:16px;
+	background-color: #F4F2F3;
+	width:350px;
 }
+
+
 #quit-btn{
 	border: 2px solid #F4F2F3;
 	background-color:white;
@@ -578,5 +584,11 @@ display: inline-block;
 		background: none;
 		position: relative;
     	top: -10px;
-    	right: -475px
+    	right: -475px;
+		font-size:16px;
+	}
+
+	.ex_mdf{
+		color:#94A7AE;
+		background-color:white;
 	}

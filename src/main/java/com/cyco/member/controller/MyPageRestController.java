@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.dao.MemberDao;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.M_ExperienceVo;
@@ -30,6 +32,13 @@ public class MyPageRestController {
 	public void setMemberDetailService(MemberDetailService memberdetailservice) {
 		this.memberdetailservice = memberdetailservice;
 		// this.member = member;
+	}
+	
+	//닉네임, 휴대폰 번호 중복체크는 서비스 없이 바로 사용함
+	private SqlSession sqlsession;
+	@Autowired
+	public void setSqlsession(SqlSession sqlsession) {
+		this.sqlsession = sqlsession;
 	}
 
 	// 회원 개인정보 수정
@@ -87,6 +96,41 @@ public class MyPageRestController {
 
 		return result;
 	}
+	
+	//개인정보 수정시 닉네임 중복체크
+	@RequestMapping(value="nicknamecheck",method=RequestMethod.GET)
+	public String checkNickNameMyPage(String nickName) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = "able";
+		
+		if(memberdao.checkNickName(nickName) != null) {
+			
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
+		return result;
+	}
+	
+	//개인정보 수정시 휴대폰번호 중복체크
+	@RequestMapping(value="phonecheck",method=RequestMethod.GET)
+	public String checkPhoneNameMyPage(String phone) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		String result = "able";
+		
+		if(memberdao.checkPhone(phone) != null) {
+			result = "disable";
+		} else {
+			result = "able";
+		}
+		
+		return result;
+	}
+	
 
 	/*
 	 * //회원 프로필 이미지 바꾸기
@@ -152,7 +196,8 @@ public class MyPageRestController {
 		return list;
 
 	}
-
+	
+	//스탯 삭제하기(기술, 기간)
 	@RequestMapping(value = "deletestat")
 	public String deleteStat(String memberid, String type) {
 
@@ -241,8 +286,10 @@ public class MyPageRestController {
  
 		 mex.setMEMBER_ID(ID); 
 		 mex.setEXP_TITLE(EXP_TITLE);
-		 mex.setEX_POSITION(EX_POSITION); mex.setEX_SKILL(EX_SKILL);
-		 mex.setEX_CONTENT(EX_CONTENT); mex.setEX_DURATION(EX_DURATION);
+		 mex.setEX_POSITION(EX_POSITION);
+		 mex.setEX_SKILL(EX_SKILL);
+		 mex.setEX_CONTENT(EX_CONTENT);
+		 mex.setEX_DURATION(EX_DURATION);
 
 		System.out.println(mex.toString());
 		String result =	memberdetailservice.insertExperiences(mex);
@@ -254,8 +301,6 @@ public class MyPageRestController {
 	@RequestMapping(value = "getnewexperiences", method = RequestMethod.POST)
 	public List<M_ExperienceVo> getNewExperiences(String useremail){
 		
-		System.out.println("여기는 타지?");
-		
 		return memberdetailservice.getExperiences(useremail);
 		
 	}
@@ -266,6 +311,29 @@ public class MyPageRestController {
 		
 		String result = memberdetailservice.deleteExperience(ex_id, memberid);
 		
+		return result;
+	}
+	
+	//프로젝트 경험 업데이트 디비 반영
+	//post 방식으로 보내는데 자꾸 get을 허용할 수 없다는 에러 발생해서 method 추가함
+	@RequestMapping(value="updateexperiences", method= {RequestMethod.GET, RequestMethod.POST})
+	public String updateExperiences(@RequestParam String member_id_input, @RequestParam String ex_count_input ,@RequestParam String EXP_TITLE_input,
+			@RequestParam String EX_POSITION_input, @RequestParam String EX_SKILL_input, @RequestParam String EX_CONTENT_input,@RequestParam String EX_DURATION_input) {
+	//public String editExperiences(String ex_count_input , String EXP_TITLE_input, String EX_POSITION_input,
+	//		String EX_SKILL_input, String EX_CONTENT_input, String EX_DURATION_input) {
+		 System.out.println("프로젝트 경험 수정하기");
+		 M_ExperienceVo mex = new M_ExperienceVo();
+
+		 mex.setMEMBER_ID(member_id_input); 
+		 mex.setEXP_TITLE(EXP_TITLE_input);
+		 mex.setEX_POSITION(EX_POSITION_input);
+		 mex.setEX_SKILL(EX_SKILL_input);
+		 mex.setEX_CONTENT(EX_CONTENT_input);
+		 mex.setEX_DURATION(EX_DURATION_input);		 
+		 mex.setEx_count(ex_count_input);
+
+		System.out.println(mex.toString());
+		String result =	memberdetailservice.updateExperiences(mex);
 		return result;
 	}
 
@@ -298,6 +366,17 @@ public class MyPageRestController {
 		}
 
 		return list;
+	}
+	
+	//모든 정보 입력시 포인트 최초 지급
+	@RequestMapping(value="givepoint",method=RequestMethod.POST)
+	public String givePointFirstTime(String member_id) {
+		
+		System.out.println("들어왔나?");
+		
+		String result = memberdetailservice.givePointFirstTime(member_id);
+		 
+		 return result;
 	}
 
 	// 회원이 탈퇴 누르면 DB에 있는 탈퇴날짜 업데이트 하는 함수

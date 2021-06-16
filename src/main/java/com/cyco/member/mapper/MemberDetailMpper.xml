@@ -151,12 +151,34 @@
 	
 	</update>
 	
+	<update id="updateExperiences" parameterType="com.cyco.member.vo.M_ExperienceVo">
+	
+		update m_experience set exp_title=#{EXP_TITLE},
+                        ex_position=#{EX_POSITION},
+                        ex_skill=#{EX_SKILL},
+                        ex_duration=#{EX_DURATION},
+                        ex_content=#{EX_CONTENT}
+        where ex_count=${ex_count} and member_id=${MEMBER_ID}
+	
+	</update>
 	
 		<select id="getMemberDetail" resultType="com.cyco.common.vo.MemberVo">
 		
 		select member_email, member_nickname, MEMBER_IMAGE from member where member_id=${memberid}
 		
 	</select>
+	
+	<select id="checkPoint" resultType="Integer">
+	
+		select member_id from point where member_id=${member_id} and have_point=0 and use_point=0
+	
+	</select>
+	
+	<update id="givePointFirstTime">
+		
+		update point set have_point=50 where member_id=${member_id}
+	
+	</update>
 	
 	<update id="updateDeleteDate">
 	

@@ -138,18 +138,20 @@ public class MyPageController {
 			
 		}
 		
-		/*
-		 * ModelMap mmp = new ModelMap(); mmp.addAttribute("result", result);
-		 * mmp.addAttribute("icon", icon); mmp.addAttribute("url", "main.cy");
-		 */
-		
 		System.out.println("업로드 후 리다이렉트");
-		//System.out.println(mmp.toString());
-		
-		//return new ModelAndView("Redirect/Redirect", mmp);
-		//return "Redirect/Redirect";
 		
 		res.sendRedirect("mypage");
+	}
+	
+	//충전 페이지 이동
+	@RequestMapping(value="charge",method=RequestMethod.GET)
+	public ModelAndView goToCharge(HttpSession session) {
+		
+		ModelMap mmp = new ModelMap();
+		mmp.addAttribute("member_id",session.getAttribute("member_id"));
+		
+		return new ModelAndView("/Member/Charge",mmp);
+		
 	}
 
 }

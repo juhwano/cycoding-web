@@ -61,7 +61,7 @@
 							value="${member.MEMBER_EMAIL}" readonly>
 							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
 						<li class="itemlist"><span class="item">비밀번호</span><input
-							type="password" class="info" value="password"
+							type="password" class="info" id="password" value="password"
 							readonly>
 							<button type="button" class="modify_items m-btn">수정</button></li>
 						<li class="itemlist"><span class="item">닉네임</span><input
@@ -72,11 +72,11 @@
 							type="text" class="info" value="${member.MEMBER_NAME}" readonly>
 							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
 						<li class="itemlist"><span class="item">휴대폰</span><input
-							type="text" class="info" value="${member.MEMBER_PHONE}" readonly>
+							type="text" class="info" id="phone" value="${member.MEMBER_PHONE}" readonly>
 							<button type="button" class="modify_items m-btn">수정</button></li>
 						<li class="itemlist"><span class="item">포인트</span><input
-							type="text" class="info" value="${member.HAVE_POINT}점" readonly>
-							<button type="button" class="modify_items point-btn">충전</button></li>
+							type="text" class="info" id="point" value="${member.HAVE_POINT}점" readonly>
+							<a href="charge"><button type="button" class="modify_items point-btn">충전</button></a></li>
 
 					</ul>
 
@@ -85,7 +85,13 @@
 
 				<div id="info" class="details">
 					<p class="cycoder_title">DETAIL</p>
-					<p class="sub_title">모든 항목을 입력해야 프로젝트에 지원할 수 있어요!</p>
+					<p class="sub_title">
+						<c:if test="${empty skills || empty experiences || empty position || empty durations}">
+						
+							모든 항목을 입력해야 프로젝트에 지원할 수 있어요!
+						
+						</c:if>
+					</p>
 
 					<div class="infolist">
 
@@ -154,7 +160,7 @@
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
 											<div class="insert experience" id="never">없음</div>
-											<a href="m_experience" class="trigger-btn" data-toggle="modal">
+											<a href="#m_experience" class="trigger-btn" data-toggle="modal">
 												<div class="insert experience" id="have">있음</div>
 											</a>
 										</div>
@@ -173,22 +179,24 @@
 									<div id="exlist">
 									
 									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+									<form action="ajax/updateexperiences" class="ex_edit_form">
+									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
 										<div class="ex_box" id="${experiences.ex_count}">
-										
 										<div class="ex ex_titlebox">
 											<div id="exicons">
-												<i class="fas fa-edit"></i>
+												<i class="fas fa-edit edit_exbox"></i>
 												<i class="fas fa-eraser del_exbox"></i>
 											</div>
-											
-											<span class="ex_count">#${status.count}</span><span class="ex_title">${experiences.EXP_TITLE}</span>
+										
+											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
 										</div>
-										<div class="ex">${experiences.EX_POSITION}</div>
-										<div class="ex">${experiences.EX_SKILL}</div>
-										<div class="ex">${experiences.EX_DURATION}</div>
-										<div class="ex">${experiences.EX_CONTENT}</div>
-									
+										<div class="ex"><input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
+										
 										</div>
+										</form>
 										</c:forEach>
 										
 										<a href="#m_experience" class="trigger-btn" data-toggle="modal">
