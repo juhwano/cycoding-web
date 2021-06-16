@@ -157,5 +157,28 @@
 	</insert>
 	<!-- 프로젝트 생성 -->
 
+
+	<!-- 추천리스트 -->
+	<!-- 회원 포지션 -->
+	<select id="getMDetail" parameterType="string" resultType="com.cyco.common.vo.M_DetailVo">
+		select member_id, position_id 
+		from m_detail
+		where member_id=${member_id}
+	</select>
+	<!-- 회원 기술 -->
+	<select id="getMSkill" parameterType="string" resultType="com.cyco.common.vo.M_SkillVo">
+		select member_id, skill_code, ms_count
+		from m_skill
+		where member_id=${member_id}
+	</select>
+	<!-- 회원 선호기간 -->
+	<select id="getMDuration" parameterType="string" resultType="com.cyco.common.vo.M_DurationVo">
+		select member_id, duration_id 
+		from m_duration
+		where member_id=${member_id}
+	</select>
+	
+	
+	<!-- 추천리스트 -->
 	
 </mapper>

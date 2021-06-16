@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.M_DetailVo;
+import com.cyco.common.vo.M_DurationVo;
+import com.cyco.common.vo.M_SkillVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -278,5 +281,28 @@ public class ProjectService {
 			
 		}
 	// ---------------------------------------------------------
-
+	
+	//프로젝트 추천리스트
+		public void getRcmProjectList(String member_id) {
+			/*
+			 	1. 회원 정보 가져오기 ( skill, position, duration)
+			 	2. 가져온 정보를 가공하기
+			 	3. 회원이 원하는 포지션의 자리가 있는 프로젝트를 먼저 걸름
+			 	4. 회원이 가지고 있는 기술을 하나라도 가지고있는 프로젝트를 걸름
+			 	5. 회원이 원하는 기간을 하나라도 가지고있는 프로젝트를 걸름
+			 	6. 그중에서 대표스킬이 포함되어있는 프로젝트를 먼저 보여줌.
+			 	7. 또 그중에서 조회수가 높은걸 보여줌
+			*/
+			ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+			Map<String, List> map = new HashMap<String, List>();
+			List<M_DetailVo> mdtlist = dao.getMDetail(member_id);
+			List<M_SkillVo> mskilllsit = dao.getMSkill(member_id);
+			List<M_DurationVo> mdulist =  dao.getMDuration(member_id);
+			
+			
+			
+			
+			System.out.println(member_id);
+		
+		}
 }

@@ -51,7 +51,7 @@ public class ProjectController {
 	private MemberService memberService;
 	
 	@RequestMapping(value="list")
-	public String getProjectList(Model m) {
+	public String getProjectList(Model m, HttpSession session) {
 		// 프로젝트 리스트 첫 페이지
 		// 모든 프로젝트 리스트 바로 뿌려주기.
 		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList("");
@@ -74,6 +74,13 @@ public class ProjectController {
 		List<PmemberCountVo> membercount_list = service.getPmemberCountList();
 		JSONArray json_membercout_list = JSONArray.fromObject(membercount_list);
 		
+		if(session.getAttribute("member_id")!=null) {
+			//유저가 로그인되어있으면 추천리스트 출력
+			service.getRcmProjectList(String.valueOf(session.getAttribute("member_id")));
+		}
+		else {
+			//조회수 순으로 출력
+		}
 		
 		
 		m.addAttribute("project_list",json_project_list);

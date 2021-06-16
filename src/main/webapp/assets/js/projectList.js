@@ -104,15 +104,14 @@ let card;
      card+=		"	<div	class='card-body'>									"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><h3	class='h5	card-title	mt-3'>"+project_list[current].p_title+"</h3></a>"
      card+=		"	<div	class='p_footer'>									"
-     card+=		"	<p	class='card-text	p_skill'>기술스택:"
-     
+     card+=		"	<p	class='card-text	p_skill'>기술스택: "     
      /*기술스택, 모집인원 for문 시작*/
          for(let sk=0; sk<pjsk_list.length; sk++	){
              if(project_list[current].project_id == pjsk_list[sk].project_id){
-                 card+=pjsk_list[sk].skill_name;
+                 card+=pjsk_list[sk].skill_name +" ";
              }
          }
-     card+=		"	</p>										"
+     card+=		"</p>										"
      card+=		"	<p	class='card-text	p_team_memNum'>모집인원:								"
      
          for(let mem=0; mem<membercount_list.length; mem++	){

@@ -5,6 +5,9 @@ import java.util.Map;
 
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.M_DetailVo;
+import com.cyco.common.vo.M_DurationVo;
+import com.cyco.common.vo.M_SkillVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -75,5 +78,10 @@ public interface ProjectDao {
 	// 프로젝트 스킬 insert
 	public void setProjectSkillList(List<P_SkillVo> s);
 	// -----------------------------------------
+	
+	// ------------- 추천 리스트 -------------------
+	public List<M_DetailVo> getMDetail(String member_id);
+	public List<M_SkillVo> getMSkill(String member_id);
+	public List<M_DurationVo> getMDuration(String member_id);
 	
 }
