@@ -43,7 +43,7 @@
 		
 		function PwdCheck(useremail, userPwd) {
 			$.ajax({
-	             url:'/memberdetail/ajax/mypageCheck',
+	             url:'/mypage/ajax/mypageCheck',
 	             type: 'post',
 	             dataType:"text",
 	             data: { 
@@ -54,7 +54,7 @@
 	                 console.log("result: "+ result);
 	                 
 	                 if(result != "false") {
-	                	 let url = "${pageContext.request.contextPath}/memberdetail/mypage?useremail=${LoginUser}";
+	                	 let url = "${pageContext.request.contextPath}/mypage/mypage?useremail=${LoginUser}";
 	                	 location.replace(url);
 	                 } else {
 	                	 swal("비밀번호를 다시 확인해주세요." , "" ,"error");
