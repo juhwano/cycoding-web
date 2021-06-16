@@ -373,6 +373,7 @@
 	</div>
 </div>     
 
+
 </body>
 <!-- 가입 정보 유효성 검사 -->
 <script src="${pageContext.request.contextPath}/assets/js/register.js"></script>

@@ -5,11 +5,17 @@ body {
 	font-family: 'Roboto', serif;
 	line-height: 1.6
 }
-
+.rootcontainer{
+	display:flex;
+	max-width:1300px;
+	padding:30px;
+	margin:auto;
+}
 /* 탭기능 */
-.container {
-	width: 500px;
+.containe {
+	width: 100%;
 	margin: 0 auto;
+	margin-right:80px;
 }
 
 ul.tabs {
@@ -182,7 +188,7 @@ div{
 }
 
 .projectInfoTabContents .section {
-    margin-bottom: 35px;
+    margin-bottom: 15px;
 }
 
 /* 모집현황박스 */
@@ -201,8 +207,8 @@ div{
 }
 
 .projectInfoTabContents .section.statusSection h3 {
-    font-size: 16px!important;
-    font-weight: 500!important;
+    font-size: 19px!important;
+    font-weight: 550!important;
     color: #424251!important;
     border-bottom: 1px solid #e6e6e6;
     -moz-box-sizing: border-box;
@@ -241,12 +247,18 @@ div{
  }
  
  /* 오른쪽 박스영역 */
- .projectPageWrap .projectRightBox {
+.projectRightInfoContetns {
     max-width: 280px;
     width: 100%;
 }
+.projectRightInfoContetns  h3{
+	font-size: 19px;
+    font-weight: 550;
+    color: #424251!important;
+    border-bottom: 1px solid #e6e6e6;
+}
 
-.projectPageWrap .projectRightBox .projectRightInfoWrap {
+.projectRightInfoContetns .projectRightInfoWrap {
     width: 100%;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -264,13 +276,13 @@ div{
     top: 51px;
 }
 
-.projectPageWrap .projectRightBox .projectRightInfoWrap .infoWrap {
+.projectRightInfoWrap .infoWrap {
     border-bottom: 1px solid #e6e6e6;
     padding: 20px 0;
 }
 
 
-.projectPageWrap .projectRightInfoContetns .projectRightInfoWrap .infoWrap .checkboxTit {
+.projectRightInfoContetns .projectRightInfoWrap .infoWrap .checkboxTit {
     font-size: 16px;
     color: #424251;
     font-weight: 500;
@@ -286,7 +298,7 @@ div{
     align-items: center;
 }
 
-.projectPageWrap .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .userIdWrap {
+ .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .userIdWrap {
     display: -webkit-inline-flex;
     display: -moz-inline-box;
     display: inline-flex;
@@ -296,7 +308,7 @@ div{
     flex-direction: row;
 }
 
-.projectPageWrap .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .leaderImg {
+ .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .leaderImg {
     width: 54px;
     height: 54px;
     border-radius: 8px;
@@ -306,7 +318,7 @@ div{
     flex-shrink: 0;
 }
 
-.projectPageWrap .projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .rightBox .userIdTxt {
+.projectRightInfoContetns .projectRightInfoWrap .basicInfoWrap .leaderInfo .rightBox .userIdTxt {
     font-size: 15px;
     font-weight: 400;
     color: #61b4c7;
@@ -317,7 +329,7 @@ div{
     display: inline-flex;
 }
 
-.projectPageWrap .projectRightInfoContetns .projectRightInfoWrap .infoWrap .checkboxTit {
+ .projectRightInfoContetns .projectRightInfoWrap .infoWrap .checkboxTit {
     font-size: 16px;
     color: #424251;
     font-weight: 500;
@@ -333,7 +345,7 @@ div{
     align-items: center;
 }
 
-.projectPageWrap .projectRightInfoContetns .infoWrap .tabTxt {
+.projectRightInfoContetns .infoWrap .tabTxt {
     font-size: 14px;
     line-height: 14px;
     color: #8e8ea2;

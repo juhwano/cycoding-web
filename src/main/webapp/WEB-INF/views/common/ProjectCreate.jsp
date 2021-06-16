@@ -1,128 +1,40 @@
+<%@page import="java.util.List"%>
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<c:set var="project" value="${project}"/>
-<c:set var="pmcountlist" value="${pmcountlist}"/>
-<c:set var="pmlist" value="${pmlist}"/>
-
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>사이좋게 코딩하자</title>
+<meta charset="UTF-8">
+<title>사이좋게 코딩하자 - 프로젝트 생성</title>
 
-<link type="text/css"
-	href="${pageContext.request.contextPath}/css/ProjectDetail.css"
-	rel="stylesheet"> 
-	<%-- <link type="text/css" href="${pageContext.request.contextPath}/css/ProjectDetail.css" rel="sytlesheet"> --%>
 </head>
-<jsp:include
-	page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="../include/header.jsp"></jsp:include>
+
+<!-- project css -->
+<link type="text/css" href="${pageContext.request.contextPath}/css/Project_Css.css" rel="stylesheet">
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="adrvo" value="${AdrList}"></c:set>
+<c:set var="fieldvo" value="${FieldList}"></c:set>
+<c:set var="skillvo" value="${SkillList}"></c:set>
+<c:set var="positionvo" value="${PositionList}"></c:set>
+<c:set var="durationvo" value="${DurationList}"></c:set>
+<c:set var="membervo" value="${MemberVo}"></c:set>
+
+
 <body>
 
-
-	<div class="projectPageHeaderWrap">
-		<div class="projectPurposeWrap">
-			<div>
-				<span class="rightTxt">${project.field_name}</span>
-			</div>
-		</div>
-		<div class="ProjectPageHeaderContent">
-			<h3 class="projectTit">${project.p_title }</h3>
-			<li class="projectLeaderWrap">
-			<a href="#"><%-- "/memberdetailpage?memberid=${project.member_id }"> --%>
-				<div class="userIdWrap">
-					<div class="leaderImg">
-						<img width="20px" height="20px"
-							src="${pageContext.request.contextPath}/assets/img/ain_test/${project.p_image}">
-					</div>
-					<span class="userIdTxt">${project.member_nickname }</span>
-					
-				</div>
-			</a>
-			</li>
-			<div class="statusTagWrap">
-				<span class="statusTag">${project.p_state }</span>
-			</div>
-		</div>
-	</div>
-
-	<!--  -->
-	
-	<div class="rootcontainer">
-	 <div class="containe">
-
-		<ul class="tabs">
-			<li class="tab-link current" data-tab="tab-1">정보</li>
-			<li class="tab-link" data-tab="tab-2">Q&A</li>
-		</ul>
-
-		<div id="tab-1" class="tab-content current">
-			<div class="projectDatailWrap">
-				<div class="projectTab projectInfoTabContents active">
-					<div class="section statusSection">
-						<h3 class="tabTit">모집 현황</h3>
-						<ul>
-						<c:forEach var="position" items="${pmcountlist}">
-							<li><span class="positionTxt">${position.position_name}</span>
-							<span class="positionNum">
-							${position.curr}/${position.max}</span>
-								<button value="지원" class="positionApplyBtn">지원</button></li>
-						</c:forEach>
-						</ul>
-						
-					</div>
-					<div class="section statusSection">
-						<h3 class="tabTit">프로젝트 소개</h3>
-						<span>${project.p_content}</span>
-					</div>
-				</div>
-				
-				
-			</div>
-			
-		</div>
-
-		<div id="tab-2" class="tab-content">---- ---- ★------ ---- ----
-			---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- --------
-			---- ---- ---- ★-- ---- ---- ------★ ---- ---- ---- ---- ---- ----
-			-------- ---- ---- ---- ---- ---- ---- ★------ ---- ---- ---- ----
-		</div>
-	</div> 
-
-	<div class="projectRightInfoContetns">
-			<div class="projectRightInfoWrap">
-				<div class="basicInfoWrap infoWrap">
-					<p class="checkBoxTit"> ✔ 리더 정보 </p>
-					<div class="leaderInfo">
-						<div class="leaderImg">
-							<img width="20px" height="20px"
-							src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
-						</div>
-						<div class="rightBox">
-							<span class="userIdTxt">${project.member_nickname}</span>
-						</div>
-					</div>
-				</div>
-				<div class="projectDate infoWrap">
-					<h3 class="tabTit">프로젝트 기간</h3>
-					<p class="tabTxt">${project.duration_date }</p>
-				</div>
-				<div class="projectDate infoWrap">
-					<h3 class="tabTit">분야</h3>
-					<p class="rightTxt tabTxt">${project.field_name }</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-	<!--  -->
-	<%-- 
-	<div class="container">
+	<div class="project_area">
+	  <div class="area-img">
+	  	 <p>프로젝트 생성</p>
+      	 <p>당신의 상상을 현실로 반영해보세요!</p>
+	  </div>	
+   </div>
+		<section class="min-vh-100 d-flex align-items-center" style="background-color:#F4F2F3">
+            <div class="container">
                 <div class="row justify-content-center">
                     	<div class="ProjectPage">
                     	
@@ -259,26 +171,36 @@
 						</form>
                    	</div>
              </div>
-         </div> --%>
-
-
-	<%-- <script src="${pageContext.request.contextPath}/assets/js/js파일명"></script> --%>
+         </div>
+       </section> 
 </body>
-<jsp:include
-	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
-<script type="text/javascript">
-$(document).ready(function(){
+	<script type="text/javascript">
+		var selectBox = "<div class='project_boxdiv'><select class='Project_SelectBox'><c:forEach items='${positionvo}' var='position'><c:if test='${position.position_enabled eq 1}'><option value='${position.position_id}'>${position.position_name}</option>"
+			+ "</c:if></c:forEach></select> <div class='BtnWarp'><input type='button' class='Up_num' value='+'><p class='number'>1</p><input type='button' class='Down_num' value='-'></div></div>";
 	
-	$('ul.tabs li').click(function(){
-		var tab_id = $(this).attr('data-tab');
 
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
-
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
-	})
-
-})
-</script>
-</html>
+			
+			
+		
+		$('.CreateBtn').click(function(){
+			swal({
+				  title: "프로젝트를 생성하시겠습니까?",
+				  text: "* 프로젝트 생성시 50포인트가 소모됩니다.",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+					  $('.Project_createForm').submit();
+				  } else {
+					  return false;
+				  }
+				});
+		})
+			
+			
+			
+	</script>
+	<script src="${pageContext.request.contextPath}/assets/js/ProjectCreate.js" ></script>
+</html>	

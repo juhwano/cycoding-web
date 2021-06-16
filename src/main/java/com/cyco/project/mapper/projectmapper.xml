@@ -8,19 +8,20 @@
 		inner join v_p_detail vpd
 		on p.project_id = vpd.project_id
 		<choose>
+			<!-- 완료상태를 제외한 전체 조회 -->
 			<when test='where == ""'>
 				where vpd.p_state not like '완료'
 			</when>
+			<!-- 완료상태만 조회 -->
 			<when test='where != "" and p_state =="완료"'>
 				${where}
 			</when>
+			<!-- 완료상태를 제외한 필터 조회 -->
 			<otherwise>
 				${where}
 				and vpd.p_state not like '완료'
 			</otherwise>
-		
 		</choose>
-		
 		order by vpd.p_state asc, vpd.p_date desc
 	</select>
 	
@@ -47,11 +48,7 @@
     </choose>
 	</select>
 	
-	<select id="getProjectMemberList">
-		select project_id, member_id, position_name  
-		from v_pm_position
-	</select>
-	
+	<!-- skill_code를 이용한 필터링 -->
 	<select id="getFilteredProjectSkillList" parameterType="string" resultType="string">
 		select project_id 
 		from p_skill
@@ -79,13 +76,18 @@
 		from v_psk_sk
 	</select>
 	
-	<select id="getPmemberCountList" resultType="com.cyco.project.vo.PmemberCountVo">
+	<!-- 전체프로젝트의 전체 구인중인 자리 수와 확정된 자리 수 -->
+	<select id="getPmemberCountList" parameterType="string" resultType="com.cyco.project.vo.PmemberCountVo">
 		select count(member_id)as m_count, count(*) as total_count, project_id
 		from p_member
+		<choose>
+			<when test='project_id != "all"'>
+				where project_id=#{project_id}
+			</when>
+		</choose>
 		group by project_id
 	</select>
 	
-
 	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
 
 		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
@@ -95,6 +97,38 @@
 		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
 	</select>
 	
+
+	<!-- 프로젝트 상세 하나만 가져오기 -->
+	<select id="getOneProject" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="hashmap">
+		select p.project_id, p.member_id, m.member_nickname, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
+		from v_pj_adr_field p 
+		inner join v_p_detail vpd
+		on p.project_id = vpd.project_id
+		inner join member m
+		on p.member_id = m.member_id
+		where p.project_id = ${project_id}
+		order by vpd.p_state asc, vpd.p_date desc
+	</select>
+	
+		<!-- //프로젝트 상세에서 포지션 별 전체 자리수와 남은 자리수를 가져옴 -->
+	<select id="getPmemberCount" parameterType="string" resultType="com.cyco.project.vo.V_PmPostion_Count">
+		select count(member_id) as curr,count(*) as max,position_name ,position_id 
+		from v_pm_position
+		where project_id=${project_id}
+		group by position_name,position_id
+	</select>
+	
+		<!-- 프로젝트 멤버 검색. project_id를 통한 조건검색 가능 -->
+	<select id="getProjectMemberList" parameterType="string" resultType="com.cyco.project.vo.V_PmPosition">
+		select project_id, member_id, position_name,position_id
+		from v_pm_position
+		<if test='project_id !=""'>
+			where project_id='${project_id}'
+		</if>
+
+	</select>
+	
+
 	<!-- 프로젝트 생성  -->
 	<insert id="setProjectInsert">
 		 <selectKey keyProperty="project_id" resultType="String" order="BEFORE">
@@ -122,5 +156,6 @@
 		</foreach>
 	</insert>
 	<!-- 프로젝트 생성 -->
+
 	
 </mapper>

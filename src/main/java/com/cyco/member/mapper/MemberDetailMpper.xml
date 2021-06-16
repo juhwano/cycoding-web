@@ -76,6 +76,22 @@
 		
 	</select>
 	
+	<select id="getExperiences" resultType="com.cyco.member.vo.M_ExperienceVo">
+	
+		select e.exp_title, e.ex_position, e.ex_skill, e.ex_duration, e.ex_content from m_experience e left join member m
+    		on e.member_id=m.member_id
+    		where m.member_email=#{userid}	
+	
+	</select>
+	
+	<select id="haveExperience" resultType="String">
+	
+		select md.P_EXPERIENCE from m_detail md left join member m
+			on md.member_id=m.member_id
+			where m.member_email=#{userid}
+	
+	</select>
+	
 	
 	<delete id="deleteSkills">
 	
@@ -87,9 +103,16 @@
 	
 		INSERT INTO m_skill (ms_count, member_id, skill_code)
 	VALUES(
-		(SELECT NVL(MAX(ms_count),0)+1 FROM m_skill where member_id=${param1}),
+		(SELECT MAX(ms_count)+1 FROM m_skill where member_id=${param1}),
     	${param1},#{param2}	)
 
+	
+	</insert>
+	
+	<insert id="insertExperiences" parameterType="com.cyco.member.vo.M_ExperienceVo">
+	
+		insert into m_experience (MEMBER_ID,EXP_TITLE,EX_POSITION,EX_SKILL,EX_DURATION,EX_CONTENT) 
+			values(${MEMBER_ID},#{EXP_TITLE},#{EX_POSITION},#{EX_SKILL},#{EX_DURATION},#{EX_CONTENT})
 	
 	</insert>
 	
@@ -112,6 +135,12 @@
 
 	
 	</insert>
+	
+	<update id="updateExperience">
+	
+		update m_detail set p_experience=${param2} where member_id=${param1}
+	
+	</update>
 	
 	
 	<select id="getMemberDetail" resultType="com.cyco.common.vo.MemberVo">

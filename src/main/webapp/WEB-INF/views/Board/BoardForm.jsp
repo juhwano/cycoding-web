@@ -1,10 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+// 	양식 다시 제출 방지
+	response.setHeader("Cache-Control","no-store"); 
+	response.setHeader("Pragma","no-cache"); 
+	response.setDateHeader("Expires",0);
+	if (request.getProtocol().equals("HTTP/1.1")){ 
+		response.setHeader("Cache-Control", "no-cache");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>CYCO 커뮤니티</title>
+<style type="text/css">
+.section-header{
+	background-image: url("../assets/img/board/form.jpg");
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100%;
+    background-position: center;
+}
+</style>
 <script>
 // 글쓰기 유효성검사
 function fn_formSubmit(){
@@ -96,47 +114,41 @@ function previewImage(targetObj, View_area) {
 		}
 	}
 }
+
 </script>
 </head>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <body>
-	<form name="form" action="save" method="post" enctype="multipart/form-data">
-		<table border="1" style="width:600px">
-			<caption>CYCO 커뮤니티</caption>
-			<colgroup>
-				<col width='15%' />
-				<col width='*%' />
-			</colgroup>
-			<tbody>
-				<tr>
-					<td>글쓴이</td> 
-					<td><input type="text" name="MEMBER_ID" size="20" maxlength="20" value="<c:out value="${boardInfo.MEMBER_ID}"/>"></td> 
-				</tr>
-				<tr>
-					<td>제목</td> 
-					<td><input type="text" name="FREE_TITLE" size="70" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>"></td> 
-				</tr>
-				<tr>
-					<td>내용</td> 
-					<td><textarea name="FREE_CONTENT" rows="5" cols="60"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea></td> 
-				</tr>
-				<tr>
-					<td>첨부</td> 
-					<td>
+<div class="container">
+	<div class="section-header"></div>
+	<br/><br/>
+	<div class="row">
+	<br/>
+	<form name="form" action="save" method="post" enctype="multipart/form-data" autocomplete="off">
+					<div><input type="text" name="MEMBER_ID" placeholder="닉네임" size="20" maxlength="20" value="<c:out value="${boardInfo.MEMBER_ID}"/>"></div>
+					<div><input type="text" name="FREE_TITLE" placeholder="제목을 입력해 주세요." size="60" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>"></div>
+					<br/> 
+					 <div class="editor_wrap">
+					 	<textarea name="FREE_CONTENT" placeholder="내용을 입력해 주세요." rows="13" cols="120"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea>
+					 </div>
+					
 						<c:forEach var="listview" items="${listview}" varStatus="status">
 							<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
             				<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
 							<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
 						</c:forEach>					
 						
-						<input type="file" id="uploadfile" name="uploadfile" multiple="" onchange="previewImage(this,'View_area')"/>
+						<input type="file" id="uploadfile" name="uploadfile" multiple="multiple" onchange="previewImage(this,'View_area')"/>
 						<div id='View_area' style='position:relative; width: 300px; height: 300px; color: black; border: 0px solid black; dispaly: inline; '></div>
-					</td> 
-				</tr>
-			</tbody>
-		</table>    
-		<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>"> 
-		<a href="#" onclick="fn_formSubmit()">등록</a>
-		<a href="#" onclick="history.back(-1)">취소</a>
+					 
+						<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>"> 
 	</form>	
+		<div class="text-right">
+			<a href="#" onclick="fn_formSubmit()" class="btn btn-outline-primary">등록</a>
+			<a href="#" onclick="history.back(-1)" class="btn btn-outline-default">취소</a>
+		</div>
+		
+	</div>
+	</div>
 </body>
 </html>

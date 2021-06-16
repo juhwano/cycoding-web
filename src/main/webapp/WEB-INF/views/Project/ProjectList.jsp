@@ -158,12 +158,12 @@
 </body>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
-/* projectList에서 필요한 데이터들 미리 선언 */
-	let membercount_list = JSON.parse('${membercount_list}');
-	let pjsk_list = JSON.parse('${pjsk_list}');
-	let project_list = JSON.parse('${project_list}');
-	
-	
+/* projectList.js에서 필요한 데이터들을 미리 선언 */
+ 	var membercount_list = ${membercount_list};
+ 	var pjsk_list = ${pjsk_list};
+ 	var project_list = ${project_list};
+ 	
+ 
 </script>
 <script type="text/javascript" src="/assets/js/projectList.js"></script>
 </html>

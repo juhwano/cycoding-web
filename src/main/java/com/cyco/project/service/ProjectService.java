@@ -26,6 +26,8 @@ import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
+import com.cyco.project.vo.V_PmPosition;
+import com.cyco.project.vo.V_PmPostion_Count;
 
 @Service
 public class ProjectService {
@@ -49,9 +51,9 @@ public class ProjectService {
 		map.put("p_state", p_state);
 		
 		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(map);
-		System.out.println("dao : " + project_list);
 		return project_list;
 	}
+	
 //	ProjectList with Filter
 //	오버로딩 함수
 	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist, String p_state){
@@ -72,12 +74,10 @@ public class ProjectService {
 			return null;
 		}
 		
-		System.out.println(where);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("where",where);
 		map.put("p_state", p_state);
 		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(map);
-		System.out.println(list);
 		
 		return list;
 	}
@@ -92,7 +92,6 @@ public class ProjectService {
 		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		list = dao.getFilteredProjectList(data);
-		System.out.println("3개 필터링 : "+list.toString());
 		return list;
 	}
 
@@ -103,11 +102,9 @@ public class ProjectService {
 		
 		String skill_code = data.get("skill_code");
 		List<String> idlist = new ArrayList<String>();
-		System.out.println("service Flist : " + Flist);
 		
 		//input값이 아무것도 없을떄 return null
 		if(skill_code.equals("") && Flist==null) {
-			System.out.println("아무 input도없을때 return null입니당");
 			return null;
 		}
 		//skill_code inpupt값이 없다면 Flist를 다시 return
@@ -120,21 +117,16 @@ public class ProjectService {
 		
 		//skill_code로 필터링된 리스트 뽑기
 		List<String> list = dao.getFilteredProjectSkillList(skill_code);
-		System.out.println("skill filtering list : " + list);
 		
 		
 		// list와 Flist에서 중복되는값 찾기
 		// Flist의 값이 존재할 경우(3개 필터링 결과값이 있다.)
 		if(Flist!=null) {
-			System.out.println("Flist 값이 존재");
-			
 			//list값이 하나라도 있으면
 			if(list.size()>0) {
 				for(String l : list) {
 					//contains()를 이용하여 Flist에 list의 l값이 있으면 중복.
 					if(Flist.contains(l)) {
-						System.out.println("중복값 발생!!! ");
-						System.out.println("l : " + l);
 						idlist.add(l);
 					}
 				}
@@ -149,16 +141,13 @@ public class ProjectService {
 		else {
 			//list값이 하나라도 존재한다면
 			if(list.size()>0) {
-				System.out.println("Flist 존재x   size>0" );
 				idlist.addAll(list);
 			}
 //			skill_code 필터링 list도 없다면 비어있는 list return
 			else {
-				System.out.println("Flist 존재x   size<0" );
 				idlist.addAll(list);
 			}
 		}
-		System.out.println("idlist : " + idlist);
 		//중복제거된 리스트 리턴
 		return idlist;
 	}
@@ -220,15 +209,40 @@ public class ProjectService {
 		return searched_list;
 	}
 	
-	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
+	//전체프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
 	public List<PmemberCountVo> getPmemberCountList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
-		List<PmemberCountVo> membercount_list = dao.getPmemberCountList();
+		List<PmemberCountVo> membercount_list = dao.getPmemberCountList("all");
 		
 		return membercount_list;
 	}
 	
+	// 프로젝트 생성 --------------------------------------------------------
+	//프로젝트 상셍에서 포지션 별 전체 자리수와 남은 자리수 뽑기
+	public List<V_PmPostion_Count> getPmemberCount(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<V_PmPostion_Count> pmcountlist = dao.getPmemberCount(project_id);
+		
+		return pmcountlist;
+	}
+	
+	
+	//	프로젝트 상세 - 프로젝트 id를 통해 하나만 가져오기
+	public V_PjAdrField_Join_V_PDetail getOneProject(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		V_PjAdrField_Join_V_PDetail project = dao.getOneProject(project_id);
+		return project;
+	}
+	
+	//프로젝트 멤버 검색. project_id를 통한 조건검색 가능
+	public List<V_PmPosition> getProjectMemberList(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
+		return pmlist;
+	}
+
 	// ----------------------------------------------------------
 	// 프로젝트 생성
 	public String setProjectInsert(ProjectVo p) {
@@ -264,4 +278,5 @@ public class ProjectService {
 			
 		}
 	// ---------------------------------------------------------
+
 }
