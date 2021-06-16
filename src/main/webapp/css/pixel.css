@@ -4973,6 +4973,7 @@ textarea.form-control-lg {
     color: #ffffff;
     background-color: #CA8FAB;
     border-color: #CA8FAB;
+    line-height: 1;
 }
 
 .btn-outline-primary:hover {

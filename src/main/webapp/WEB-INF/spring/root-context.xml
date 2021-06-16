@@ -51,6 +51,15 @@
 		</property>
 	</bean>
 
+
+	<!-- 공통 파일 업로드 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+
+
 	<bean id="bCryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
@@ -129,6 +138,5 @@
 	</tx:advice>
 	
 
-	<!-- <bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
- -->
+<!-- 	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/> -->
 </beans>

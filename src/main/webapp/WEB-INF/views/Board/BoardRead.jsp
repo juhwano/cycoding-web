@@ -159,7 +159,7 @@ function fn_replyReplySave(){
 				<span><c:out value="${boardInfo.FREE_TITLE}"/><br/></span>
 			</h3>
 			<div>
-					<span><c:out value="${boardInfo.MEMBER_ID}"/></span>&nbsp; | &nbsp;<span><fmt:formatDate value="${boardInfo.FREE_DATE }" pattern="yyyy.MM.dd hh:mm:ss" /></span>
+					<span><c:out value="${boardInfo.MEMBER_NICKNAME}"/></span>&nbsp; | &nbsp;<span><fmt:formatDate value="${boardInfo.FREE_DATE }" pattern="yyyy.MM.dd hh:mm:ss" /></span>
 			</div>
 			<div class="text-right">		
 					<span>조회&nbsp;<c:out value="${boardInfo.FREE_VIEWS}"/></span><br/>

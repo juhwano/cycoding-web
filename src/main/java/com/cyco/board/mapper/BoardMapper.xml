@@ -55,8 +55,9 @@
 	<!-- 게시글 조회 -->
 	<select id="selectBoardOne" parameterType="String"
 		resultType="com.cyco.board.vo.BoardVo">
-		SELECT FREE_ID, FREE_TITLE, MEMBER_ID, FREE_CONTENT, FREE_DATE, FREE_VIEWS
-		FROM BOARD
+		SELECT B.FREE_ID, B.FREE_TITLE,B.MEMBER_ID, B.FREE_CONTENT,B.FREE_DATE, B.FREE_VIEWS, M.MEMBER_NICKNAME
+		FROM BOARD B LEFT JOIN MEMBER M
+		ON B.MEMBER_ID=M.MEMBER_ID
 		WHERE FREE_ID=#{FREE_ID}
 	</select>
 

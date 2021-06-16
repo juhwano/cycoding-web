@@ -125,7 +125,8 @@ function previewImage(targetObj, View_area) {
 	<div class="row">
 	<br/>
 	<form name="form" action="save" method="post" enctype="multipart/form-data" autocomplete="off">
-					<div><input type="text" name="MEMBER_ID" placeholder="닉네임" size="20" maxlength="20" value="<c:out value="${boardInfo.MEMBER_ID}"/>"></div>
+					<input type="hidden" name="MEMBER_ID" value="${sessionScope.member_id }">
+					<div><input type="text" name="MEMBER_NICKNAME" placeholder="닉네임" size="20" maxlength="20" value="<c:out value="${sessionScope.nickname}"/>"></div>
 					<div><input type="text" name="FREE_TITLE" placeholder="제목을 입력해 주세요." size="60" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>"></div>
 					<br/> 
 					 <div class="editor_wrap">

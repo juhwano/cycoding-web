@@ -106,13 +106,12 @@ function checkOnlyOne(element) {
 	<form id="form1" name="form1"  method="post">
 		<!-- 페이징 호출2 -->
 	    	<jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
-		<div>
+		<div class="form-group">
 			<input type="checkbox" name="searchType" onclick="checkOnlyOne(this)" value="FREE_TITLE" <c:if test="${fn:indexOf(searchVO.searchType, 'FREE_TITLE')!=-1}">checked="checked"</c:if>/>
 			<label class="chkselect" for="searchType1">제목</label>
 			<input type="checkbox" name="searchType" onclick="checkOnlyOne(this)" value="FREE_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'FREE_CONTENT')!=-1}">checked="checked"</c:if>/>
 			<label class="chkselect" for="searchType2">내용</label>
-			<input type="text" name="searchKeyword" style="width:150px;" maxlength="50" value='<c:out value="${searchVO.searchKeyword}"/>' onkeydown="if(event.keyCode == 13) { fn_formSubmit();}">
-			<input name="btn_search" value="검색" class="btn_sch " type="button" onclick="fn_formSubmit()" />
+			<input type="text" name="searchKeyword" style="width:200px;" maxlength="50" placeholder="검색" value='<c:out value="${searchVO.searchKeyword}"/>' onkeydown="if(event.keyCode == 13) { fn_formSubmit();}"><button  name="btn_search" style="border:none; color:white; background:#CA8FAB; height:33px;" class="btn_sch input-group-addon" type="button" onclick="fn_formSubmit()"><span class="fas fa-search"></span></button>
 		</div>
 	</form>
 	</div>
