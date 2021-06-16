@@ -10,7 +10,6 @@
 		</layout>
 	</appender>
 	
-<<<<<<< HEAD
 	<!-- 날짜별 로그 파일 생성 -->
     <appender name="springFile" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="file" value="	C:/Users/masta/Desktop/logs/log.log"/>  
@@ -36,9 +35,6 @@
           </layout>
            </appender>
 
-
-=======
->>>>>>> origin/developer
 	<!-- Application Loggers -->
 	<logger name="com.cyco.main">
 		<level value="info" />
