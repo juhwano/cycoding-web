@@ -166,8 +166,7 @@ function fn_replyReplySave(){
 			</div>			
 		</div>
 	</header>				
-	<hr>
-                    <textarea cols="120" rows="8"><c:out value="${boardInfo.FREE_CONTENT}" escapeXml="false"/></textarea><hr/><br/>
+                    <textarea cols="120" rows="8" readonly="readonly" disabled><c:out value="${boardInfo.FREE_CONTENT}" escapeXml="false"/></textarea><hr/><br/>
 					첨부파일 : 
 						<c:forEach var="listview" items="${listview}" varStatus="status">	
             				<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 

@@ -29,6 +29,7 @@ table {
     background-size: cover;
     background-size: 100%;
     background-position: center;
+    margin-bottom: 50px;
 }
 </style>
 <script>
