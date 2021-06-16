@@ -97,8 +97,13 @@
     </delete>
     <!-- 댓글 리스트 -->
     <select id="selectBoardReplyList" resultType="com.cyco.board.vo.BoardReplyVo" parameterType="String">
-        SELECT FREE_ID, REPLY_ID, MEMBER_ID, REPLY_CONTENT, REPLY_DATE, REPLY_REF, DEPT, STEP
-          FROM B_REPLY
+<!--         SELECT FREE_ID, REPLY_ID, MEMBER_ID, REPLY_CONTENT, REPLY_DATE, REPLY_REF, DEPT, STEP -->
+<!--           FROM B_REPLY -->
+<!--          WHERE FREE_ID=#{FREE_ID} -->
+<!--          ORDER BY STEP -->
+         SELECT R.FREE_ID, R.REPLY_ID, R.MEMBER_ID, R.REPLY_CONTENT, R.REPLY_DATE, R.REPLY_REF, R.DEPT, R.STEP, M.MEMBER_NICKNAME
+         FROM B_REPLY R LEFT JOIN MEMBER M
+         ON R.MEMBER_ID = M.MEMBER_ID
          WHERE FREE_ID=#{FREE_ID}
          ORDER BY STEP
     </select>

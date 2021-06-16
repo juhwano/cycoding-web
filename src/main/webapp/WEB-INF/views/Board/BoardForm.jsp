@@ -22,23 +22,27 @@
     background-size: 100%;
     background-position: center;
 }
+textarea{
+	resize: none;
+	overflow-x:auto;
+}
 </style>
 <script>
 // 글쓰기 유효성검사
 function fn_formSubmit(){
-	var form = document.form;
-	
+	var validateTITLE = document.form.FREE_TITLE.value.replace(/\s|　/gi, '');
+	var validateCONTENT = document.form.FREE_CONTENT.value.replace(/\s|　/gi, '');
 // 	if (form.MEMBER_ID.value=="") {
 // 		alert("작성자를 입력해주세요.");
 // 		form.MEMBER_ID.focus();
 // 		return;
 // 	}
-	if (form.FREE_TITLE.value=="") {
+	if (validateTITLE == "") {
 		alert("글 제목을 입력해주세요.");
 		form.FREE_TITLE.focus();
 		return;
 	}
-	if (form.FREE_CONTENT.value=="") {
+	if (validateCONTENT == "") {
 		alert("글 내용을 입력해주세요.");
 		form.FREE_CONTENT.focus();
 		return;
@@ -129,22 +133,27 @@ function previewImage(targetObj, View_area) {
 			<label for="FREE_TITLE">제목</label>
 			<input type="text" id="FREE_TITLE" name="FREE_TITLE" class="form-control" placeholder="제목을 입력해 주세요." pattern=".{1,250}" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>">
 		</div>
+		<br/>
 		<div class="form-group">
 			<label for="FREE_CONTENT">내용</label>
-			<textarea id="FREE_CONTENT" name="FREE_CONTENT" class="form-control" placeholder="내용을 입력해 주세요." rows="5" cols="120"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea>
-		</div>	
+			<textarea id="FREE_CONTENT" name="FREE_CONTENT" class="form-control" placeholder="내용을 입력해 주세요." rows="15" cols="120"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea>
+		</div>
+		<br/>	
 		<div class="form-group">
 			<label for="fileno">첨부파일</label>
 			<c:forEach var="listview" items="${listview}" varStatus="status">
 				<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
             	<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
 				<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
-			</c:forEach>					
-			<input type="file" id="uploadfile" name="uploadfile" multiple="multiple" onchange="previewImage(this,'View_area')"/>
-			<div id='View_area' style='position:relative; width: 300px; height: 300px; color: black; border: 0px solid black; dispaly: inline; '></div>
-		</div>			 
+			</c:forEach>		
+			<input type="file" id="uploadfile" name="uploadfile" class="form-control" multiple="multiple" onchange="previewImage(this,'View_area')"/>
+			<div id='View_area' style='position:relative; color: black; border: 0px solid black; dispaly: inline; '></div>
+		</div>
+		<br/>
+		<div class="text-right" style="margin-bottom:30px">			 
 			<a href="#" onclick="fn_formSubmit()" class="btn btn-outline-primary">등록</a>
-			<a href="#" onclick="history.back(-1)" class="btn btn-outline-default">취소</a>
+			<a href="list" class="btn btn-outline-black">취소</a>
+		</div>
 	</form>	
 </div>
 </body>

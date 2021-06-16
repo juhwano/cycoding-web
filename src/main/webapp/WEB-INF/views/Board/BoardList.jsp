@@ -17,8 +17,6 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="width=device-width; initial-scale=1; text/html; charset=utf-8" />
 <title>CYCO 커뮤니티</title>
-
-
 <style type="text/css">
 table {
 	font-size: 14px;
@@ -89,10 +87,15 @@ function checkOnlyOne(element) {
 					<td>
 						<a href="${link}"><c:out value="${listview.getShortTitle(35)}"/></a>
 					</td>
-					<td align="center"><c:out value="${listview.MEMBER_NICKNAME}"/></td>
-					<td align="center"><fmt:formatDate value="${listview.FREE_DATE }"
-					 pattern="MM.dd" /></td>
-					<td align="center"><c:out value="${listview.FREE_VIEWS}"/></td>
+					<td align="center">
+						<c:out value="${listview.MEMBER_NICKNAME}"/>
+					</td>
+					<td align="center">
+						<fmt:formatDate value="${listview.FREE_DATE }" pattern="MM.dd" />
+					 </td>
+					<td align="center">
+						<c:out value="${listview.FREE_VIEWS}"/>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -105,7 +108,7 @@ function checkOnlyOne(element) {
 	<form id="form1" name="form1"  method="post">
 		<!-- 페이징 호출2 -->
 	    	<jsp:include page="/WEB-INF/views/common/pagingforSubmit.jsp" />
-		<div class="form-group">
+		<div class="form-group" style="margin-bottom:30px">
 			<input type="checkbox" name="searchType" onclick="checkOnlyOne(this)" value="FREE_TITLE" <c:if test="${fn:indexOf(searchVO.searchType, 'FREE_TITLE')!=-1}">checked="checked"</c:if>/>
 			<label class="chkselect" for="searchType1">제목</label>
 			<input type="checkbox" name="searchType" onclick="checkOnlyOne(this)" value="FREE_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'FREE_CONTENT')!=-1}">checked="checked"</c:if>/>
