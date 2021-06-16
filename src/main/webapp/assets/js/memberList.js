@@ -24,13 +24,13 @@ $(document).ready(function() {
 					 card += '<div class="card shadow">'
 					 card += '<div class="m_img">'
 					 card += '<img class="m_img_size"'
-					 card += 'src="../assets/img/ain_test/' + member.m_image + '">'
+					 card += 'src="'+'/resources/upload/' + member.m_image + '">'
 					 card += '</div>'
 					 card += '<div class="card-body">'
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
 					 card += '</div> </div> </div>'
 	               $(card_section).append(card);
             })
@@ -78,13 +78,13 @@ $(document).ready(function() {
 					 card += '<div class="card shadow">'
 					 card += '<div class="m_img">'
 					 card += '<img class="m_img_size"'
-					 card += 'src="../assets/img/ain_test/' + member.m_image + '">'
+					 card += 'src="${pageContext.request.contextPath}/resources/upload/' + member.m_image + '">'
 					 card += '</div>'
 					 card += '<div class="card-body">'
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
 					 card += '</div> </div> </div>'
                $(card_section).append(card);
 
@@ -159,13 +159,13 @@ $(document).ready(function() {
 					 card += '<div class="card shadow">'
 					 card += '<div class="m_img">'
 					 card += '<img class="m_img_size"'
-					 card += 'src="../assets/img/ain_test/' + member.m_image + '">'
+					 card += 'src="${pageContext.request.contextPath}/resources/upload/' + member.m_image + '">'
 					 card += '</div>'
 					 card += '<div class="card-body">'
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="" class="card_link">VIEW MORE</a>'
+					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
 					 card += '</div> </div> </div>'
                   $(card_section).append(card);
                }

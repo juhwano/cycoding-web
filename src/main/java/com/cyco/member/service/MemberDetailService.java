@@ -16,7 +16,9 @@ import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
+import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 
 @Service
@@ -124,6 +126,29 @@ public class MemberDetailService {
 		
 	}
 	
+	//프로젝트 경험 리스트 뽑기
+	public List<M_ExperienceVo> getExperiences(String userid){
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		List<M_ExperienceVo> list = new ArrayList<M_ExperienceVo>();
+		
+		list = memberdao.getExperiences(userid);
+		
+		return list;
+		
+	}
+	
+	//마이페이지에서 프로젝트 경험 없음이 없음이라고 입력한건지 확인
+	public String haveExperience(String userid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = memberdao.haveExperience(userid);
+		
+		
+		return result;
+	}
+	
 	//모달 안에 기술 스택 리스트 뽑기
 	public List<SkillVo> getSkills(){
 		
@@ -198,6 +223,20 @@ public class MemberDetailService {
 		
 	}
 	
+	//프로젝트 경험 있/없 디비에 반영하기
+	public String updateExperience(String memberid, int answer) {
+		
+		String result = "fail";
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.updateExperience(memberid, answer);
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		return result;
+	}
+	
 	//뷰단에서 변경한 포지션 업데이트
 	public String updatePosition(String memberid, String stat) {
 		
@@ -252,6 +291,21 @@ public class MemberDetailService {
 		
 	}
 	
+	// 마이페이지에서 기입한 프로젝트 경험들 디비에 insert
+	public String insertExperiences(List<M_ExperienceVo> mex) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.insertExperiences(mex);
+		
+		if(row > 0){
+			result = "success";
+		}
+		
+		return result;
+	}
+	
 	//마이페이지에서 회원 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id) {
 		
@@ -270,10 +324,14 @@ public class MemberDetailService {
 		
 		return member;
 	}
-
 	
-	
-	
-
+	//회원상세 리뷰목록 가져오기
+	public List<ReviewVo> getReviewList(String memberid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		List<ReviewVo> reviewList = memberdao.getReviewList(memberid);
+		
+		return reviewList;
+	}	
 
 }

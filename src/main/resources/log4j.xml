@@ -10,6 +10,7 @@
 		</layout>
 	</appender>
 	
+<<<<<<< HEAD
 	<!-- 날짜별 로그 파일 생성 -->
     <appender name="springFile" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="file" value="	C:/Users/masta/Desktop/logs/log.log"/>  
@@ -36,6 +37,8 @@
            </appender>
 
 
+=======
+>>>>>>> origin/developer
 	<!-- Application Loggers -->
 	<logger name="com.cyco.main">
 		<level value="info" />
@@ -44,7 +47,7 @@
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
-	</logger>
+	</logger>	
 	
 	<logger name="org.springframework.beans">
 		<level value="info" />
@@ -75,10 +78,10 @@
 	<logger name="jdbc">
 		<level value="ERROR"/>  
 	</logger>
-	
+
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="info" />
 		<appender-ref ref="console" />
 		<appener-ref ref="springFile"/>
 		<appender-ref ref="errFile"/> 

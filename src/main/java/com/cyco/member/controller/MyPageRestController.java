@@ -1,34 +1,33 @@
 package com.cyco.member.controller;
 
 
-import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.cyco.common.vo.MemberVo;
 
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
-import com.cyco.utils.UtilFile;
 
-@RequestMapping("memberdetail/ajax/")
+
+@RequestMapping("mypage/ajax/")
 @RestController
-public class MemberDeatilRestController {
+public class MyPageRestController {
 	
 	MemberService memberservice;
 	MemberDetailService memberdetailservice;
@@ -41,7 +40,7 @@ public class MemberDeatilRestController {
 	}
 	
 	//회원 개인정보 수정
-	@RequestMapping(value="editmydetail.ajax")
+	@RequestMapping(value="editmydetail")
 	public String editInfo(String code, String info, String userid) {
 		
 		System.out.println("This is editInfo ajax");
@@ -121,7 +120,7 @@ public class MemberDeatilRestController {
 	
 	*/
 	//모달창에 기술 태그 뿌리기
-	@RequestMapping(value="getskills.ajax")
+	@RequestMapping(value="getskills")
 	public List<SkillVo> getSkills(){
 		
 		List<SkillVo> list = new ArrayList<SkillVo>();
@@ -135,7 +134,7 @@ public class MemberDeatilRestController {
 	}
 	
 	//모달창에 포지션 태그 뿌리기
-	@RequestMapping(value="getposition.ajax")
+	@RequestMapping(value="getposition")
 	public List<PositionVo> getSPositions(){
 		
 		List<PositionVo> list = new ArrayList<PositionVo>();
@@ -150,7 +149,7 @@ public class MemberDeatilRestController {
 	
 	
 	//모달창에 선호 기간 태그 뿌리기
-	@RequestMapping(value="getdurations.ajax")
+	@RequestMapping(value="getdurations")
 	public List<V_Duration> getDurations(){
 		
 		List<V_Duration> list = new ArrayList<V_Duration>();
@@ -163,7 +162,7 @@ public class MemberDeatilRestController {
 
 	}
 	
-	@RequestMapping(value="deletestat.ajax")
+	@RequestMapping(value="deletestat")
 	public String deleteStat(String memberid, String type) {
 		
 		System.out.println("deleteStat");
@@ -186,7 +185,7 @@ public class MemberDeatilRestController {
 	}
 	
 	//변경한 기술 스탯 디비에 반영하기
-	@RequestMapping(value="editskills.ajax")
+	@RequestMapping(value="editskills")
 	public String editSkills(String memberid, String stat) {
 		
 		System.out.println("기술 비동기 변경");
@@ -199,7 +198,7 @@ public class MemberDeatilRestController {
 	}
 	
 	//변경할 포지션 디비 반영
-	@RequestMapping(value="updateposition.ajax")
+	@RequestMapping(value="updateposition")
 	public String updatePosition(String memberid, String stat) {
 		
 		System.out.println("포지션 비동기 변경");
@@ -212,7 +211,7 @@ public class MemberDeatilRestController {
 	}
 	
 	//변경한 선호기간 스탯 디비에 반영하기
-	@RequestMapping(value="editdurations.ajax")
+	@RequestMapping(value="editdurations")
 	public String editDurations(String memberid, String stat) {
 		
 		System.out.println("기간 비동기 변경");
@@ -224,9 +223,45 @@ public class MemberDeatilRestController {
 		return result;
 	}
 	
+	//프로젝트 경험 있/없 디비에 반영하기
+	@RequestMapping(value="updateexperience")
+	public String updateExperience(String memberid, String answer) {
+		String result = "fail";
+
+		
+		System.out.println("경험 여부 : " + answer);
+		
+		if(answer.equals("never")) {
+			
+			result = memberdetailservice.updateExperience(memberid, 0);
+
+		} else {
+			
+			result = memberdetailservice.updateExperience(memberid, 1);
+		
+		}
+		
+		return result;
+	}
+	
+	//프로젝트 경험 기입한 내용 폼 태그로 날린 거 받아서 인서트하기
+	@RequestMapping(value="insertexperiences", method= {RequestMethod.POST,RequestMethod.GET})
+	public String insertExperiences(@RequestBody M_ExperienceVo mex){
+	//public String insertExperiences(@RequestBody String mex){
+	//public String insertExperiences(@RequestBody List<M_ExperienceVo> mex){
+	//public String insertExperiences(@RequestBody Map<String,String> mex){
+	//public String insertExperiences(@RequestBody String mex) {
+		
+		System.out.println(mex);
+		
+		//String result = memberdetailservice.insertExperiences(mex);
+		
+		return null;
+	}
+	
 	
 	//디비에서 변경된 스탯 뷰단에 반영(공통)
-	@RequestMapping(value="modifystatview.ajax")
+	@RequestMapping(value="modifystatview")
 	public List<MemberDetailPageVo> modifyStatView(String userid, String type) {
 		
 		
@@ -260,15 +295,11 @@ public class MemberDeatilRestController {
 	}
 	
 	//회원이 탈퇴 누르면 DB에 있는 탈퇴날짜 업데이트 하는 함수
-	@RequestMapping(value="updatedeletecount.ajax", method = RequestMethod.POST)
+	@RequestMapping(value="updatedeletecount", method = RequestMethod.POST)
 	public String submitQuit(String quit_id){
-		
-		System.out.println("탈퇴하려는 id : " + quit_id);
 		
 		int result = memberdetailservice.updateDeleteDate(quit_id);
 		String msg = "fail";
-		
-		System.out.println("탈퇴 날짜 반영된 행 : " + result);
 		
 		if(result > 0) {
 			msg = "success";
