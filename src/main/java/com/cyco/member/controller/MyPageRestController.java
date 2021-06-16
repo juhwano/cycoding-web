@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +14,6 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
-import com.cyco.member.vo.M_ExperienceList;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.V_Duration;
@@ -224,8 +218,6 @@ public class MyPageRestController {
 	public String updateExperience(String memberid, String answer) {
 		String result = "fail";
 
-		System.out.println("경험 여부 : " + answer);
-
 		if (answer.equals("never")) {
 
 			result = memberdetailservice.updateExperience(memberid, 0);
@@ -240,34 +232,41 @@ public class MyPageRestController {
 	}
 
 	// 프로젝트 경험 기입한 내용 폼 태그로 날린 거 받아서 인서트하기
+	//post 방식으로 보내는데 자꾸 get을 허용할 수 없다는 에러 발생해서 method 추가함
 	@RequestMapping(value = "insertexperiences", method = {RequestMethod.GET, RequestMethod.POST})
-	//public String insertExperiences(M_ExperienceList mex) {
-	//public String insertExperiences(String ex){
-	//public String insertExperiences(@RequestBody M_ExperienceVo mex){
-	// public String insertExperiences(@RequestBody Map<String,String> mex){
-	// public String insertExperiences(@RequestBody String mex) {
 	public String insertExperiences(@RequestParam String ID ,@RequestParam String EXP_TITLE,@RequestParam String EX_POSITION,
 	@RequestParam String EX_SKILL, @RequestParam String EX_CONTENT,@RequestParam String EX_DURATION) {
-	//public String insertExperiences(@RequestParam ArrayList<Map<String, M_ExperienceVo>> l) {
-		
-		
-		 List<M_ExperienceVo> list = new ArrayList<M_ExperienceVo>();
 		 
 		 M_ExperienceVo mex = new M_ExperienceVo();
-		 
-
-		 
+ 
 		 mex.setMEMBER_ID(ID); 
 		 mex.setEXP_TITLE(EXP_TITLE);
 		 mex.setEX_POSITION(EX_POSITION); mex.setEX_SKILL(EX_SKILL);
 		 mex.setEX_CONTENT(EX_CONTENT); mex.setEX_DURATION(EX_DURATION);
-		 
 
 		System.out.println(mex.toString());
+		String result =	memberdetailservice.insertExperiences(mex);
 
-		String result = memberdetailservice.insertExperiences(mex);
-
-		return null;
+		return result;
+	}
+	
+	//프로젝트 경험 추가된 것 뷰단에 반영하기
+	@RequestMapping(value = "getnewexperiences", method = RequestMethod.POST)
+	public List<M_ExperienceVo> getNewExperiences(String useremail){
+		
+		System.out.println("여기는 타지?");
+		
+		return memberdetailservice.getExperiences(useremail);
+		
+	}
+	
+	//프로젝트 경험 삭제 디비 반영
+	@RequestMapping(value="deleteexperience",method=RequestMethod.POST)
+	public String deleteExperience(String ex_id, String memberid) {
+		
+		String result = memberdetailservice.deleteExperience(ex_id, memberid);
+		
+		return result;
 	}
 
 	// 디비에서 변경된 스탯 뷰단에 반영(공통)

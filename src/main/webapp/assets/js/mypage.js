@@ -100,7 +100,6 @@ $(document).ready(function() {
                     
                         //비밀번호가 변경되었을 때는 인풋 태그의 값을 굳이 바꾸지 않는다
                         //암호화 된 거 엄청 길어서 사용자한테 그대로 보여주지 않을 것
-                        console.log("여기 안 타나");
                         button.prev().val("password");
                         button.prev().prop("readonly",true);
                         button.prev().removeClass("info-mdf");
@@ -124,7 +123,6 @@ $(document).ready(function() {
 
         }
             
-
     });
 
     let newStats = [];
@@ -173,14 +171,12 @@ $(document).ready(function() {
         //클릭하면 포지션 태그 선택
         $(document).on("click",".positions",function(){
 
-
             let name = $(this).text();
             selected= $(".p_clicked");
 
                 if(selected.length>0){
 
                     swal("하나만 선택 가능합니다");
-                    
     
                 } else{
     
@@ -199,17 +195,16 @@ $(document).ready(function() {
             $(this).removeClass("chosen");
             $(this).addClass("positions");
             $("#tagarea").append($(this));
-        });
-
-       
+        });  
 
 }); //document.ready 끝
 
    //모달창에 스탯 리스트 뿌리기
    function edit_modal(code){
-    
+
     console.log("모달 실행");
     console.log(code);
+    
     $("#stat").val(code);
 
     if(code == 'skill'){
@@ -256,12 +251,12 @@ $(document).ready(function() {
         
         } else if(key == "experience"){
 
-            $("#m_experience").addClass("show");
+             $("#m_experience").addClass("show");
             $(".exarea").remove();
             addEx();
 
             if($("#have").length == 0){
-                console.log("그냥 프로젝트 경험이 없는 사람~~");
+
                 $(".exarea").remove();
             }
 
@@ -422,7 +417,6 @@ function del(type){
     let url = "";
     console.log("1번 시작");
 
-    
     $.ajax({
 
         //url:url,
@@ -467,7 +461,6 @@ function edit(stats){
         url="ajax/editdurations";
 
     }
-
     
     $.ajax({
 
@@ -508,7 +501,6 @@ function modifyStatView(type){
         dataType:"json",
         async: false,
         success:function(data){
-
         
             if(type == "skill"){
 
@@ -517,8 +509,7 @@ function modifyStatView(type){
                 $.each(data, function(index,obj){
     
                     if(index == 0){
-    
-    
+     
                         $(".skillarea").append(
     
                             '<a href="#m_stat" class="trigger-btn" data-toggle="modal">'
@@ -538,8 +529,7 @@ function modifyStatView(type){
     
                         );
     
-                    }
-                    
+                    }                
     
                 });
 
@@ -558,11 +548,9 @@ function modifyStatView(type){
 
             } else if(type=="duration"){
 
-
                 $(".durationarea").empty();
 
                 $.each(data, function(index,obj){
-
     
                         $(".durationarea").append(
     
@@ -652,10 +640,11 @@ $(document).on("click",".add_ex",function(){
 
 });
 
-//프로젝트 경험 기입한 것 삭제
+// 프로젝트 경험 추가폼 삭제
 $(document).on("click",".del_ex",function(){
 
-    $(this).parent().parent().remove();
+    // - 버튼 눌러서 폼 삭제
+   $(this).parent().parent().remove();
 
 });
 
@@ -673,23 +662,47 @@ function addEx(){
            <input type="text" class="exinput EX_CONTENT" name="EX_CONTENT" id="EX_CONTENT" placeholder="간단한 설명"></input>
             <div class="ex_button"><button type="button" class="add_ex">+</button><button type="button" class="del_ex">-</button></div>
         </div>`
-
-
     );
 
     // //인풋 태그에 바로 넣어주면 첫번째 폼에서는 회원번호를 못 가져온다
     $(".MEMBER_ID").val($("#m_id").val().trim());
 }
 
+let check = "true";
+//모든 항목 입력 전에는 수정 버튼을 누를 수 없다
+$(document).on("input",".exinput",function(){ 
+    
+    $.each($(".exinput"),function(index,obj){
+
+        if($(this).val() == ""){
+
+            check = false;
+            $("#insert_ex").text("대기");
+       		$("#insert_ex").attr("disabled",true);
+           
+        } else {
+			check = true;
+		}
+
+    });
+
+    if(check){
+        console.log("모든 항목 입력");
+        $("#insert_ex").text("수정");
+        $("#insert_ex").attr("disabled",false);
+    }
+
+})
+
 //수정 버튼 누르면 폼에 입력한 프로젝트 경험들 인서트
 $("#insert_ex").on("click", function(){
     
+    console.log(check);
+
     let mex = [];
     $.each($("div[class=exarea]"),function(index,item){
 
         console.log($(this));
-
-        console.log("자식들",$(this).children(".EX_POSITION").val())
         
         var ex_data = {
             ID : $(this).children(".MEMBER_ID").val(),
@@ -701,25 +714,23 @@ $("#insert_ex").on("click", function(){
         }
 
         insertExperiences(ex_data);
-        //mex.push(ex_data);  
-    
-    });
-     
-    //insertExperiences(mex); 
+    }); 
 
 })
 
-//폼에 입력한 프로젝트 경험들 비동기로 날리고 받은 거 뷰단에 반영하기
-function insertExperiences(mex){
-   
+//폼에 입력한 프로젝트 경험들 서버에 보내기
+function insertExperiences(ex_data){
+    
     $.ajax({
 
         url:$(".ex_form").attr("action"),
         type:"post",
         dataType:"text",
-        data:mex,
+        data:ex_data,
         success:function(res){
             console.log(res);
+
+            getNewExperiences();
 
         },
         error:function(xhr){
@@ -728,6 +739,107 @@ function insertExperiences(mex){
 
     });
 
+}
+
+//서버에서 비동기로 새로 추가된 경험 불러오기
+function getNewExperiences(){
+
+    $.ajax({
+
+        url:"ajax/getnewexperiences",
+        type:"post",
+        dataType:"json",
+        data:{ useremail : $("#m_email").val()},
+        success:function(res){
+
+            console.log(res);
+
+            $("#exlistarea").empty();
+            $("#exlistarea").append(
+                `<div id="exlist"></div>`
+            );
+
+            $.each(res, function(index,obj){
+
+                $("#exlistarea").append(
+
+                    `<div class="ex_box" id="`+obj.ex_count+`">										
+                        <div class="ex ex_titlebox">
+                            <div id="exicons">
+                                <i class="fas fa-edit edit_exbox"></i>
+                                <i class="fas fa-eraser del_exbox"></i>
+                            </div>
+                            <span class="ex_count">#`+obj.ex_count+`</span><span class="ex_title">`+obj.exp_TITLE+`</span>
+                        </div>
+                        <div class="ex">`+obj.ex_POSITION+`</div>
+                        <div class="ex">`+obj.ex_SKILL+`</div>
+                        <div class="ex">`+obj.ex_DURATION+`</div>
+                        <div class="ex">`+obj.ex_CONTENT+`</div>               
+                    </div>`
+
+                );
+
+            });
+
+            $("#exlistarea").append(
+                `<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+                <div class="add experience" id="have">추가</div></a>`
+            );
+        },
+        error:function(xhr){
+            console.log(xhr);
+        }
+
+    });
+
+}
+
+//클릭하면 경험 수 체크하고 삭제 모든 경험 삭제는 안되게 막기(뷰단처리)
+$(document).on("click",".del_exbox",function(){
+	
+		console.log("삭제");
+		if($(".ex_box").length == 1){
+			
+			swal("경험을 모두 삭제하실 수는 없습니다");
+            
+		}else{
+
+            $(this).parent().parent().parent().remove();
+
+            $.each($(".ex_count"),function(index,item){
+ 
+                 $(this).empty();
+                 $(this).text("#"+(index+1));
+ 
+             });
+ 
+             deleteExperience($(this));
+           
+        }
+
+});
+//프로젝트 경험 삭제 디비 반영
+function deleteExperience(del_btn){
+    
+		let boxid = del_btn.parent().parent().parent().attr("id");
+		console.log(boxid);
+		
+		$.ajax({
+			
+			url:"ajax/deleteexperience",
+			type:"post",
+			dataType:"text",
+			data:{
+				ex_id : boxid,
+				memberid:$("#m_id").val()
+			},
+			success:function(res){
+				console.log(res);
+			},
+			error:function(xhr){
+				console.log(xhr);
+			}
+		});
 }
 
 // 프로필 이미지 파일 업로드
@@ -756,39 +868,6 @@ $('#file').change(function(event) {
     console.log("리다이렉트");
 });
 
-
-//비동기로 이미지 바뀌도록 이미지 폼태그가 submit 될 때 작동할 스크립트 추가
-/*
-$("#img_form").submit(function(e){
-
-    //동기로 전송되는 것 막고
-    e.preventDefault();
-
-    //직렬화 해서 이미지 폼 안의 정보를 키/값 쌍으로 만듦
-    let imgdata = $("#img_form").serialize();
-    console.log(imgdata);
-
-    //애증의 비동기...
-    $.ajax({
-
-        url:$("#img_form").attr("action"),
-        type:"post",
-        data:imgdata,
-        dataType:"text",
-        processData: false,
-        contentType:'multipart/form-data',
-        success:function(data){
-            console.log(data);
-
-        },
-        error:function(xhr){
-            console.log(xhr);
-        }
-
-    });
-
-});
-*/
 //회원 탈퇴
 $("#quit").on("click",function(){
     

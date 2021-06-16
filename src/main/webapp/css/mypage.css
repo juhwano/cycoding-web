@@ -347,8 +347,6 @@ top:-5px;
 
 /*여기까지 모달창*/
 
-
-
 .detail_section{
 	margin: 50px auto;
     width: 700px;
@@ -514,5 +512,71 @@ display: inline-block;
 	background-color:white;
 	box-sizing: border-box;
 	color:#F4F2F3;
+}
+
+.ex_box{
+	margin:10px auto;
+	padding:10px 20px 20px 20px;
+	border:2px solid white;
+	font-size:14px;
+}
+
+.ex_box span{
+	font-weight:bold;
+}
+
+.ex_titlebox{
+	margin:10px auto;
+	text-align:left;
+	padding:0 150px;
+	display:flex;
 
 }
+
+.ex{
+	margin:10px auto;
+	text-align:left;
+	padding:0 150px;
+}
+
+.ex_count{
+	color:#CA8FAB;
+	font-size:21px;
+	margin-right:5px;
+}
+.ex_title{
+	font-size:16px;
+}
+
+.add{
+	text-align:center;
+		/*background-color:#F4F2F3;*/
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color:#94A7AE;	
+	width:80px;
+	height:40px;
+	font-size:14px;
+	padding:0 10px;
+	margin:20px auto;
+	line-height: 35px;	
+	}
+
+	.add:hover{
+		border: 2px solid #CA8FAB;
+		box-sizing: border-box;
+		color:#CA8FAB;
+	position:relative;
+	top:-5px;
+	
+	}
+
+	#exicons{
+		border:none;
+		outline:none;
+		color:#CA8FAB;
+		background: none;
+		position: relative;
+    	top: -10px;
+    	right: -475px
+	}

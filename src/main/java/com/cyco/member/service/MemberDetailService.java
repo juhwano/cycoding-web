@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -234,6 +233,20 @@ public class MemberDetailService {
 			result = "success";
 		}
 		return result;
+	}
+	
+	public String  deleteExperience(String ex_id, String memberid) {
+		
+		String result = "fail";
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.deleteExperience(ex_id, memberid);
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		return result;
+		
 	}
 	
 	//뷰단에서 변경한 포지션 업데이트

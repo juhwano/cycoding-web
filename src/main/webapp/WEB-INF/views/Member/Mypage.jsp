@@ -141,16 +141,15 @@
 
 							<div class="detail_title">
 
-								<span class="item">프로젝트 경험여부</span>
+								<span class="item">프로젝트 경험</span>
 
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails experience"
+							<div class="moerdetails experience" id="exlistarea"
 								onclick="edit_modal('experience')">
 								<c:choose>
 
 									<c:when test="${empty experiences}">
-
 
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
@@ -173,15 +172,28 @@
 									
 									<div id="exlist">
 									
-									<c:forEach var="experiences" items="${experiences}">
-										<div class="ex_box">
-										<div>${experiences.EXP_TITLE}</div>
-										<div>${experiences.EX_POSITION}</div>
-										<div>${experiences.EX_SKILL}</div>
-										<div>${experiences.EX_CONTENT}</div>
-										<div>${experiences.EX_DURATION}</div>
+									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+										<div class="ex_box" id="${experiences.ex_count}">
+										
+										<div class="ex ex_titlebox">
+											<div id="exicons">
+												<i class="fas fa-edit"></i>
+												<i class="fas fa-eraser del_exbox"></i>
+											</div>
+											
+											<span class="ex_count">#${status.count}</span><span class="ex_title">${experiences.EXP_TITLE}</span>
+										</div>
+										<div class="ex">${experiences.EX_POSITION}</div>
+										<div class="ex">${experiences.EX_SKILL}</div>
+										<div class="ex">${experiences.EX_DURATION}</div>
+										<div class="ex">${experiences.EX_CONTENT}</div>
+									
 										</div>
 										</c:forEach>
+										
+										<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+												<div class="add experience" id="have">추가</div>
+											</a> 
 									</div>
 									
 									</c:otherwise>
@@ -253,12 +265,10 @@
 											</a>
 										</c:forEach>
 
-
 									</c:otherwise>
 								</c:choose>
 							</div>
 						</div>
-
 
 					</div>
 
@@ -270,11 +280,7 @@
 			</div>
 		</div>
 
-
-
-
 	</main>
-
 
 	<!-- 기술 스택 모달창 -->
 	<div id="m_stat" class="modal fade">
@@ -325,19 +331,15 @@
 					</div>
 					<div id="buttonarea">
 						<a href="#m_experience" class="trigger-btn" data-toggle="modal">
-							<button id="insert_ex">수정</button>
+							<button id="insert_ex" disabled>대기</button>
 						</a> <a href="#m_experience" class="trigger-btn" data-toggle="modal">
 							<button id="cancel">닫기</button>
 						</a>
 					</div>
-
 				</div>
-
-
 			</div>
 		</div>
 	</div>
-
 	
 	<div id="quit_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
@@ -375,6 +377,6 @@
 	</div>
 
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=3"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=1"></script>
 </body>
 </html>
