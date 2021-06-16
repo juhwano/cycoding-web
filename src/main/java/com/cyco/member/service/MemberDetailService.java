@@ -18,6 +18,7 @@ import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 
 @Service
@@ -323,6 +324,14 @@ public class MemberDetailService {
 		
 		return member;
 	}
-
+	
+	//회원상세 리뷰목록 가져오기
+	public List<ReviewVo> getReviewList(String memberid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		List<ReviewVo> reviewList = memberdao.getReviewList(memberid);
+		
+		return reviewList;
+	}	
 
 }
