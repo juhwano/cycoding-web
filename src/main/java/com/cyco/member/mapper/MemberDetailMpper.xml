@@ -162,7 +162,7 @@
 	
 	</update>
 	
-		<select id="getMemberDetail" resultType="com.cyco.common.vo.MemberVo">
+	<select id="getMemberDetail" resultType="com.cyco.common.vo.MemberVo">
 		
 		select member_email, member_nickname, MEMBER_IMAGE from member where member_id=${memberid}
 		
@@ -185,6 +185,18 @@
 		update m_detail set delete_count=sysdate where member_id=${quit_id}
 	
 	</update>
+	
+	<!-- 회원상세 리뷰목록 가져오기 -->
+	<!-- select  r.* , m.member_nickname
+		from review r left join member m
+		on r.writer_id = m.member_id
+		where review_member=${memberid} -->
+	<select id="getReviewList" resultType="com.cyco.member.vo.ReviewVo">
+		select  m.member_nickname, r.review_grade, r.review_content, r.review_date
+		from review r left join member m
+		on r.writer_id = m.member_id
+		where review_member=${memberid}
+	</select>
 
 	
 </mapper>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <c:set var="member" value="${aboutmember}" />
@@ -9,6 +10,8 @@
 <c:set var="position" value="${position}" />
 <c:set var="durations" value="${durations}" />
 <c:set var="experiences" value="${experiences}" />
+<c:set var="reviewList" value="${reviewList}" />
+
 
 <!DOCTYPE html>
 <html>
@@ -16,7 +19,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>사이좋게 코딩하자</title>
 
-<link type="text/css" href="${pageContext.request.contextPath}/css/memberdetail.css" rel="stylesheet">
+<link type="text/css"
+	href="${pageContext.request.contextPath}/css/memberdetail.css"
+	rel="stylesheet">
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
@@ -26,13 +31,14 @@
 		<div id="wrap">
 			<div id="profile_img">
 				<!-- <img src="assets/img/member_detail/cycoding_img.png"> -->
-				<img src="${pageContext.request.contextPath}/resources/${member.MEMBER_IMAGE}">
+				<img
+					src="${pageContext.request.contextPath}/resources/${member.MEMBER_IMAGE}">
 			</div>
 			<div id="cycoder">
 				<p>${member.MEMBER_NICKNAME}</p>
 			</div>
 
-<!-- 			<div id="modals">
+			<!-- 			<div id="modals">
 				<ul>
 					<li>지원내역</li>
 					<li>프로젝트</li>
@@ -41,8 +47,9 @@
 
 			<div id="detail_box">
 
-					<div id="info" class="details">
-					<p class="cycoder_title">ABOUT<br>CYCODER
+				<div id="info" class="details">
+					<p class="cycoder_title">
+						ABOUT<br>CYCODER
 					<p class="sub_title"></p>
 
 					<div class="infolist">
@@ -55,46 +62,32 @@
 
 							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
 								<c:choose>
-
-
 									<c:when test="${empty skills}">
-
-											<div class="none">미입력</div>
-
+										<div class="none">미입력</div>
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="sarr" items="${skills}" varStatus="status">
 											<c:choose>
 												<c:when test="${status.index eq 0 }">
-
-														<!-- <span id="star">★</span> -->
-														<i class="fa fa-star" id=star></i>
-														<div class="info_tags main_skill skill">
-
-															<c:out value="${sarr.skill_name}" />
-
-														</div>
-													
+													<!-- <span id="star">★</span> -->
+													<i class="fa fa-star" id=star></i>
+													<div class="info_tags main_skill skill">
+														<c:out value="${sarr.skill_name}" />
+													</div>
 												</c:when>
 												<c:otherwise>
-	
-														<div class="info_tags skill">
-															<c:out value="${sarr.skill_name}" />
-														</div>
-												
+													<div class="info_tags skill">
+														<c:out value="${sarr.skill_name}" />
+													</div>
 												</c:otherwise>
 											</c:choose>
-
 										</c:forEach>
-
-
 									</c:otherwise>
 								</c:choose>
 							</div>
 						</div>
 
 						<div class="detail_section itmelist">
-
 							<div class="detail_title">
 
 								<span class="item">프로젝트 경험</span>
@@ -104,20 +97,13 @@
 							<div class="moerdetails experience"
 								onclick="edit_modal('experience')">
 								<c:choose>
-
-
-
-
 									<c:when test="${empty experiences}">
-
 
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
 											<div class="none experience" id="never">없음</div>
 
 										</div>
-
-
 									</c:when>
 									<c:otherwise>
 
@@ -146,7 +132,6 @@
 
 									</div>
 
-
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -154,31 +139,23 @@
 
 						<div class="detail_section">
 							<div class="detail_title">
-
 								<span class="item">선호 포지션</span>
-
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
 							<div class="moerdetails positionarea"
 								onclick="edit_modal('position')">
 								<c:choose>
-
-
 									<c:when test="${empty position}">
-
-					
-											<div class="none">미입력</div>
-								
-
+										<div class="none">미입력</div>
 									</c:when>
 									<c:otherwise>
 
 										<c:forEach var="position" items="${position}">
-						
-												<div class="info_tags position">
-													<c:out value="${position.position_name}" />
-												</div>
-										
+
+											<div class="info_tags position">
+												<c:out value="${position.position_name}" />
+											</div>
+
 										</c:forEach>
 
 									</c:otherwise>
@@ -187,11 +164,8 @@
 						</div>
 
 						<div class="detail_section">
-
 							<div class="detail_title">
-
 								<span class="item">선호 프로젝트 기간</span>
-
 							</div>
 
 							<!-- 기간 입력 안 했으면 -->
@@ -200,133 +174,79 @@
 								<c:choose>
 									<c:when test="${empty durations}">
 
-						
-											<div class="none">미입력</div>
-								
+										<div class="none">미입력</div>
 
 									</c:when>
 									<c:otherwise>
 
-
 										<c:forEach var="darr" items="${durations}">
-									
-												<div class="info_tags duration">
-													<c:out value="${darr.du_date}" />
-												</div>
-									
-										</c:forEach>
 
+											<div class="info_tags duration">
+												<c:out value="${darr.du_date}" />
+											</div>
+
+										</c:forEach>
 
 									</c:otherwise>
 								</c:choose>
 							</div>
 						</div>
-
-
 					</div>
+				</div>
 
-
-					<%-- 			<div class="infolist">
-			
-				<div class="detail_section">
-				
-					<div class="detail_title">
-						<span class="item">보유기술</span>
-						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button type="button" class="modify_p_info right-btn" onclick="edit_modal('skill')">수정</button>
-						</a>
-					</div>
-					<div class="moerdetails">
-							<c:forEach var="sarr" items="${skills}">
-								<div class="info_tags"><c:out value="${sarr.skill_name}"/></div>
-							</c:forEach>
+				<!-- 리뷰 div -->
+				<div id="review" class="details">
+					<p class="cycoder_title">REVIEW
+					<div class="reviewBox">
+					
+					<c:set var="last_flag" value="false"/>
+					<!-- list_size : reviewList의 크기 -->
+					<c:set var="list_size" value="${fn:length(reviewList)}"/>
+					<!-- 리뷰 리스트 뿌리기 -->
+						<c:forEach var="reviewList" items="${reviewList}" varStatus="status" begin="0" end="3">
 						
+						<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
+						<c:if test="${status.count eq list_size}">
+							<c:set var="last_flag" value="true"/>
+						</c:if>
+						<!-- 리뷰 start -->
+						<div class="col-12 reviews">
+							<h5 class="reviewWriter"><c:out value="${reviewList.member_nickname}" /></h5>
+							<div class="star-rate">
+								<c:forEach begin="1" step="1" end="${reviewList.review_grade}">
+									<i class="fas fa-star review-star"></i>
+								</c:forEach>
+								
+							</div>
+							<p class="review-content"><c:out value="${reviewList.review_content}" /></p>
+						</div>
+						</c:forEach>
+						<!-- 리뷰 end -->
+					</div>
+					
+						<div class="moreSec">
+						<!-- 리뷰 끝나면 더보기 버튼 안보이게하기 -->
+							<c:if test="${not last_flag}">
+								<p class="moreLink" id="moreBtn"> + 더보기</p>
+							</c:if>
 						</div>
 				</div>
+				<!-- 리뷰 div end -->
 				
-				<div class="detail_section itmelist">
-				
-					<div class="detail_title">
-					
-						<span class="item">프로젝트 경험여부</span><button type="button" class="modify_p_info right-btn">수정</button>
-					
-					</div>
+				<!-- 탑버튼 -->
+				<img id="topBtn" src="${pageContext.request.contextPath}/assets/img/ain_test/topBtn.png">
+				<!-- 목록 돌아가기버튼 -->
+				<div class="return_sec">
+					<a href="/member/list"><button class="returnBtn" type="button">목록으로돌아가기</button></a>
 				</div>
-				
-				<div class="detail_section">				
-					<div class="detail_title">
-					
-						<span class="item">선호 포지션</span><button type="button" class="modify_p_info">수정</button>
-					
-					</div>
-				</div>
-				
-				<div class="detail_section">
-				
-					<div class="detail_title">
-					
-						<span class="item">선호 프로젝트 기간</span>
-						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button type="button" class="modify_p_info right-btn" onclick="edit_modal('duration')">수정</button>
-						</a>
-					
-					</div>
-					<div class="moerdetails">
-							<c:forEach var="darr" items="${durations}">
-								<div class="info_tags"><c:out value="${darr.du_date}"/></div>
-							</c:forEach>
-						</div>
-				</div>
-			
-						
-			</div>  --%>
-
-
-
-
-				</div>
-
 			</div>
 		</div>
-
-
-
-
 	</main>
-
-
-	<!-- 기술 스택 모달창 -->
-	<div id="m_stat" class="modal fade">
-		<div class="modal-dialog modal-login">
-			<div class="modal-content">
-				<div class="modal-header">
-					<p id="modal-title"></p>
-				</div>
-				<div id="modal-body">
-					<input type="hidden" id="stat"> <input type="hidden"
-						id="first"> <input type="hidden" id="second"> <input
-						type="hidden" id="third">
-
-					<div id="contentarea">
-						<div id="tagarea"></div>
-						<div id="selectedarea"></div>
-					</div>
-					<div id="buttonarea">
-						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button id="edit-btn">수정</button>
-						</a> <a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button id="cancel">닫기</button>
-						</a>
-					</div>
-
-				</div>
-
-
-			</div>
-		</div>
-	</div>
-
-	<script
-		src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=6"></script>
 </body>
+<jsp:include page="../include/footer.jsp"></jsp:include>
+<script type="text/javascript">
+	/* js로 보내주기 */
+	var reviewList = ${reviewList};
+</script>
+<script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>
