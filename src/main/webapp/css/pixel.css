@@ -4973,6 +4973,7 @@ textarea.form-control-lg {
     color: #ffffff;
     background-color: #CA8FAB;
     border-color: #CA8FAB;
+    line-height: 1;
 }
 
 .btn-outline-primary:hover {
@@ -5229,6 +5230,7 @@ textarea.form-control-lg {
 .btn-outline-danger {
     color: #dc3545;
     border-color: #dc3545;
+    line-height: 1;
 }
 
 .btn-outline-danger:hover {
@@ -5357,6 +5359,7 @@ textarea.form-control-lg {
 .btn-outline-black {
     color: #171f38;
     border-color: #171f38;
+    line-height: 1;
 }
 
 .btn-outline-black:hover {

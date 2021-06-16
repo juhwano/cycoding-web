@@ -20,6 +20,8 @@ public class BoardVo {
 	private Date FREE_DATE;
 //	조회수
 	private int FREE_VIEWS;
+//	닉네임
+	private String MEMBER_NICKNAME;
 //	게시글에 첨부된 파일 갯수
 	private String filecnt;
 //	게시글에 첨부된 댓글 갯수
