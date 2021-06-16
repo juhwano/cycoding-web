@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <c:set var="member" value="${aboutmember}" />
@@ -177,37 +178,55 @@
 				<div id="review" class="details">
 					<p class="cycoder_title">REVIEW
 					<div class="reviewBox">
-						<table>
-							<thead>
-								<tr>
-									<th>작성자</th>
-									<th>별점</th>
-									<th>내용</th>
-									<th>작성일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="reviewList" items="${reviewList}">
-									<tr>
-										<td><c:out value="${reviewList.writer_nickname}" /></td>
-										<td><c:out value="${reviewList.review_grade}" /></td>
-										<td><c:out value="${reviewList.review_content}" /></td>
-										<td><c:out value="${reviewList.review_date}" /></td>
-									</tr>
+					
+					<c:set var="last_flag" value="false"/>
+					<!-- list_size : reviewList의 크기 -->
+					<c:set var="list_size" value="${fn:length(reviewList)}"/>
+					<!-- 리뷰 리스트 뿌리기 -->
+						<c:forEach var="reviewList" items="${reviewList}" varStatus="status" begin="0" end="3">
+						
+						<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
+						<c:if test="${status.count eq list_size}">
+							<c:set var="last_flag" value="true"/>
+						</c:if>
+						<!-- 리뷰 start -->
+						<div class="col-12 reviews">
+							<h5 class="reviewWriter"><c:out value="${reviewList.member_nickname}" /></h5>
+							<div class="star-rate">
+								<c:forEach begin="1" step="1" end="${reviewList.review_grade}">
+									<i class="fas fa-star review-star"></i>
 								</c:forEach>
-							</tbody>
-						</table>
+								
+							</div>
+							<p class="review-content"><c:out value="${reviewList.review_content}" /></p>
+						</div>
+						</c:forEach>
+						<!-- 리뷰 end -->
 					</div>
+					
+						<div class="moreSec">
+						<!-- 리뷰 끝나면 더보기 버튼 안보이게하기 -->
+							<c:if test="${not last_flag}">
+								<p class="moreLink" id="moreBtn"> + 더보기</p>
+							</c:if>
+						</div>
 				</div>
 				<!-- 리뷰 div end -->
-
+				
+				<!-- 탑버튼 -->
+				<img id="topBtn" src="${pageContext.request.contextPath}/assets/img/ain_test/topBtn.png">
+				<!-- 목록 돌아가기버튼 -->
+				<div class="return_sec">
+					<a href="/member/list"><button class="returnBtn" type="button">목록으로돌아가기</button></a>
+				</div>
 			</div>
 		</div>
 	</main>
-
-
-	<script
-		src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=6"></script>
 </body>
 <jsp:include page="../include/footer.jsp"></jsp:include>
+<script type="text/javascript">
+	/* js로 보내주기 */
+	var reviewList = ${reviewList};
+</script>
+<script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

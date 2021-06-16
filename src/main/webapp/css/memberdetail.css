@@ -264,6 +264,7 @@ ul {
 	margin: 10px auto;
 }
 
+/* 리뷰영역 */
 .reviewBox {
 	width: 90%;
 	margin: 0 auto;
@@ -271,7 +272,113 @@ ul {
 	
 	border-top: 1px solid #cccccc;
 	border-bottom: 1px solid #cccccc;
+	padding-top: 40px;
+    padding-bottom: 40px;
+    
+	/* height: 400px; */
 	
-	height: 400px;
+	text-align: left;
+	background-color: #fff;
+}
+
+/* 리뷰 1개 */
+.reviews{
+	position: relative;
+    width: 90% !important;
+    margin-bottom: 1.875rem;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+
+.reviewWriter{
+	display: inline-block;
+    margin: 0 .5rem .5rem 0;
+	font-size: 1rem;
+    /* line-height: 1.5rem; */
+    letter-spacing: -.01875rem;
+}
+
+.star-rate{
+	display: inline-block;
+	padding: 0;
+    margin: 0;
+    line-height: 0;
+    /* width: 120px; */
+}
+
+.review-star{
+	font-size: 12px;
+	color: #ffdb4d;
+}
+
+.review-date{
+	color: #a6a6a6;
+	font-size: 14px;
+	display: inline-block;
+	padding: 0;
+    margin-left: 10px;
+    line-height: 0;
+	width: 100px;
+}
+
+.review-content{
+	color: #737373;
+    margin-bottom: 0;
+	font-size: .875rem;
+    line-height: 1.3125rem;
+    font-weight: 400;
+    letter-spacing: -.0125rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+/* 탑버튼 */
+#topBtn {
+	position: fixed;
+	right: 22px;
+	bottom: 22px;
+	display: none;
+	z-index: 100;
+	width: 50px;
+}
+
+/* 더보기 링크 */
+.moreSec{
+	width: 100%;
+	text-align: center;
+	margin-top: 60px;
+}
+
+.moreLink{
+	font-size: 16px;
+	color: #ca8fab;
+	cursor: pointer;
+}
+
+/* 목록 돌아가기 버튼 */
+.returnBtn {
+	width: 20%;
 	
+	border-radius: 7px;
+	color: #c0a9bd;
+	font-size: 16px;
+	padding: 10px 20px 10px 20px;
+	border: solid #c0a9bd 2px;
+	background: white;
+	
+	margin-top: 30px;
+}
+
+.returnBtn:hover {
+	background: #c0a9bd;
+	color: white;
+}
+
+.return_sec{
+	width: 100%;
+	text-align: center;
 }

@@ -15,5 +15,5 @@ public class ReviewVo {
 	private int review_member;
 	private int project_id;
 	
-	private String writer_nickname;
+	private String member_nickname;
 }

@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_MlistVo;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("member")
@@ -61,8 +64,13 @@ public class MemberController {
 			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));
 			
 			//리뷰목록
-			mmp.addAttribute("reviewList", memberdetailservice.getReviewList(memberid));
+			List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
+			
 			System.out.println("리뷰목록: " + memberdetailservice.getReviewList(memberid));
+			
+			JSONArray reviewList = JSONArray.fromObject(row_reviewList);
+			System.out.println("리뷰목록JSON: " + reviewList);
+			mmp.addAttribute("reviewList", reviewList);
 			
 			mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
