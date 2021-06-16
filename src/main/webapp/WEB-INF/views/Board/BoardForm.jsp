@@ -28,11 +28,11 @@
 function fn_formSubmit(){
 	var form = document.form;
 	
-	if (form.MEMBER_ID.value=="") {
-		alert("작성자를 입력해주세요.");
-		form.MEMBER_ID.focus();
-		return;
-	}
+// 	if (form.MEMBER_ID.value=="") {
+// 		alert("작성자를 입력해주세요.");
+// 		form.MEMBER_ID.focus();
+// 		return;
+// 	}
 	if (form.FREE_TITLE.value=="") {
 		alert("글 제목을 입력해주세요.");
 		form.FREE_TITLE.focus();

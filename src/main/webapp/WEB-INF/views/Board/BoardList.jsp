@@ -73,7 +73,6 @@ function checkOnlyOne(element) {
 				<th scope="col" class="text-center">글쓴이</th>
 				<th scope="col" class="text-center">작성일</th>
 				<th scope="col" class="text-center">조회</th>
-				<th scope="col" class="text-center">첨부</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -89,11 +88,10 @@ function checkOnlyOne(element) {
 					<td>
 						<a href="${link}"><c:out value="${listview.getShortTitle(35)}"/></a>
 					</td>
-					<td align="center"><c:out value="${listview.MEMBER_ID}"/></td>
+					<td align="center"><c:out value="${listview.MEMBER_NICKNAME}"/></td>
 					<td align="center"><fmt:formatDate value="${listview.FREE_DATE }"
 					 pattern="MM.dd" /></td>
 					<td align="center"><c:out value="${listview.FREE_VIEWS}"/></td>
-					<td align="center"><c:out value="${listview.filecnt}"/></td>
 				</tr>
 			</c:forEach>
 		</tbody>
