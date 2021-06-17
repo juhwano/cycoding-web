@@ -997,15 +997,6 @@ $(document).on("click",".confirm_edit",function(){
         url:exbox.parent().parent().attr("action"),
 		//data:JSON.stringify(newEx),
 		data:newEx,
-		/*data:{
-			m_id:m_id,
-			ex_count_input:id,
-			exp_title_input: exbox.children(".exp_title_input").val(),
-			ex_position_input: exbox.children(".ex_position_input").val(),
-			ex_skill_input: exbox.children(".ex_skill_input").val(),
-			ex_duration_input: exbox.children(".ex_duration_input").val(),
-			ex_content_input: exbox.children(".ex_content_input").val()
-		},*/
 		type:"post",
 		//contentType: "application/json",
 		//contentType:'application/json; charset=utf-8',
