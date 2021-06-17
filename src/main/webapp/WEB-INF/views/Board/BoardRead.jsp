@@ -316,7 +316,6 @@ function fn_replyReplySave(){
 	<div class="section-header"></div>
 	<br/>
 	<br/>
-	
 	<header>
 		<div>
 			<h2>
@@ -335,15 +334,18 @@ function fn_replyReplySave(){
 		<textarea class="form-control" cols="120" rows="15" readonly="readonly" disabled><c:out value="${boardInfo.FREE_CONTENT}" escapeXml="false"/></textarea>
 	</div>	
 	<br/>
-	<div class="form-group">
+	<div class="form-group" style="margin-bottom:10px">
 			<label for="fileno">첨부파일</label>
+			<c:if test="${sessionScope.nickname ne null}">
 						<c:forEach var="listview" items="${listview}" varStatus="status">	
             				<a class="form-control" href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
  							<c:out value="${listview.filename}"/></a><%-- <c:out value="${listview.size2String()}"/> --%>
 						</c:forEach><br/>
+		</c:if>				
 	</div>			
-		<hr>
-        
+	<hr id="replyHr">
+	<label>댓글</label>
+        <c:if test="${sessionScope.nickname ne null}">
         <div>
 			<form name="form1" action="replysave" method="post">
 				<div class="form-group">
@@ -358,11 +360,10 @@ function fn_replyReplySave(){
 			</form>
 		</div>
 		<hr/>
-		
+		</c:if>
 		<c:forEach var="replylist" items="${replylist}" varStatus="status">
 			<div class="form-group" style="margin-top: 5px; position: relative; background:transparent; clear:both; display:block;
 					margin-left: <c:out value="${20*replylist.DEPT}"/>px;">
-					
 					<c:choose>
 					<c:when test="${replylist.DEPT eq '0'}">
 					<div style="float:left; width:132px; margin-left:10px; margin-right:20px; margin-top:3px;">
@@ -381,10 +382,17 @@ function fn_replyReplySave(){
 					</div>
 					 </c:otherwise>
 					 </c:choose>
+					 <c:if test="${sessionScope.nickname eq replylist.MEMBER_NICKNAME}">
 					<div style="float:right; margin-top:3px;">
 						<fmt:formatDate value="${replylist.REPLY_DATE }" pattern="MM.dd hh:mm:ss" />
-					<button class="imgBtn" onclick="fn_replyReply('<c:out value="${replylist.REPLY_ID}"/>')">&nbsp;<i class="fas fa-plus"></i></button>&nbsp;<button class="imgBtn" onclick="fn_replyUpdate('<c:out value="${replylist.REPLY_ID}"/>')" >&nbsp;<i class="fas fa-pencil-alt"></i></button>&nbsp;<button class="imgBtn" onclick="fn_replyDelete('<c:out value="${replylist.REPLY_ID}"/>')">&nbsp;<i class="fas fa-trash-alt"></i></button>
-					</div> 
+						<button class="imgBtn" onclick="fn_replyReply('<c:out value="${replylist.REPLY_ID}"/>')">&nbsp;<i class="fas fa-plus"></i></button>&nbsp;<button class="imgBtn" onclick="fn_replyUpdate('<c:out value="${replylist.REPLY_ID}"/>')" >&nbsp;<i class="fas fa-pencil-alt"></i></button>&nbsp;<button class="imgBtn" onclick="fn_replyDelete('<c:out value="${replylist.REPLY_ID}"/>')">&nbsp;<i class="fas fa-trash-alt"></i></button>
+					</div>	
+					</c:if>
+					<c:if test="${sessionScope.nickname ne replylist.MEMBER_NICKNAME}">
+						<div style="float:right; margin-top:3px; margin-right: 125px">
+						<fmt:formatDate value="${replylist.REPLY_DATE }" pattern="MM.dd hh:mm:ss" />
+						</div>
+					</c:if>
 <%-- 				<a href="#" onclick="fn_replyDelete('<c:out value="${replylist.REPLY_ID}"/>')">삭제</a> --%>
 <%-- 				<a href="#" onclick="fn_replyUpdate('<c:out value="${replylist.REPLY_ID}"/>')">수정</a> --%>
 <%-- 				<a href="#" onclick="fn_replyReply('<c:out value="${replylist.REPLY_ID}"/>')">대댓글</a> --%>
@@ -392,7 +400,7 @@ function fn_replyReplySave(){
 		</c:forEach>
 		<div id="replySpace"></div>
 		<br/>
-		<!-- 남의 댓글 무단 수정 가능 -->
+		<!-- 댓글 수정 -->
 		<div id="replyDiv" style="width: 99%; display:none">
 			<form name="form2" action="replysave" method="post">
 				<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>"> 
@@ -417,14 +425,18 @@ function fn_replyReplySave(){
 				<button onclick="fn_replyReplySave()" class="btn btn-outline-primary text-right">저장</button>
 				<button type="button" onclick="fn_replyReplyCancel()" class="btn btn-default text-right">취소</button>
 			</form>
-				
 		</div>
 		<br/>
 </div>
 <div class="container text-right" style="margin-bottom:30px">
+	<c:if test="${sessionScope.nickname eq boardInfo.MEMBER_NICKNAME}">
 			<a href="form?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-primary">수정</a>
 	        <a href="delete?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-black">삭제</a>
 	        <a href="list" class="btn btn-outline-black">취소</a>
+	 </c:if>
+	 <c:if test="${sessionScope.nickname ne boardInfo.MEMBER_NICKNAME}">
+			<a href="list" class="btn btn-outline-black">취소</a>
+	</c:if>		
 </div>
 </body>
 </html>
