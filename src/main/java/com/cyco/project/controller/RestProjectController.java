@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.ProjectNameVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
@@ -65,5 +68,27 @@ public class RestProjectController {
 		
 		return searched_list;
 		
+	}
+	
+	@RequestMapping(value = "bookmark", method=RequestMethod.GET)
+	public String bookMarking(@RequestParam String project_id, HttpSession session) {
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		String text = null;
+		
+		//북마크 리스트에 해당 유저가 해당 프로젝트를 북마크한 데이터가 있는지 확인
+		int checkNum = service.checkBookMark(project_id, member_id);
+		System.out.println("projectRestController, checkBookMark: " + checkNum);
+		
+		if(checkNum == 0) {
+			BookmarkVo bookmark = new BookmarkVo(0, project_id, member_id);
+			service.setBookMark(bookmark);
+			text = "insert";
+		}else {
+			service.deleteBookMark(project_id, member_id);
+			text = "delete";
+		}
+		
+		return text;
 	}
 }

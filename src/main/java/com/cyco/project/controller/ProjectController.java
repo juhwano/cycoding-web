@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PointVo;
@@ -51,7 +52,7 @@ public class ProjectController {
 	private MemberService memberService;
 	
 	@RequestMapping(value="list")
-	public String getProjectList(Model m) {
+	public String getProjectList(Model m, HttpSession session) {
 		// 프로젝트 리스트 첫 페이지
 		// 모든 프로젝트 리스트 바로 뿌려주기.
 		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList("");
@@ -74,6 +75,12 @@ public class ProjectController {
 		List<PmemberCountVo> membercount_list = service.getPmemberCountList();
 		JSONArray json_membercout_list = JSONArray.fromObject(membercount_list);
 		
+		//북마크 리스트
+		//유저가 로그인되어있으면 북마크 리스트 보내주기
+		if(session.getAttribute("member_id")!=null) {
+			List<BookmarkVo> bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+			m.addAttribute("bookmark_list",bookmark_list);
+		}
 		
 		
 		m.addAttribute("project_list",json_project_list);

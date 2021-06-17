@@ -8,6 +8,8 @@
 <link type="text/css"
 	href="${pageContext.request.contextPath}/css/ProjectList.css"
 	rel="stylesheet">
+<!-- 북마크 -->
+<script type="text/javascript" src="/assets/js/bookmark.js?ver=1"></script>
 </head>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
@@ -17,6 +19,7 @@
 	<c:set var="skill_list" value="${skill_list}" />
 	<c:set var="pjsk_list" value="${pjsk_list}" />
 	<c:set var="membercount_list" value="${membercount_list}" />
+	<c:set var="bookmark_list" value="${bookmark_list}" />
 	
 	
 	<!-- 탑버튼 -->
@@ -93,13 +96,16 @@
 				<!-- list_size : project_list의 크기 -->
 				<c:set var="list_size" value="${fn:length(project_list)}"/>
 				
-				<!-- project_list반복문 시작 >> card만들기 시작 -->
+				<!-- ## project_list반복문 시작 >> card만들기 시작 ## -->
 				<c:forEach var = "project" items="${project_list}" varStatus="status" begin="0" end="5"> 
 				
 				<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
 				<c:if test="${status.count eq list_size}">
 					<c:set var="last_flag" value="true"/>
 				</c:if>
+				
+				<!-- 북마크 for each문 break용 -->
+				<c:set var="bookmarking" value="false" />
 				
 				<!-- 프로젝트카트 start -->
 				<div class="col-12 col-md-6 col-lg-4 mb-5 cardNum">
@@ -113,7 +119,20 @@
 						
 						<div class="m_img" >
 						   <div class="m_img_top">
-						  	 <i class="far fa-heart bookmark" onclick='location.href="#"'></i>
+						   <!-- 해당 회원이 마킹했던 프로젝트면 표시해주기 -->
+						   <c:forEach var = "bookmark" items="${bookmark_list}" varStatus="mark_status">
+								<c:if test="${bookmarking eq false}">
+									 <c:choose>
+										<c:when test="${bookmark.project_id eq project.project_id}">
+										  	<i class="fas fa-heart bookmark marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
+										  	<c:set var="bookmarking" value="true" />
+										</c:when>
+									  	<c:when test="${mark_status.last}">
+										  	<i class="fas fa-heart bookmark no_marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
+										</c:when> 
+									</c:choose>
+								</c:if>
+						   </c:forEach>
 						   </div>
                            <a href="/project/detail?project_id=${project.project_id}"><img class="m_img_size" src="${pageContext.request.contextPath}/assets/img/projectimg/${project.p_image}"></a>
                         </div>
@@ -122,10 +141,10 @@
 						<div class="card-body">
 							<a href="/project/detail?project_id=${project.project_id}"><h3 class="h5 card-title mt-3">${project.p_title}</h3></a>
 							<div class="p_footer">
-							<p class="card-text p_skill">기술스택: 
+							<p class="card-text p_skill">
 								<c:forEach var = "pjsk" items="${pjsk_list}" varStatus="status" > 
 									<c:if test="${pjsk.project_id eq project.project_id}">
-										${pjsk.skill_name}
+									 #${pjsk.skill_name}
 									</c:if>
 								</c:forEach>
 								</p>
@@ -165,5 +184,5 @@
  	
  
 </script>
-<script type="text/javascript" src="/assets/js/projectList.js"></script>
+<script type="text/javascript" src="/assets/js/projectList.js?ver=2"></script>
 </html>
