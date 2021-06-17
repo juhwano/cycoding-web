@@ -24,8 +24,6 @@ public class BoardVo {
 	private String MEMBER_NICKNAME;
 //	게시글에 첨부된 파일 갯수
 	private String filecnt;
-//	게시글에 첨부된 댓글 갯수
-	private String replycnt;
 //	첨부파일 목록
 	private List<MultipartFile> uploadfile;
 //	게시물 제목을 글자수에 맞추어 자르기

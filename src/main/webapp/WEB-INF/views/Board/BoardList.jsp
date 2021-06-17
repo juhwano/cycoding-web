@@ -57,14 +57,6 @@ function checkOnlyOne(element) {
 <div class="section-header"></div>
 <div class="table-responsive-sm" style="overflow-x:auto;">
 	<table class="table table-hover" style="width:1300px">
-		<colgroup>
-<%-- 			<col style="width: 25%;"> --%>
-<%-- 			<col width='8%' /> --%>
-<%-- 			<col width='*%' /> --%>
-<%-- 			<col width='15%' /> --%>
-<%-- 			<col width='15%' /> --%>
-<%-- 			<col width='10%' /> --%>
-		</colgroup>
 		<thead>
 			<tr>
 				<th scope="col" class="text-center">번호</th> 
@@ -79,13 +71,12 @@ function checkOnlyOne(element) {
 				<c:url var="link" value="read">
 					<c:param name="FREE_ID" value="${listview.FREE_ID}" />
 				</c:url>		
-				
 				<tr>
 					<td align="center">
-						<c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/>					
+						<c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/>
 					</td>
 					<td>
-						<a href="${link}"><c:out value="${listview.getShortTitle(35)}"/></a>
+						<a href="${link}"><c:out value="${listview.getShortTitle(50)}"/></a>
 					</td>
 					<td align="center">
 						<c:out value="${listview.MEMBER_NICKNAME}"/>
@@ -101,9 +92,11 @@ function checkOnlyOne(element) {
 		</tbody>
 	</table>
 </div>
+		<c:if test="${sessionScope.nickname ne null}">
 		<div class="text-right">
 			<a href="form" class="btn btn-outline-primary">글쓰기</a>
 		</div>
+		</c:if>
 	<div class="text-center">
 	<form id="form1" name="form1"  method="post">
 		<!-- 페이징 호출2 -->

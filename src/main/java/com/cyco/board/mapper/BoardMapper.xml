@@ -60,7 +60,14 @@
 		ON B.MEMBER_ID=M.MEMBER_ID
 		WHERE FREE_ID=#{FREE_ID}
 	</select>
-
+<!-- 	게시글 댓글 수 계산 -->
+	<update id="updateReplyCount" parameterType="String">
+	update board b
+	set b.replycnt = (select count(REPLY_ID)
+    					           from B_reply
+                    				where FREE_ID= #{FREE_ID})
+	where b.FREE_ID = #{FREE_ID}
+	</update>
 	<!-- 조회수 증가 -->
 	<update id="updateBoardRead" parameterType="String">
 		UPDATE BOARD
