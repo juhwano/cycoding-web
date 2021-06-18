@@ -281,6 +281,20 @@ ul {
 	background-color: #fff;
 }
 
+/* 리뷰 없을 때 */
+.review_nothing{
+	text-align: center;
+	position: relative;
+    width: 80% !important;
+    margin-bottom: 1.875rem;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    
+    color: #94A7AE;
+    font-size: 14px;
+}
+
 /* 리뷰 1개 */
 .reviews{
 	position: relative;

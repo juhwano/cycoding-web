@@ -96,7 +96,20 @@ let card;
      card+=		"	<!--	프로젝트이미지	-->								"
      card+=		"	<div	class='m_img'>									"
      card+=		"	<div	class='m_img_top'>									"
-     card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
+     
+     /* 북마크 표시 */
+     if(sessionStorage.getItem("member_id") != null) {/* 북마크 리스트가 있는 경우에만(로그인한 경우에만) */
+     for(let i = 0; i < bookmark_list.length; i++) {
+			if(bookmark_list[i].project_id == project_list[current].project_id) {
+				card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+				break;
+			}else if(i=bookmark_list.length-1) {
+				card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+			}
+		}
+	}
+    // card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
+     
      card+=		"	</div>										"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><img	class='m_img_size'	src='/assets/img/projectimg/"+project_list[current].p_image+"'></a>							"
      card+=		"	</div>										"
@@ -104,12 +117,12 @@ let card;
      card+=		"	<div	class='card-body'>									"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><h3	class='h5	card-title	mt-3'>"+project_list[current].p_title+"</h3></a>"
      card+=		"	<div	class='p_footer'>									"
-     card+=		"	<p	class='card-text	p_skill'>기술스택:"
+     card+=		"	<p	class='card-text	p_skill'>"
      
      /*기술스택, 모집인원 for문 시작*/
          for(let sk=0; sk<pjsk_list.length; sk++	){
              if(project_list[current].project_id == pjsk_list[sk].project_id){
-                 card+=pjsk_list[sk].skill_name;
+                 card+= " #" + pjsk_list[sk].skill_name;
              }
          }
      card+=		"	</p>										"
@@ -175,5 +188,6 @@ let card;
          
          filter(adr_code, field_code, skill_code, p_state);
      });
+     
      
  })

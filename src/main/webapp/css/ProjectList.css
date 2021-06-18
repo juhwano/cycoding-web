@@ -102,6 +102,8 @@ body{
 	float: left;
     display: block;
     width: 100%;
+    color: #ca8fab;
+    font-weight: 500;
 }
 
 .p_team_memNum{
@@ -142,6 +144,20 @@ body{
 
 .bookmark:hover{
 	color: #ca8fab;	
+}
+
+.marking{
+	color: #ca8fab !important;
+}
+
+.no_marking{
+	color: rgba(202, 143, 171, 0.2) !important;
+	-webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: rgba(202, 143, 171, 0.7);
+}
+
+.no_marking:hover{
+	opacity: 1.0 !important;
 }
 
 /* 탑버튼 */

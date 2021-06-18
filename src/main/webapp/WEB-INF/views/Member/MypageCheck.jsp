@@ -25,11 +25,9 @@
 					<i class="fas fa-user-lock checkIcon"></i>
 					<p> 고객님의 소중한 정보를 위해 </p>
 					<p style="margin-bottom: 50px;"> 비밀번호를 한번 더 입력해주세요 </p>
-					<%-- <form action="${pageContext.request.contextPath}/memberdetail/mypageCheck" id="form" method="post"> --%>
 						<input id="useremail" name="useremail" value="${LoginUser}" type="hidden"> 
 						<input class="check-input" id="userPwd" placeholder="비밀번호" name="userPwd" type="password">
 						<button type="button" class="checkBtn" id="pwdCheck">입력</button>
-					<!-- </form> -->
 				</div>
 			</div>
 		</div>
@@ -43,7 +41,7 @@
 		
 		function PwdCheck(useremail, userPwd) {
 			$.ajax({
-	             url:'/memberdetail/ajax/mypageCheck',
+	             url:'/mypage/ajax/mypageCheck',
 	             type: 'post',
 	             dataType:"text",
 	             data: { 
@@ -54,7 +52,7 @@
 	                 console.log("result: "+ result);
 	                 
 	                 if(result != "false") {
-	                	 let url = "${pageContext.request.contextPath}/memberdetail/mypage?useremail=${LoginUser}";
+	                	 let url = "${pageContext.request.contextPath}/mypage/mypage?useremail=${LoginUser}";
 	                	 location.replace(url);
 	                 } else {
 	                	 swal("비밀번호를 다시 확인해주세요." , "" ,"error");
