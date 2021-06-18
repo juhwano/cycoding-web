@@ -96,7 +96,20 @@ let card;
      card+=		"	<!--	프로젝트이미지	-->								"
      card+=		"	<div	class='m_img'>									"
      card+=		"	<div	class='m_img_top'>									"
-     card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
+     
+     /* 북마크 표시 */
+     if(sessionStorage.getItem("member_id") != null) {/* 북마크 리스트가 있는 경우에만(로그인한 경우에만) */
+     for(let i = 0; i < bookmark_list.length; i++) {
+			if(bookmark_list[i].project_id == project_list[current].project_id) {
+				card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+				break;
+			}else if(i=bookmark_list.length-1) {
+				card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+			}
+		}
+	}
+    // card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
+     
      card+=		"	</div>										"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><img	class='m_img_size'	src='/assets/img/projectimg/"+project_list[current].p_image+"'></a>							"
      card+=		"	</div>										"

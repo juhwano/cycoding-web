@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 
 <head>
 <!-- member CSS -->
@@ -120,19 +121,21 @@
 						<div class="m_img" >
 						   <div class="m_img_top">
 						   <!-- 해당 회원이 마킹했던 프로젝트면 표시해주기 -->
-						   <c:forEach var = "bookmark" items="${bookmark_list}" varStatus="mark_status">
-								<c:if test="${bookmarking eq false}">
-									 <c:choose>
-										<c:when test="${bookmark.project_id eq project.project_id}">
-										  	<i class="fas fa-heart bookmark marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
-										  	<c:set var="bookmarking" value="true" />
-										</c:when>
-									  	<c:when test="${mark_status.last}">
-										  	<i class="fas fa-heart bookmark no_marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
-										</c:when> 
-									</c:choose>
-								</c:if>
-						   </c:forEach>
+						   <se:authorize access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+							   <c:forEach var = "bookmark" items="${bookmark_list}" varStatus="mark_status">
+									<c:if test="${bookmarking eq false}">
+										 <c:choose>
+											<c:when test="${bookmark.project_id eq project.project_id}">
+											  	<i class="fas fa-heart bookmark marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
+											  	<c:set var="bookmarking" value="true" />
+											</c:when>
+										  	<c:when test="${mark_status.last}">
+											  	<i class="fas fa-heart bookmark no_marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
+											</c:when> 
+										</c:choose>
+									</c:if>
+							   </c:forEach>
+						   </se:authorize>
 						   </div>
                            <a href="/project/detail?project_id=${project.project_id}"><img class="m_img_size" src="${pageContext.request.contextPath}/assets/img/projectimg/${project.p_image}"></a>
                         </div>
@@ -182,6 +185,9 @@
  	var pjsk_list = ${pjsk_list};
  	var project_list = ${project_list};
  	
+ 	<se:authorize access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+ 		var bookmark_list = ${bookmark_list};
+ 	</se:authorize>
  
 </script>
 <script type="text/javascript" src="/assets/js/projectList.js?ver=2"></script>

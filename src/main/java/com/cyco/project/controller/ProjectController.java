@@ -78,8 +78,12 @@ public class ProjectController {
 		//북마크 리스트
 		//유저가 로그인되어있으면 북마크 리스트 보내주기
 		if(session.getAttribute("member_id")!=null) {
-			List<BookmarkVo> bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+			List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+			JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
 			m.addAttribute("bookmark_list",bookmark_list);
+		}else {
+			List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
+			m.addAttribute("bookmark_list",x_bookmark_list);
 		}
 		
 		
