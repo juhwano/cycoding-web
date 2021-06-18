@@ -199,29 +199,39 @@
 					<p class="cycoder_title">REVIEW
 					<div class="reviewBox">
 					
-					<c:set var="last_flag" value="false"/>
+					<c:set var="last_flag" value="true"/>
 					<!-- list_size : reviewList의 크기 -->
 					<c:set var="list_size" value="${fn:length(reviewList)}"/>
+					
+					<!-- 리뷰가 1개도 없는 경우 문구 출력 -->
+					<c:if test="${list_size == 0}">
+						<div class="review_nothing">
+							<p> 아직 남겨진 리뷰가 없습니다. </p>
+						</div>
+					</c:if>
+					
 					<!-- 리뷰 리스트 뿌리기 -->
 						<c:forEach var="reviewList" items="${reviewList}" varStatus="status" begin="0" end="3">
-						
-						<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
-						<c:if test="${status.count eq list_size}">
-							<c:set var="last_flag" value="true"/>
-						</c:if>
-						<!-- 리뷰 start -->
-						<div class="col-12 reviews">
-							<h5 class="reviewWriter"><c:out value="${reviewList.member_nickname}" /></h5>
-							<div class="star-rate">
-								<c:forEach begin="1" step="1" end="${reviewList.review_grade}">
-									<i class="fas fa-star review-star"></i>
-								</c:forEach>
-								
-							</div>
-							<p class="review-content"><c:out value="${reviewList.review_content}" /></p>
-						</div>
+							<c:set var="last_flag" value="false"/>
+							<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
+							<c:if test="${status.count eq list_size}">
+								<c:set var="last_flag" value="true"/>
+							</c:if>
+							
+							<!-- 리뷰 start -->
+									<div class="col-12 reviews">
+										<h5 class="reviewWriter"><c:out value="${reviewList.member_nickname}" /></h5>
+										<div class="star-rate">
+											<c:forEach begin="1" step="1" end="${reviewList.review_grade}">
+												<i class="fas fa-star review-star"></i>
+											</c:forEach>
+											
+										</div>
+										<p class="review-content"><c:out value="${reviewList.review_content}" /></p>
+									</div>
 						</c:forEach>
 						<!-- 리뷰 end -->
+						
 					</div>
 					
 						<div class="moreSec">
@@ -247,6 +257,8 @@
 <script type="text/javascript">
 	/* js로 보내주기 */
 	var reviewList = ${reviewList};
+	
+	console.log(${fn:length(reviewList)});
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

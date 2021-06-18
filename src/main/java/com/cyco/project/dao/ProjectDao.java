@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -60,6 +61,18 @@ public interface ProjectDao {
 
 	//포지션리스트
 	public List<P_DurationVO> getDurationList();
+	
+	//북마크리스트
+	public List<BookmarkVo> getBookmarkList(String memberid);
+	
+	//북마크 내역 확인
+	public int checkBookMark(String projectid, String memberid); 
+	
+	//북마크 추가
+	public void setBookMark(BookmarkVo bookmark);
+	
+	//북마크 삭제
+	public void deletBookMark(String projectid, String memberid);
 	
 	
 	// --------- 트랜잭션 처리  --------------
