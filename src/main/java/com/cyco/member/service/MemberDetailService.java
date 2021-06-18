@@ -384,5 +384,16 @@ public class MemberDetailService {
 		
 		return reviewList;
 	}	
+	
+	//포인트 충전하기
+	   public int chargePoint(String memberid, String point) {
+//	      1행리턴
+	      System.out.println("서비스 memberid: " +memberid);
+	      System.out.println("서비스 point : " +point);
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      int row = memberdao.chargePoint(memberid, point);
+	      System.out.println("서비스 row : " + row);
+	      return row;
+	   }
 
 }

@@ -1106,3 +1106,85 @@ function givePoint(){
 	});
 	
 }
+
+$("#charge-btn").on("click",function(){
+	console.log("클릭");
+	payment();
+});
+//포인트 충전	
+function payment() {
+   var IMP = window.IMP; // 생략가능
+   IMP.init('imp80764682');
+   
+   var money = $('input[name="cp_item"]:checked').val();
+   var email = $('input[id="m_email"]').val();
+   var name = $('input[id="m_name"]').val();
+   var phone = $('input[id="m_phone"]').val();
+   
+   
+   console.log(money);
+   console.log(email);
+   console.log(name);
+   console.log(phone);
+   
+   let originalpoint = $("#point").val().replace("점","");
+   let plus = $("input[name=cp_item]:checked").val();
+   IMP.request_pay({
+   pg: 'kakao', 
+//    pay_method: 'card',
+   merchant_uid: 'merchant_' + new Date().getTime(),
+   name: 'CYCO Point 결제',
+   //결제창에서 보여질 이름
+   amount: money,
+   //가격
+   buyer_email: email,
+   buyer_name: name,
+   buyer_tel: phone,
+}, function (response) {
+   console.log(response);
+   if (response.success) {
+      var msg = '결제가 완료되었습니다.';
+      msg += ' 고유ID : ' + response.imp_uid;
+      msg += ' 상점 거래ID : ' + response.merchant_uid;
+      msg += ' 결제 금액 : ' + response.paid_amount;
+      msg += ' 카드 승인번호 : ' + response.apply_num;
+
+      $.ajax({
+         type: "POST",
+         url: "ajax/chargePoint",
+//          받는거
+         dataType : 'text',
+//          보내는거
+         data: {
+            "memberid" :  $("#m_id").val(),
+            "point" : $("input[name=cp_item]:checked").val(),
+            "money" : money
+         },
+         success : function(data){
+             console.log(data);
+              if(data == "success"){
+                 swal("성공", "결제에 성공하였습니다.", "success")
+                  console.log(msg);
+                  let newpoint = Number(originalpoint) + Number(plus);
+                  $("#point").val("");
+                  $("#point").val( newpoint + "점");
+              } else{
+                 var msg = '결제에 실패하였습니다.';
+                 alert("실패")
+                  console.log(msg);
+              }
+               
+         },
+         error : function(param){
+               alert("에러");
+               console.log(param);
+         }
+      })
+   } else {
+      var msg = '결제에 실패하였습니다.';
+      msg += '에러내용 : ' + response.error_msg;
+   }
+//    console.log("실행완료");
+});
+}
+

@@ -19,6 +19,8 @@
 <title>사이좋게 코딩하자</title>
 
 <link type="text/css" href="${pageContext.request.contextPath}/css/mypage.css" rel="stylesheet">
+
+
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
@@ -54,31 +56,32 @@
 					</p>
 					<input type="hidden" id="m_id" name="m_id"
 						value="${member.MEMBER_ID}">
-					<ul>
+              <ul>
 
-						<li class="itemlist"><span class="item">이메일</span><input
-							type="text" class="info" id="m_email"
-							value="${member.MEMBER_EMAIL}" readonly>
-							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
-						<li class="itemlist"><span class="item">비밀번호</span><input
-							type="password" class="info" id="password" value="password"
-							readonly>
-							<button type="button" class="modify_items m-btn">수정</button></li>
-						<li class="itemlist"><span class="item">닉네임</span><input
-							type="text" class="info" id="nick"
-							value="${member.MEMBER_NICKNAME}" readonly>
-							<button type="button" class="modify_items m-btn">수정</button></li>
-						<li class="itemlist"><span class="item">이름</span><input
-							type="text" class="info" value="${member.MEMBER_NAME}" readonly>
-							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
-						<li class="itemlist"><span class="item">휴대폰</span><input
-							type="text" class="info" id="phone" value="${member.MEMBER_PHONE}" readonly>
-							<button type="button" class="modify_items m-btn">수정</button></li>
-						<li class="itemlist"><span class="item">포인트</span><input
-							type="text" class="info" id="point" value="${member.HAVE_POINT}점" readonly>
-							<a href="charge"><button type="button" class="modify_items point-btn">충전</button></a></li>
+                  <li class="itemlist"><span class="item">이메일</span><input
+                     type="text" class="info" id="m_email"
+                     value="${member.MEMBER_EMAIL}" readonly>
+                     <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
+                  <li class="itemlist"><span class="item">비밀번호</span><input
+                     type="password" class="info" value="password"
+                     readonly>
+                     <button type="button" class="modify_items m-btn">수정</button></li>
+                  <li class="itemlist"><span class="item">닉네임</span><input
+                     type="text" class="info" id="nick"
+                     value="${member.MEMBER_NICKNAME}" readonly>
+                     <button type="button" class="modify_items m-btn">수정</button></li>
+                  <li class="itemlist"><span class="item">이름</span><input
+                     type="text" class="info" id="m_name" value="${member.MEMBER_NAME}" readonly>
+                     <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
+                  <li class="itemlist"><span class="item">휴대폰</span><input
+                     type="text" class="info" id="m_phone" value="${member.MEMBER_PHONE}" readonly>
+                     <button type="button" class="modify_items m-btn">수정</button></li>
+                  <li class="itemlist"><span class="item">포인트</span><input
+                     type="text" class="info" id="point" value="${member.HAVE_POINT}점" readonly>
+                     <a href="#point_modal" class="trigger-btn" data-toggle="modal"><button type="button" class="modify_items point-btn">충전</button></a></li>
 
-					</ul>
+               </ul>
+
 
 				</div>
 
@@ -383,8 +386,38 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="point_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">POINT</p>
+				</div>
+				<div id="modal-body">
 
+					<div id="contentarea">
+					<ul id="pointlist">
+						<li><span class="pointicons"><i class="fas fa-coins"></i><span class="pointtext">   100P</span></span>
+							<label class="box-radio-input"><input type="radio" class="cp_item" name="cp_item" value="100"><span>5,000</span></label></li>
+						<li><span class="pointicons"><i class="far fa-money-bill-alt"></i><span class="pointtext">   300P</span></span>
+							<label class="box-radio-input"><input type="radio" class="cp_item" name="cp_item" value="300"><span>10,000</span></label></li>
+						<li><span class="pointicons"><i class="fas fa-money-bill-alt"></i><span class="pointtext">   450P</span></span>
+							<label class="box-radio-input"><input type="radio" class="cp_item" name="cp_item" value="450"><span>15,000</span></label></li> 
+						<li id="btnline"><a href="#point_modal" class="trigger-btn" data-toggle="modal"><button id="charge-btn">충전</button></a></li>                   
+                    </ul>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
+	
+<!-- 아임포트 js코드 -->
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=1"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=4"></script>
 </body>
 </html>

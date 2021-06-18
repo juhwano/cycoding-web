@@ -120,6 +120,9 @@ public interface MemberDao {
 	// 포인트 관리 쿼리
 	public int updatePoint(PointVo point);
 	
+	public Integer chargePoint(String memberid, String point);
+	
 	//회원 상세 페이지 리뷰목록 가져오기
 	public List<ReviewVo> getReviewList(String userid);
+
 }
