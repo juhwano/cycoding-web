@@ -97,16 +97,17 @@ let card;
      card+=		"	<div	class='m_img'>									"
      card+=		"	<div	class='m_img_top'>									"
      
+     console.log("로그인유저: " + loginuser);
      /* 북마크 표시 */
-     if(sessionStorage.getItem("member_id") != null) {/* 북마크 리스트가 있는 경우에만(로그인한 경우에만) */
-     for(let i = 0; i < bookmark_list.length; i++) {
-			if(bookmark_list[i].project_id == project_list[current].project_id) {
-				card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
-				break;
-			}else if(i=bookmark_list.length-1) {
-				card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+     if(loginuser != null) {/* 북마크 리스트가 있는 경우에만(로그인한 경우에만) */
+	     for(let i = 0; i < bookmark_list.length; i++) {
+				if(bookmark_list[i].project_id == project_list[current].project_id) {
+					card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+					break;
+				}else if(i=bookmark_list.length-1) {
+					card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+				}
 			}
-		}
 	}
     // card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
      
@@ -125,7 +126,7 @@ let card;
                  card+= " #" + pjsk_list[sk].skill_name;
              }
          }
-     card+=		"	</p>										"
+     card+=		"</p>										"
      card+=		"	<p	class='card-text	p_team_memNum'>모집인원:								"
      
          for(let mem=0; mem<membercount_list.length; mem++	){
@@ -189,5 +190,20 @@ let card;
          filter(adr_code, field_code, skill_code, p_state);
      });
      
+   var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
      
  })

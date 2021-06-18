@@ -86,6 +86,15 @@ public class ProjectController {
 			m.addAttribute("bookmark_list",x_bookmark_list);
 		}
 		
+		List<V_PjAdrField_Join_V_PDetail> rcm_list;
+		if(session.getAttribute("member_id")!=null) {
+			//유저가 로그인되어있으면 추천리스트 출력
+			rcm_list=service.getRcmProjectList(String.valueOf(session.getAttribute("member_id")));
+		}
+		else {
+			rcm_list=service.getOrderedViewsList(null);
+		}
+		
 		
 		m.addAttribute("project_list",json_project_list);
 		m.addAttribute("pjsk_list",json_pjsk_list);
@@ -95,6 +104,8 @@ public class ProjectController {
 		m.addAttribute("skill_list",skill_list);
 		
 		m.addAttribute("membercount_list",json_membercout_list);
+		
+		m.addAttribute("rcm_list",rcm_list);
 		
 		
 		return "Project/ProjectList";
