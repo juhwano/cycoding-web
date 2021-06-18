@@ -7,17 +7,25 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.common.vo.BookmarkVo;
 import com.cyco.project.service.ProjectService;
+import com.cyco.project.vo.ApplyVo;
+import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.ProjectNameVo;
+import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
+import com.cyco.utils.UtilFile;
 
 import net.sf.json.JSONArray;
 
@@ -70,6 +78,93 @@ public class RestProjectController {
 		
 	}
 	
+
+	@RequestMapping(value="projectCheckApply", method=RequestMethod.GET)
+	public String CheckProjectApply(ApplyVo apply) {
+		String returnUrl = null;
+		
+		int projectState = service.CheckProject(apply.getMember_id());
+		
+		int checkProjectApply = service.CheckProjectApply(apply);
+		
+		// 자신이 만든 프로젝트가 완료가 아닌것들 가져오기
+		if(projectState > 1) {
+			returnUrl = "is_project";
+			return returnUrl;
+		}else if(checkProjectApply > 1) {
+			returnUrl = "ProjectApply";
+			return returnUrl;
+		}else {
+			returnUrl = "true";
+		}
+		
+		
+		return returnUrl;
+	}
+	
+	
+	@RequestMapping(value="projectapply", method=RequestMethod.GET)
+	public String setProjectApply(ApplyVo apply) {
+		String returnUrl = "false";
+		
+		int check = service.CheckProjectApply(apply);
+		if(check > 0) {
+			return returnUrl;
+		}else {
+			int result = service.setProjectApply(apply);
+			
+			if(result > 0) {
+				returnUrl = "true";
+			}
+		}
+		
+		
+		
+		return returnUrl;
+	}
+	
+	@RequestMapping(value="editAjax",method = RequestMethod.POST)
+	public String ProjectEditAjax(P_DetailVo detail, ProjectVo projectvo,
+			@RequestParam(value = "skill_code")List<String> skill_code,
+			@RequestParam("uploadFile") MultipartFile uploadFile, 
+			MultipartHttpServletRequest request){
+			
+		// 파일 유틸 생성
+		UtilFile utilFile = new UtilFile();
+		
+		// 받아오는 파일 받아오기
+		utilFile.FileUpload(request, uploadFile);
+		String UploadFilename = utilFile.getFilename();
+		// 받아온 파일 디테일에 set
+		detail.setP_image(UploadFilename);
+	
+		
+		List<P_SkillVo> SkillList = new ArrayList<P_SkillVo>();
+		
+		
+		// 스킬VO 받아온대로 List에 add
+		for(String skill : skill_code) {
+			SkillList.add(new P_SkillVo(projectvo.getProject_id(),skill));
+		}
+		
+	
+		System.out.println(projectvo);
+		System.out.println(detail);
+		System.out.println(SkillList);
+		
+		// 프로젝트 업데이트 
+		String ajax = null;
+		int result = service.updateProject(projectvo,detail,SkillList);
+		if(result > 0) {
+			ajax = "true";
+		}else {
+			ajax = "false";
+		}
+		
+		
+		return ajax;
+    
+  }
 	@RequestMapping(value = "bookmark", method=RequestMethod.GET)
 	public String bookMarking(@RequestParam String project_id, HttpSession session) {
 		String member_id = String.valueOf(session.getAttribute("member_id"));

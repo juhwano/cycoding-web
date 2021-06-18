@@ -34,7 +34,7 @@ public class UtilFile {
 			
 			File f = new File(path);
 			
-			if(Filename == null) {
+			if(Filename == null || Filename == "") {
 				return null;
 			}
 			
