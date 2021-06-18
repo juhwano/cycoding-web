@@ -9,6 +9,10 @@
 <link type="text/css"
 	href="${pageContext.request.contextPath}/css/ProjectList.css"
 	rel="stylesheet">
+<!-- Swiper Css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<!-- Swiper js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 <!-- 북마크 -->
 <script type="text/javascript" src="/assets/js/bookmark.js?ver=1"></script>
 </head>
@@ -32,6 +36,9 @@
 		<p>나와 맞는 <br> 프로젝트를 찾아보세요.</p>
       	</div>
 	</div>
+	
+	
+
 	
 	<div class="section section-md">
 
@@ -86,6 +93,50 @@
 				</div>
 			</div>
 			
+			<!-- 클래스명은 변경하면 안 됨 -->
+	<div class="swiper-container mySwiper">
+		<div>
+		<div class="swiper-wrapper">
+			<c:forEach var="rcm" items="${rcm_list}">
+			<div class="swiper-slide" >
+			<!-- 프로젝트카트 start -->
+
+				<div class="col-12 col-md-6 col-lg-4 mb-5 cardNum" id="rcmcard" >
+					<div class="card shadow" >
+						<!-- 카드헤더: 모집상태,분야,조회수 -->
+						
+						<!-- 프로젝트이미지 -->
+
+                       
+                        <!-- 프로젝트이름, 주언어 -->
+						<div class="card-body" id="backimg" style="background-image:url(${pageContext.request.contextPath}/assets/img/projectimg/${rcm.p_image})">
+							<a href="/project/detail?project_id=${rcm.project_id}"><h3 class="h5 card-title">${rcm.p_title}</h3></a>
+						<div class="p_footer">
+							<p class="card-text p_skill" >기술스택: 
+								<c:forEach var = "pjsk" items="${pjsk_list}" varStatus="status" > 
+									<c:if test="${pjsk.project_id eq rcm.project_id}">
+										${pjsk.skill_name}
+									</c:if>
+								</c:forEach>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 프로젝트카드end -->
+			</div>
+			</c:forEach>
+		</div>
+		
+		<!-- 네비게이션 -->
+		 <div class="swiper-button-next"></div> <!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+		 <div class="swiper-button-prev"></div> <!-- 이전 버튼 -->
+	
+		<!-- 페이징 -->
+		<div class="swiper-pagination"></div>
+		</div>
+	</div>
 			<div class="row mb-5" id="card_section">
 				<!-- 프로젝트카드  -->
 				<!-- cardNum은 마지막 더보기버튼 사라지게 하기 위해 넣은 class -->
@@ -109,6 +160,7 @@
 				<c:set var="bookmarking" value="false" />
 				
 				<!-- 프로젝트카트 start -->
+				
 				<div class="col-12 col-md-6 col-lg-4 mb-5 cardNum">
 					<div class="card shadow">
 						<!-- 카드헤더: 모집상태,분야,조회수 -->

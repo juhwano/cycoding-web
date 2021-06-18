@@ -2,12 +2,9 @@ package com.cyco.project.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -310,5 +307,131 @@ public class ProjectService {
 			
 		}
 	// ---------------------------------------------------------
+	
+	//프로젝트 추천리스트
+	public List<V_PjAdrField_Join_V_PDetail> getRcmProjectList(String member_id) {
+		/*
+			
+		 	1. 회원 정보 가져오기 ( skill, position, duration, 모집중)
+		 	2. 가져온 정보를 가공하기
+		 	3. 회원이 원하는 포지션의 자리가 있는 프로젝트를 먼저 걸름 -> p_membervo
+		 	4. 회원이 가지고 있는 기술을 하나라도 가지고있는 프로젝트를 걸름 -> p_skillvo테이블 사용해서 id뽑기
+		 	5. 회원이 원하는 기간을 하나라도 가지고있는 프로젝트를 걸름-> p_detailvo
+		 	6. 모집중인 프로젝트를 걸름 -> p_detail
+		 	7. 걸러진 리스트에서 중복되는 결과만 모음
+		 	8. 그중에서 대표스킬이 포함되어있는 프로젝트를 먼저 보여줌.
+		 	9. 또 그중에서 조회수가 높은걸 보여줌
+		 	
+		 	이후
+		 	
+		 	1. 필터링 결과가 9개 미만일때 처리 -> 모집중 , 포지션 , 기술 , 기간 중
+		 								  기간부터 하나씩 빼서 필터링하여 리스트가 9개 이상일때까지 반복
+		 	2. 비회원, 추가기입x 회원일경우 조회수 높은순으로 출력
+		 	3. 
+		*/
+		System.out.println("member_id : "+member_id);
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		
+		List<String> mposlist = dao.getFilteredMPosition(member_id);//포지션필터링 리스트
+		List<String> msklist = dao.getFilteredMSkill(member_id); // 스킬 필터링 리스트
+		List<String> mdulist =  dao.getFilteredMDuration(member_id); // 기간 필터링 리스트
+		List<String> reculist = dao.getFilteredRecruting(member_id); // 모집중 필터링 리스트
+		
+		map.put("reculist", reculist);
+		map.put("mposlist", mposlist);
+		map.put("msklist", msklist);
+		map.put("mdulist", mdulist);
 
+		List<V_PjAdrField_Join_V_PDetail> resultlist = new ArrayList<V_PjAdrField_Join_V_PDetail>();
+		List<String> filtered_list = new ArrayList<String>();
+		
+		if(mposlist !=null && msklist !=null && mdulist !=null && reculist !=null) {
+			if(mposlist.size()>0 && msklist.size()>0 && mdulist.size()>0 && reculist.size()>0) {
+				filtered_list =allFilteredList(map);
+				//보여줄 리스트가 9개보다 작을때
+				int count=0;
+				for(; filtered_list.size()<9; count++) {
+					System.out.println("결과값이 9보다작다. list.size : " + filtered_list.size());
+					if(count==0) {
+						map.remove("mdulist");
+					}else if(count==1) {
+						map.remove("msklist");
+					}else if(count==2) {
+						map.remove("mposlist");
+					}
+					else {
+						System.out.println("모집중이고 조회수 순으로 출력");
+						resultlist=getOrderedViewsList(null);
+						break;
+					}
+					filtered_list = allFilteredList(map);
+					
+				}
+				//msklist전까지만 필터링되었을때 -> 대표스킬로정렬하는 의미가 있다.
+				if(count<1) {
+					filtered_list = dao.getOrderedSkill(filtered_list, member_id);
+					resultlist=getOrderedViewsList(filtered_list);
+				}
+				//msklist이후라면 대표스킬로 정렬하는 의미가 없기때문에 
+				else {
+					resultlist=getOrderedViewsList(filtered_list);
+				}
+			}
+			else {
+				//Just 조회수 정렬
+				resultlist=getOrderedViewsList(null);
+			}
+		}
+		else {
+			//Just 조회수 정렬
+			resultlist=getOrderedViewsList(null);
+		}
+		return resultlist;
+	}
+	//조회수 순으로 리스트 출력(Just 조회수 정렬)
+	public List<V_PjAdrField_Join_V_PDetail> getOrderedViewsList(List<String> filtered_list) {
+		//모집중
+		//조회수
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+
+		List<V_PjAdrField_Join_V_PDetail> list = dao.getRecommList(filtered_list);
+		list = list.subList(0, 9);
+		return list;
+		
+	}
+	public List<String> allFilteredList(Map<String, List<String>> map) {
+		List<String> result = new ArrayList<String>();
+		for(String l : map.get("reculist")) {
+			//contains()를 이용하여 중복확인
+			if(map.get("mposlist") !=null) {
+				if(map.get("mposlist").contains(l)) {
+					System.out.println("mposlist 확인");
+					
+					
+					if(map.get("msklist") != null) {
+						if(map.get("msklist").contains(l)) {
+							System.out.println("msklist 확인");
+							
+							
+							if(map.get("mdulist") != null) {
+								if(map.get("mdulist").contains(l)) {
+									System.out.println("mdulist 확인");
+									result.add(l);
+								}
+							}
+							else {
+								result.add(l);
+							}
+						}
+					}
+					else {
+						result.add(l);
+					}
+				}
+			}
+			
+		}
+		return result;
+	}
 }

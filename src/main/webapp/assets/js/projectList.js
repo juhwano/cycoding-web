@@ -126,7 +126,7 @@ let card;
                  card+= " #" + pjsk_list[sk].skill_name;
              }
          }
-     card+=		"	</p>										"
+     card+=		"</p>										"
      card+=		"	<p	class='card-text	p_team_memNum'>모집인원:								"
      
          for(let mem=0; mem<membercount_list.length; mem++	){
@@ -190,5 +190,20 @@ let card;
          filter(adr_code, field_code, skill_code, p_state);
      });
      
+   var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
      
  })
