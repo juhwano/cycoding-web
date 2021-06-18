@@ -159,26 +159,86 @@
 
 
 	<!-- 추천리스트 -->
-	<!-- 회원 포지션 -->
-	<select id="getMDetail" parameterType="string" resultType="com.cyco.common.vo.M_DetailVo">
-		select member_id, position_id 
-		from m_detail
-		where member_id=${member_id}
+	<!-- 회원 포지션로 필터링 -->
+	<select id="getFilteredMPosition" parameterType="string" resultType="string">
+	select distinct project_id
+	from p_member
+	where position_id in (
+	    select position_id from m_detail
+	    where member_id=${project_id}) and member_id is null
+	order by project_id
+	
 	</select>
-	<!-- 회원 기술 -->
-	<select id="getMSkill" parameterType="string" resultType="com.cyco.common.vo.M_SkillVo">
-		select member_id, skill_code, ms_count
-		from m_skill
-		where member_id=${member_id}
-	</select>
-	<!-- 회원 선호기간 -->
-	<select id="getMDuration" parameterType="string" resultType="com.cyco.common.vo.M_DurationVo">
-		select member_id, duration_id 
-		from m_duration
-		where member_id=${member_id}
+	<!-- 회원 기술로 필터링 -->
+	<select id="getFilteredMSkill" parameterType="string" resultType="string">
+	select distinct project_id
+	from p_skill
+	where skill_code in (
+	    select skill_code from m_skill
+	    where member_id=${project_id} )
+	order by project_id
 	</select>
 	
+	<!-- 회원 선호기간로 필터링 -->
+	<select id="getFilteredMDuration" parameterType="string" resultType="string">
+	select project_id
+	from p_detail
+	where duration_id in (
+	    select duration_id from m_duration
+	    where member_id =${project_id}) 
+	    order by project_id
+	</select>
 	
+	<!-- 모집중으로 필터링 -->
+	<select id="getFilteredRecruting" parameterType="string" resultType="string">
+	select project_id
+	from p_detail
+	where p_state='모집중'
+	order by project_id
+	</select>
+	
+	<!-- 대표스킬 순으로 정렬 -->
+	<select id="getOrderedSkill" resultType="string">
+		select  distinct p.project_id, t.ms_count
+		from p_skill p
+		inner join (select skill_code, ms_count from m_skill
+		where member_id=${member_id})t
+		on p.skill_code = t.skill_code
+		where project_id in 
+			<foreach collection="filtered_list" item="item" index="index" separator="," open="(" close=")">
+				${item}
+	        </foreach>
+		order by t.ms_count, p.project_id
+	</select>
+	
+	<!-- 모집중으로 필터 + 조회수순으로 정렬 -->
+	<select id="getOrderedViews" resultType="string">
+		select project_id from p_detail
+		where p_state='모집중'
+			<if test="filtered_list != null">
+				and project_id in
+				<foreach collection="filtered_list" item="item" index="index" separator="," open="(" close=")">
+					${item}
+		        </foreach>
+			</if>
+		
+		order by p_views desc
+	</select>
+	
+	<select id="getRecommList" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="string">
+		select p.project_id, p.member_id, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
+		from v_pj_adr_field p 
+		inner join v_p_detail vpd
+		on p.project_id = vpd.project_id
+		where vpd.p_state like '모집중'
+		<if test="filtered_list != null">
+			and p.project_id in
+			<foreach collection="filtered_list" item="item" index="index" separator="," open="(" close=")">
+				${item}
+	        </foreach>
+		</if>
+		order by vpd.p_views desc
+	</select>
 	<!-- 추천리스트 -->
 	
 </mapper>

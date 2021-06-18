@@ -3,6 +3,7 @@ package com.cyco.project.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.M_DetailVo;
@@ -80,8 +81,12 @@ public interface ProjectDao {
 	// -----------------------------------------
 	
 	// ------------- 추천 리스트 -------------------
-	public List<M_DetailVo> getMDetail(String member_id);
-	public List<M_SkillVo> getMSkill(String member_id);
-	public List<M_DurationVo> getMDuration(String member_id);
+	public List<String> getFilteredMPosition(String member_id);
+	public List<String> getFilteredMSkill(String member_id);
+	public List<String> getFilteredMDuration(String member_id);
+	public List<String> getFilteredRecruting(String member_id);
+	public List<String> getOrderedSkill(@Param("filtered_list") List<String> filtered_list, @Param("member_id") String member_id);
+	public List<String> getOrderedViews(@Param("filtered_list") List<String> filtered_list);
+	public List<V_PjAdrField_Join_V_PDetail> getRecommList(@Param("filtered_list") List<String> filtered_list);
 	
 }

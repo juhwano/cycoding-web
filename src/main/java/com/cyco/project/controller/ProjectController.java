@@ -74,12 +74,14 @@ public class ProjectController {
 		List<PmemberCountVo> membercount_list = service.getPmemberCountList();
 		JSONArray json_membercout_list = JSONArray.fromObject(membercount_list);
 		
+		
+		List<V_PjAdrField_Join_V_PDetail> rcm_list;
 		if(session.getAttribute("member_id")!=null) {
 			//유저가 로그인되어있으면 추천리스트 출력
-			service.getRcmProjectList(String.valueOf(session.getAttribute("member_id")));
+			rcm_list=service.getRcmProjectList(String.valueOf(session.getAttribute("member_id")));
 		}
 		else {
-			//조회수 순으로 출력
+			rcm_list=service.getOrderedViewsList(null);
 		}
 		
 		
@@ -91,6 +93,8 @@ public class ProjectController {
 		m.addAttribute("skill_list",skill_list);
 		
 		m.addAttribute("membercount_list",json_membercout_list);
+		
+		m.addAttribute("rcm_list",rcm_list);
 		
 		
 		return "Project/ProjectList";
