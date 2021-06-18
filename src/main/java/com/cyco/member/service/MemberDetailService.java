@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,9 @@ import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
+import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 
 @Service
@@ -124,6 +125,29 @@ public class MemberDetailService {
 		
 	}
 	
+	//프로젝트 경험 리스트 뽑기
+	public List<M_ExperienceVo> getExperiences(String userid){
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		List<M_ExperienceVo> list = new ArrayList<M_ExperienceVo>();
+		
+		list = memberdao.getExperiences(userid);
+		
+		return list;
+		
+	}
+	
+	//마이페이지에서 프로젝트 경험 없음이 없음이라고 입력한건지 확인
+	public String haveExperience(String userid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		String result = memberdao.haveExperience(userid);
+		
+		
+		return result;
+	}
+	
 	//모달 안에 기술 스택 리스트 뽑기
 	public List<SkillVo> getSkills(){
 		
@@ -198,6 +222,50 @@ public class MemberDetailService {
 		
 	}
 	
+	//프로젝트 경험 있/없 디비에 반영하기
+	public String updateExperience(String memberid, int answer) {
+		
+		String result = "fail";
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.updateExperience(memberid, answer);
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		return result;
+	}
+	
+	//프로젝트 경험 삭제하기
+	public String  deleteExperience(String ex_id, String memberid) {
+		
+		String result = "fail";
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.deleteExperience(ex_id, memberid);
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		return result;
+		
+	}
+	
+	//프로젝트 경험 업데이트 하기
+	public String updateExperiences(M_ExperienceVo mex) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.updateExperiences(mex);
+		
+		if(row > 0) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
 	//뷰단에서 변경한 포지션 업데이트
 	public String updatePosition(String memberid, String stat) {
 		
@@ -252,6 +320,43 @@ public class MemberDetailService {
 		
 	}
 	
+	// 마이페이지에서 기입한 프로젝트 경험들 디비에 insert
+	public String insertExperiences(M_ExperienceVo mex) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.insertExperiences(mex);
+		
+		if(row > 0){
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	//회원 추가정보 모두 기입시 최초 입력인지 체크해서 맞으면 포인트 지급
+	public String givePointFirstTime(String member_id) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		if(memberdao.checkPoint(member_id) != null) {
+			
+			//포인트 컬럼에서 회원 아이디로 사용포인트, 보유포인트가 모두 0인지 확인했을 때 결과가 있으면 포인트 지급
+			int row = memberdao.givePointFirstTime(member_id);
+			
+			if(row > 0) {
+				result = "success";
+			}
+					
+		}
+		
+		return result;
+		
+	}
+	
 	//마이페이지에서 회원 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id) {
 		
@@ -270,10 +375,25 @@ public class MemberDetailService {
 		
 		return member;
 	}
-
 	
+	//회원상세 리뷰목록 가져오기
+	public List<ReviewVo> getReviewList(String memberid) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		List<ReviewVo> reviewList = memberdao.getReviewList(memberid);
+		
+		return reviewList;
+	}	
 	
-	
-
+	//포인트 충전하기
+	   public int chargePoint(String memberid, String point) {
+//	      1행리턴
+	      System.out.println("서비스 memberid: " +memberid);
+	      System.out.println("서비스 point : " +point);
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      int row = memberdao.chargePoint(memberid, point);
+	      System.out.println("서비스 row : " + row);
+	      return row;
+	   }
 
 }

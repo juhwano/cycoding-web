@@ -2,12 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
 
 <head>
 <!-- member CSS -->
 <link type="text/css"
 	href="${pageContext.request.contextPath}/css/ProjectList.css"
 	rel="stylesheet">
+<!-- Swiper Css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<!-- Swiper js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+<!-- 북마크 -->
+<script type="text/javascript" src="/assets/js/bookmark.js?ver=1"></script>
 </head>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
@@ -17,6 +24,7 @@
 	<c:set var="skill_list" value="${skill_list}" />
 	<c:set var="pjsk_list" value="${pjsk_list}" />
 	<c:set var="membercount_list" value="${membercount_list}" />
+	<c:set var="bookmark_list" value="${bookmark_list}" />
 	
 	
 	<!-- 탑버튼 -->
@@ -28,6 +36,9 @@
 		<p>나와 맞는 <br> 프로젝트를 찾아보세요.</p>
       	</div>
 	</div>
+	
+	
+
 	
 	<div class="section section-md">
 
@@ -82,6 +93,50 @@
 				</div>
 			</div>
 			
+			<!-- 클래스명은 변경하면 안 됨 -->
+	<div class="swiper-container mySwiper">
+		<div>
+		<div class="swiper-wrapper">
+			<c:forEach var="rcm" items="${rcm_list}">
+			<div class="swiper-slide" >
+			<!-- 프로젝트카트 start -->
+
+				<div class="col-12 col-md-6 col-lg-4 mb-5 cardNum" id="rcmcard" >
+					<div class="card shadow" >
+						<!-- 카드헤더: 모집상태,분야,조회수 -->
+						
+						<!-- 프로젝트이미지 -->
+
+                       
+                        <!-- 프로젝트이름, 주언어 -->
+						<div class="card-body" id="backimg" style="background-image:url(${pageContext.request.contextPath}/assets/img/projectimg/${rcm.p_image})">
+							<a href="/project/detail?project_id=${rcm.project_id}"><h3 class="h5 card-title">${rcm.p_title}</h3></a>
+						<div class="p_footer">
+							<p class="card-text p_skill" >기술스택: 
+								<c:forEach var = "pjsk" items="${pjsk_list}" varStatus="status" > 
+									<c:if test="${pjsk.project_id eq rcm.project_id}">
+										${pjsk.skill_name}
+									</c:if>
+								</c:forEach>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 프로젝트카드end -->
+			</div>
+			</c:forEach>
+		</div>
+		
+		<!-- 네비게이션 -->
+		 <div class="swiper-button-next"></div> <!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+		 <div class="swiper-button-prev"></div> <!-- 이전 버튼 -->
+	
+		<!-- 페이징 -->
+		<div class="swiper-pagination"></div>
+		</div>
+	</div>
 			<div class="row mb-5" id="card_section">
 				<!-- 프로젝트카드  -->
 				<!-- cardNum은 마지막 더보기버튼 사라지게 하기 위해 넣은 class -->
@@ -93,7 +148,7 @@
 				<!-- list_size : project_list의 크기 -->
 				<c:set var="list_size" value="${fn:length(project_list)}"/>
 				
-				<!-- project_list반복문 시작 >> card만들기 시작 -->
+				<!-- ## project_list반복문 시작 >> card만들기 시작 ## -->
 				<c:forEach var = "project" items="${project_list}" varStatus="status" begin="0" end="5"> 
 				
 				<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
@@ -101,7 +156,11 @@
 					<c:set var="last_flag" value="true"/>
 				</c:if>
 				
+				<!-- 북마크 for each문 break용 -->
+				<c:set var="bookmarking" value="false" />
+				
 				<!-- 프로젝트카트 start -->
+				
 				<div class="col-12 col-md-6 col-lg-4 mb-5 cardNum">
 					<div class="card shadow">
 						<!-- 카드헤더: 모집상태,분야,조회수 -->
@@ -113,7 +172,22 @@
 						
 						<div class="m_img" >
 						   <div class="m_img_top">
-						  	 <i class="far fa-heart bookmark" onclick='location.href="#"'></i>
+						   <!-- 해당 회원이 마킹했던 프로젝트면 표시해주기 -->
+						   <se:authorize access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+							   <c:forEach var = "bookmark" items="${bookmark_list}" varStatus="mark_status">
+									<c:if test="${bookmarking eq false}">
+										 <c:choose>
+											<c:when test="${bookmark.project_id eq project.project_id}">
+											  	<i class="fas fa-heart bookmark marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
+											  	<c:set var="bookmarking" value="true" />
+											</c:when>
+										  	<c:when test="${mark_status.last}">
+											  	<i class="fas fa-heart bookmark no_marking" id="${project.project_id}" onclick='BookMarking(${project.project_id})'></i>
+											</c:when> 
+										</c:choose>
+									</c:if>
+							   </c:forEach>
+						   </se:authorize>
 						   </div>
                            <a href="/project/detail?project_id=${project.project_id}"><img class="m_img_size" src="${pageContext.request.contextPath}/resources/upload/${project.p_image}"></a>
                         </div>
@@ -122,10 +196,10 @@
 						<div class="card-body">
 							<a href="/project/detail?project_id=${project.project_id}"><h3 class="h5 card-title mt-3">${project.p_title}</h3></a>
 							<div class="p_footer">
-							<p class="card-text p_skill">기술스택: 
+							<p class="card-text p_skill">
 								<c:forEach var = "pjsk" items="${pjsk_list}" varStatus="status" > 
 									<c:if test="${pjsk.project_id eq project.project_id}">
-										${pjsk.skill_name}
+									 #${pjsk.skill_name}
 									</c:if>
 								</c:forEach>
 								</p>
@@ -163,7 +237,15 @@
  	var pjsk_list = ${pjsk_list};
  	var project_list = ${project_list};
  	
+ 	<se:authorize access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+ 		var bookmark_list = ${bookmark_list};
+ 		var loginuser = '${sessionScope.nickname}';
+ 	</se:authorize>
+ 	
+ 	<se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+ 		var loginuser = null;
+ 	</se:authorize>
  
 </script>
-<script type="text/javascript" src="/assets/js/projectList.js"></script>
+<script type="text/javascript" src="/assets/js/projectList.js?ver=2"></script>
 </html>

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PointVo;
@@ -54,7 +55,7 @@ public class ProjectController {
 	private MemberService memberService;
 	
 	@RequestMapping(value="list")
-	public String getProjectList(Model m) {
+	public String getProjectList(Model m, HttpSession session) {
 		// 프로젝트 리스트 첫 페이지
 		// 모든 프로젝트 리스트 바로 뿌려주기.
 		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList("");
@@ -77,6 +78,25 @@ public class ProjectController {
 		List<PmemberCountVo> membercount_list = service.getPmemberCountList();
 		JSONArray json_membercout_list = JSONArray.fromObject(membercount_list);
 		
+		//북마크 리스트
+		//유저가 로그인되어있으면 북마크 리스트 보내주기
+		if(session.getAttribute("member_id")!=null) {
+			List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+			JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
+			m.addAttribute("bookmark_list",bookmark_list);
+		}else {
+			List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
+			m.addAttribute("bookmark_list",x_bookmark_list);
+		}
+		
+		List<V_PjAdrField_Join_V_PDetail> rcm_list;
+		if(session.getAttribute("member_id")!=null) {
+			//유저가 로그인되어있으면 추천리스트 출력
+			rcm_list=service.getRcmProjectList(String.valueOf(session.getAttribute("member_id")));
+		}
+		else {
+			rcm_list=service.getOrderedViewsList(null);
+		}
 		
 		
 		m.addAttribute("project_list",json_project_list);
@@ -87,6 +107,8 @@ public class ProjectController {
 		m.addAttribute("skill_list",skill_list);
 		
 		m.addAttribute("membercount_list",json_membercout_list);
+		
+		m.addAttribute("rcm_list",rcm_list);
 		
 		
 		return "Project/ProjectList";

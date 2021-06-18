@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
@@ -77,6 +78,7 @@ public class RestProjectController {
 		
 	}
 	
+
 	@RequestMapping(value="projectCheckApply", method=RequestMethod.GET)
 	public String CheckProjectApply(ApplyVo apply) {
 		String returnUrl = null;
@@ -161,5 +163,27 @@ public class RestProjectController {
 		
 		
 		return ajax;
+    
+  }
+	@RequestMapping(value = "bookmark", method=RequestMethod.GET)
+	public String bookMarking(@RequestParam String project_id, HttpSession session) {
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		String text = null;
+		
+		//북마크 리스트에 해당 유저가 해당 프로젝트를 북마크한 데이터가 있는지 확인
+		int checkNum = service.checkBookMark(project_id, member_id);
+		System.out.println("projectRestController, checkBookMark: " + checkNum);
+		
+		if(checkNum == 0) {
+			BookmarkVo bookmark = new BookmarkVo(0, project_id, member_id);
+			service.setBookMark(bookmark);
+			text = "insert";
+		}else {
+			service.deleteBookMark(project_id, member_id);
+			text = "delete";
+		}
+		
+		return text;
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -67,9 +68,19 @@ public interface ProjectDao {
 
 	//포지션리스트
 	public List<P_DurationVO> getDurationList();
+
+	//북마크리스트
+	public List<BookmarkVo> getBookmarkList(String memberid);
 	
-	//완료가 아닌 프로젝트가 있는지 확인
-	public int CheckProject(String member_id);
+	//북마크 내역 확인
+	public int checkBookMark(String projectid, String memberid); 
+	
+	//북마크 추가
+	public void setBookMark(BookmarkVo bookmark);
+	
+	//북마크 삭제
+	public void deletBookMark(String projectid, String memberid);
+	
 	
 	// --------- 트랜잭션 처리  --------------
 	//프로젝트 insert
@@ -85,6 +96,9 @@ public interface ProjectDao {
 	public void setProjectSkillList(List<P_SkillVo> s);
 	// -----------------------------------------
 	
+  //완료가 아닌 프로젝트가 있는지 확인
+	public int CheckProject(String member_id);
+  
 	// 프로젝트 지원체크  맴버아이디랑, 프로젝트 아이디 넣어야함
 	public int CheckProjectApply(ApplyVo apply);
 	
@@ -115,5 +129,15 @@ public interface ProjectDao {
 	
 	// 위에 프로젝트 스킬 insert 도 같이 실행
 	// -------------------------------------------
+
+	// ------------- 추천 리스트 -------------------
+	public List<String> getFilteredMPosition(String member_id);
+	public List<String> getFilteredMSkill(String member_id);
+	public List<String> getFilteredMDuration(String member_id);
+	public List<String> getFilteredRecruting(String member_id);
+	public List<String> getOrderedSkill(@Param("filtered_list") List<String> filtered_list, @Param("member_id") String member_id);
+	public List<String> getOrderedViews(@Param("filtered_list") List<String> filtered_list);
+	public List<V_PjAdrField_Join_V_PDetail> getRecommList(@Param("filtered_list") List<String> filtered_list);
+
 	
 }

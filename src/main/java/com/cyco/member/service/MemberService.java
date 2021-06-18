@@ -22,8 +22,6 @@ public class MemberService {
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-		
-	
 
 	
 	// 맴버정보가져오기
@@ -50,7 +48,7 @@ public class MemberService {
 	      
 	}
 	
-	//닉네임, 회원 번호 가져오기
+	//로그인시 닉네임, 회원 번호 가져오기
 	public HashMap<String, String> getLoginedName(String useremail) {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
@@ -61,8 +59,6 @@ public class MemberService {
 	
 	//로그인시 탈퇴날짜 체크
 	public void checkDeleteDate(String memeberid) {
-		
-		System.out.println("로그인 했으니까 탈퇴 무르기");
 		
 	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 	      memberdao.checkDeleteDate(memeberid);

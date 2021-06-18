@@ -1,26 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+// 	양식 다시 제출 방지
+	response.setHeader("Cache-Control","no-store"); 
+	response.setHeader("Pragma","no-cache"); 
+	response.setDateHeader("Expires",0);
+	if (request.getProtocol().equals("HTTP/1.1")){ 
+		response.setHeader("Cache-Control", "no-cache");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>CYCO 커뮤니티</title>
+<style type="text/css">
+.section-header{
+	background-image: url("../assets/img/board/form.jpg");
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100%;
+    background-position: center;
+}
+textarea{
+	resize: none;
+	overflow-x:auto;
+}
+</style>
 <script>
 // 글쓰기 유효성검사
 function fn_formSubmit(){
-	var form = document.form;
-	
-	if (form.MEMBER_ID.value=="") {
-		alert("작성자를 입력해주세요.");
-		form.MEMBER_ID.focus();
-		return;
-	}
-	if (form.FREE_TITLE.value=="") {
+	var validateTITLE = document.form.FREE_TITLE.value.replace(/\s|　/gi, '');
+	var validateCONTENT = document.form.FREE_CONTENT.value.replace(/\s|　/gi, '');
+// 	if (form.MEMBER_ID.value=="") {
+// 		alert("작성자를 입력해주세요.");
+// 		form.MEMBER_ID.focus();
+// 		return;
+// 	}
+	if (validateTITLE == "") {
 		alert("글 제목을 입력해주세요.");
 		form.FREE_TITLE.focus();
 		return;
 	}
-	if (form.FREE_CONTENT.value=="") {
+	if (validateCONTENT == "") {
 		alert("글 내용을 입력해주세요.");
 		form.FREE_CONTENT.focus();
 		return;
@@ -96,47 +118,43 @@ function previewImage(targetObj, View_area) {
 		}
 	}
 }
+
 </script>
 </head>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <body>
-	<form name="form" action="save" method="post" enctype="multipart/form-data">
-		<table border="1" style="width:600px">
-			<caption>CYCO 커뮤니티</caption>
-			<colgroup>
-				<col width='15%' />
-				<col width='*%' />
-			</colgroup>
-			<tbody>
-				<tr>
-					<td>글쓴이</td> 
-					<td><input type="text" name="MEMBER_ID" size="20" maxlength="20" value="<c:out value="${boardInfo.MEMBER_ID}"/>"></td> 
-				</tr>
-				<tr>
-					<td>제목</td> 
-					<td><input type="text" name="FREE_TITLE" size="70" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>"></td> 
-				</tr>
-				<tr>
-					<td>내용</td> 
-					<td><textarea name="FREE_CONTENT" rows="5" cols="60"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea></td> 
-				</tr>
-				<tr>
-					<td>첨부</td> 
-					<td>
-						<c:forEach var="listview" items="${listview}" varStatus="status">
-							<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
-            				<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
-							<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
-						</c:forEach>					
-						
-						<input type="file" id="uploadfile" name="uploadfile" multiple="" onchange="previewImage(this,'View_area')"/>
-						<div id='View_area' style='position:relative; width: 300px; height: 300px; color: black; border: 0px solid black; dispaly: inline; '></div>
-					</td> 
-				</tr>
-			</tbody>
-		</table>    
-		<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>"> 
-		<a href="#" onclick="fn_formSubmit()">등록</a>
-		<a href="#" onclick="history.back(-1)">취소</a>
+<div class="container">
+	<div class="section-header"></div>
+	<br/><br/>
+	<form name="form" action="save" method="post" enctype="multipart/form-data" autocomplete="off">
+		<input type="hidden" name="MEMBER_ID" value="${sessionScope.member_id }">
+		<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>">
+		<div class="form-group">
+			<label for="FREE_TITLE">제목</label>
+			<input type="text" id="FREE_TITLE" name="FREE_TITLE" class="form-control" placeholder="제목을 입력해 주세요." pattern=".{1,250}" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>">
+		</div>
+		<br/>
+		<div class="form-group">
+			<label for="FREE_CONTENT">내용</label>
+			<textarea id="FREE_CONTENT" name="FREE_CONTENT" class="form-control" placeholder="내용을 입력해 주세요." rows="15" cols="120"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea>
+		</div>
+		<br/>	
+		<div class="form-group">
+			<label for="fileno">첨부파일</label>
+			<c:forEach var="listview" items="${listview}" varStatus="status">
+				<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
+            	<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
+				<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
+			</c:forEach>		
+			<input type="file" id="uploadfile" name="uploadfile" class="form-control" multiple="multiple" onchange="previewImage(this,'View_area')"/>
+			<div id='View_area' style='position:relative; color: black; border: 0px solid black; dispaly: inline; '></div>
+		</div>
+		<br/>
+		<div class="text-right" style="margin-bottom:30px">			 
+			<a href="#" onclick="fn_formSubmit()" class="btn btn-outline-primary">등록</a>
+			<a href="list" class="btn btn-outline-black">취소</a>
+		</div>
 	</form>	
+</div>
 </body>
 </html>
