@@ -106,7 +106,7 @@
 	
 		INSERT INTO m_skill (ms_count, member_id, skill_code)
 	VALUES(
-		(SELECT MAX(ms_count)+1 FROM m_skill where member_id=${param1}),
+		(SELECT nvl(MAX(ms_count),0)+1 FROM m_skill where member_id=${param1}),
     	${param1},#{param2}	)
 
 	
@@ -125,7 +125,7 @@
 	
 	</delete>
 	
-		<update id="updatePosition">
+	<update id="updatePosition">
 	
 		update m_detail set position_id=#{param2} where member_id=${param1}
 	

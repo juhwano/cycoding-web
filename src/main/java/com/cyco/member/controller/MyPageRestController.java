@@ -317,20 +317,23 @@ public class MyPageRestController {
 	//프로젝트 경험 업데이트 디비 반영
 	//post 방식으로 보내는데 자꾸 get을 허용할 수 없다는 에러 발생해서 method 추가함
 	@RequestMapping(value="updateexperiences", method= {RequestMethod.GET, RequestMethod.POST})
-	public String updateExperiences(@RequestParam String member_id_input, @RequestParam String ex_count_input ,@RequestParam String EXP_TITLE_input,
-			@RequestParam String EX_POSITION_input, @RequestParam String EX_SKILL_input, @RequestParam String EX_CONTENT_input,@RequestParam String EX_DURATION_input) {
+	public String updateExperiences(@RequestParam String member_id_input, @RequestParam String ex_count_input ,@RequestParam String exp_title_input,
+			@RequestParam String ex_position_input, @RequestParam String ex_skill_input, @RequestParam String ex_content_input,@RequestParam String ex_duration_input) {
 	//public String editExperiences(String ex_count_input , String EXP_TITLE_input, String EX_POSITION_input,
 	//		String EX_SKILL_input, String EX_CONTENT_input, String EX_DURATION_input) {
+	//public String updateExperiences(@RequestParam String member_id_input, @RequestParam String ex_count_input, ) {
 		 System.out.println("프로젝트 경험 수정하기");
 		 M_ExperienceVo mex = new M_ExperienceVo();
 
-		 mex.setMEMBER_ID(member_id_input); 
-		 mex.setEXP_TITLE(EXP_TITLE_input);
-		 mex.setEX_POSITION(EX_POSITION_input);
-		 mex.setEX_SKILL(EX_SKILL_input);
-		 mex.setEX_CONTENT(EX_CONTENT_input);
-		 mex.setEX_DURATION(EX_DURATION_input);		 
+		 mex.setMEMBER_ID(member_id_input);
 		 mex.setEx_count(ex_count_input);
+		 mex.setEXP_TITLE(exp_title_input);
+
+		 mex.setEX_POSITION(ex_position_input);
+		 mex.setEX_SKILL(ex_skill_input); 
+		 mex.setEX_CONTENT(ex_skill_input);
+		 mex.setEX_DURATION(ex_duration_input); 
+
 
 		System.out.println(mex.toString());
 		String result =	memberdetailservice.updateExperiences(mex);

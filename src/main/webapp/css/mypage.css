@@ -583,12 +583,13 @@ display: inline-block;
 		color:#CA8FAB;
 		background: none;
 		position: relative;
-    	top: -10px;
-    	right: -475px;
-		font-size:16px;
+		top: -10px;
+	    right: -460px;
+	    font-size: 18px;
+	    width: 100px
 	}
 
 	.ex_mdf{
 		color:#94A7AE;
-		background-color:white;
+		background-color:white !important;
 	}
