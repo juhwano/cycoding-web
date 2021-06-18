@@ -2,26 +2,30 @@ package com.cyco.project.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_MemberVo;
+import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
+import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
+import com.cyco.project.vo.V_PmPosition;
+import com.cyco.project.vo.V_PmPostion_Count;
 
 @Service
 public class ProjectService {
@@ -45,9 +49,9 @@ public class ProjectService {
 		map.put("p_state", p_state);
 		
 		List<V_PjAdrField_Join_V_PDetail> project_list = dao.getProjectList(map);
-		System.out.println("dao : " + project_list);
 		return project_list;
 	}
+	
 //	ProjectList with Filter
 //	오버로딩 함수
 	public List<V_PjAdrField_Join_V_PDetail> getProjectList(List<String> filterlist, String p_state){
@@ -68,12 +72,10 @@ public class ProjectService {
 			return null;
 		}
 		
-		System.out.println(where);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("where",where);
 		map.put("p_state", p_state);
 		List<V_PjAdrField_Join_V_PDetail> list = dao.getProjectList(map);
-		System.out.println(list);
 		
 		return list;
 	}
@@ -88,7 +90,6 @@ public class ProjectService {
 		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		list = dao.getFilteredProjectList(data);
-		System.out.println("3개 필터링 : "+list.toString());
 		return list;
 	}
 
@@ -99,11 +100,9 @@ public class ProjectService {
 		
 		String skill_code = data.get("skill_code");
 		List<String> idlist = new ArrayList<String>();
-		System.out.println("service Flist : " + Flist);
 		
 		//input값이 아무것도 없을떄 return null
 		if(skill_code.equals("") && Flist==null) {
-			System.out.println("아무 input도없을때 return null입니당");
 			return null;
 		}
 		//skill_code inpupt값이 없다면 Flist를 다시 return
@@ -116,21 +115,16 @@ public class ProjectService {
 		
 		//skill_code로 필터링된 리스트 뽑기
 		List<String> list = dao.getFilteredProjectSkillList(skill_code);
-		System.out.println("skill filtering list : " + list);
 		
 		
 		// list와 Flist에서 중복되는값 찾기
 		// Flist의 값이 존재할 경우(3개 필터링 결과값이 있다.)
 		if(Flist!=null) {
-			System.out.println("Flist 값이 존재");
-			
 			//list값이 하나라도 있으면
 			if(list.size()>0) {
 				for(String l : list) {
 					//contains()를 이용하여 Flist에 list의 l값이 있으면 중복.
 					if(Flist.contains(l)) {
-						System.out.println("중복값 발생!!! ");
-						System.out.println("l : " + l);
 						idlist.add(l);
 					}
 				}
@@ -145,16 +139,13 @@ public class ProjectService {
 		else {
 			//list값이 하나라도 존재한다면
 			if(list.size()>0) {
-				System.out.println("Flist 존재x   size>0" );
 				idlist.addAll(list);
 			}
 //			skill_code 필터링 list도 없다면 비어있는 list return
 			else {
-				System.out.println("Flist 존재x   size<0" );
 				idlist.addAll(list);
 			}
 		}
-		System.out.println("idlist : " + idlist);
 		//중복제거된 리스트 리턴
 		return idlist;
 	}
@@ -198,6 +189,37 @@ public class ProjectService {
 		return duration_list;
 	}
 	
+	//북마크 시작
+	//북마크리스트
+	public List<BookmarkVo> getBookmarkList(String memberid) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<BookmarkVo> bookmark_list = dao.getBookmarkList(memberid);
+		
+		return bookmark_list;
+	}
+	
+	//북마크 존재여부 확인
+	public int checkBookMark(String projectid, String memberid) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		int checkNum = dao.checkBookMark(projectid, memberid);
+		
+		return checkNum;
+	}
+	
+	//북마크 추가(insert)
+	public void setBookMark(BookmarkVo bookmark) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.setBookMark(bookmark);
+	}
+	
+	//북마크 삭제(delete)
+	public void deleteBookMark(String projectid, String memberid) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.deletBookMark(projectid, memberid);
+	}
+	
+	//북마크 끝
+	
 	//프로젝트 검색 - 제목으로만 검색
 	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(Map<String, String> projectname){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
@@ -216,7 +238,7 @@ public class ProjectService {
 		return searched_list;
 	}
 	
-	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
+	//전체프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
 	public List<PmemberCountVo> getPmemberCountList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
@@ -225,4 +247,191 @@ public class ProjectService {
 		return membercount_list;
 	}
 	
+	// 프로젝트 생성 --------------------------------------------------------
+	//프로젝트 상셍에서 포지션 별 전체 자리수와 남은 자리수 뽑기
+	public List<V_PmPostion_Count> getPmemberCount(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<V_PmPostion_Count> pmcountlist = dao.getPmemberCount(project_id);
+		
+		return pmcountlist;
+	}
+	
+	
+	//	프로젝트 상세 - 프로젝트 id를 통해 하나만 가져오기
+	public V_PjAdrField_Join_V_PDetail getOneProject(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		V_PjAdrField_Join_V_PDetail project = dao.getOneProject(project_id);
+		return project;
+	}
+	
+	//프로젝트 멤버 검색. project_id를 통한 조건검색 가능
+	public List<V_PmPosition> getProjectMemberList(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
+		return pmlist;
+	}
+
+	// ----------------------------------------------------------
+	// 프로젝트 생성
+	public String setProjectInsert(ProjectVo p) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		dao.setProjectInsert(p);
+		
+		return p.getProject_id();
+		
+	}
+	
+	// 프로젝트 상세정보
+	public void setProjectDetail(P_DetailVo p) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		dao.setProjectDetail(p);;
+		
+	}
+	
+	// 프로젝트 + 기술
+	public void setProjectSkillList(List<P_SkillVo> p) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		dao.setProjectSkillList(p);;
+		
+	}
+	
+	// 프로젝트 맴버
+		public void setProjectMemberList(List<P_MemberVo> m) {
+			ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+			
+			dao.setProjectMemberList(m);;
+			
+		}
+	// ---------------------------------------------------------
+	
+	//프로젝트 추천리스트
+	public List<V_PjAdrField_Join_V_PDetail> getRcmProjectList(String member_id) {
+		/*
+			
+		 	1. 회원 정보 가져오기 ( skill, position, duration, 모집중)
+		 	2. 가져온 정보를 가공하기
+		 	3. 회원이 원하는 포지션의 자리가 있는 프로젝트를 먼저 걸름 -> p_membervo
+		 	4. 회원이 가지고 있는 기술을 하나라도 가지고있는 프로젝트를 걸름 -> p_skillvo테이블 사용해서 id뽑기
+		 	5. 회원이 원하는 기간을 하나라도 가지고있는 프로젝트를 걸름-> p_detailvo
+		 	6. 모집중인 프로젝트를 걸름 -> p_detail
+		 	7. 걸러진 리스트에서 중복되는 결과만 모음
+		 	8. 그중에서 대표스킬이 포함되어있는 프로젝트를 먼저 보여줌.
+		 	9. 또 그중에서 조회수가 높은걸 보여줌
+		 	
+		 	이후
+		 	
+		 	1. 필터링 결과가 9개 미만일때 처리 -> 모집중 , 포지션 , 기술 , 기간 중
+		 								  기간부터 하나씩 빼서 필터링하여 리스트가 9개 이상일때까지 반복
+		 	2. 비회원, 추가기입x 회원일경우 조회수 높은순으로 출력
+		 	3. 
+		*/
+		System.out.println("member_id : "+member_id);
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		
+		List<String> mposlist = dao.getFilteredMPosition(member_id);//포지션필터링 리스트
+		List<String> msklist = dao.getFilteredMSkill(member_id); // 스킬 필터링 리스트
+		List<String> mdulist =  dao.getFilteredMDuration(member_id); // 기간 필터링 리스트
+		List<String> reculist = dao.getFilteredRecruting(member_id); // 모집중 필터링 리스트
+		
+		map.put("reculist", reculist);
+		map.put("mposlist", mposlist);
+		map.put("msklist", msklist);
+		map.put("mdulist", mdulist);
+
+		List<V_PjAdrField_Join_V_PDetail> resultlist = new ArrayList<V_PjAdrField_Join_V_PDetail>();
+		List<String> filtered_list = new ArrayList<String>();
+		
+		if(mposlist !=null && msklist !=null && mdulist !=null && reculist !=null) {
+			if(mposlist.size()>0 && msklist.size()>0 && mdulist.size()>0 && reculist.size()>0) {
+				filtered_list =allFilteredList(map);
+				//보여줄 리스트가 9개보다 작을때
+				int count=0;
+				for(; filtered_list.size()<9; count++) {
+					System.out.println("결과값이 9보다작다. list.size : " + filtered_list.size());
+					if(count==0) {
+						map.remove("mdulist");
+					}else if(count==1) {
+						map.remove("msklist");
+					}else if(count==2) {
+						map.remove("mposlist");
+					}
+					else {
+						System.out.println("모집중이고 조회수 순으로 출력");
+						resultlist=getOrderedViewsList(null);
+						break;
+					}
+					filtered_list = allFilteredList(map);
+					
+				}
+				//msklist전까지만 필터링되었을때 -> 대표스킬로정렬하는 의미가 있다.
+				if(count<1) {
+					filtered_list = dao.getOrderedSkill(filtered_list, member_id);
+					resultlist=getOrderedViewsList(filtered_list);
+				}
+				//msklist이후라면 대표스킬로 정렬하는 의미가 없기때문에 
+				else {
+					resultlist=getOrderedViewsList(filtered_list);
+				}
+			}
+			else {
+				//Just 조회수 정렬
+				resultlist=getOrderedViewsList(null);
+			}
+		}
+		else {
+			//Just 조회수 정렬
+			resultlist=getOrderedViewsList(null);
+		}
+		return resultlist;
+	}
+	//조회수 순으로 리스트 출력(Just 조회수 정렬)
+	public List<V_PjAdrField_Join_V_PDetail> getOrderedViewsList(List<String> filtered_list) {
+		//모집중
+		//조회수
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+
+		List<V_PjAdrField_Join_V_PDetail> list = dao.getRecommList(filtered_list);
+		list = list.subList(0, 9);
+		return list;
+		
+	}
+	public List<String> allFilteredList(Map<String, List<String>> map) {
+		List<String> result = new ArrayList<String>();
+		for(String l : map.get("reculist")) {
+			//contains()를 이용하여 중복확인
+			if(map.get("mposlist") !=null) {
+				if(map.get("mposlist").contains(l)) {
+					System.out.println("mposlist 확인");
+					
+					
+					if(map.get("msklist") != null) {
+						if(map.get("msklist").contains(l)) {
+							System.out.println("msklist 확인");
+							
+							
+							if(map.get("mdulist") != null) {
+								if(map.get("mdulist").contains(l)) {
+									System.out.println("mdulist 확인");
+									result.add(l);
+								}
+							}
+							else {
+								result.add(l);
+							}
+						}
+					}
+					else {
+						result.add(l);
+					}
+				}
+			}
+			
+		}
+		return result;
+	}
 }

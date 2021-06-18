@@ -40,31 +40,17 @@ public class LoginController {
 	  
 	  @RequestMapping(value="checkLogin", method = RequestMethod.POST)
 	  public ModelAndView checkInfo(String username, HttpSession session) {
-		  
-		  
-		  System.out.println("탈퇴날짜 null, 닉네임 가져오기");
+
+
 		  HashMap<String, String> map = memberservice.getLoginedName(username);
-		  System.out.println(map.toString());
+
 		  memberservice.checkDeleteDate(String.valueOf(map.get("MEMBER_ID")));
-		  
 		  ModelMap mmp = new ModelMap();
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
-
-	  
+		  session.setAttribute("member_id", map.get("MEMBER_ID"));
+		  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  
 	  }
-	
-	  
-	  
-	  
-	  
-		/*
-		 * @RequestMapping(value="kakaologin.cy") public String
-		 * kakaoLogin(@RequestParam(value="code", required=false) String code) {
-		 * System.out.println("code : " + code);
-		 * 
-		 * return "Main/CycoMain"; }
-		 */
 
 }

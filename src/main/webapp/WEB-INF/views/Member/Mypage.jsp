@@ -8,10 +8,7 @@
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
 <c:set var="durations" value="${durations}" />
-
-<!-- 배열에서 값 뽑아내기 -->
-
-
+<c:set var="experiences" value="${experiences}" />
 
 
 
@@ -22,6 +19,8 @@
 <title>사이좋게 코딩하자</title>
 
 <link type="text/css" href="${pageContext.request.contextPath}/css/mypage.css" rel="stylesheet">
+
+
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
@@ -31,7 +30,7 @@
 		<div id="wrap">
 			<div id="profile_img">
 				<!-- <img src="assets/img/member_detail/cycoding_img.png"> -->
-				<img id ="target_img" src="${pageContext.request.contextPath}/resources/${member.MEMBER_IMAGE}">
+				<img id ="target_img" src="${pageContext.request.contextPath}/resources/upload/${member.MEMBER_IMAGE}">
 				<form action="editprofile" method="post" enctype="multipart/form-data" id="img_form">
 				<input type="hidden" id="id" name="id" value="${member.MEMBER_EMAIL}">
 				<input type="file" id="file" name="uploadFile" style="display:none;">
@@ -57,38 +56,45 @@
 					</p>
 					<input type="hidden" id="m_id" name="m_id"
 						value="${member.MEMBER_ID}">
-					<ul>
+              <ul>
 
-						<li class="itemlist"><span class="item">이메일</span><input
-							type="text" class="info" id="m_email"
-							value="${member.MEMBER_EMAIL}" readonly>
-							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
-						<li class="itemlist"><span class="item">비밀번호</span><input
-							type="password" class="info" value="password"
-							readonly>
-							<button type="button" class="modify_items m-btn">수정</button></li>
-						<li class="itemlist"><span class="item">닉네임</span><input
-							type="text" class="info" id="nick"
-							value="${member.MEMBER_NICKNAME}" readonly>
-							<button type="button" class="modify_items m-btn">수정</button></li>
-						<li class="itemlist"><span class="item">이름</span><input
-							type="text" class="info" value="${member.MEMBER_NAME}" readonly>
-							<button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
-						<li class="itemlist"><span class="item">휴대폰</span><input
-							type="text" class="info" value="${member.MEMBER_PHONE}" readonly>
-							<button type="button" class="modify_items m-btn">수정</button></li>
-						<li class="itemlist"><span class="item">포인트</span><input
-							type="text" class="info" value="${member.HAVE_POINT}점" readonly>
-							<button type="button" class="modify_items point-btn">충전</button></li>
+                  <li class="itemlist"><span class="item">이메일</span><input
+                     type="text" class="info" id="m_email"
+                     value="${member.MEMBER_EMAIL}" readonly>
+                     <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
+                  <li class="itemlist"><span class="item">비밀번호</span><input
+                     type="password" class="info" value="password"
+                     readonly>
+                     <button type="button" class="modify_items m-btn">수정</button></li>
+                  <li class="itemlist"><span class="item">닉네임</span><input
+                     type="text" class="info" id="nick"
+                     value="${member.MEMBER_NICKNAME}" readonly>
+                     <button type="button" class="modify_items m-btn">수정</button></li>
+                  <li class="itemlist"><span class="item">이름</span><input
+                     type="text" class="info" id="m_name" value="${member.MEMBER_NAME}" readonly>
+                     <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
+                  <li class="itemlist"><span class="item">휴대폰</span><input
+                     type="text" class="info" id="m_phone" value="${member.MEMBER_PHONE}" readonly>
+                     <button type="button" class="modify_items m-btn">수정</button></li>
+                  <li class="itemlist"><span class="item">포인트</span><input
+                     type="text" class="info" id="point" value="${member.HAVE_POINT}점" readonly>
+                     <a href="#point_modal" class="trigger-btn" data-toggle="modal"><button type="button" class="modify_items point-btn">충전</button></a></li>
 
-					</ul>
+               </ul>
+
 
 				</div>
 
 
 				<div id="info" class="details">
 					<p class="cycoder_title">DETAIL</p>
-					<p class="sub_title"></p>
+					<p class="sub_title">
+						<c:if test="${empty skills || empty experiences || empty position || empty durations}">
+						
+							모든 항목을 입력해야 프로젝트에 지원할 수 있어요!
+						
+						</c:if>
+					</p>
 
 					<div class="infolist">
 
@@ -144,41 +150,63 @@
 
 							<div class="detail_title">
 
-								<span class="item">프로젝트 경험여부</span>
+								<span class="item">프로젝트 경험</span>
 
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails experience"
+							<div class="moerdetails experience" id="exlistarea"
 								onclick="edit_modal('experience')">
 								<c:choose>
 
-
-
-
-									<c:when test="${empty skills}">
-
+									<c:when test="${empty experiences}">
 
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
 											<div class="insert experience" id="never">없음</div>
-											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
+											<a href="#m_experience" class="trigger-btn" data-toggle="modal">
 												<div class="insert experience" id="have">있음</div>
 											</a>
 										</div>
 
 
 									</c:when>
-									<c:otherwise>
+									<c:when test="${experiences eq 'none'}">
 
 										<div
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;" id="ex_toggle">
-											<div class="insert experience" id="never">없음</div>
-											<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience" id="have">있음</div>
-											</a>
+											<div class="info_tags experience" id="never" style="margin:10px auto">없음</div>
 										</div>
-
-
+									</c:when>
+									<c:otherwise>
+									
+									<div id="exlist">
+									
+									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+									<form action="ajax/updateexperiences" class="ex_edit_form">
+									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
+										<div class="ex_box" id="${experiences.ex_count}">
+										<div class="ex ex_titlebox">
+											<div id="exicons">
+												<i class="fas fa-edit edit_exbox"></i>
+												<i class="fas fa-eraser del_exbox"></i>
+											</div>
+										
+											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
+										</div>
+										<div class="ex"><input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
+										
+										</div>
+										</form>
+										</c:forEach>
+										
+										<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+												<div class="add experience" id="have">추가</div>
+											</a> 
+									</div>
+									
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -248,12 +276,10 @@
 											</a>
 										</c:forEach>
 
-
 									</c:otherwise>
 								</c:choose>
 							</div>
 						</div>
-
 
 					</div>
 
@@ -265,11 +291,7 @@
 			</div>
 		</div>
 
-
-
-
 	</main>
-
 
 	<!-- 기술 스택 모달창 -->
 	<div id="m_stat" class="modal fade">
@@ -289,7 +311,7 @@
 					</div>
 					<div id="buttonarea">
 						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button id="edit-btn">수정</button>
+							<button id="edit-btn" class="insert_ex">수정</button>
 						</a> <a href="#m_stat" class="trigger-btn" data-toggle="modal">
 							<button id="cancel">닫기</button>
 						</a>
@@ -298,6 +320,34 @@
 				</div>
 
 
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="m_experience" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">경험하신 프로젝트에 대해 알려주세요</p>
+				</div>
+				<div id="modal-body">
+
+					<div id="ex_contentarea">
+					
+				        <form class="ex_form" method="post" action="ajax/insertexperiences">
+				               
+				        </form>
+
+					</div>
+					<div id="buttonarea">
+						<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+							<button id="insert_ex" disabled>대기</button>
+						</a> <a href="#m_experience" class="trigger-btn" data-toggle="modal">
+							<button id="cancel">닫기</button>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -336,8 +386,38 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="point_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">POINT</p>
+				</div>
+				<div id="modal-body">
 
+					<div id="contentarea">
+					<ul id="pointlist">
+						<li><span class="pointicons"><i class="fas fa-coins"></i><span class="pointtext">   100P</span></span>
+							<label class="box-radio-input"><input type="radio" class="cp_item" name="cp_item" value="100"><span>5,000</span></label></li>
+						<li><span class="pointicons"><i class="far fa-money-bill-alt"></i><span class="pointtext">   300P</span></span>
+							<label class="box-radio-input"><input type="radio" class="cp_item" name="cp_item" value="300"><span>10,000</span></label></li>
+						<li><span class="pointicons"><i class="fas fa-money-bill-alt"></i><span class="pointtext">   450P</span></span>
+							<label class="box-radio-input"><input type="radio" class="cp_item" name="cp_item" value="450"><span>15,000</span></label></li> 
+						<li id="btnline"><a href="#point_modal" class="trigger-btn" data-toggle="modal"><button id="charge-btn">충전</button></a></li>                   
+                    </ul>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
+	
+<!-- 아임포트 js코드 -->
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=1"></script>
+		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=4"></script>
 </body>
 </html>

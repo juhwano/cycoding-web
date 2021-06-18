@@ -35,7 +35,7 @@ public class RegisterRestComtroller {
 	@RequestMapping(value="emailcheck.ajax", method=RequestMethod.GET)
 	public String checkEmail(String email) {
 		
-		System.out.println("This is checkEmail");
+		
 		String mail = email.replace("email=","").replace("%40","@");
 		
 		System.out.println("중복체크할 메일 : " + mail );
@@ -139,6 +139,7 @@ public class RegisterRestComtroller {
 		String result = "able";
 		
 		if(memberdao.checkNickName(nickName) != null) {
+			
 			result = "disable";
 		} else {
 			result = "able";

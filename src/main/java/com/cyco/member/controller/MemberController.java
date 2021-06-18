@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_MlistVo;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("member")
@@ -56,19 +59,25 @@ public class MemberController {
 			
 			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
 			
-			System.out.println("상세 페이지 보여줄 회원 이메일 : " + useremail);
-			
 			ModelMap mmp = new ModelMap();
 			
 			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));
+			
+			//리뷰목록
+			List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
+			
+			System.out.println("리뷰목록: " + memberdetailservice.getReviewList(memberid));
+			
+			JSONArray reviewList = JSONArray.fromObject(row_reviewList);
+			System.out.println("리뷰목록JSON: " + reviewList);
+			mmp.addAttribute("reviewList", reviewList);
+			
 			mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 			mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
-			
-			System.out.println(memberdetailservice.getMemberDetail(memberid));
-			System.out.println(memberdetailservice.getPreferSkills(useremail));
-			System.out.println(memberdetailservice.getPreferDurations(useremail));
+			mmp.addAttribute("experiences", memberdetailservice.getExperiences(useremail));
 			
 			return new ModelAndView("/Member/MemberDetail",mmp) ;
+
 		}
 }

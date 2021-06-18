@@ -433,10 +433,16 @@ body {
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important;
 }
-
+#replyHr{
+    margin: 1rem 0;
+    color: #C0A9BD;
+    background-color: currentColor;
+    border: solid;
+    opacity: 1;
+}
 hr {
     margin: 1rem 0;
-    color: inherit;
+    color: #C0A9BD;
     background-color: currentColor;
     border: 0;
     opacity: 0.25;
@@ -3213,7 +3219,7 @@ progress {
     font-weight: 400;
     line-height: 1.5;
     color: #4B5563;
-    background-color: #F9FAFB;
+    background-color: #FDFDFD;
     background-clip: padding-box;
     border: 0.0625rem solid #D1D5DB;
     -webkit-appearance: none;
@@ -3254,7 +3260,7 @@ progress {
 }
 
 .form-control:disabled, .form-control[readonly] {
-    background-color: #F3F4F6;
+    background-color: #FDFDFD;
     opacity: 1;
 }
 
@@ -4970,14 +4976,16 @@ textarea.form-control-lg {
 }
 
 .btn-outline-primary {
-    color: #242e4c;
-    border-color: #242e4c;
+    color: #ffffff;
+    background-color: #CA8FAB;
+    border-color: #CA8FAB;
+    line-height: 1;
 }
 
 .btn-outline-primary:hover {
     color: #ffffff;
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #C0A9BD;
+    border-color: #C0A9BD;
 }
 
 .btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
@@ -4987,8 +4995,8 @@ textarea.form-control-lg {
 .btn-check:checked + .btn-outline-primary,
   .btn-check:active + .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show {
     color: #ffffff;
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #C0A9BD;
+    border-color: #C0A9BD;
 }
 
 .btn-check:checked + .btn-outline-primary:focus,
@@ -5228,6 +5236,7 @@ textarea.form-control-lg {
 .btn-outline-danger {
     color: #dc3545;
     border-color: #dc3545;
+    line-height: 1;
 }
 
 .btn-outline-danger:hover {
@@ -5356,6 +5365,7 @@ textarea.form-control-lg {
 .btn-outline-black {
     color: #171f38;
     border-color: #171f38;
+    line-height: 1;
 }
 
 .btn-outline-black:hover {
@@ -7080,8 +7090,8 @@ textarea.form-control-lg {
 .page-item.active .page-link {
     z-index: 3;
     color: #ffffff;
-    background-color: #242e4c;
-    border-color: #242e4c;
+    background-color: #CA8FAB;
+    border-color: #CA8FAB;
 }
 
 .page-item.disabled .page-link {

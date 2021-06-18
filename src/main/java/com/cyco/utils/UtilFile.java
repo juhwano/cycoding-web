@@ -34,6 +34,10 @@ public class UtilFile {
 			
 			File f = new File(path);
 			
+			if(Filename == null) {
+				return null;
+			}
+			
 			// 파일 이름이 중복이면 _ 붙이기
 			if(Filename != null && !Filename.equals("") ) {
 				if(f.exists()) {
@@ -85,8 +89,7 @@ public class UtilFile {
 		String uploadpath = request.getSession().getServletContext().getRealPath("/");
 		System.out.println("uploadpath : " + uploadpath);
 		// 어떤 파일에 저장할것인지
-		//String attachpath = "upload/";
-		String attachpath = "resources/";
+		String attachpath = "resources/upload/";
 		
 		
 		return uploadpath + attachpath;

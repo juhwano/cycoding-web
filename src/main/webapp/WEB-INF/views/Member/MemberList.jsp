@@ -8,7 +8,7 @@
 	href="${pageContext.request.contextPath}/css/member.css?ver=1"
 	rel="stylesheet">
 </head>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <body>
 	<!-- http://localhost:8090/memberlist.cy -->
 
@@ -17,8 +17,9 @@
 		src="${pageContext.request.contextPath}/assets/img/ain_test/topBtn.png">
 
 	<div class="top_area">
-		<img id="memberListHeader"
-			src="${pageContext.request.contextPath}/assets/img/ain_test/MemberListHeader.png">
+		<div class="area-img">
+		<p>함께 할 <br> 팀원을 찾아보세요</p>
+      	</div>
 	</div>
 
 	<c:set var="memberList" value="${memberList}" />
@@ -81,7 +82,7 @@
 		</div>
 	</div>
 </body>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
+<jsp:include page="../include/footer.jsp"></jsp:include>
 <!-- MemberList Javascript -->
 <script
 	src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=2"></script>

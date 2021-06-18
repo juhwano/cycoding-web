@@ -8,19 +8,20 @@
 		inner join v_p_detail vpd
 		on p.project_id = vpd.project_id
 		<choose>
+			<!-- 완료상태를 제외한 전체 조회 -->
 			<when test='where == ""'>
 				where vpd.p_state not like '완료'
 			</when>
+			<!-- 완료상태만 조회 -->
 			<when test='where != "" and p_state =="완료"'>
 				${where}
 			</when>
+			<!-- 완료상태를 제외한 필터 조회 -->
 			<otherwise>
 				${where}
 				and vpd.p_state not like '완료'
 			</otherwise>
-		
 		</choose>
-		
 		order by vpd.p_state asc, vpd.p_date desc
 	</select>
 	
@@ -47,11 +48,7 @@
     </choose>
 	</select>
 	
-	<select id="getProjectMemberList">
-		select project_id, member_id, position_name  
-		from v_pm_position
-	</select>
-	
+	<!-- skill_code를 이용한 필터링 -->
 	<select id="getFilteredProjectSkillList" parameterType="string" resultType="string">
 		select project_id 
 		from p_skill
@@ -79,6 +76,7 @@
 		from v_psk_sk
 	</select>
 	
+	<!-- 전체프로젝트의 전체 구인중인 자리 수와 확정된 자리 수 -->
 	<select id="getPmemberCountList" parameterType="string" resultType="com.cyco.project.vo.PmemberCountVo">
 		select count(member_id)as m_count, count(*) as total_count, project_id
 		from p_member
@@ -90,7 +88,6 @@
 		group by project_id
 	</select>
 	
-
 	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
 
 		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
@@ -99,8 +96,173 @@
 	<select id="getDurationList" resultType="com.cyco.project.vo.P_DurationVO">
 		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
 	</select>
+
+	<!-- 프로젝트 상세 하나만 가져오기 -->
+	<select id="getOneProject" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="hashmap">
+		select p.project_id, p.member_id, m.member_nickname, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
+		from v_pj_adr_field p 
+		inner join v_p_detail vpd
+		on p.project_id = vpd.project_id
+		inner join member m
+		on p.member_id = m.member_id
+		where p.project_id = ${project_id}
+		order by vpd.p_state asc, vpd.p_date desc
+	</select>
+	
+		<!-- //프로젝트 상세에서 포지션 별 전체 자리수와 남은 자리수를 가져옴 -->
+	<select id="getPmemberCount" parameterType="string" resultType="com.cyco.project.vo.V_PmPostion_Count">
+		select count(member_id) as curr,count(*) as max,position_name ,position_id 
+		from v_pm_position
+		where project_id=${project_id}
+		group by position_name,position_id
+	</select>
+	
+		<!-- 프로젝트 멤버 검색. project_id를 통한 조건검색 가능 -->
+	<select id="getProjectMemberList" parameterType="string" resultType="com.cyco.project.vo.V_PmPosition">
+		select project_id, member_id, position_name,position_id
+		from v_pm_position
+		<if test='project_id !=""'>
+			where project_id='${project_id}'
+		</if>
+
+	</select>
+	
+
+	<!-- 프로젝트 생성  -->
+	<insert id="setProjectInsert">
+		 <selectKey keyProperty="project_id" resultType="String" order="BEFORE">
+		    select P_SEQ.nextval FROM DUAL 
+		  </selectKey>
+		insert into project (PROJECT_ID, MEMBER_ID,FIELD_CODE, ADR_CODE ) values (#{project_id}, #{member_id}, #{field_code}, #{adr_code})
+	</insert>
 	
 	
+	<insert id="setProjectDetail">
+		insert into P_DETAIL (PROJECT_ID,P_TITLE,P_IMAGE,DURATION_ID, P_CONTENT, P_STATE,P_VIEWS,P_DATE) values (#{project_id}, #{p_title}, #{p_image}, #{duration_id}, #{p_content}, '모집중', 0, sysdate)
+	</insert>
 	
+	<insert id="setProjectMemberList">
+		<foreach collection="list" item="member" open="INSERT ALL" close="SELECT * FROM DUAL">
+			into P_MEMBER (MEMBER_ID,PROJECT_ID, POSITION_ID) 
+			values (null, #{member.project_id}, #{member.position_id})
+		</foreach>
+	</insert>
+	
+	<insert id="setProjectSkillList">
+		<foreach collection="list" item="skill" open="INSERT ALL" close="SELECT * FROM DUAL">
+			into P_SKILL (PROJECT_ID, SKILL_CODE) 
+			values (#{skill.project_id}, #{skill.skill_code})
+		</foreach>
+	</insert>
+	<!-- 프로젝트 생성 -->
+	
+	<!-- 북마크목록 -->
+	<select id="getBookmarkList" resultType="com.cyco.common.vo.BookmarkVo">
+		SELECT * FROM BOOKMARK WHERE MEMBER_ID=${MEMBER_ID}
+	</select>
+	
+	<!-- 북마크테이블에 해당 데이터 존재 여부 확인 -->
+	<select id="checkBookMark" resultType="_int">
+		select count(*) from bookmark where project_id=${param1} and member_id=${param2}
+	</select>
+	
+	<!-- 북마크 추가 -->
+	<!-- 
+		<selectKey keyProperty="bookmark_id" resultType="String" order="BEFORE">
+		    select BK_SEQ.nextval FROM DUAL 
+		</selectKey>
+	 -->
+	<insert id="setBookMark">
+		insert into bookmark(bookmark_id, project_id, member_id) VALUES(BK_SEQ.nextval, ${project_id}, ${member_id})
+	</insert>
+	
+	<!-- 북마크 삭제 -->
+	<delete id="deletBookMark">
+		delete from bookmark where project_id=${param1} and member_id=${param2}
+	</delete>
+
+
+	<!-- 추천리스트 -->
+	<!-- 회원 포지션로 필터링 -->
+	<select id="getFilteredMPosition" parameterType="string" resultType="string">
+	select distinct project_id
+	from p_member
+	where position_id in (
+	    select position_id from m_detail
+	    where member_id=${project_id}) and member_id is null
+	order by project_id
+	
+	</select>
+	<!-- 회원 기술로 필터링 -->
+	<select id="getFilteredMSkill" parameterType="string" resultType="string">
+	select distinct project_id
+	from p_skill
+	where skill_code in (
+	    select skill_code from m_skill
+	    where member_id=${project_id} )
+	order by project_id
+	</select>
+	
+	<!-- 회원 선호기간로 필터링 -->
+	<select id="getFilteredMDuration" parameterType="string" resultType="string">
+	select project_id
+	from p_detail
+	where duration_id in (
+	    select duration_id from m_duration
+	    where member_id =${project_id}) 
+	    order by project_id
+	</select>
+	
+	<!-- 모집중으로 필터링 -->
+	<select id="getFilteredRecruting" parameterType="string" resultType="string">
+	select project_id
+	from p_detail
+	where p_state='모집중'
+	order by project_id
+	</select>
+	
+	<!-- 대표스킬 순으로 정렬 -->
+	<select id="getOrderedSkill" resultType="string">
+		select  distinct p.project_id, t.ms_count
+		from p_skill p
+		inner join (select skill_code, ms_count from m_skill
+		where member_id=${member_id})t
+		on p.skill_code = t.skill_code
+		where project_id in 
+			<foreach collection="filtered_list" item="item" index="index" separator="," open="(" close=")">
+				${item}
+	        </foreach>
+		order by t.ms_count, p.project_id
+	</select>
+	
+	<!-- 모집중으로 필터 + 조회수순으로 정렬 -->
+	<select id="getOrderedViews" resultType="string">
+		select project_id from p_detail
+		where p_state='모집중'
+			<if test="filtered_list != null">
+				and project_id in
+				<foreach collection="filtered_list" item="item" index="index" separator="," open="(" close=")">
+					${item}
+		        </foreach>
+			</if>
+		
+		order by p_views desc
+	</select>
+	
+	<select id="getRecommList" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="string">
+		select p.project_id, p.member_id, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
+		from v_pj_adr_field p 
+		inner join v_p_detail vpd
+		on p.project_id = vpd.project_id
+		where vpd.p_state like '모집중'
+		<if test="filtered_list != null">
+			and p.project_id in
+			<foreach collection="filtered_list" item="item" index="index" separator="," open="(" close=")">
+				${item}
+	        </foreach>
+		</if>
+		order by vpd.p_views desc
+	</select>
+	<!-- 추천리스트 -->
 	
 </mapper>

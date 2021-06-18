@@ -53,7 +53,7 @@
 	<div class="header_">
     <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-dark">
         <div class="container position-relaive">
-            <a class="navbar-brand me-lg-5" href="${pageContext.request.contextPath}/main.cy">
+            <a class="navbar-brand me-lg-5" href="${pageContext.request.contextPath}/main">
                 <img class="navbar-brand-dark" src="${pageContext.request.contextPath}/assets/img/brand/LOGO.svg" alt="Logo light">
             </a>
             <div class="navbar-collapse collapse me-auto" id="navbar_global">
@@ -61,7 +61,7 @@
                	<div class="navbar-collapse-header">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <a href="main.cy">
+                            <a href="/main">
                                 <img src="${pageContext.request.contextPath}/assets/img/brand/LOGO.svg" alt="Themesberg logo">
                             </a>
                         </div>
@@ -76,26 +76,26 @@
                 <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/#" class="nav-link" id="frontPagesDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="${pageContext.request.contextPath}/main" class="nav-link" >
                             HOME
                         </a>
                     </li>
                     
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/#" class="nav-link" id="dashboardDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="${pageContext.request.contextPath}/project/list" class="nav-link" >
                             PROJECT
                         </a>
                     </li>
                     
                     
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/memberlist.cy" class="nav-link" id="componentsDropdown" aria-expanded="false" data-bs-toggle="dropdown">
+                        <a href="${pageContext.request.contextPath}/member/list" class="nav-link" >
                             MEMBER
                         </a>
                     </li>
                     
                     <li class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/#" class="nav-link" data-bs-toggle="dropdown" id="supportDropdown" aria-expanded="false">
+                        <a href="${pageContext.request.contextPath}/board/list" class="nav-link">
                             COMMUNITY
                         </a>
                     </li>
@@ -177,17 +177,18 @@
 	                        	<!-- 드랍 박스 -->
 	                        	<div class="user_info" style="display:none">
 				 					<div class="mypage">
-				 					<a href="${pageContext.request.contextPath}/memberdetail/mypage?useremail=${LoginUser}">마이페이지</a>
-				 					
+				 					<%-- <a href="${pageContext.request.contextPath}/memberdetail/mypage?useremail=${LoginUser}">마이페이지</a> --%>
+				 					<a href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a>
+
 				 					</div>
 				 					
 				 					
 				 					<div class="Nav_Drop_A"><a href="">북마크</a></div>
 				 					<div class="Nav_Drop_A"><a href="">지원 내역</a></div>
-				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create?userId=${LoginUser}">프로젝트 생성하기</a></div>
+				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></div>
 								
                                   	
-				 					<div class="logout"><a href="logout">로그아웃</a></div>
+				 					<div class="logout"><a href="${pageContext.request.contextPath}/logout">로그아웃</a></div>
 				 				</div>
 	                        
 	                   	 </li>

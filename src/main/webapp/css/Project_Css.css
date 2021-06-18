@@ -122,7 +122,15 @@
 
 .number{
 	margin: 5px;
-	color: red;
+    color: red;
+    text-align: center;
+    border: none !important;
+    width: 20px !important;
+	
+}
+
+.number:hover{
+	background-color: #F9FAFB !important;
 }
 
 .Project_SelectBox{
@@ -302,7 +310,15 @@
 	font-size:16px;
 	padding:10px;
 	margin:10px;
-border-radius: 25px;
+    border-radius: 25px;
+}
+
+.tags > input{
+	text-align: center;
+	border: none;
+	width: 100%;
+	cursor: pointer;
+	background-color: #F9FAFB;
 }
 
 .tags:hover, .clicked:hover{
@@ -321,7 +337,13 @@ top:-5px;
 	text-align:center;
     border-radius: 25px;
 }
-
+.clicked >input{
+	text-align: center;
+	border: none;
+	width: 100%;
+	cursor: pointer;
+	background-color: #F9FAFB;
+}
 
 #buttonarea{
 	position:absolute;
@@ -354,5 +376,115 @@ top:-5px;
 	background-color: #c4c4c4;
 }
 
+.projectok_area{
+    width: 100%;
+    padding: 4.5rem 0;
+    background-color: #F9FAFB;
+    text-align: center;
+}
+
+.projectok_area_title{
+	font-size: 28px !important;
+	font-weight: bold !important;
+	
+}
+
+.projectok_area >p{
+    color: #737373;
+    font-size: 14px;
+}
+
+.projectok_area_icon > img{
+	width: 100px;
+}
+.MyProjectPage{
+    width: 30%;
+    color: #F9FAFB;
+    background-color: #C0A9BD;
+    border: 0.0625rem solid #D1D5DB;
+    margin: auto;
+    padding: 0.3rem;
+    cursor: pointer;
+}
+.MyProjectPage >a{
+	color: #F9FAFB;
+}
+
+.member_chois_title{
+	display: inline-block;
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+
+.member_allList{
+   
+    float: right;
+    cursor: pointer;
+   
+    line-height: 2.1875rem;
+    position: relative;
+    padding-right: .9375rem;
+}
+.member_allList >a{
+ 	color: #C0A9BD;
+ 	 font-weight: 500;
+ 	 font-size: 14px;
+}
+
+.m_container{
+	max-width: 1200px;
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+.m_img{
+	height: 120px;
+}
+
+.m_img >img {
+	height: 100%;
+	width: 100%;
+	filter: brightness(70%);
+	opacity: 0.5;
+}
 
 
+#card_section{
+	
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.cardNum {
+    width: 300px;
+    position: relative;
+    border: .0625rem solid #e1e1e1;
+    border-radius: .25rem;
+    background: #fff;
+    padding: 0;
+}
+
+.card-title{
+	margin: 0 0 10px 0;
+	font-size: 16px;
+}
+
+.card-text{
+	margin: 0;
+	font-size: .875rem;
+    color: #737373;
+}
+
+.card-tags{
+	text-align: left;
+    color: #94A7AE;
+    width: 125px;
+    font-size: 16px;
+    padding: 4px;
+    margin: 0;
+}
+.Project_card-body{
+	flex: 1 1 auto !important;
+    padding: 0.7rem 1rem 1rem 1rem !important;
+}

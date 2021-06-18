@@ -1,5 +1,4 @@
-
- let card;
+let card;
  let step=6;
  let start = 6;
  let count;
@@ -36,7 +35,6 @@
             },
             success:function(filtered_list){
                 project_list = JSON.parse(filtered_list);
-                console.log(project_list);
 
                 /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
                 $('#card_section').empty();
@@ -57,7 +55,6 @@
              data: {projectname:project_name},
              success:function(membercount_list){
                  project_list = JSON.parse(membercount_list);
-                 console.log(project_list);
                  
                  /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
                  $('.form-select').val('').prop('selected', true);
@@ -71,8 +68,6 @@
      
      /*더보기버튼 - 카드달아주는 함수 project_list : 프로젝트 리스트   current : 뿌려줄 시작 인덱스*/
      function moreBtn(project_list, current){
-         console.log("moreBtn clicked");
-         console.log(current)
          /* 프로젝트 리스트가 존재 할 때만 함수 실행*/
          if(!project_list.length>0){
              //리스트는 없는데 더보기버튼이 있으면 안되기때문에 none
@@ -89,8 +84,6 @@
              */
              for(start =current+step; current<start; current++){
                      
-                     console.log(current+": " + project_list[current]);
-                     console.log("이번 엔드포인트 : " + start)
                      
      card=		"	<!--	프로젝트카트	start	-->							"
      card+=		"	<div	class='col-12	col-md-6	col-lg-4	mb-5	cardNum'>					"
@@ -103,7 +96,21 @@
      card+=		"	<!--	프로젝트이미지	-->								"
      card+=		"	<div	class='m_img'>									"
      card+=		"	<div	class='m_img_top'>									"
-     card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
+     
+     console.log("로그인유저: " + loginuser);
+     /* 북마크 표시 */
+     if(loginuser != null) {/* 북마크 리스트가 있는 경우에만(로그인한 경우에만) */
+	     for(let i = 0; i < bookmark_list.length; i++) {
+				if(bookmark_list[i].project_id == project_list[current].project_id) {
+					card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+					break;
+				}else if(i=bookmark_list.length-1) {
+					card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
+				}
+			}
+	}
+    // card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
+     
      card+=		"	</div>										"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><img	class='m_img_size'	src='/assets/img/projectimg/"+project_list[current].p_image+"'></a>							"
      card+=		"	</div>										"
@@ -111,15 +118,15 @@
      card+=		"	<div	class='card-body'>									"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><h3	class='h5	card-title	mt-3'>"+project_list[current].p_title+"</h3></a>"
      card+=		"	<div	class='p_footer'>									"
-     card+=		"	<p	class='card-text	p_skill'>기술스택:"
+     card+=		"	<p	class='card-text	p_skill'>"
      
      /*기술스택, 모집인원 for문 시작*/
          for(let sk=0; sk<pjsk_list.length; sk++	){
              if(project_list[current].project_id == pjsk_list[sk].project_id){
-                 card+=pjsk_list[sk].skill_name;
+                 card+= " #" + pjsk_list[sk].skill_name;
              }
          }
-     card+=		"	</p>										"
+     card+=		"</p>										"
      card+=		"	<p	class='card-text	p_team_memNum'>모집인원:								"
      
          for(let mem=0; mem<membercount_list.length; mem++	){
@@ -136,7 +143,6 @@
      
                  /* card_section에 for문을 돌면서 card 추가 */
                  $('#card_section').append(card)
-                 console.log(current +" "+project_list.length)
                  
                  /* 
                      리스트의 마지막이라면 현재 index를 start변수에 넣고 
@@ -147,10 +153,7 @@
                          
                      }
                      if(current == project_list.length-1){
-                         console.log("마지막입니다.")
-                         console.log("current : " + current);
                          start=current;
-                         console.log("start : " + start);
                          $('#moreBtn').css('display', 'none');
                          break;
                      }
@@ -160,6 +163,7 @@
      /* 더보기버튼 */
      $('#moreBtn').click(function(){
          moreBtn(project_list,start)
+		
      })
      
      /* 이름으로 검색 : Enter키 눌리면 #searchIcon.click 이벤트 발생 */
@@ -182,14 +186,24 @@
          let field_code = $('#fieldSelect option:selected').val();
          let skill_code = $('#skillSelect option:selected').val();
          let p_state = $('#stateSelect option:selected').val();
-
-         console.log(adr_code);
-         console.log(field_code);
-         console.log(skill_code);
-         console.log(p_state);
          
          filter(adr_code, field_code, skill_code, p_state);
      });
      
+   var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+     
  })
- 
