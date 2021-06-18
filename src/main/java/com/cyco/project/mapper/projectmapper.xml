@@ -96,7 +96,6 @@
 	<select id="getDurationList" resultType="com.cyco.project.vo.P_DurationVO">
 		SELECT DURATION_ID , DURATION_DATE FROM P_DURATION
 	</select>
-	
 
 	<!-- 프로젝트 상세 하나만 가져오기 -->
 	<select id="getOneProject" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="hashmap">
@@ -156,6 +155,31 @@
 		</foreach>
 	</insert>
 	<!-- 프로젝트 생성 -->
+	
+	<!-- 북마크목록 -->
+	<select id="getBookmarkList" resultType="com.cyco.common.vo.BookmarkVo">
+		SELECT * FROM BOOKMARK WHERE MEMBER_ID=${MEMBER_ID}
+	</select>
+	
+	<!-- 북마크테이블에 해당 데이터 존재 여부 확인 -->
+	<select id="checkBookMark" resultType="_int">
+		select count(*) from bookmark where project_id=${param1} and member_id=${param2}
+	</select>
+	
+	<!-- 북마크 추가 -->
+	<!-- 
+		<selectKey keyProperty="bookmark_id" resultType="String" order="BEFORE">
+		    select BK_SEQ.nextval FROM DUAL 
+		</selectKey>
+	 -->
+	<insert id="setBookMark">
+		insert into bookmark(bookmark_id, project_id, member_id) VALUES(BK_SEQ.nextval, ${project_id}, ${member_id})
+	</insert>
+	
+	<!-- 북마크 삭제 -->
+	<delete id="deletBookMark">
+		delete from bookmark where project_id=${param1} and member_id=${param2}
+	</delete>
 
 
 	<!-- 추천리스트 -->

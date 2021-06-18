@@ -9,10 +9,9 @@
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
 <c:set var="durations" value="${durations}" />
-
+<c:set var="experiences" value="${experiences}" />
 <c:set var="reviewList" value="${reviewList}" />
 
-<!-- 배열에서 값 뽑아내기 -->
 
 <!DOCTYPE html>
 <html>
@@ -60,7 +59,7 @@
 							<div class="detail_title">
 								<span class="item">보유기술</span>
 							</div>
-							<!-- 스탯 입력 안 했으면 -->
+
 							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
 								<c:choose>
 									<c:when test="${empty skills}">
@@ -90,28 +89,49 @@
 
 						<div class="detail_section itmelist">
 							<div class="detail_title">
-								<span class="item">프로젝트 경험여부</span>
+
+								<span class="item">프로젝트 경험</span>
+
 							</div>
 							<!-- 스탯 입력 안 했으면 -->
 							<div class="moerdetails experience"
 								onclick="edit_modal('experience')">
 								<c:choose>
-									<c:when test="${empty skills}">
+									<c:when test="${empty experiences}">
+
 										<div id="ex_btn"
 											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
-											<div class="none experience" id="never">미입력</div>
+											<div class="none experience" id="never">없음</div>
 
 										</div>
 									</c:when>
 									<c:otherwise>
-										<div
-											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;"
-											id="ex_toggle">
-											<div id="ex_btn"
-												style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
-												<div class="none experience" id="never">미입력</div>
+
+									<div id="exlist">
+									
+									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+									<form action="ajax/updateexperiences" class="ex_edit_form">
+									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
+										<div class="ex_box" id="${experiences.ex_count}">
+										<div class="ex ex_titlebox">
+											<div id="exicons">
+												<i class="fas fa-edit edit_exbox"></i>
+												<i class="fas fa-eraser del_exbox"></i>
 											</div>
+										
+											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
 										</div>
+										<div class="ex"><input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
+										<div class="ex"><input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
+										
+										</div>
+										</form>
+										</c:forEach>
+
+									</div>
+
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -179,29 +199,39 @@
 					<p class="cycoder_title">REVIEW
 					<div class="reviewBox">
 					
-					<c:set var="last_flag" value="false"/>
+					<c:set var="last_flag" value="true"/>
 					<!-- list_size : reviewList의 크기 -->
 					<c:set var="list_size" value="${fn:length(reviewList)}"/>
+					
+					<!-- 리뷰가 1개도 없는 경우 문구 출력 -->
+					<c:if test="${list_size == 0}">
+						<div class="review_nothing">
+							<p> 아직 남겨진 리뷰가 없습니다. </p>
+						</div>
+					</c:if>
+					
 					<!-- 리뷰 리스트 뿌리기 -->
 						<c:forEach var="reviewList" items="${reviewList}" varStatus="status" begin="0" end="3">
-						
-						<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
-						<c:if test="${status.count eq list_size}">
-							<c:set var="last_flag" value="true"/>
-						</c:if>
-						<!-- 리뷰 start -->
-						<div class="col-12 reviews">
-							<h5 class="reviewWriter"><c:out value="${reviewList.member_nickname}" /></h5>
-							<div class="star-rate">
-								<c:forEach begin="1" step="1" end="${reviewList.review_grade}">
-									<i class="fas fa-star review-star"></i>
-								</c:forEach>
-								
-							</div>
-							<p class="review-content"><c:out value="${reviewList.review_content}" /></p>
-						</div>
+							<c:set var="last_flag" value="false"/>
+							<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
+							<c:if test="${status.count eq list_size}">
+								<c:set var="last_flag" value="true"/>
+							</c:if>
+							
+							<!-- 리뷰 start -->
+									<div class="col-12 reviews">
+										<h5 class="reviewWriter"><c:out value="${reviewList.member_nickname}" /></h5>
+										<div class="star-rate">
+											<c:forEach begin="1" step="1" end="${reviewList.review_grade}">
+												<i class="fas fa-star review-star"></i>
+											</c:forEach>
+											
+										</div>
+										<p class="review-content"><c:out value="${reviewList.review_content}" /></p>
+									</div>
 						</c:forEach>
 						<!-- 리뷰 end -->
+						
 					</div>
 					
 						<div class="moreSec">
@@ -227,6 +257,8 @@
 <script type="text/javascript">
 	/* js로 보내주기 */
 	var reviewList = ${reviewList};
+	
+	console.log(${fn:length(reviewList)});
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

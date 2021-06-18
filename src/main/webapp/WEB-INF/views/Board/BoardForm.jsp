@@ -22,23 +22,27 @@
     background-size: 100%;
     background-position: center;
 }
+textarea{
+	resize: none;
+	overflow-x:auto;
+}
 </style>
 <script>
 // 글쓰기 유효성검사
 function fn_formSubmit(){
-	var form = document.form;
-	
-	if (form.MEMBER_ID.value=="") {
-		alert("작성자를 입력해주세요.");
-		form.MEMBER_ID.focus();
-		return;
-	}
-	if (form.FREE_TITLE.value=="") {
+	var validateTITLE = document.form.FREE_TITLE.value.replace(/\s|　/gi, '');
+	var validateCONTENT = document.form.FREE_CONTENT.value.replace(/\s|　/gi, '');
+// 	if (form.MEMBER_ID.value=="") {
+// 		alert("작성자를 입력해주세요.");
+// 		form.MEMBER_ID.focus();
+// 		return;
+// 	}
+	if (validateTITLE == "") {
 		alert("글 제목을 입력해주세요.");
 		form.FREE_TITLE.focus();
 		return;
 	}
-	if (form.FREE_CONTENT.value=="") {
+	if (validateCONTENT == "") {
 		alert("글 내용을 입력해주세요.");
 		form.FREE_CONTENT.focus();
 		return;
@@ -122,33 +126,35 @@ function previewImage(targetObj, View_area) {
 <div class="container">
 	<div class="section-header"></div>
 	<br/><br/>
-	<div class="row">
-	<br/>
 	<form name="form" action="save" method="post" enctype="multipart/form-data" autocomplete="off">
-					<div><input type="text" name="MEMBER_ID" placeholder="닉네임" size="20" maxlength="20" value="<c:out value="${boardInfo.MEMBER_ID}"/>"></div>
-					<div><input type="text" name="FREE_TITLE" placeholder="제목을 입력해 주세요." size="60" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>"></div>
-					<br/> 
-					 <div class="editor_wrap">
-					 	<textarea name="FREE_CONTENT" placeholder="내용을 입력해 주세요." rows="13" cols="120"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea>
-					 </div>
-					
-						<c:forEach var="listview" items="${listview}" varStatus="status">
-							<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
-            				<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
-							<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
-						</c:forEach>					
-						
-						<input type="file" id="uploadfile" name="uploadfile" multiple="multiple" onchange="previewImage(this,'View_area')"/>
-						<div id='View_area' style='position:relative; width: 300px; height: 300px; color: black; border: 0px solid black; dispaly: inline; '></div>
-					 
-						<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>"> 
-	</form>	
-		<div class="text-right">
-			<a href="#" onclick="fn_formSubmit()" class="btn btn-outline-primary">등록</a>
-			<a href="#" onclick="history.back(-1)" class="btn btn-outline-default">취소</a>
+		<input type="hidden" name="MEMBER_ID" value="${sessionScope.member_id }">
+		<input type="hidden" name="FREE_ID" value="<c:out value="${boardInfo.FREE_ID}"/>">
+		<div class="form-group">
+			<label for="FREE_TITLE">제목</label>
+			<input type="text" id="FREE_TITLE" name="FREE_TITLE" class="form-control" placeholder="제목을 입력해 주세요." pattern=".{1,250}" maxlength="250" value="<c:out value="${boardInfo.FREE_TITLE}"/>">
 		</div>
-		
-	</div>
-	</div>
+		<br/>
+		<div class="form-group">
+			<label for="FREE_CONTENT">내용</label>
+			<textarea id="FREE_CONTENT" name="FREE_CONTENT" class="form-control" placeholder="내용을 입력해 주세요." rows="15" cols="120"><c:out value="${boardInfo.FREE_CONTENT}"/></textarea>
+		</div>
+		<br/>	
+		<div class="form-group">
+			<label for="fileno">첨부파일</label>
+			<c:forEach var="listview" items="${listview}" varStatus="status">
+				<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
+            	<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
+				<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
+			</c:forEach>		
+			<input type="file" id="uploadfile" name="uploadfile" class="form-control" multiple="multiple" onchange="previewImage(this,'View_area')"/>
+			<div id='View_area' style='position:relative; color: black; border: 0px solid black; dispaly: inline; '></div>
+		</div>
+		<br/>
+		<div class="text-right" style="margin-bottom:30px">			 
+			<a href="#" onclick="fn_formSubmit()" class="btn btn-outline-primary">등록</a>
+			<a href="list" class="btn btn-outline-black">취소</a>
+		</div>
+	</form>	
+</div>
 </body>
 </html>

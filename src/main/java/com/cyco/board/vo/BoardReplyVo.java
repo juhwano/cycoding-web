@@ -11,6 +11,8 @@ public class BoardReplyVo {
     private String REPLY_ID;
 //    댓글쓴이
     private String MEMBER_ID;
+//    	댓글쓴이 닉네임
+    private String MEMBER_NICKNAME;
 //    댓글 내용
     private String REPLY_CONTENT;
 //    댓글 작성일자

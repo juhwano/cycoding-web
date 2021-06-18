@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.common.vo.AdrVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PointVo;
@@ -74,6 +75,16 @@ public class ProjectController {
 		List<PmemberCountVo> membercount_list = service.getPmemberCountList();
 		JSONArray json_membercout_list = JSONArray.fromObject(membercount_list);
 		
+		//북마크 리스트
+		//유저가 로그인되어있으면 북마크 리스트 보내주기
+		if(session.getAttribute("member_id")!=null) {
+			List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+			JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
+			m.addAttribute("bookmark_list",bookmark_list);
+		}else {
+			List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
+			m.addAttribute("bookmark_list",x_bookmark_list);
+		}
 		
 		List<V_PjAdrField_Join_V_PDetail> rcm_list;
 		if(session.getAttribute("member_id")!=null) {

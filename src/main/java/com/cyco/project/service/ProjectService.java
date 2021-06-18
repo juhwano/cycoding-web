@@ -2,21 +2,16 @@ package com.cyco.project.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import com.cyco.common.vo.AdrVo;
-import com.cyco.common.vo.M_DetailVo;
-import com.cyco.common.vo.M_DurationVo;
-import com.cyco.common.vo.M_SkillVo;
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -193,6 +188,37 @@ public class ProjectService {
 		
 		return duration_list;
 	}
+	
+	//북마크 시작
+	//북마크리스트
+	public List<BookmarkVo> getBookmarkList(String memberid) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<BookmarkVo> bookmark_list = dao.getBookmarkList(memberid);
+		
+		return bookmark_list;
+	}
+	
+	//북마크 존재여부 확인
+	public int checkBookMark(String projectid, String memberid) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		int checkNum = dao.checkBookMark(projectid, memberid);
+		
+		return checkNum;
+	}
+	
+	//북마크 추가(insert)
+	public void setBookMark(BookmarkVo bookmark) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.setBookMark(bookmark);
+	}
+	
+	//북마크 삭제(delete)
+	public void deleteBookMark(String projectid, String memberid) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.deletBookMark(projectid, memberid);
+	}
+	
+	//북마크 끝
 	
 	//프로젝트 검색 - 제목으로만 검색
 	public List<V_PjAdrField_Join_V_PDetail> getSearchedProjectList(Map<String, String> projectname){

@@ -177,6 +177,7 @@ width:70px;*/
 	text-align:center;
 	font-weight:bold;
 	width:100%;
+	margin:0 !important;
 }
 .modal-login {
 	color: #636363;
@@ -205,7 +206,7 @@ width:70px;*/
 #modal-body{
 	overflow:auto;
 /* 	overflow-anchor: none; */
-	padding:30px;
+	padding:0 30px 30px 30px;
 }
 .modal-login .modal-footer {
 	background: #ecf0f1;
@@ -346,8 +347,6 @@ top:-5px;
 }
 
 /*여기까지 모달창*/
-
-
 
 .detail_section{
 	margin: 50px auto;
@@ -506,13 +505,159 @@ display: inline-block;
 
 }
 
-#ex{
-	text-align:right;
+.ex input{
+	border:none;
+	outline:none;
+	font-size:16px;
+	background-color: #F4F2F3;
+	width:350px;
 }
+
+
 #quit-btn{
 	border: 2px solid #F4F2F3;
 	background-color:white;
 	box-sizing: border-box;
 	color:#F4F2F3;
+}
+
+.ex_box{
+	margin:10px auto;
+	padding:10px 20px 20px 20px;
+	border:2px solid white;
+	font-size:14px;
+}
+
+.ex_box span{
+	font-weight:bold;
+}
+
+.ex_titlebox{
+	margin:10px auto;
+	text-align:left;
+	padding:0 150px;
+	display:flex;
 
 }
+
+.ex{
+	margin:10px auto;
+	text-align:left;
+	padding:0 150px;
+}
+
+.ex_count{
+	color:#CA8FAB;
+	font-size:21px;
+	margin-right:5px;
+}
+.ex_title{
+	font-size:16px;
+}
+
+.add{
+	text-align:center;
+		/*background-color:#F4F2F3;*/
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color:#94A7AE;	
+	width:80px;
+	height:40px;
+	font-size:14px;
+	padding:0 10px;
+	margin:20px auto;
+	line-height: 35px;	
+	}
+
+	.add:hover{
+		border: 2px solid #CA8FAB;
+		box-sizing: border-box;
+		color:#CA8FAB;
+	position:relative;
+	top:-5px;
+	
+	}
+
+	#exicons{
+		border:none;
+		outline:none;
+		color:#CA8FAB;
+		background: none;
+		position: relative;
+		top: -10px;
+	    right: -460px;
+	    font-size: 18px;
+	    width: 100px
+	}
+
+	.ex_mdf{
+		color:#94A7AE;
+		background-color:white !important;
+	}
+	
+#pointlist{
+	width:300px;
+	padding:0;
+	margin:auto;
+}
+#pointlist li{
+	padding:10px;
+	margin-bottom:5px;
+	display:flex;
+	justify-content: space-between;
+	width:300px;
+}
+
+#pointlist li .pointicons{
+	font-size:26px;
+	color:#94A7AE;
+	width:120px;
+}
+.pointicons .pointtext{
+	font-size:23px;
+	font-weight: 700;
+}
+label{
+	margin:0 !important;
+}
+.box-radio-input input[type="radio"]{
+  display:none;
+}
+
+.box-radio-input input[type="radio"] + span{
+  display:inline-block;
+  background:none;
+  border:2px solid #94A7AE; 
+  color:#94A7AE; 
+  padding:0px 10px;
+  text-align:center;
+  width:120px;
+  line-height:40px;
+  font-weight:500;
+  cursor:pointer;
+  margin:0;
+  height:100%;
+}
+
+.box-radio-input input[type="radio"]:checked + span{
+  border:1px solid #23a3a7;
+  background:#94A7AE;
+  color:#fff;
+}
+#btnline{
+	margin-top:20px;
+	text-align:center;
+}
+#btnline a{
+	    display:block;
+	margin:auto;
+}
+#charge-btn{
+	
+	background-color:#94A7AE;
+	color:#F4F2F3;
+	outline:none;
+	border:none;
+	width: 60px;
+    padding: 5px;
+}	

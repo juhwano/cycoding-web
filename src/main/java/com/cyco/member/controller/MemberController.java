@@ -75,7 +75,9 @@ public class MemberController {
 			mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 			mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
+			mmp.addAttribute("experiences", memberdetailservice.getExperiences(useremail));
 			
-			return new ModelAndView("/Member/MemberDetail",mmp);
+			return new ModelAndView("/Member/MemberDetail",mmp) ;
+
 		}
 }

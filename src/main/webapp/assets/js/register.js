@@ -75,7 +75,7 @@ function validation() {
     
     
     //비밀번호 일치 체크
-    $("#passwordC").keyup(function(){
+    $("#passwordC").on("input",function(){
         
         console.log("이벤트 발생");
         console.log("비밀번호 ", password);
@@ -350,7 +350,7 @@ function validation() {
             }
     
     
-            //비밀번호 일치 체크
+/*            //비밀번호 일치 체크
             if (password != passwordC) {
                  swal({
                     title: "비밀번호가 일치하지 않습니다",
@@ -361,7 +361,17 @@ function validation() {
                 $("#passwordC").focus();
                 checking = false;
                 return;
-            }
+            }*/
+            
+            if($("#pwdcCheck").text() != "✔ 비밀번호가 일치합니다"){
+				swal({
+                    title: "비밀번호가 일치하지 않습니다",
+                    icon: "error"
+                });
+                $("#passwordC").focus();
+                checking = false;
+                return;
+			}
     
             if (passwordC == "") {
     

@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -237,6 +236,36 @@ public class MemberDetailService {
 		return result;
 	}
 	
+	//프로젝트 경험 삭제하기
+	public String  deleteExperience(String ex_id, String memberid) {
+		
+		String result = "fail";
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		int row = memberdao.deleteExperience(ex_id, memberid);
+		
+		if(row > 0 ) {
+			result = "success";
+		}
+		return result;
+		
+	}
+	
+	//프로젝트 경험 업데이트 하기
+	public String updateExperiences(M_ExperienceVo mex) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.updateExperiences(mex);
+		
+		if(row > 0) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
 	//뷰단에서 변경한 포지션 업데이트
 	public String updatePosition(String memberid, String stat) {
 		
@@ -292,7 +321,7 @@ public class MemberDetailService {
 	}
 	
 	// 마이페이지에서 기입한 프로젝트 경험들 디비에 insert
-	public String insertExperiences(List<M_ExperienceVo> mex) {
+	public String insertExperiences(M_ExperienceVo mex) {
 		
 		String result = "fail";
 		
@@ -304,6 +333,28 @@ public class MemberDetailService {
 		}
 		
 		return result;
+	}
+	
+	//회원 추가정보 모두 기입시 최초 입력인지 체크해서 맞으면 포인트 지급
+	public String givePointFirstTime(String member_id) {
+		
+		String result = "fail";
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		if(memberdao.checkPoint(member_id) != null) {
+			
+			//포인트 컬럼에서 회원 아이디로 사용포인트, 보유포인트가 모두 0인지 확인했을 때 결과가 있으면 포인트 지급
+			int row = memberdao.givePointFirstTime(member_id);
+			
+			if(row > 0) {
+				result = "success";
+			}
+					
+		}
+		
+		return result;
+		
 	}
 	
 	//마이페이지에서 회원 탈퇴날짜 업데이트
@@ -333,5 +384,16 @@ public class MemberDetailService {
 		
 		return reviewList;
 	}	
+	
+	//포인트 충전하기
+	   public int chargePoint(String memberid, String point) {
+//	      1행리턴
+	      System.out.println("서비스 memberid: " +memberid);
+	      System.out.println("서비스 point : " +point);
+	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+	      int row = memberdao.chargePoint(memberid, point);
+	      System.out.println("서비스 row : " + row);
+	      return row;
+	   }
 
 }

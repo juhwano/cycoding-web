@@ -60,8 +60,6 @@ public class MemberService {
 	//로그인시 탈퇴날짜 체크
 	public void checkDeleteDate(String memeberid) {
 		
-		System.out.println("로그인 했으니까 탈퇴 무르기");
-		
 	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 	      memberdao.checkDeleteDate(memeberid);
 		
