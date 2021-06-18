@@ -10,30 +10,30 @@
 		</layout>
 	</appender>
 	
-	<!-- 날짜별 로그 파일 생성 -->
+	<!--  날짜별 로그 파일 생성 
     <appender name="springFile" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="	C:/Users/masta/Desktop/logs/log.log"/>  
+		<param name="file" value="	C:/log.log"/>  
 		<param name="Append" value="true"/>
-        <!-- param name="MaxFileSize" value="100MB"/ -->
-        <!-- param name="MaxBackupIndex" value="2"></param -->
+        param name="MaxFileSize" value="100MB"/
+        param name="MaxBackupIndex" value="2"></param
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %p [%C{10}] %m [%X{userId}]%n" />
         </layout>  
     </appender>
     
-    <!-- 날짜별 로그 파일 생성(에러만) --> 
+    날짜별 로그 파일 생성(에러만) 
     <appender name="errFile" class="org.apache.log4j.DailyRollingFileAppender"> 
     <param name="Threshold" value="ERROR" /> 
-    <param name="File" value="C:/Users/masta/Desktop/logs/error.log" />
+    <param name="File" value="C:error.log" />
      <param name="Append" value="true" />
-      <!-- param name="MaxFileSize" value="100MB"/ --> 
-      <!-- param name="MaxBackupIndex" value="2"></param -->
+      param name="MaxFileSize" value="100MB"/ 
+      param name="MaxBackupIndex" value="2"></param
        <param name="DatePattern" value="'.'yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">
          <param name="ConversionPattern" value="%d %5p [%C{1}] %m %n" />
           </layout>
-           </appender>
+           </appender> -->
 
 	<!-- Application Loggers -->
 	<logger name="com.cyco.main">

@@ -192,6 +192,7 @@ body{
 	text-align: center;
 }
 
+/* 추천리스트 */
 /* Swiper Css */
 .swiper-container {
   max-width: 1200px;
@@ -280,4 +281,27 @@ body{
     font-weight: 300;
     line-height: 1.6;
     position: relative;
+}
+/* 추천리스트 */
+
+.zerocontainer{
+	display:none;
+}
+.zerowrapper{
+	margin:auto;
+}
+#zerolist{
+	background: white;
+	height: 200px;
+    width: 100%;
+    border: solid #c0a9bd 2px;
+	
+}
+#zerolist > p{
+	font-size:25px;
+	font-family: var(--bs-font-sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    position:relative;
+    top:36%;
 }
