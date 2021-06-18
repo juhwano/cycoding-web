@@ -187,6 +187,11 @@
  	
  	<se:authorize access="hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
  		var bookmark_list = ${bookmark_list};
+ 		var loginuser = '${sessionScope.nickname}';
+ 	</se:authorize>
+ 	
+ 	<se:authorize access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+ 		var loginuser = null;
  	</se:authorize>
  
 </script>
