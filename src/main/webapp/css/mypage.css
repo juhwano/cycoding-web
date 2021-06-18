@@ -177,6 +177,7 @@ width:70px;*/
 	text-align:center;
 	font-weight:bold;
 	width:100%;
+	margin:0 !important;
 }
 .modal-login {
 	color: #636363;
@@ -205,7 +206,7 @@ width:70px;*/
 #modal-body{
 	overflow:auto;
 /* 	overflow-anchor: none; */
-	padding:30px;
+	padding:0 30px 30px 30px;
 }
 .modal-login .modal-footer {
 	background: #ecf0f1;
@@ -593,3 +594,70 @@ display: inline-block;
 		color:#94A7AE;
 		background-color:white !important;
 	}
+	
+#pointlist{
+	width:300px;
+	padding:0;
+	margin:auto;
+}
+#pointlist li{
+	padding:10px;
+	margin-bottom:5px;
+	display:flex;
+	justify-content: space-between;
+	width:300px;
+}
+
+#pointlist li .pointicons{
+	font-size:26px;
+	color:#94A7AE;
+	width:120px;
+}
+.pointicons .pointtext{
+	font-size:23px;
+	font-weight: 700;
+}
+label{
+	margin:0 !important;
+}
+.box-radio-input input[type="radio"]{
+  display:none;
+}
+
+.box-radio-input input[type="radio"] + span{
+  display:inline-block;
+  background:none;
+  border:2px solid #94A7AE; 
+  color:#94A7AE; 
+  padding:0px 10px;
+  text-align:center;
+  width:120px;
+  line-height:40px;
+  font-weight:500;
+  cursor:pointer;
+  margin:0;
+  height:100%;
+}
+
+.box-radio-input input[type="radio"]:checked + span{
+  border:1px solid #23a3a7;
+  background:#94A7AE;
+  color:#fff;
+}
+#btnline{
+	margin-top:20px;
+	text-align:center;
+}
+#btnline a{
+	    display:block;
+	margin:auto;
+}
+#charge-btn{
+	
+	background-color:#94A7AE;
+	color:#F4F2F3;
+	outline:none;
+	border:none;
+	width: 60px;
+    padding: 5px;
+}	

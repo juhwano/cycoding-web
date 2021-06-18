@@ -197,6 +197,16 @@
 		on r.writer_id = m.member_id
 		where review_member=${memberid}
 	</select>
+	
+	<update id="chargePoint">
+   update point 
+   set
+   have_point = have_point + ${param2} 
+   where member_id = ${param1}
+<!--    update point  -->
+<!--    set have_point = (select have_point from point where member_id= ${param1}) + ${param2}  -->
+<!--    where member_id = ${param1} -->
+   </update>
 
 	
 </mapper>

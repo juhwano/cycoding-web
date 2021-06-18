@@ -414,5 +414,24 @@ public class MyPageRestController {
 
 		return false;
 	}
+	
+	//컨트롤러
+	//  결제
+  @RequestMapping(value="chargePoint", method = RequestMethod.POST)
+  public String chargePoint(@RequestParam Map<String, String> data) {
+     
+     System.out.println(data.toString());
+     
+     int result = memberdetailservice.chargePoint(data.get("memberid"), data.get("point"));
+     
+     String msg = "fail";
+     
+     if(result > 0) {
+        msg = "success";
+     }
+        
+     return msg;
+     
+  }
 
 }
