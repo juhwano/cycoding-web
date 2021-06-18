@@ -403,7 +403,7 @@ function validation() {
                     $("#phoneCheck").text("✔ 사용 가능한 번호입니다");
                 } else {
 
-                    swal("사용할 수 없는 번호입니다." , "" ,"success");
+                    swal("사용할 수 없는 번호입니다." , "" ,"error");
                 }
             },
             error: function(error) {

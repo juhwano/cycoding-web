@@ -92,7 +92,6 @@ public interface MemberDao {
 	//마이페이지 회원 탈퇴시 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id);
 	
-	
 	//회원 상세 페이지 이메일 가져오기
 	public MemberVo getMemberDetail(String memberid);
 	

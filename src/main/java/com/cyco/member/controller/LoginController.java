@@ -48,7 +48,9 @@ public class LoginController {
 		  
 		  ModelMap mmp = new ModelMap();
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
+		  session.setAttribute("member_id", map.get("MEMBER_ID"));
 	  
+		  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  
 	  }

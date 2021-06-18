@@ -10,6 +10,7 @@
 <c:set var="icon" value='${mmp.icon}'></c:set>
 <c:if test="${msg!=null && url!=null }">
 <script>
+
 $(document).ready(function() {
 
 	console.log("리다이렉트 페이지");
@@ -25,6 +26,5 @@ $(document).ready(function() {
 });
 	
 			
-	    
 	</script>
 </c:if>

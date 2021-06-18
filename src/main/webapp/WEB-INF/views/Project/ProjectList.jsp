@@ -115,7 +115,7 @@
 						   <div class="m_img_top">
 						  	 <i class="far fa-heart bookmark" onclick='location.href="#"'></i>
 						   </div>
-                           <a href="/project/detail?project_id=${project.project_id}"><img class="m_img_size" src="${pageContext.request.contextPath}/assets/img/projectimg/${project.p_image}"></a>
+                           <a href="/project/detail?project_id=${project.project_id}"><img class="m_img_size" src="${pageContext.request.contextPath}/resources/upload/${project.p_image}"></a>
                         </div>
                        
                         <!-- 프로젝트이름, 주언어 -->

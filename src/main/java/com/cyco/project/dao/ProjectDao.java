@@ -1,13 +1,16 @@
 package com.cyco.project.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVo;
@@ -18,6 +21,7 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
+import com.cyco.project.vo.V_p_pd_Join_NameVo;
 
 
 public interface ProjectDao {
@@ -40,6 +44,9 @@ public interface ProjectDao {
 	//각 프로젝트의 기술스택 리스트 가져오기
 	public List<V_PjSk> getPjSkList();
 	
+	//조건 프로젝트의 기술스택 리스트 가져오기
+	public List<V_PjSk> getIfPjSkList(String project_id);
+	
 	//프로젝트 멤버의 남은 자리 개수를 담은 리스트 가져오기
 	public List<PmemberCountVo> getPmemberCountList(String project_id);
 	
@@ -61,6 +68,8 @@ public interface ProjectDao {
 	//포지션리스트
 	public List<P_DurationVO> getDurationList();
 	
+	//완료가 아닌 프로젝트가 있는지 확인
+	public int CheckProject(String member_id);
 	
 	// --------- 트랜잭션 처리  --------------
 	//프로젝트 insert
@@ -75,5 +84,36 @@ public interface ProjectDao {
 	// 프로젝트 스킬 insert
 	public void setProjectSkillList(List<P_SkillVo> s);
 	// -----------------------------------------
+	
+	// 프로젝트 지원체크  맴버아이디랑, 프로젝트 아이디 넣어야함
+	public int CheckProjectApply(ApplyVo apply);
+	
+	// 프로젝트를 만들었고 모집중인 것이 있는지 확인하는 쿼리
+	public int CheckProjectState(String member_id);
+	
+	// 프로젝트 지원내역
+	public int setProjectApply(ApplyVo apply);
+	
+	// 프로젝트 정보 가져오는데 코드로 말고 이름으로 변경해서 가져오기.
+	public V_p_pd_Join_NameVo getProjectJoinName(V_p_pd_Join_NameVo project);
+	
+	// 생성된 프로젝트 기술 스텍 가져오기
+	public List<SkillVo> getCreateProjectSkill(String project_id);
+	
+	// 생성된 프로젝트에서 없는 기술 스텍 가져오기
+	public List<SkillVo> getCreateNotInProjectSkill(String project_id);
+	
+	// --------- 트랜잭션 처리 ---------------------
+	// 프로젝트 update
+	public int updateProject(ProjectVo project);
+	
+	// 프로젝트 상세정보 update 
+	public int updateP_detail(P_DetailVo p_detail);
+	
+	// 프로젝트 스킬 삭제 
+	public int deleteP_skill(String project_id);
+	
+	// 위에 프로젝트 스킬 insert 도 같이 실행
+	// -------------------------------------------
 	
 }
