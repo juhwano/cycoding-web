@@ -104,11 +104,26 @@ $(document).ready(function() {
      
      //프로젝트 초대 보내기
      $("#confirm_inv").on("click",function(){
-
+	
+			var data = {
+				
+				code:"초대",
+				//sender:$("#current_id").val(),
+				receiver:$("#m_id").val()
+					
+			}
+			
+			console.log(data);
             
+            ws.send(JSON.stringify(data));
+
+            onMessage();
 		
 	});
+	
+	
 }); //document.ready 끝
+
 
 
   
