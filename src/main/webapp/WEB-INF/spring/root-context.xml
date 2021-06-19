@@ -77,6 +77,7 @@
    <mybatis-spring:scan base-package="com.cyco"/>
    <context:component-scan base-package="com.cyco"/>
    
+
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
                 <property name="annotationClass"
                         value="org.springframework.stereotype.Repository" />

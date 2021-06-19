@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 
 	//추가항목 기입 여부에 따라 문구 노출
 	$("#ex_toggle").on("click",function(){
@@ -1183,8 +1184,12 @@ function payment() {
    } else {
       var msg = '결제에 실패하였습니다.';
       msg += '에러내용 : ' + response.error_msg;
+      console.log(msg);
    }
 //    console.log("실행완료");
 });
 }
+
+
+
 

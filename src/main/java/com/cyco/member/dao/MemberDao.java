@@ -51,6 +51,9 @@ public interface MemberDao {
 	//로그인시 닉네임, 아이디값 메인으로 가져오기
 	public HashMap<String, String> getLoginedName(String memberemail);
 	
+	//로그인시 받은 알림 있는지 체크
+	public Integer getOldAlarm(String memberid);
+	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
 	
