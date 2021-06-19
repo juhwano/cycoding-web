@@ -419,5 +419,6 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=4"></script>
+		
 </body>
 </html>

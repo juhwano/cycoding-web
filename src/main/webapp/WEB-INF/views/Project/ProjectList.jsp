@@ -93,9 +93,12 @@
 				</div>
 			</div>
 			
-			<!-- 클래스명은 변경하면 안 됨 -->
+	<p id="wouldyoulike">이런 프로젝트는 어떠세요?</p>
+	<!-- 추천 리스트 박스 -->
+	<div id="slidewrapper">
+	<!-- 클래스명은 변경하면 안 됨 -->
 	<div class="swiper-container mySwiper">
-		<div>
+
 		<div class="swiper-wrapper">
 			<c:forEach var="rcm" items="${rcm_list}">
 			<div class="swiper-slide" >
@@ -109,18 +112,20 @@
 
                        
                         <!-- 프로젝트이름, 주언어 -->
+
 						<div class="card-body" id="backimg" style="background-image:url(${pageContext.request.contextPath}/assets/img/projectimg/${rcm.p_image})">
 							<a href="/project/detail?project_id=${rcm.project_id}"><h3 class="h5 card-title">${rcm.p_title}</h3></a>
-						<div class="p_footer">
-							<p class="card-text p_skill" >기술스택: 
+
+							<p class="card-text recommend_skill" >
 								<c:forEach var = "pjsk" items="${pjsk_list}" varStatus="status" > 
 									<c:if test="${pjsk.project_id eq rcm.project_id}">
-										${pjsk.skill_name}
+										#${pjsk.skill_name}
 									</c:if>
 								</c:forEach>
 								</p>
-							</div>
+							
 						</div>
+
 					</div>
 				</div>
 
@@ -129,13 +134,14 @@
 			</c:forEach>
 		</div>
 		
-		<!-- 네비게이션 -->
+
+		
+	</div>
+	<!-- 페이징 -->
+			<!-- 네비게이션 -->
 		 <div class="swiper-button-next"></div> <!-- 다음 버튼 (오른쪽에 있는 버튼) -->
 		 <div class="swiper-button-prev"></div> <!-- 이전 버튼 -->
-	
-		<!-- 페이징 -->
-		<div class="swiper-pagination"></div>
-		</div>
+	<div class="swiper-pagination"></div>
 	</div>
 			<div class="row mb-5" id="card_section">
 				<!-- 프로젝트카드  -->

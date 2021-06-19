@@ -63,6 +63,8 @@ public class MemberController {
 			
 			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));
 			
+			
+			System.out.println("상세 페이지 회원 " +memberdetailservice.getMemberDetail(memberid).toString());
 			//리뷰목록
 			List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
 			
@@ -76,6 +78,7 @@ public class MemberController {
 			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 			mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
 			mmp.addAttribute("experiences", memberdetailservice.getExperiences(useremail));
+			mmp.addAttribute("member_id",memberid);
 			
 			return new ModelAndView("/Member/MemberDetail",mmp) ;
 

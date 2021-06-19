@@ -193,13 +193,36 @@ body{
 }
 
 /* Swiper Css */
+
+#wouldyoulike{
+	color:#94A7AE;
+	font-weight: 900;
+    font-size: 21px
+	
+}
+#slidewrapper{
+	
+	max-width: 1200px;
+    height: 280px;
+    border: solid 2px #94A7AE;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom:10px;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1
+	
+}
+
 .swiper-container {
-  max-width: 1200px;
-  height: 280px;
-  margin-top:50px;
-  border: solid 2px;
-  border-radius: 26px;
-  border-color: #80808042;
+  max-width: 1100px;
+  height: 240px;
+  /* border-radius: 26px; */
+  margin-top:12px;
+  
 }
 
 .swiper-slide {
@@ -240,7 +263,14 @@ body{
 	background: black;
 }
 .swiper-pagination-bullet-active{
-	background: white!important;
+	background: #94A7AE!important;
+}
+
+.swiper-pagination{
+	left:50%;
+	bottom:-13px;
+	align-items: center;
+	height:30px;
 }
 /* Swiper Css */
 #rcmcard {
@@ -272,6 +302,7 @@ body{
     font-size: 1.25rem;
     font-weight: 600;
     position: relative;
+        letter-spacing: 3px;
 }
 #backimg p{
 	color: white;
@@ -280,4 +311,14 @@ body{
     font-weight: 300;
     line-height: 1.6;
     position: relative;
+
+}
+
+.card-body a{
+	position:relative;
+	top:45%;
+}
+.recommend_skill{
+	position:relative;
+	top:40%;
 }

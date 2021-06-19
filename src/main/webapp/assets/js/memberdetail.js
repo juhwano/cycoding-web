@@ -100,7 +100,15 @@ $(document).ready(function() {
 		console.log("더보기..하게해주세여..제발..")
          moreBtn(reviewList,start)
      })
+     
+     
+     //프로젝트 초대 보내기
+     $("#confirm_inv").on("click",function(){
 
+            
+		
+	});
 }); //document.ready 끝
+
 
   

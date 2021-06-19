@@ -28,14 +28,11 @@ public class MemberService {
 	public MemberVo getMember(String email) {
 	      
 	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-	      MemberVo m = memberdao.getMember(email);
+	      MemberVo m = memberdao.getMember(email);	      
 	      
-	      
-	      return m;
-	      
+	      return m;	      
 	}
-	
-	
+		
 	//회원가입
 	public int regist(MemberVo member) {
 	      
@@ -63,6 +60,17 @@ public class MemberService {
 	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 	      memberdao.checkDeleteDate(memeberid);
 		
+	}
+	
+	//로그인시 알림
+	public int getOldAlarm(String memeberid) {
+		int row = 0;
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		if(memberdao.getOldAlarm(memeberid) != null) {
+			row = memberdao.getOldAlarm(memeberid);
+		}
+		
+		return row;
 	}
 	
 
