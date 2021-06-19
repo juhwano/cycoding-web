@@ -1,12 +1,13 @@
 package com.cyco.member.controller;
 
+
 import java.util.HashMap;
-import java.util.List;
+
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class LoginController {
 		
 	
 	MemberService memberservice;
-	
+
 	@Autowired
 	public void setMemberService(MemberService memberservice) {
 		this.memberservice = memberservice;
@@ -40,14 +41,23 @@ public class LoginController {
 	  
 	  @RequestMapping(value="checkLogin", method = RequestMethod.POST)
 	  public ModelAndView checkInfo(String username, HttpSession session) {
-
-
+		  
 		  HashMap<String, String> map = memberservice.getLoginedName(username);
 
 		  memberservice.checkDeleteDate(String.valueOf(map.get("MEMBER_ID")));
 		  ModelMap mmp = new ModelMap();
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
-		  session.setAttribute("member_id", map.get("MEMBER_ID"));
+		  session.setAttribute("member_id", map.get("MEMBER_ID"));		 
+		  
+		  //로그인 했을 때 알림 받기 쿼리
+		  int row = memberservice.getOldAlarm(String.valueOf(map.get("MEMBER_ID")));
+		  
+		  if(row> 0) {
+			  String msg = map.get("MEMBER_NICKNAME")+"님께서 읽지 않은 메시지가 " + Integer.toString(row) +"건 있습니다";		  
+			  mmp.addAttribute("alarm", msg);
+		  }
+		  String msg = map.get("MEMBER_NICKNAME")+"님께서 읽지 않은 메시지가 " + Integer.toString(row) +"건 있습니다";		  
+		  mmp.addAttribute("alarm", msg);
 		  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  

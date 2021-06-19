@@ -28,7 +28,7 @@
 	<c:if test="${msg eq true }">
 	  <div class="projectok_area_icon"><img src="${pageContext.request.contextPath}/assets/img/project/ProjectCreateOk.png"></div>
 	  	 <p class="projectok_area_title">프로젝트가 생성되었습니다.</p>
-      	 <p>프로젝트를 함께 할 맴버를 모집하여 프로젝트를 진행해보세요!</p>
+      	 <p>프로젝트를 함께 할 멤버를 모집하여 프로젝트를 진행해보세요!</p>
       	 
       	 <div class="MyProjectPage"><a href="${pageContext.request.contextPath}/project/detail?project_id=${id}">내 프로젝트로 이동하기</a></div>
      </c:if> 	
@@ -41,7 +41,7 @@
 		<div class="m_container">
 			<div class="row mb-7" id="card_section">
 				<div class="member_chois">
-				<p class="member_chois_title">프로젝트를 함께할 맴버를 찾아보세요!</p>
+				<p class="member_chois_title">프로젝트를 함께할 멤버를 찾아보세요!</p>
 				<div class="member_allList">
 					<a href="${pageContext.request.contextPath}/member/list">전체보기 ></a>
 				</div>
@@ -82,9 +82,6 @@
 			});
 	}
 	
-	if("${authSession}" != "${session}"){
-		location.href = "/main";
-	}
 	
 </script>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>

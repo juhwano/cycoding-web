@@ -40,5 +40,11 @@
 	
 	</update>
 	
+	<select id="getOldAlarm" resultType="Integer">
+	
+		select member_id from ALARM where member_id=${memberid} and Alatm_OK=0
+	
+	</select>
+	
 
 </mapper>
