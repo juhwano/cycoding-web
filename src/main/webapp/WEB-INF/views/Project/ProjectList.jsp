@@ -222,8 +222,17 @@
 				</div>
 				<!-- 프로젝트카드end -->
 				</c:forEach>
-				
 
+
+		</div>
+		<div class="zerocontainer">
+			<div class="row " >
+			<div class="col-md-8 zerowrapper">
+			<blockquote class="blockquote text-center shadow" id=zerolist>
+				<p>원하시는 프로젝트를 찾을수 없네요...😥</p>
+			</blockquote>
+			</div>
+			</div>
 		</div>
 			<!-- 더보기버튼 -->
 			<!-- last_flag가  true면 버튼은 감춘다.-->

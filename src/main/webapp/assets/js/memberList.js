@@ -18,6 +18,9 @@ $(document).ready(function() {
          type: 'get',
          success: function(memberList) {
             console.log(memberList);
+			if(memberList.length>0){
+				$('#memberNickname').val('');
+				$('.zerocontainer').css('display', 'none');
 
             $.each(memberList, function(index, member) {
 	               let card = '<div class="cardNum">'
@@ -46,6 +49,10 @@ $(document).ready(function() {
                  endIndex = endIndex+indexStep;
             }
          }
+			else{
+				$('.zerocontainer').css('display', 'block');
+			}
+		}
 
       })
 
@@ -72,7 +79,9 @@ $(document).ready(function() {
          type: 'get',
          success: function(memberList) {
             console.log(memberList);
-
+			if(memberList.length>0){
+				$('.zerocontainer').css('display', 'none');
+				$('.m_sel').val('전체').prop('selected', true);
             $.each(memberList, function(index, member) {
                let card = '<div class="cardNum">'
 					 card += '<div class="card shadow">'
@@ -94,7 +103,10 @@ $(document).ready(function() {
             if (cardNum < endIndex) {
                $(".moreBtn").css('display', 'none');
             }
-
+			}
+			else{
+				$('.zerocontainer').css('display', 'block');
+			}
          }
 
       })

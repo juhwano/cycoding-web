@@ -75,6 +75,15 @@
 				</c:forEach>
 
 			</div>
+			<div class="zerocontainer">
+				<div class="row " >
+				<div class="col-md-8 zerowrapper">
+				<blockquote class="blockquote text-center shadow" id=zerolist>
+					<p>찾으시는 회원이 없네요...😥</p>
+				</blockquote>
+				</div>
+				</div>
+			</div>
 			<!-- 더보기버튼 -->
 			<div class="more_sec">
 				<button class="moreBtn" type="button">더보기</button>
