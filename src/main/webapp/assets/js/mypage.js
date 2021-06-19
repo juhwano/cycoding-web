@@ -1122,11 +1122,21 @@ function payment() {
    var name = $('input[id="m_name"]').val();
    var phone = $('input[id="m_phone"]').val();
    
+  if(money == 100){
+  	money = '5000';
+  } 
+  if(money == 300){
+  	money = '10000';
+  }
+  if(money == 450){
+  	money = '15000';
+  }
    
-   console.log(money);
-   console.log(email);
-   console.log(name);
-   console.log(phone);
+   
+   console.log('value값 : ' + money);
+   console.log('회원메일 : ' + email);
+   console.log('회원이름 : ' + name);
+   console.log('회원폰 : ' + phone); 
    
    let originalpoint = $("#point").val().replace("점","");
    let plus = $("input[name=cp_item]:checked").val();
@@ -1185,6 +1195,7 @@ function payment() {
       var msg = '결제에 실패하였습니다.';
       msg += '에러내용 : ' + response.error_msg;
       console.log(msg);
+      swal("실패", "결제에 실패하였습니다.", "error")
    }
 //    console.log("실행완료");
 });
