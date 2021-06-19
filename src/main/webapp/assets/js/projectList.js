@@ -165,9 +165,6 @@ let card;
                  }
      }
 
-     function zerolist(){
-		
-     }
      /* 더보기버튼 */
      $('#moreBtn').click(function(){
          moreBtn(project_list,start)
@@ -185,6 +182,11 @@ let card;
      $('#searchIcon').click(function(){
          //input태그의 값을 변수에 담에주고 search()함수 호출
          let project_name = $('#ProjectNameSearch').val();
+		if(project_name == ""){
+		 alert('검색어를 입력해주세요 😥')
+         $('#ProjectNameSearch').focus();
+         return;
+		}
          search(project_name);
      })
 
