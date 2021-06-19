@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.V_MlistVo;
 
@@ -16,10 +17,12 @@ import com.cyco.member.vo.V_MlistVo;
 @RequestMapping("member")
 public class MemberRestController {
 	MemberService memberservice;
+	MemberDetailService memberdetailservice;
 
 	@Autowired
-	public void setMemberService(MemberService memberservice) {
+	public void setMemberService(MemberService memberservice, MemberDetailService memberdetailservice) {
 		this.memberservice = memberservice;
+		this.memberdetailservice = memberdetailservice;
 	}
 
 
@@ -52,5 +55,14 @@ public class MemberRestController {
 		System.out.println("더보기버튼 restcontroller");
 		List<V_MlistVo> memberList = memberservice.memberList();
 		return memberList;
+	}
+	
+	//회원 초대 전에 초대할 프로젝트 있는지 확인
+	@RequestMapping(value = "ajax/checkprojectbeforeinvite", method = RequestMethod.POST)
+	public String checkProjectBeforeInvite(String member_id) {
+		
+		String p_title =memberdetailservice.checkProjectBeforeInvite(member_id);
+		
+		return p_title;
 	}
 }

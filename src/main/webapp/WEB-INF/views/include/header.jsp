@@ -185,6 +185,7 @@
 				 					
 				 					<div class="Nav_Drop_A"><a href="">북마크</a></div>
 				 					<div class="Nav_Drop_A"><a href="">지원 내역</a></div>
+				 					<div class="Nav_Drop_A" id="test">알림<!-- <a href="">지원 내역</a> --></div>
 				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></div>
 								
                                   	
@@ -237,15 +238,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
-	//웹소켓
-	var ws;
-	var logineduser = ${sessionScope.member_id}
-	console.log("헤더",logineduser)
-	
-	$(document).ready(function(){
-		openSocket();
-	});
-
 /* ==============================================
 Loader -->
 =============================================== */
@@ -292,9 +284,19 @@ $('#alram').click(function() {
 	}
 })
 
+//////////////////////////////////////////
 
+	$(document).ready(function(){
+		openSocket();
+	});
 
-function openSocket() {
+	//웹소켓
+	var ws;
+	var logineduser = ${sessionScope.member_id}
+	console.log("헤더",logineduser)
+	
+
+	function openSocket() {
 	console.log("함수 실행은 됩니까?")
 	/*var ws = new WebSocket("wss://localhost:8090/alarm/{code, sender, receiver}");   */
 	ws = new WebSocket("ws://localhost:8090/alarm/${sessionScope.member_id}");
@@ -313,26 +315,35 @@ function openSocket() {
 
 		};
 		
-		ws.onmessage = onMessage;
-		
-	}
-	
-	//서버에서 클라이언트로 메시지가 왔을 때 호출
-	 function onMessage(event) {
+		ws.onmessage = function(event) {
 
 		console.log(event.data)
 		alert("프로젝트에 초대되었습니다")
 
 	}
 	
-	ws.onclose = function(event){
+/* 	ws.onclose = function(event){
 	    console.log("연결 해제");
 	   // openSocket();
 
+	} */
 	}
 
 }
 
+    //프로젝트 초대 보내기
+    $("#test").on("click",function(){
+	
+			var data = {				
+				code:"초대",
+				receiver:$("#m_id").val()					
+			}
+			
+			console.log(data);
+           
+           ws.send(JSON.stringify(data));
+		
+	});
 
 </script>
 

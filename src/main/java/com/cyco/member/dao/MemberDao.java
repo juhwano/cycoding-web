@@ -127,5 +127,9 @@ public interface MemberDao {
 	
 	//회원 상세 페이지 리뷰목록 가져오기
 	public List<ReviewVo> getReviewList(String userid);
+	
+	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
+	public String checkProjectBeforeInvite(String memberid);
+	
 
 }

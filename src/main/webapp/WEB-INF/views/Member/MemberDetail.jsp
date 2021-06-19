@@ -268,15 +268,14 @@
 					<p id="modal-title">INVITATION</p>
 				</div>
 				<div id="modal-body">
-
+					<div id="inv_img"></div>
 					<div id="contentarea">
-					    <div id="joinimg">'1f91d'</div>
 						<p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p>
 					</div>
-					<div id="buttonarea">
+					<div id="inv_buttonarea">
 						
 						<a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
-							<button id="confirm_inv">초대</button>		
+							<button class="inv_btn" id="confirm_inv">초대</button>		
 						</a>
 					</div>
 
@@ -295,6 +294,49 @@
 	var reviewList = ${reviewList};
 	
 	console.log(${fn:length(reviewList)});
+
+	//웹소켓
+	var ws;
+	var logineduser = ${sessionScope.member_id}
+	console.log("헤더",logineduser)
+	
+
+	function openSocket() {
+	console.log("함수 실행은 됩니까?")
+	/*var ws = new WebSocket("wss://localhost:8090/alarm/{code, sender, receiver}");   */
+	ws = new WebSocket("ws://172.30.1.32:8090/alarm/${sessionScope.member_id}");
+	console.log(${sessionScope.member_id});
+
+	function open(){
+
+		//서버와 연결할 때 호출됨
+		ws.onopen = function(event) {
+			
+
+			if (event.data === undefined) {
+
+				return;
+			}	
+
+		};
+/* 		//서버에서 클라이언트로 메시지가 왔을 때 호출
+		ws.onmessage = function (event) {
+
+		console.log(event.data)
+		alert("프로젝트에 초대되었습니다")
+
+	} */
+	
+/* 	ws.onclose = function(event){
+	    console.log("연결 해제");
+	   // openSocket();
+
+	} */
+
+	}
+
+}
+	
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

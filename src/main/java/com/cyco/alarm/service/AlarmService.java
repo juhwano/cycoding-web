@@ -1,11 +1,11 @@
-package com.cyco.main.service;
+package com.cyco.alarm.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cyco.alarm.dao.AlarmDao;
 import com.cyco.common.vo.AlarmVo;
-import com.cyco.main.dao.AlarmDao;
 
 @Service
 public class AlarmService {

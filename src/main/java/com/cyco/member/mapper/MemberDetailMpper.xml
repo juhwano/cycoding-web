@@ -207,6 +207,12 @@
 <!--    set have_point = (select have_point from point where member_id= ${param1}) + ${param2}  -->
 <!--    where member_id = ${param1} -->
    </update>
+   
+   <select id="checkProjectBeforeInvite" resultType="String">
+   		select pd.p_title, p.project_id from project p left join p_detail pd
+		    on p.project_id=pd.project_id
+		    where p.member_id=${memberid}
+   </select>
 
 	
 </mapper>
