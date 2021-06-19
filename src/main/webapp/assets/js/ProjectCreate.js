@@ -13,7 +13,7 @@ $(function() {
 				}
 
 				if (memberNum == 10) {
-					swal("맴버는 10명이상의 구인이 불가능합니다.", "", "error");
+					swal("멤버는 10명이상 구인이 불가능합니다.", "", "error");
 				}
 
 			})
@@ -23,9 +23,14 @@ $(function() {
 				if (memberNum > 1) {
 					var DelNum = $('.project_boxdiv').last()[0].children[1].children[1];
 					
+					
+					
+					console.log(memberNum);
+					memberNum -= $(DelNum)[0].value;
+					
+					
 					$('.project_boxdiv').last().remove();
 					
-					memberNum -= $(DelNum).text();
 				}
 
 			})

@@ -29,16 +29,4 @@
 	<context:component-scan base-package="com.cyco.utils" />
 	<context:component-scan base-package="com.cyco.common" />	
 	
-	
-		<beans:bean id="chatHandler" class="com.cyco.main.controller.WebSocketHandler" />
-	<websocket:handlers>
-		<websocket:mapping handler="chatHandler" path="/chat-ws" />
-		<!-- 로그인 된 사용자를 알아내기 위해선 HttpSession이 필요해  handshake-interceptors 사용-->
-		<websocket:handshake-interceptors>
-	         <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-	      </websocket:handshake-interceptors>
-	</websocket:handlers>
-	
-	<default-servlet-handler />
-	
 </beans:beans>

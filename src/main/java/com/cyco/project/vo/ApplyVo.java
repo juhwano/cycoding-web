@@ -12,6 +12,4 @@ public class ApplyVo {
 	String apply_ok;
 	
 	
-	
-	
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.BookmarkVo;
@@ -16,6 +16,7 @@ import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVo;
@@ -26,6 +27,7 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
+import com.cyco.project.vo.V_p_pd_Join_NameVo;
 
 @Service
 public class ProjectService {
@@ -175,6 +177,13 @@ public class ProjectService {
 		return pjsk_list;
 	}
 	
+	public List<V_PjSk> getIfPjSkList(String projectID){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PjSk> pjsk_list = dao.getIfPjSkList(projectID);
+		
+		return pjsk_list;
+	}
+	
 	public List<PositionVo> getPositionList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		List<PositionVo> position_list = dao.getPositionList();
@@ -271,7 +280,17 @@ public class ProjectService {
 		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
 		return pmlist;
 	}
-
+	
+	//프로젝트 체크
+	public int CheckProject(String member_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CheckProject(member_id);
+		
+		return result;
+	}
+	
+	
 	// ----------------------------------------------------------
 	// 프로젝트 생성
 	public String setProjectInsert(ProjectVo p) {
@@ -307,6 +326,79 @@ public class ProjectService {
 			
 		}
 	// ---------------------------------------------------------
+
+  
+			
+	// 프로젝트 지원내역
+	public int CheckProjectApply(ApplyVo apply) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CheckProjectApply(apply);
+		
+		return result;
+	}
+	
+	// 프로젝트 지원내역
+	public int setProjectApply(ApplyVo apply) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.setProjectApply(apply);
+		
+		return result;
+	}
+	
+	// 만들어진 프로젝트 정보 가져오기
+	public V_p_pd_Join_NameVo getProjectJoinName(V_p_pd_Join_NameVo project) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		
+		V_p_pd_Join_NameVo result = dao.getProjectJoinName(project);
+		
+		return result;
+	}
+	
+	// 생성된 프로젝트 기술 스텍 가져오기
+	public List<SkillVo> getCreateProjectSkill(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<SkillVo> skill = dao.getCreateProjectSkill(project_id);
+		
+		return skill;
+	}
+	
+	// 생성된 프로젝트에서 없는 기술 스텍 가져오기
+	public List<SkillVo> getCreateNotInProjectSkill(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<SkillVo> skill = dao.getCreateNotInProjectSkill(project_id);
+		
+		return skill;
+	}
+	
+	
+	
+	// 프로젝트 업데이트
+	@Transactional
+	public int updateProject(ProjectVo project,P_DetailVo p_detail,List<P_SkillVo> skill) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		
+		// 프로젝트 업데이트
+		int result = dao.updateProject(project);
+		
+		// 프로젝트 상세정보 업데이트
+		dao.updateP_detail(p_detail);
+		
+		// 프로젝트 스킬도 여기서 같이 삭제
+		dao.deleteP_skill(project.getProject_id());
+		
+		// 프로젝트 스킬 insert
+		dao.setProjectSkillList(skill);
+		
+		return result;
+	}
+	
+
 	
 	//프로젝트 추천리스트
 	public List<V_PjAdrField_Join_V_PDetail> getRcmProjectList(String member_id) {
