@@ -63,31 +63,7 @@ function applyCancle(applyid) {
 			  if (willDelete) {
 				
 				/* 확인버튼 클릭시 북마크 delete 후 html 재로딩(비동기) */
-				$.ajax({
-		            url:'ajax/applyCancle?apply_id='+applyid,
-		            type: 'get',
-		            dataType:"text",
-		            success:function(result){
-		                apply_list = JSON.parse(result);
-		                
-		                $('.apply_table_sec').empty();
-		                
-		                
-		                $.each(apply_list, function(index, obj){
-							if(obj.p_state=='모집중' && obj.apply_ok==0) {
-							card +=	"	<tr>	"
-							card +=	"	<td><i class='fas fa-cut applyCancle' id='"+obj.apply_id+"'	"
-							card +=	"	onclick='지원취소함수가져오기'></i></td>	"
-							card +=	"	<td><a href='/project/detail?project_id="+obj.project_id+"'>"+obj.p_title+"</a></td>	"
-							card +=	"	<td>"+obj.apply_date.substring(2,10)+"</td>	"
-							card +=	"	<td><p class='state_ing'> 모집중 </p></td>	"
-							card +=	"	</tr>	"
-							}
-						})
-
-		                 $('.apply_table_sec').append(card);
-		            }
-				})
+				applyListReload(applyid);
 				
 			    swal("지원이 취소되었습니다.", {
 			      icon: "success",
@@ -97,3 +73,31 @@ function applyCancle(applyid) {
 			  }
 			});
 	}
+	
+function applyListReload(applyid) {
+	/* 확인버튼 클릭시 북마크 delete 후 html 재로딩(비동기) */
+				$.ajax({
+		            url:'ajax/applyCancle?apply_id='+applyid,
+		            type: 'get',
+		            dataType:"text",
+		            success:function(result){
+		                apply_list = JSON.parse(result);
+		                
+		                $('.apply_table_sec').empty();
+		                
+		                $.each(apply_list, function(index, obj){
+							if(obj.p_state=='모집중' && obj.apply_ok==0) {
+								card =	"	<tr>	"
+								card +=	"	<td><i class='fas fa-cut applyCancle' id='"+obj.apply_id+"'	"
+								card +=	"	onclick='applyCancle("+obj.apply_id+")'></i></td>	"
+								card +=	"	<td><a href='/project/detail?project_id="+obj.project_id+"'>"+obj.p_title+"</a></td>	"
+								card +=	"	<td>"+obj.apply_date.substring(2,10)+"</td>	"
+								card +=	"	<td><p class='state_ing'> 모집중 </p></td>	"
+								card +=	"	</tr>	"
+		                 		$('.apply_table_sec').append(card);
+							}
+						})
+
+		            }
+				});
+}

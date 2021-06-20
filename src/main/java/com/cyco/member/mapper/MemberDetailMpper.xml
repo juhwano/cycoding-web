@@ -230,6 +230,7 @@
 		join p_detail p 
 		on p.project_id = a.project_id
 		where a.member_id = ${member_id}
+		order by a.apply_date
    </select>
    
    <!-- 지원 취소 -->
