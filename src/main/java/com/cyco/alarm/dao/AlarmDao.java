@@ -11,7 +11,8 @@ public interface AlarmDao {
 	
 	//알림 헤더 메뉴에서 보여줄 것들
 	public List<AlarmVo> getNewAlarms(String memberid);
-	// 프로젝트 초대된 알림
-	//public List<HashMap<String, String>> getInvitations(String memberid);
+
+	//알림페이지에서 전체 알림
+	public List<AlarmVo> getAllAlarms(String useremail);
 
 }

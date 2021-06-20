@@ -29,7 +29,6 @@ public class MemberService {
 	      
 	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 	      MemberVo m = memberdao.getMember(email);	      
-	      System.out.println("서비스에서의 멤버 : " + m);
 	      return m;	      
 	}
 		

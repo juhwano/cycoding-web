@@ -52,5 +52,14 @@ public class AlarmService {
 		
 		return alarms;
 	}
+	
+	//알림페이지 초기 진입시 전체 알림 뿌려주기
+	public List<AlarmVo> getAllAlarms(String useremail){
+		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);	
+		
+		return alarms;
+	}
 
 }

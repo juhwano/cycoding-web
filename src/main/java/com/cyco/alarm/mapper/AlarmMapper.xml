@@ -19,4 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	</select>
 	
+			<select id="getAllAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
+
+			select a.ALARM_ID, a.MEMBER_ID, a.ALARM_CODE, a.ALARM_DATE, a.URL, a.ALARM_CONTENT, a.Alarm_OK 
+				from ALARM a left join Member m
+				on a.MEMBER_ID=m.MEMBER_ID 
+				where m.member_email=#{useremail} order by ALARM_DATE DESC
+
+	
+	</select>
+	
 </mapper>

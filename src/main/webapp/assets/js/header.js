@@ -71,7 +71,7 @@ function updatealarmlist(id){
 			
 			$(".susub").append(
         	
-        	 	"<li class='last'><a href='#'><button id='more'>더보기</button></a></li>"
+        	 	"<li class='last'><a href='/mypage/myalarm'><button id='more'>더보기</button></a></li>"
 
         		);
 		},

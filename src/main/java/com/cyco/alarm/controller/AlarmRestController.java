@@ -46,7 +46,7 @@ public class AlarmRestController {
 		return list;
 	}
 	
-	//알림 디비에 반영하기
+	//알림 발생시 디비에 반영하기
 	@RequestMapping(value="insertalarm", method= {RequestMethod.GET, RequestMethod.POST})
 	public Boolean insertAlarm(@RequestBody HashMap<String, String> data) {
 
@@ -58,10 +58,6 @@ public class AlarmRestController {
 		
 		return bo;
 	}
-	
-	//
-	
-	
 	
 	
 }
