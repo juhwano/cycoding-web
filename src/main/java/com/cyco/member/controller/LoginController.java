@@ -56,8 +56,6 @@ public class LoginController {
 			  String msg = map.get("MEMBER_NICKNAME")+"님께서 읽지 않은 메시지가 " + Integer.toString(row) +"건 있습니다";		  
 			  mmp.addAttribute("alarm", msg);
 		  }
-		  String msg = map.get("MEMBER_NICKNAME")+"님께서 읽지 않은 메시지가 " + Integer.toString(row) +"건 있습니다";		  
-		  mmp.addAttribute("alarm", msg);
 		  
 	  return new ModelAndView("Main/CycoMain",mmp);
 	  

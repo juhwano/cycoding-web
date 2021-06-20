@@ -41,13 +41,6 @@
 				<p>${member.MEMBER_NICKNAME}</p>
 			</div>
 
-			<div id="modals">
-				<ul>
-					<li>지원내역</li>
-					<li>프로젝트</li>
-				</ul>
-			</div>
-
 			<div id="detail_box">
 
 				<div id="persnal" class="details">

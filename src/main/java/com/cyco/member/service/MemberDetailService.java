@@ -399,11 +399,11 @@ public class MemberDetailService {
 	   }
 	   
 	   //회원상세 프로젝트 초대 모달 노출 전 초대할 프로젝트 있는지 확인
-	   public P_DetailVo checkProjectBeforeInvite(String memberid) {
+	   public List<P_DetailVo> checkProjectBeforeInvite(String memberid) {
 		   
 		   MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		   P_DetailVo p_detail = memberdao.checkProjectBeforeInvite(memberid);
-		   
+		   List<P_DetailVo> p_detail = memberdao.checkProjectBeforeInvite(memberid);
+
 		   return p_detail;
 	   }
 	   

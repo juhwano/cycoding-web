@@ -134,22 +134,22 @@ $(document).ready(function() {
 							
 						//프로젝트 초대 보내기
 					     $("#confirm_inv").on("click",function(){
-						
+
 								var data = {				
 									code:"PR_IN",
 									url:res.project_id,
-									receiver:$("#m_id").val(),
-									sender:logineduser					
+									//p_title:res.project_title,
+									member_id:$("#m_id").val(),
+									sender:logineduser,
+									content:loginednickname+"님이 회원님을 "+res.p_title+" 프로젝트에 초대하셨습니다"					
 								}
-								
-								var link = "/alram/inviteproject"
-								
+
 								console.log(data);
 					            //서버로 메시지 보내기
 					            ws.send(JSON.stringify(data));
 					            
 					            //디비에 반영
-					            insertAlarm(link, JSON.stringify(data));
+					            insertAlarm(JSON.stringify(data));
 							
 						});
 					}

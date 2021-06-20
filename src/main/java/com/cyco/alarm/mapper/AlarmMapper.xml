@@ -7,8 +7,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertAlarm">
 	
-		insert into alarm (ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url )
-    			values(ALM_SEQ.nextval, ${MEMBER_ID}, #{ALARM_CODE}, sysdate,${URL})	
+		insert into alarm (ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url, ALARM_CONTENT )
+    			values(ALM_SEQ.nextval, ${MEMBER_ID}, #{ALARM_CODE}, sysdate,${URL},#{ALARM_CONTENT})	
 	</insert>
+	
+		<select id="getNewAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
+
+			select *from (select ALARM_ID, MEMBER_ID, ALARM_CODE, ALARM_DATE, URL, ALARM_CONTENT from ALARM 
+		where member_id=${member_id} and Alarm_OK=0 order by ALARM_DATE DESC)where rownum &lt;= 5
+
+	
+	</select>
 	
 </mapper>

@@ -131,7 +131,7 @@ public interface MemberDao {
 	public List<ReviewVo> getReviewList(String userid);
 	
 	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
-	public P_DetailVo checkProjectBeforeInvite(String memberid);
+	public List<P_DetailVo> checkProjectBeforeInvite(String memberid);
 	
 
 }

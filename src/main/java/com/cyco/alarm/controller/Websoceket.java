@@ -14,16 +14,10 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.cyco.alarm.service.AlarmService;
-import com.cyco.alarm.vo.AlarmVo;
-import com.cyco.member.service.MemberDetailService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-
-import lombok.RequiredArgsConstructor;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -64,19 +58,13 @@ public class Websoceket {
         	System.out.println(jsonObj.toString());
         	
         	String code = (String)jsonObj.get("code");
-            String receiver = (String)jsonObj.get("receiver");
-            String url = (String)jsonObj.get("url");
-            
+            String receiver = (String)jsonObj.get("member_id");
             String msg = "";
-            String sender = (String)session.getUserProperties().get("currentId");
-         
+            String sender = (String)jsonObj.get("loginednickname");
+
             // 프로젝트에 초대됨
             if(code.equals("PR_IN")){
-            	
-            	//msg = sender + "님께서 회원님을 프로젝트에 초대하셨습니다";
-            	msg = "서버로부터";
-            	//alarmservice.insertAlarm(code, receiver, url);
-            
+
             	// 내 프로젝트에 누가 지원함
             } else if(code.equals("PR_A")) {
             	
@@ -113,13 +101,11 @@ public class Websoceket {
             //메시지 보내는 부분
             for(int i =0; i < sessionList.size(); i++) {
             	
-            	System.out.println("세션 " + sessionList.get(i).getUserProperties().get("currentId"));
-            	
               if(receiver.equals(sessionList.get(i).getUserProperties().get("currentId"))) {
             	  	
             	   System.out.println(sessionList.get(i).getUserProperties().get("currentId")+"에게 메시지 보내기");
-
-            		   session.getAsyncRemote().sendText(msg);               	
+            	   //sessionList.get(i).getAsyncRemote().sendObject(jsonObj);
+            	   sessionList.get(i).getAsyncRemote().sendText(jsonObj.toJSONString());
                }
             }
                     
