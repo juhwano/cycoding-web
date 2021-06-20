@@ -122,7 +122,11 @@ public class ProjectController {
 	@RequestMapping(value="create",method = RequestMethod.GET)
 	public String ProjectAdd(Model model, Authentication auth) {
 		
+		System.out.println("멤버 : " + auth.getName());
+		System.out.println(memberService.getMember(auth.getName()));
+		
 		MemberVo member = memberService.getMember(auth.getName());
+	
 		
 		int ProjectCount = service.CheckProject(""+member.getMEMBER_ID());
 		

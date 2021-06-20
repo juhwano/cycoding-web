@@ -208,6 +208,12 @@
 <!--    where member_id = ${param1} -->
    </update>
    
+   <select id="checkProjectBeforeInvite" resultType="com.cyco.project.vo.P_DetailVo">
+   		select pd.p_title, pd.project_id from project p left join p_detail pd 
+		    on p.project_id=pd.project_id 
+		    where p.member_id=${memberid} and pd.p_state='모집중'
+   </select>
+
    <!-- 북마크/지원목록 페이지 -->
    <!-- 북마크 목록 불러오기 -->
    <select id="getBookmarkList" resultType="com.cyco.common.vo.BookMark_Join_P_detailVo">
@@ -237,6 +243,7 @@
    <delete id="deleteApply">
    		delete from apply where apply_id = ${apply_id}
    </delete>
+
 
 	
 </mapper>

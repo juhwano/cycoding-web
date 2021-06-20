@@ -1,6 +1,7 @@
 package com.cyco.member.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,9 @@ import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.dao.ProjectDao;
+
 
 @Service
 public class MemberDetailService {
@@ -399,8 +402,16 @@ public class MemberDetailService {
 	      return row;
 	   }
 	   
+	   //회원상세 프로젝트 초대 모달 노출 전 초대할 프로젝트 있는지 확인
+	   public List<P_DetailVo> checkProjectBeforeInvite(String memberid) {
+		   
+		   MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		   List<P_DetailVo> p_detail = memberdao.checkProjectBeforeInvite(memberid);
+
+		   return p_detail;
+	   }
 	   
-	   
+ 
 	   	//북마크,지원목록 페이지
 	   	//북마크 목록 가져오기
 	   	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid) {
@@ -429,4 +440,5 @@ public class MemberDetailService {
 			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 			memberdao.deleteApply(applyid);
 		}
+
 }

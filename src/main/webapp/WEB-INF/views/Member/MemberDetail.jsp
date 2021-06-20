@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <c:set var="member" value="${aboutmember}" />
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
@@ -268,16 +265,15 @@
 					<p id="modal-title">INVITATION</p>
 				</div>
 				<div id="modal-body">
-
+					<div id="inv_img"></div>
 					<div id="contentarea">
-					    <div id="joinimg">'1f91d'</div>
-						<p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p>
+						<%-- <p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p> --%>
 					</div>
-					<div id="buttonarea">
+					<div id="inv_buttonarea">
 						
-						<a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
-							<button id="confirm_inv">초대</button>		
-						</a>
+						<!-- <a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
+							<button class="inv_btn" id="confirm_inv">초대</button>		
+						</a> -->
 					</div>
 
 				</div>
@@ -295,6 +291,7 @@
 	var reviewList = ${reviewList};
 	
 	console.log(${fn:length(reviewList)});
+
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

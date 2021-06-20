@@ -3,7 +3,12 @@ package com.cyco.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import com.cyco.alarm.service.AlarmService;
+import com.cyco.alarm.vo.AlarmVo;
+
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
+
 import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.utils.UtilFile;
@@ -34,10 +44,12 @@ import com.cyco.utils.UtilFile;
 public class MyPageController {
 	
 	MemberDetailService memberdetailservice;
+	AlarmService alarmservice;
 	
 	@Autowired
-	public void setMemberDetailService(MemberDetailService memberdetailservice) {
+	public void setMemberDetailService(MemberDetailService memberdetailservice, AlarmService alarmservice) {
 		this.memberdetailservice = memberdetailservice;
+		this.alarmservice = alarmservice;
 	}
 	
 	//마이페이지 진입시 비밀번호 체크 페이지
@@ -157,6 +169,18 @@ public class MyPageController {
 		
 	}
 	
+
+	@RequestMapping(value="myalarm",method=RequestMethod.GET)
+	public ModelAndView myAlarm(Authentication auth) {
+		
+		String useremail = auth.getName();
+		ModelMap mmp = new ModelMap();
+		
+		List<AlarmVo> list = alarmservice.getAllAlarms(useremail);	
+		mmp.addAttribute("alarmlist", list);
+
+		return new ModelAndView("/Member/MyAlarm",mmp);
+}
 	//북마크 페이지 이동
 	@RequestMapping(value="wishProject")
 	public String wishProject(Model m, HttpSession session) {
@@ -173,6 +197,7 @@ public class MyPageController {
 		m.addAttribute("apply_list",apply_list);
 		System.out.println("apply_list: " + apply_list);
 		return "/Member/wishProject";
+
 	}
 
 }
