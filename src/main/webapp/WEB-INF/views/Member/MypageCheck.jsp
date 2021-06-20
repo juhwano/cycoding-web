@@ -4,8 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
 <link type="text/css" href="${pageContext.request.contextPath}/css/mypageCheck.css" rel="stylesheet">
 </head>
 <!-- 스프링 시큐리티 설정 -->

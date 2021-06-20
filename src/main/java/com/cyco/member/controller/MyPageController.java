@@ -3,6 +3,7 @@ package com.cyco.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cyco.common.vo.Apply_Join_P_datailVo;
+import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.utils.UtilFile;
@@ -152,6 +155,24 @@ public class MyPageController {
 		
 		return new ModelAndView("/Member/Charge",mmp);
 		
+	}
+	
+	//북마크 페이지 이동
+	@RequestMapping(value="wishProject")
+	public String wishProject(Model m, HttpSession session) {
+		
+		//북마크리스트 불러오기
+		List<BookMark_Join_P_detailVo> bookmark_list = null;
+		bookmark_list = memberdetailservice.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+		
+		m.addAttribute("bookmark_list",bookmark_list);
+		
+		//지원목록리스트 불러오기
+		List<Apply_Join_P_datailVo> apply_list = null;
+		apply_list = memberdetailservice.getApplyList(String.valueOf(session.getAttribute("member_id")));
+		m.addAttribute("apply_list",apply_list);
+		System.out.println("apply_list: " + apply_list);
+		return "/Member/wishProject";
 	}
 
 }

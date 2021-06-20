@@ -183,8 +183,7 @@
 				 					</div>
 				 					
 				 					
-				 					<div class="Nav_Drop_A"><a href="">북마크</a></div>
-				 					<div class="Nav_Drop_A"><a href="">지원 내역</a></div>
+				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></div>
 				 					<div class="Nav_Drop_A"><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></div>
 								
                                   	

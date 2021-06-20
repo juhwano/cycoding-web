@@ -80,14 +80,18 @@ public class ProjectController {
 		
 		//북마크 리스트
 		//유저가 로그인되어있으면 북마크 리스트 보내주기
-		if(session.getAttribute("member_id")!=null) {
+		/*if(session.getAttribute("member_id")!=null) {*/
 			List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+			if(raw_bookmark_list.isEmpty()) {
+				raw_bookmark_list.add(new BookmarkVo(0, "0", "0"));
+				System.out.println("비어있나요 " + raw_bookmark_list);
+			}
 			JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
 			m.addAttribute("bookmark_list",bookmark_list);
-		}else {
-			List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
-			m.addAttribute("bookmark_list",x_bookmark_list);
-		}
+			/*
+			 * }else { List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
+			 * m.addAttribute("bookmark_list",x_bookmark_list); }
+			 */
 		
 		List<V_PjAdrField_Join_V_PDetail> rcm_list;
 		if(session.getAttribute("member_id")!=null) {

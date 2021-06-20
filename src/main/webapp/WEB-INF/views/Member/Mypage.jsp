@@ -421,4 +421,5 @@
 		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=4"></script>
 		
 </body>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 </html>
