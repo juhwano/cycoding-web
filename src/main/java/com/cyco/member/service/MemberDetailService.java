@@ -1,6 +1,7 @@
 package com.cyco.member.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.project.vo.P_DetailVo;
 
 @Service
 public class MemberDetailService {
@@ -397,12 +399,12 @@ public class MemberDetailService {
 	   }
 	   
 	   //회원상세 프로젝트 초대 모달 노출 전 초대할 프로젝트 있는지 확인
-	   public String checkProjectBeforeInvite(String memberid) {
+	   public P_DetailVo checkProjectBeforeInvite(String memberid) {
 		   
 		   MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		   String p_title = memberdao.checkProjectBeforeInvite(memberid);
+		   P_DetailVo p_detail = memberdao.checkProjectBeforeInvite(memberid);
 		   
-		   return p_title;
+		   return p_detail;
 	   }
-
+	   
 }

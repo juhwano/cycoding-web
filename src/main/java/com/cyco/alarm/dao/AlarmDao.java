@@ -1,6 +1,6 @@
 package com.cyco.alarm.dao;
 
-import com.cyco.common.vo.AlarmVo;
+import com.cyco.alarm.vo.AlarmVo;
 
 public interface AlarmDao {
 	

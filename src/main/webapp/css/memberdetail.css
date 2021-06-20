@@ -504,3 +504,12 @@ ul {
 	padding:5px;
 	
 }
+.modal-content{
+	    margin-top: 40%;
+}
+.modal.show .modal-dialog{
+	height: 800px;
+}
+#modal-dialog modal-login{
+	height:800px;
+}

@@ -2,6 +2,7 @@ package com.cyco.member.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
+import com.cyco.project.vo.P_DetailVo;
 
 
 @Repository
@@ -129,7 +131,7 @@ public interface MemberDao {
 	public List<ReviewVo> getReviewList(String userid);
 	
 	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
-	public String checkProjectBeforeInvite(String memberid);
+	public P_DetailVo checkProjectBeforeInvite(String memberid);
 	
 
 }

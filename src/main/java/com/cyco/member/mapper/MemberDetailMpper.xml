@@ -208,10 +208,10 @@
 <!--    where member_id = ${param1} -->
    </update>
    
-   <select id="checkProjectBeforeInvite" resultType="String">
+   <select id="checkProjectBeforeInvite" resultType="com.cyco.project.vo.P_DetailVo">
    		select pd.p_title, p.project_id from project p left join p_detail pd
 		    on p.project_id=pd.project_id
-		    where p.member_id=${memberid}
+		    where p.member_id=${memberid} and pd.p_state='진행중'
    </select>
 
 	

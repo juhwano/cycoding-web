@@ -3,13 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cyco.main.dao.AlarmDao">
+<mapper namespace="com.cyco.alarm.dao.AlarmDao">
 	
 	<insert id="insertAlarm">
 	
 		insert into alarm (ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url )
-    			values(ALM_SEQ.nextval, ${MEMBER_ID}, #{ALARM_CODE}, sysdate,${url});
-	
+    			values(ALM_SEQ.nextval, ${MEMBER_ID}, #{ALARM_CODE}, sysdate,${URL})	
 	</insert>
 	
 </mapper>

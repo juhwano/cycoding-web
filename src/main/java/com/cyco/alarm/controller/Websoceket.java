@@ -14,17 +14,23 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.cyco.alarm.service.AlarmService;
+import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.member.service.MemberDetailService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+import lombok.RequiredArgsConstructor;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 
 @Controller
-@ServerEndpoint(value="/alarm/{logineduser}")
+@ServerEndpoint(value="/websocket/{logineduser}")
 public class Websoceket {
 	
 	private static final List<Session> sessionList = new ArrayList<Session>();
@@ -32,14 +38,11 @@ public class Websoceket {
 
     //Controller 어노테이션 때문에 자동으로 객체 생성
     public Websoceket() {
-    	System.out.println("WebSocket 객체 생성");  	
+    	System.out.println("WebSocket 객체 생성");
+    	
     }
-    
-    //웹소켓이 연결되었을 때 호출
-	// 웹소켓의 Session 객체는 웹의 Session객체와 다르다
-	// 브라우저에서 소켓 접속하면 생성되는 객체로 브라우저가 웹소켓에 접속했을 때의 커넥션 정보가 있다
+
     @OnOpen
-    //public void onOpen(Session session, @PathParam("code")String code, @PathParam("sender")String sender, @PathParam("receiver")String receiver) {
     public void onOpen(Session session, @PathParam("logineduser")String logineduser) {	    	
 
 		session.getUserProperties().put("currentId",logineduser);
@@ -50,7 +53,7 @@ public class Websoceket {
   
     // 웹소켓으로 메시지가 오면 호출되는 함수
     @OnMessage
-    public void onMessage(Session session, String message) throws JsonParseException, JsonMappingException, IOException {  	
+    public void onMessage(String message, Session session) throws JsonParseException, JsonMappingException, IOException {  	
         
         try {
         	
@@ -62,25 +65,17 @@ public class Websoceket {
         	
         	String code = (String)jsonObj.get("code");
             String receiver = (String)jsonObj.get("receiver");
+            String url = (String)jsonObj.get("url");
             
             String msg = "";
             String sender = (String)session.getUserProperties().get("currentId");
-            /*
-            프로젝트에 초대되었습니다.	PR_IN	프로젝트
-            내 프로젝트 지원자가 있습니다	PR_A	회원
-            프로젝트에 참여가 승인되었습니다.	PR_S	프로젝트
-            프로젝트에 참여가 거절되었습니다.	PR_F	프로젝트
-            프로젝트의 상태가 변경되었습니다.(모집,진행,종료)	PR_UP	프로젝트
-            님이 나에게 후기를 남겼습니다.	MY_RV	후기
-            님과 1대1 대화에 초대되었습니다	CHAT_O	쪽지 수신함
-            내 질문에 답변이 달렸습니다.	QNAR	QnA게시판
-            */
-            
+         
             // 프로젝트에 초대됨
             if(code.equals("PR_IN")){
             	
-            	msg = sender + "님께서 회원님을 프로젝트에 초대하셨습니다";
-            	
+            	//msg = sender + "님께서 회원님을 프로젝트에 초대하셨습니다";
+            	msg = "서버로부터";
+            	//alarmservice.insertAlarm(code, receiver, url);
             
             	// 내 프로젝트에 누가 지원함
             } else if(code.equals("PR_A")) {
@@ -123,9 +118,8 @@ public class Websoceket {
               if(receiver.equals(sessionList.get(i).getUserProperties().get("currentId"))) {
             	  	
             	   System.out.println(sessionList.get(i).getUserProperties().get("currentId")+"에게 메시지 보내기");
-                	
-            	  	session.getAsyncRemote().sendText(msg); 
-                	
+
+            		   session.getAsyncRemote().sendText(msg);               	
                }
             }
                     
