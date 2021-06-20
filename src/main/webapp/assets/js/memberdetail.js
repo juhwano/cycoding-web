@@ -101,29 +101,65 @@ $(document).ready(function() {
          moreBtn(reviewList,start)
      })
      
-     
-     //프로젝트 초대 보내기
-     $("#confirm_inv").on("click",function(){
-	
-			var data = {
-				
-				code:"초대",
-				//sender:$("#current_id").val(),
-				receiver:$("#m_id").val()
-					
-			}
+     //프로젝트 초대 모달창 띄우기 전에 로그인 유저가 초대할 프로젝트가 있는지 확인
+     $("#invitation").on("click",function(){
 			
-			console.log(data);
-            
-            ws.send(JSON.stringify(data));
-
-            onMessage();
-		
-	});
+			$.ajax({
+				
+				url:"ajax/checkprojectbeforeinvite",
+				data:{member_id : logineduser},
+				dataType:"json",
+				type:"post",
+				success:function(res){
+					console.log(res)
+					
+					if(res.p_title == undefined){
+						
+						$("#contentarea").empty();
+						$("#contentarea").append("<p>아직 초대하실 프로젝트가 없습니다</br>"+$("#cycoder p").text()+"님과 함께 할 프로젝트를 만들어보세요!</p>");
+						
+						$("#inv_buttonarea").empty();
+						$("#inv_buttonarea").append("<a href='/project/create'><button class='inv_btn' id='create_p'>프로젝트 생성하러 가기</button></a>");
+						
+					} else{
+						$("#contentarea").empty();
+						$("#contentarea").append(
+							"<p>"+$("#cycoder p").text()+"님을<br/>"+res.p_title+" 프로젝트에 초대하시겠습니까?</p>");
+							
+						$("#inv_buttonarea").empty();
+						$("#inv_buttonarea").append(
+							'<a href="#invitation_modal" class="trigger-btn" data-toggle="modal">'
+							+'<button class="inv_btn" id="confirm_inv">초대</button></a>');
+							
+							
+						//프로젝트 초대 보내기
+					     $("#confirm_inv").on("click",function(){
+						
+								var data = {				
+									code:"PR_IN",
+									url:res.project_id,
+									receiver:$("#m_id").val(),
+									sender:logineduser					
+								}
+								
+								var link = "/alram/inviteproject"
+								
+								console.log(data);
+					            //서버로 메시지 보내기
+					            ws.send(JSON.stringify(data));
+					            
+					            //디비에 반영
+					            insertAlarm(link, JSON.stringify(data));
+							
+						});
+					}
+				},
+				error:function(xhr){
+					console.log(xhr);
+				}
+				
+			});
 	
-	
+	}); 
+     
 }); //document.ready 끝
-
-
-
-  

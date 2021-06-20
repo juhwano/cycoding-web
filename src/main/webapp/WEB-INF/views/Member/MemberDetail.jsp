@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <c:set var="member" value="${aboutmember}" />
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
@@ -268,16 +265,15 @@
 					<p id="modal-title">INVITATION</p>
 				</div>
 				<div id="modal-body">
-
+					<div id="inv_img"></div>
 					<div id="contentarea">
-					    <div id="joinimg">'1f91d'</div>
-						<p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p>
+						<%-- <p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p> --%>
 					</div>
-					<div id="buttonarea">
+					<div id="inv_buttonarea">
 						
-						<a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
-							<button id="confirm_inv">초대</button>		
-						</a>
+						<!-- <a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
+							<button class="inv_btn" id="confirm_inv">초대</button>		
+						</a> -->
 					</div>
 
 				</div>
@@ -295,6 +291,78 @@
 	var reviewList = ${reviewList};
 	
 	console.log(${fn:length(reviewList)});
+
+
+	
+
+	$(document).ready(function(){
+		openSocket();
+	});
+
+	//웹소켓
+	var ws;
+	var logineduser = ${sessionScope.member_id}
+	console.log("헤더",logineduser)
+	
+
+	function openSocket() {
+	console.log("함수 실행은 됩니까?")
+	/*var ws = new WebSocket("wss://localhost:8090/alarm/{code, sender, receiver}");   */
+	ws = new WebSocket("ws://localhost:8090/websocket/${sessionScope.member_id}");
+	console.log(${sessionScope.member_id});
+
+	function open(){
+
+		//서버와 연결할 때 호출됨
+		ws.onopen = function(event) {
+			
+
+			if (event.data === undefined) {
+
+				return;
+			}	
+
+		};
+		
+		ws.onmessage = function(event) {
+
+		console.log(event.data)
+		alert("프로젝트에 초대되었습니다")
+
+	}
+	
+ 	ws.onclose = function(event){
+	    console.log("연결 해제");
+	    openSocket();
+
+	}
+
+}
+
+}
+	
+	//알림 보내고 디비에 반영하는 함수
+	function insertAlarm(link, data){
+		
+		$.ajax({
+			
+			url:link,
+			type:"post",
+			dataType:"json",
+			data:data,
+			dataType:"text",
+			contentType: "application/json; charset=utf-8;",
+			success:function(res){
+				console.log(res)
+			},
+			error:function(xhr){
+				console.log(xhr)
+			}
+			
+
+});
+		
+	}	
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>
