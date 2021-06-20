@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.Apply_Join_P_datailVo;
+import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -19,6 +21,7 @@ import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.project.dao.ProjectDao;
 
 @Service
 public class MemberDetailService {
@@ -395,5 +398,35 @@ public class MemberDetailService {
 	      System.out.println("서비스 row : " + row);
 	      return row;
 	   }
-
+	   
+	   
+	   
+	   	//북마크,지원목록 페이지
+	   	//북마크 목록 가져오기
+	   	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid) {
+		   MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		   List<BookMark_Join_P_detailVo> bookmark_list = memberdao.getBookmarkList(memberid);
+		   
+		   return bookmark_list;
+	   	}
+	   
+	   	//북마크 삭제(delete)
+		public void deleteBookMark(String projectid, String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.deletBookMark(projectid, memberid);
+		}
+		
+		//지원목록 가져오기
+		public List<Apply_Join_P_datailVo> getApplyList(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<Apply_Join_P_datailVo> apply_list = memberdao.getApplyList(memberid);
+			
+			return apply_list;
+		}
+		
+		//지원 취소
+		public void deleteApply(String applyid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.deleteApply(applyid);
+		}
 }

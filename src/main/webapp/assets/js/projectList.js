@@ -104,12 +104,11 @@ let card;
 				if(bookmark_list[i].project_id == project_list[current].project_id) {
 					card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
 					break;
-				}else if(i=bookmark_list.length-1) {
+				} else if(i==bookmark_list.length-1) {
 					card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
 				}
 			}
 	}
-    // card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
      
      card+=		"	</div>										"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><img	class='m_img_size'	src='/assets/img/projectimg/"+project_list[current].p_image+"'></a>							"

@@ -10,7 +10,7 @@
 	href="${pageContext.request.contextPath}/css/ProjectList.css"
 	rel="stylesheet">
 <!-- 북마크 -->
-<script type="text/javascript" src="/assets/js/bookmark.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bookmark.js?ver=1"></script>
 </head>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>

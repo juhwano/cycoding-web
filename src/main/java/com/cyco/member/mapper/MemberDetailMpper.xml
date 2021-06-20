@@ -207,6 +207,35 @@
 <!--    set have_point = (select have_point from point where member_id= ${param1}) + ${param2}  -->
 <!--    where member_id = ${param1} -->
    </update>
+   
+   <!-- 북마크/지원목록 페이지 -->
+   <!-- 북마크 목록 불러오기 -->
+   <select id="getBookmarkList" resultType="com.cyco.common.vo.BookMark_Join_P_detailVo">
+	   	select p.project_id, p.p_title, p.p_state, b.member_id
+		from bookmark b
+		join p_detail p
+		on p.project_id = b.project_id
+		where b.member_id = ${member_id}
+   </select>
+   
+   <!-- 북마크 제거 -->
+	<delete id="deletBookMark">
+		delete from bookmark where project_id=${param1} and member_id=${param2}
+	</delete>
+
+	<!-- 지원목록 불러오기 -->
+	<select id="getApplyList" resultType="com.cyco.common.vo.Apply_Join_P_datailVo">
+		select a.apply_date, a.apply_id, p.project_id, p.p_title, p.p_state, a.member_id, a.apply_ok
+		from apply a
+		join p_detail p 
+		on p.project_id = a.project_id
+		where a.member_id = ${member_id}
+   </select>
+   
+   <!-- 지원 취소 -->
+   <delete id="deleteApply">
+   		delete from apply where apply_id = ${apply_id}
+   </delete>
 
 	
 </mapper>
