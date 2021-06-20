@@ -187,14 +187,16 @@
 										<div class="sub">
 										<ul>											
 											<li><a href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a></li>
-											<li><a href="">북마크/지원내역</a></li>
+											<li><a href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
 											
 											
 												<li><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>	
 												<li><a href="">진행중인 프로젝트</a></li>	
+												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 											<li class="subdrop"><a href="">알림</a>
 												<ul class="susub"></ul>
 											</li>
+											
 											
 										</ul>
 										</div>
@@ -267,19 +269,15 @@
 /* ==============================================
 Loader -->
 =============================================== */
-
 $(function() {
     $("#preloader").on(500).fadeOut();
     $(".preloader").on(600).fadeOut("slow");
 	$('.loader-container').addClass('done');
 	$('.progress-br').addClass('done');	 
 });
-
-
 /* ==============================================
 Loader -->
 =============================================== */
-
 // 회원 정보
 $('#info').click(function() {
 	var toggle = $('.user_info').attr('style');
@@ -295,7 +293,6 @@ $('#info').click(function() {
 		
 	}
 })
-
 $('#alram').click(function() {
 	var toggle = $('.Alram_box').attr('style');
 	var infotoggle = $('.user_info').attr('style');
@@ -314,15 +311,12 @@ $('#alram').click(function() {
 	var logineduser = "${sessionScope.member_id}";
 	var loginednickname = "${sessionScope.nickname}"
 	var wsurl = "ws://localhost:8090/websocket/${sessionScope.member_id}"	
-
 	function openSocket() {
 	/*var ws = new WebSocket("wss://localhost:8090/alarm/{code, sender, receiver}");   */
 	ws = new WebSocket(wsurl);
 	console.log("웹소켓 파라미터로 넘기는 회원번호 ",${sessionScope.member_id});
 	let logineduser = "${sessionScope.member_id}";
-
 	function open(){
-
 		//서버와 연결할 때 호출됨
 		ws.onopen = function(event) {
 			if (event.data === undefined) {
@@ -339,15 +333,12 @@ $('#alram').click(function() {
 		updatealarmlist(logineduser);
 		changeBell_New();
 		
-
 	}		
 	 	ws.onclose = function(event){
 		    console.log("연결 해제");
 		    
 		    openSocket();
-
 	}
-
 }
 	
 	//알림 보내고 디비에 반영하는 함수
@@ -367,7 +358,6 @@ $('#alram').click(function() {
 			error:function(xhr){
 				console.log(xhr)
 			}			
-
 		});
 		
 	}
@@ -389,9 +379,7 @@ $('#alram').click(function() {
 			console.log($(this));
 			
 			$(this).find(".sub").slideDown();
-
 			$(this).parent().hover(function(){
-
 			}, function(){
 				$(this).find(".sub").slideUp();
 			})
@@ -405,9 +393,7 @@ $('#alram').click(function() {
 		$(".subdrop").hover(function(){
 			
 			$(this).find(".susub").slideDown();
-
 			$(this).hover(function(){
-
 			}, function(){
 				$(this).find(".susub").slideUp();
 			})
