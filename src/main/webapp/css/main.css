@@ -209,12 +209,12 @@
 .alarm_content{
 	font-size:12px;
 }
-.susub li:last-child{
+/* .susub li:last-child{
 	background-color:#94A7AE;
 }
 .susub li:last-child:hover{
 	background-color:#94A7AE;
-}
+} */
 #more{
 	background-color:#94A7AE;
 	height:100%;

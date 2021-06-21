@@ -114,58 +114,109 @@ $(document).ready(function() {
 
 	});
 
-
-
 });//document ready 끝
 
 
 function addNewAlarm(message) {
 	console.log(message);
 	swal("새 알림이 도착했습니다","","info");
-	setTimeout("location.reload()", 15000)
-
+	//setTimeout("location.reload()", 15000)
 	
-/*
+	let newalarm = $("#alarmsub").children(":first").children().children();
+
 	//날짜 얻기
 	var now = new Date();
-	var year = now.getFullYear();
-	var month = now.getMonth() + 1;    //1월이 0으로 되기때문에 +1을 함.
+	var year = now.getFullYear();    
+	
+	if(now.getMonth() < 9){
+		var month = now.getMonth() + 1; //1월이 0으로 되기때문에 +1을 함.
+		month = '0' + month;
+	} else{
+		var month = now.getMonth() + 1;
+	}
+	
 	var date = now.getDate()
 
 	var today = year + "-" + month + "-" + date
 	console.log(today)
+	let count = 0;
 	$.each($("#newalarms").find("thead"), function() {
-		
-		if($(this).find("tr").text() == today){
+	
+		//오늘 수신된 알림이 있으면 한 줄만 추가
+		if($(this).find("tr").text().trim() == today){
+			count = 1;
 			
-			if(code == "PR_IN" || code == "PR_S" || code == "PR_F" || code == "PR_UP"){
+			if(message.code == "PR_IN" || message.code == "PR_S" || message.code == "PR_F" || message.code == "PR_UP"){
 					
 				//프로젝트에 초대됨, 참여 승인됨, 거절됨, 프로젝트 상태 바뀜
 				$(this).after(
-					'<tbody class="apply_table_sec"><tr id=""><td>'
-					+'<a href="/project/detail?project_id='+$(this).attr("id")+'">'+text+'</a></td></tr></tbody>'
+					'<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>'
 					);
 				
-			} else if($(this).attr("class") == "PR_A"){
+			} else if(message.code == "PR_A"){
 				
 				//내 프로젝트에 누가 지원함
-				$(this).append('<a href="/member/detail?member_id='+$(this).attr("id")+'">'+text+'</a>');
+				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/member/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
 				
-			} else if($(this).attr("class") == "MY_RV"){
+			} else if(message.code == "MY_RV"){
 				//누가 내게 리뷰를 남김
-				$(this).append('<a href="/project/detail?project_id='+$(this).attr("id")+'">'+text+'</a>');
+				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
 				
-			} else if($(this).attr("class") == "QNAR"){
+			} else if(message.code == "QNAR"){
 				//내 질문에 답변이 달림
-				$(this).append('<a href="/project/detail?project_id='+$(this).attr("id")+'">'+text+'</a>');
+				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					
+			} else if(message.code == "CHAT_O"){
+				//쪽지가 옴
+				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/messages/">'+message.content+'</a></td></tr></tbody>');
 			}
-			
-		}
+		} 	
 		
-
-	})*/
-
-
+	});
+	console.log(count)
+	if(count == 0){
+			
+			$("#newalarms").prepend(
+				
+				'<thead id="newday"><tr class="table_head"><th>'+today+'</th></tr></thead>'
+				
+			);
+			
+			if(message.code == "PR_IN" || message.code == "PR_S" || message.code == "PR_F" || message.code == "PR_UP"){
+					
+				//프로젝트에 초대됨, 참여 승인됨, 거절됨, 프로젝트 상태 바뀜
+				$("#newday").after(
+					'<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>'
+					);
+				
+			} else if(message.code == "PR_A"){
+				
+				//내 프로젝트에 누가 지원함
+				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/member/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+				
+			} else if(message.code == "MY_RV"){
+				//누가 내게 리뷰를 남김
+				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+				
+			} else if(message.code == "QNAR"){
+				//내 질문에 답변이 달림
+				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+			}else if(message.code == "CHAT_O"){
+				//쪽지가 옴
+				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
+					+'<a href="/messages/">'+message.content+'</a></td></tr></tbody>');
+			}
+	}
+	
 }
 
 

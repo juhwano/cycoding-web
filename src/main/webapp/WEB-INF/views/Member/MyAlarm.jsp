@@ -67,6 +67,10 @@
 														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="#${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
 													</c:when>
 													
+													<c:when test="${newlist.ALARM_CODE eq 'CHAT_O'}">
+														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/messages/">${newlist.ALARM_CONTENT}</a></td>
+													</c:when>
+													
 												</c:choose>
 
 											</tr>
@@ -102,7 +106,7 @@
 						</div>
 						<div class="marginBox"></div>
 
-						<!-- 마감된 플젝 -->
+
 						<div class="info_text_sec">
 							<p class="table_name_text">지난 알림내역</p>
 						</div>
@@ -152,39 +156,6 @@
 							<i class="fas fa-cut"></i> 클릭하면 해당 알림을 삭제할 수 있어요!
 						</p>
 					</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="wish_section bookmark_sec">
-				<p class="wish_title">MESSAGES</p>
-				<div class="wish_project_list">
-					<div class="info_text_sec">
-						<p class="info_text">
-							<i class="fas fa-heart"></i> 버튼을 누르면 북마크를 취소할 수 있어요!
-						</p>
-					</div>
-					<div class="table_sec">
-						<!-- 프로젝트목록 -->
-						<table class="table wish_table bookmark_table">
-							<tbody>
-								<c:forEach var="bookmark" items="${bookmark_list}">
-									<tr>
-										<td><i class="fas fa-heart bookmark marking"
-											id="${bookmark.project_id}"
-											onclick='BookMarking(${bookmark.project_id})'></i></td>
-										<td><a
-											href="/project/detail?project_id=${bookmark.project_id}">${bookmark.p_title}</a></td>
-										<c:if test="${bookmark.p_state eq '모집중'}">
-											<td><p class="state_ing">${bookmark.p_state}</p></td>
-										</c:if>
-										<c:if test="${bookmark.p_state ne '모집중'}">
-											<td><p class="state_end">모집완료</p></td>
-										</c:if>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
 					</div>
 				</div>
 			</div>
