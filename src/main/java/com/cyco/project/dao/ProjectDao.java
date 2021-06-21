@@ -18,6 +18,7 @@ import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
+import com.cyco.project.vo.V_ApplyMemberList;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
@@ -140,4 +141,37 @@ public interface ProjectDao {
 	public List<V_PjAdrField_Join_V_PDetail> getRecommList(@Param("filtered_list") List<String> filtered_list);
 
 	
+	// 지원한 멤버 리스트
+	public List<V_ApplyMemberList> getApplyMemberList(V_ApplyMemberList memberList);
+	
+	
+	// 지원 맴버 승인
+	public int ApplyMember_Ok(ApplyVo apply);
+	
+	// 지원 맴버 거절
+	public int ApplyMember_No(ApplyVo apply);
+	
+	// 지원 멤버 승인시 멤버 테이블 업데이트
+	public int ApplyMemberUpdate(P_MemberVo p_member);
+	
+	// 프로젝트 해당 포지션 개수 확인
+	public int getPositionConut(ApplyVo apply);
+	
+	// 지원 자리가 있는지 확인
+	public int getIsMemberApplyount(ApplyVo apply);
+	
+	// 멤버 강퇴
+	public int getOutMember(P_MemberVo p_member);
+	
+	// 지원 멤버 추방
+	public int ApplyMember_GetOut(ApplyVo apply);
+	
+	// 리더 권한 위임
+	public int ToHandOverAuth(ApplyVo apply);
+	
+	// 리더 멤버로 변경
+	public int ReaderMemberChange(P_MemberVo member);
+	
+	// 리더 받은사람 멤버 삭제
+	public int getAuthMemberDel(ApplyVo apply);
 }
