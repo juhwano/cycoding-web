@@ -14,5 +14,11 @@ public interface AlarmDao {
 
 	//알림페이지에서 전체 알림
 	public List<AlarmVo> getAllAlarms(String useremail);
+	
+	//알림 확인하면 상태 변경
+	public Integer checkAlarm(String alarm_id);
+	
+	//알림 삭제
+	public Integer deleteAlarm(String alarm_id);
 
 }

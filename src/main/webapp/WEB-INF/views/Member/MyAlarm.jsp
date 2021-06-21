@@ -4,18 +4,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<c:set var="alarmlist" value="${alarmlist}" />
-
-
-
-
+<c:set var="newlist" value="${newalarmlist}" />
+<c:set var="oldlist" value="${oldalarmlist}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>사이좋게 코딩하자</title>
 
-<link type="text/css" href="${pageContext.request.contextPath}/css/mypage.css" rel="stylesheet">
+<link type="text/css"
+	href="${pageContext.request.contextPath}/css/myalarm.css"
+	rel="stylesheet">
 
 
 </head>
@@ -24,98 +23,170 @@
 <body>
 	<main>
 
-		<div id="wrap">
+		<div class="wish_container">
+			<div class="wish_section apply_sec">
+				<p class="wish_title">MYNEWS</p>
+				<div class="wish_project_list">
+					<div class="table_sec">
+						<!-- 프로젝트목록 -->
+						<!-- 지원목록 영역 -->
+						<div class="info_text_sec">
+							<p class="table_name_text">새 알림내역</p>
+						</div>
 
-			<div id="cycoder">
-				<p></p>
+						<table class="table wish_table apply_table" id="newalarms">
+
+							<c:forEach var="newlist" items="${newlist}">
+								<c:choose>
+									<c:when test="${not empty newlist}">
+										<thead>
+
+											<tr class="table_head">
+												<th>${newlist.ALARM_DATE}</th>
+											</tr>
+
+										</thead>
+										<tbody class="apply_table_sec">
+											<tr id="${newlist.ALARM_ID}">
+											
+												<c:choose>
+												
+													<c:when test="${newlist.ALARM_CODE eq 'PR_IN' || newlist.ALARM_CODE eq 'PR_S' || newlist.ALARM_CODE eq 'PR_F' || newlist.ALARM_CODE eq 'PR_UP'}">
+														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/project/detail?project_id=${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
+													</c:when>
+													
+													<c:when test="${newlist.ALARM_CODE eq 'PR_A'}">
+														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/member/detail?member_id=${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
+													</c:when>
+													
+													<c:when test="${newlist.ALARM_CODE eq 'MY_RV'}">
+														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="#${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
+													</c:when>
+													
+													<c:when test="${newlist.ALARM_CODE eq 'QNAR'}">
+														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="#${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
+													</c:when>
+													
+												</c:choose>
+
+											</tr>
+
+										</tbody>
+									</c:when>
+									<c:otherwise>
+										
+										<thead>
+
+											<tr class="table_head">
+												<th>CLEAR</th>
+											</tr>
+
+										</thead>
+										<tbody class="apply_table_sec">
+											<tr>
+												<td>아직 새 알림이 없어요</td>
+											</tr>
+
+										</tbody>
+									
+									</c:otherwise>
+
+								</c:choose>
+							</c:forEach>
+						</table>
+
+						<div class="info_text_sec">
+							<p class="info_text">
+								<i class="fas fa-mouse"></i> 클릭하면 해당 페이지로 이동할 수 있어요!
+							</p>
+						</div>
+						<div class="marginBox"></div>
+
+						<!-- 마감된 플젝 -->
+						<div class="info_text_sec">
+							<p class="table_name_text">지난 알림내역</p>
+						</div>
+						<table class="table wish_table apply_table" id="oldalarms">
+
+							<c:forEach var="oldlist" items="${oldlist}">
+								<c:choose>
+									<c:when test="${not empty oldlist}">
+										<thead>
+
+											<tr class="table_head">
+												<th>${oldlist.ALARM_DATE}</th>
+											</tr>
+
+										</thead>
+										<tbody class="apply_table_sec">
+											<tr id="${oldlist.ALARM_ID}">
+												<td class="${oldlist.ALARM_CODE}" id="${oldlist.URL}">${oldlist.ALARM_CONTENT}
+												</td>
+											</tr>
+
+										</tbody>
+									</c:when>
+									<c:otherwise>
+										
+										<thead>
+
+											<tr class="table_head">
+												<th>CLEAR</th>
+											</tr>
+
+										</thead>
+										<tbody class="apply_table_sec">
+											<tr>
+												<td>지난 알림이 없어요</td>
+											</tr>
+
+										</tbody>
+									
+									</c:otherwise>
+
+								</c:choose>
+							</c:forEach>
+						</table>
+						<div class="info_text_sec">
+						<p class="info_text">
+							<i class="fas fa-cut"></i> 클릭하면 해당 알림을 삭제할 수 있어요!
+						</p>
+					</div>
+					</div>
+				</div>
 			</div>
 
-			<div id="detail_box">
-
-				<div id="news" class="details">
-					<p class="cycoder_title">
-						MYNEWS
-					</p>
-
-              <ul>
-
-                  <li class="itemlist"><span class="item">이메일</span><input
-                     type="text" class="info" id="m_email"
-                     value="${member.MEMBER_EMAIL}" readonly>
-                     <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
-               </ul>
-
-
-				</div>
-
-
-				<div id="messages" class="details">
-					<p class="cycoder_title">MESSAGES</p>
-
-					<div class="infolist">
-
-						<div class="detail_section">
-
-							<div class="detail_title">
-								<span class="item">보유기술</span>
-							</div>
-							<!-- 스탯 입력 안 했으면 -->
-
-
-							<div class="moerdetails skillarea" onclick="edit_modal('skill')">
-								
-							</div>
-						</div>
-
-						<div class="detail_section itmelist">
-
-							<div class="detail_title">
-
-								<span class="item">프로젝트 경험</span>
-
-							</div>
-							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails experience" id="exlistarea"
-								onclick="edit_modal('experience')">
-								
-							</div>
-						</div>
-
-						<div class="detail_section">
-							<div class="detail_title">
-
-								<span class="item">선호 포지션</span>
-
-							</div>
-							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails positionarea"
-								onclick="edit_modal('position')">
-								
-							</div>
-						</div>
-
-						<div class="detail_section">
-
-							<div class="detail_title">
-
-								<span class="item">선호 프로젝트 기간</span>
-
-							</div>
-
-							<!-- 기간 입력 안 했으면 -->
-							<div class="moerdetails durationarea"
-								onclick="edit_modal('duration')">
-								
-							</div>
-						</div>
-
+			<div class="wish_section bookmark_sec">
+				<p class="wish_title">MESSAGES</p>
+				<div class="wish_project_list">
+					<div class="info_text_sec">
+						<p class="info_text">
+							<i class="fas fa-heart"></i> 버튼을 누르면 북마크를 취소할 수 있어요!
+						</p>
 					</div>
-
+					<div class="table_sec">
+						<!-- 프로젝트목록 -->
+						<table class="table wish_table bookmark_table">
+							<tbody>
+								<c:forEach var="bookmark" items="${bookmark_list}">
+									<tr>
+										<td><i class="fas fa-heart bookmark marking"
+											id="${bookmark.project_id}"
+											onclick='BookMarking(${bookmark.project_id})'></i></td>
+										<td><a
+											href="/project/detail?project_id=${bookmark.project_id}">${bookmark.p_title}</a></td>
+										<c:if test="${bookmark.p_state eq '모집중'}">
+											<td><p class="state_ing">${bookmark.p_state}</p></td>
+										</c:if>
+										<c:if test="${bookmark.p_state ne '모집중'}">
+											<td><p class="state_end">모집완료</p></td>
+										</c:if>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
-				<div id="ex">
-					<a href="#quit_modal" class="trigger-btn" data-toggle="modal"><button type="button" id="quit-btn">회원탈퇴</button></a>
-				</div>
-
 			</div>
 		</div>
 
@@ -153,4 +224,7 @@
 	</div>
 
 </body>
+<script src="${pageContext.request.contextPath}/assets/js/myalarm.js?ver=1"></script>
+<jsp:include
+	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 </html>

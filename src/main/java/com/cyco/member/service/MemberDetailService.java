@@ -410,8 +410,6 @@ public class MemberDetailService {
 
 		   return p_detail;
 	   }
-	   
- 
 	   	//북마크,지원목록 페이지
 	   	//북마크 목록 가져오기
 	   	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid) {
