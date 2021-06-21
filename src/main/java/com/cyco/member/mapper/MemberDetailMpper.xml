@@ -208,7 +208,6 @@
 <!--    where member_id = ${param1} -->
    </update>
    
-
    <select id="checkProjectBeforeInvite" resultType="com.cyco.project.vo.P_DetailVo">
    		select pd.p_title, pd.project_id from project p left join p_detail pd 
 		    on p.project_id=pd.project_id 

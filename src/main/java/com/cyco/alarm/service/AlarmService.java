@@ -61,5 +61,25 @@ public class AlarmService {
 		
 		return alarms;
 	}
+	
+	//알림 확인시 상태 업데이트
+	public Integer checkAlarm(String alarm_id) {
+		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		int row = alarmdao.checkAlarm(alarm_id);
+		
+		return row;
+		
+	}
+	
+	//알림 삭제
+	public Integer deleteAlarm(String alarm_id) {
+		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		int row = alarmdao.deleteAlarm(alarm_id);
+		
+		return row;
+		
+	}
 
 }

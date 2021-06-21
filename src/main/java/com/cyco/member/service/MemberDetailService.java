@@ -22,9 +22,8 @@ import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
-
 import com.cyco.project.vo.P_DetailVo;
-
+import com.cyco.project.dao.ProjectDao;
 
 
 @Service
@@ -411,8 +410,6 @@ public class MemberDetailService {
 
 		   return p_detail;
 	   }
-   
-	   
 	   	//북마크,지원목록 페이지
 	   	//북마크 목록 가져오기
 	   	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid) {

@@ -3,11 +3,10 @@ package com.cyco.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,6 +29,7 @@ import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
+
 import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.utils.UtilFile;
@@ -172,12 +172,26 @@ public class MyPageController {
 		String useremail = auth.getName();
 		ModelMap mmp = new ModelMap();
 		
-		List<AlarmVo> list = alarmservice.getAllAlarms(useremail);	
-		mmp.addAttribute("alarmlist", list);
+		List<AlarmVo> list = alarmservice.getAllAlarms(useremail);
+		List<AlarmVo> newlist = new ArrayList<AlarmVo>();
+		List<AlarmVo> oldlist = new ArrayList<AlarmVo>();
+		
+		for( int i = 0; i < list.size(); i++) {
+			
+			if(list.get(i).getALARM_OK().equals("0")) {
+				newlist.add(list.get(i));
+			} else {
+				oldlist.add(list.get(i));
+			}
+			
+		}
+		mmp.addAttribute("newalarmlist", newlist);
+		mmp.addAttribute("oldalarmlist", oldlist);
 
 		return new ModelAndView("/Member/MyAlarm",mmp);
+
 	}
-	
+
 	//북마크 페이지 이동
 	@RequestMapping(value="wishProject")
 	public String wishProject(Model m, HttpSession session) {

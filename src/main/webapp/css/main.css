@@ -204,7 +204,7 @@
 }
 
 .susub li:hover{
-	background-color:white;
+	background-color:white !important;
 }
 .alarm_content{
 	font-size:12px;

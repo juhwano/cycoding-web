@@ -135,8 +135,6 @@ public interface MemberDao {
 
 	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
 	public List<P_DetailVo> checkProjectBeforeInvite(String memberid);
-	
-
 	//북마크, 지원목록 페이지
 	//북마크한 프로젝트 목록
 	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid);

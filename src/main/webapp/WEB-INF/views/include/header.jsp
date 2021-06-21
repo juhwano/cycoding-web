@@ -190,13 +190,17 @@
 											<li><a href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
 											
 											
-												<li><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>	
-												<li><a href="">진행중인 프로젝트</a></li>	
-												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+												<%-- <li><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>	 --%>
+												<li class="subdrop"><a href="">프로젝트</a>
+													<ul  class="susub">
+														<li>진행중인 프로젝트</li>
+														<li>나의 프로젝트/후기</li>
+													</ul>
+												</li>												
 											<li class="subdrop"><a href="">알림</a>
-												<ul class="susub"></ul>
+												<ul class="susub" id="alarmsub"></ul>
 											</li>
-											
+												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 											
 										</ul>
 										</div>
@@ -328,9 +332,13 @@ $('#alram').click(function() {
 	ws.onmessage = function(event) {
 		
 		let data = event.data;
-		//let data = JSON.parse(event.data)
+
 		console.log("서버에서 받은 메시지 ",JSON.parse(data));
 		updatealarmlist(logineduser);
+		
+		//알림페이지에 알림 하나 추가하는 함수
+		addNewAlarm(JSON.parse(data));
+		
 		changeBell_New();
 		
 	}		
@@ -384,18 +392,23 @@ $('#alram').click(function() {
 				$(this).find(".sub").slideUp();
 			})
 			
-			
-			
 		});
 		
-		//알림 아코디언
-		$(".susub").hide();
+		//서브메뉴 다운
+/* 		$(".susub").hide();
 		$(".subdrop").hover(function(){
 			
 			$(this).find(".susub").slideDown();
 			$(this).hover(function(){
 			}, function(){
 				$(this).find(".susub").slideUp();
+			})
+		}); */
+		$(".susub").hide();
+		$(".subdrop").hover(function(){
+			
+			$(this).find(".susub").slideDown();
+			$(this).hover(function(){
 			})
 		});
 		

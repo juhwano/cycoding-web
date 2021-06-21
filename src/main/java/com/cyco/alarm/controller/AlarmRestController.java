@@ -37,7 +37,7 @@ public class AlarmRestController {
 		
 	}
 	
-	//알림 오면 리스트 업데이트
+	//알림 오면/페이지 이동시 리스트 업데이트
 	@RequestMapping(value="updatealarmlist", method= {RequestMethod.GET, RequestMethod.POST})
 	public List<AlarmVo> updateAlarm(String id) {
 		
@@ -55,6 +55,34 @@ public class AlarmRestController {
 		Boolean bo = alarmservice.insertAlarm(data);
 		
 		System.out.println(bo);
+		
+		return bo;
+	}
+	
+	//알림 확인한 것 디비에 상태 반영
+	@RequestMapping(value="checkalarm", method= {RequestMethod.GET, RequestMethod.POST})
+	public Boolean chekcAlarm(String alarm_id) {
+		System.out.println("상태 변경 :"+alarm_id);
+		Boolean bo = false;
+		int row = alarmservice.checkAlarm(alarm_id);
+		
+		if(row > 0) {
+			bo = true;
+		}
+		
+		return bo;
+	}
+	
+	//알림 삭제 디비 반영
+	@RequestMapping(value="deletealarm", method= {RequestMethod.GET, RequestMethod.POST})
+	public Boolean deleteAlarm(String alarm_id) {
+		System.out.println("삭제 : " + alarm_id);
+		Boolean bo = false;
+		int row = alarmservice.deleteAlarm(alarm_id);
+		
+		if(row > 0) {
+			bo = true;
+		}
 		
 		return bo;
 	}
