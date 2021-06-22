@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyco.admin.dao.AdminDao">
+
+	<select id="getSkillList" resultType="com.cyco.common.vo.SkillVo">
+		select skill_code, skill_name, skill_enabled 
+		from skill
+	</select>
+	
+	<select id="getFieldList" resultType="com.cyco.common.vo.P_FieldVo">
+		select field_code, field_name,field_enabled 
+		from p_field
+	</select>
+	
+	<select id="getPositionList" resultType="com.cyco.common.vo.PositionVo">
+		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
+	</select>
+	
+	<select id="getSkillNameCheck" resultType="int">
+		select count(*) from skill
+		where skill_name='${name}'
+	</select>
+	
+	<insert id="insertSkill">
+	insert into SKILL (SKILL_CODE,SKILL_NAME, SKILL_ENABLED)
+	select 'SK'||sk_seq.nextval, A.* from(
+		<foreach collection="list" item="skill" separator="union all">
+			select 
+			#{skill.skill_name} as skill_name,
+			#{skill.skill_enabled} as skill_enabled
+			from dual
+		</foreach>) A
+	</insert>
+	<update id="updateSkill" parameterType="com.cyco.common.vo.SkillVo">
+			update skill
+			set skill_enabled=#{skill_enabled} 
+			where skill_code=#{skill_code}
+	</update> 
+
+</mapper>
