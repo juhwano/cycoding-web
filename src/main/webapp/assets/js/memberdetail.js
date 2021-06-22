@@ -176,14 +176,13 @@ $(document).ready(function() {
 			$('#textcount').html("200 / 200");
 		}
 	});
-
+	
 
 }); //document.ready 끝
 
-
 //메시지 전송함수
 //DB 알람 테이블, 수신, 발신 테이블에 각각 insert 되어야 한다
-$("#msg_btn").on("click", function() {
+$(document).on("click","#msg_btn", function() {
 
 	//우선 div의 텍스트를 다루기 용이하도록 input태그의 값으로 만든다
 	$("#text").val($("#messagearea").text());
@@ -203,5 +202,6 @@ $("#msg_btn").on("click", function() {
 		insertAlarm(JSON.stringify(data));
 
 });
+
 
 

@@ -185,8 +185,11 @@
 					</div>
 					<div class="msg_buttonarea">
 
-						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
+						<a href="#to_note_modal" class="trigger-btn" data-toggle="modal">
 							<button class="msg_btn" id="reply_btn">답장하기</button>
+						</a>
+						<a href="#to_note_modal" class="trigger-btn" data-toggle="modal">
+							<button class="close_modal">닫기</button>
 						</a>
 					</div>
 
@@ -209,8 +212,8 @@
 					</div>
 					<div class="msg_buttonarea">
 
-						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
-							<button class="msg_btn" id="msg_btn">닫기</button>
+						<a href="#from_note_modal" class="trigger-btn" data-toggle="modal">
+							<button class="close_modal" id="msg_btn">닫기</button>
 						</a>
 					</div>
 
@@ -218,7 +221,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 <script src="${pageContext.request.contextPath}/assets/js/mymessages.js"></script>
 <jsp:include

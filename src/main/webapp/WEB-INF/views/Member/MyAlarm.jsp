@@ -162,38 +162,6 @@
 		</div>
 
 	</main>
-
-	<!-- 기술 스택 모달창 -->
-	<div id="m_stat" class="modal fade">
-		<div class="modal-dialog modal-login">
-			<div class="modal-content">
-				<div class="modal-header">
-					<p id="modal-title"></p>
-				</div>
-				<div id="modal-body">
-					<input type="hidden" id="stat"> <input type="hidden"
-						id="first"> <input type="hidden" id="second"> <input
-						type="hidden" id="third">
-
-					<div id="contentarea">
-						<div id="tagarea"></div>
-						<div id="selectedarea"></div>
-					</div>
-					<div id="buttonarea">
-						<a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button id="edit-btn" class="insert_ex">수정</button>
-						</a> <a href="#m_stat" class="trigger-btn" data-toggle="modal">
-							<button id="cancel">닫기</button>
-						</a>
-					</div>
-
-				</div>
-
-
-			</div>
-		</div>
-	</div>
-
 </body>
 <script src="${pageContext.request.contextPath}/assets/js/myalarm.js?ver=1"></script>
 <jsp:include

@@ -246,6 +246,30 @@
 				</div>
 			</div>
 			<!-- END LOADER -->
+			
+					<!-- 새 메시지 알림 창 -->
+	<div id="new_note_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">새 쪽지가 도착했습니다</p>
+				</div>
+				<div id="modal-body">
+					
+					<div class="alert_messagearea">
+						<!-- <div class="msg_content"></div> -->
+					</div>
+					<div class="msg_buttonarea">
+
+						<a href="#new_note_modal" class="trigger-btn" data-toggle="modal">
+							<button class="msg_btn" id="msg_btn">닫기</button>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 	</main>
 
 	<!-- 반응형 토글 -->
@@ -339,8 +363,11 @@ $('#alram').click(function() {
 		console.log("서버에서 받은 메시지 ",JSON.parse(data));
 		updatealarmlist(logineduser).then(function(){
 			console.log("실행됨")
+
 			//알림페이지에 알림 하나 추가하는 함수
 			addNewAlarm(JSON.parse(data));
+			
+			
 		});	
 		changeBell_New();
 		
@@ -354,7 +381,7 @@ $('#alram').click(function() {
 	}
 }
 	
-	//보낸 알리 디비에 반영하는 함수
+	//보낸 알림 디비에 반영하는 함수
 	function insertAlarm(data){
 		
 		//서버로 알림 보내기(웹소켓)

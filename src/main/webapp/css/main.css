@@ -223,3 +223,46 @@
 	border:none;
 	
 }
+
+/*메시지 수신 모달창*/
+.msg_content{
+	display:none;
+	width: 190px;
+	height:200px;
+	position:relative;
+	position: relative;
+    top: 35%;
+    left: 28%
+    
+}
+.msg_content p{
+	font-weight: 600;
+	font-size:16px;
+}
+.msg_buttonarea{
+	text-align: center;
+	margin:20px;
+}
+.msg_btn{
+	width:80px;
+	color:#F4F2F3;
+	background-color: #94A7AE;
+	border:none;
+	padding:5px;
+}
+
+/*쪽지 수신창*/
+.alert_messagearea{
+	width:400px;
+	height:400px;
+	background-size: cover;
+    background-position: center;
+	background-image: url(../assets/img/alarm/receive.png);
+    background-repeat: no-repeat;
+    background-position:center;
+    margin:30px auto;
+    overflow: auto;
+    border:none;
+    align-items: center;
+    padding:20px;	
+}
