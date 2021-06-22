@@ -139,6 +139,7 @@ public class RestProjectController {
 			@RequestParam("uploadFile") MultipartFile uploadFile, 
 			MultipartHttpServletRequest request){
 			
+		
 		// 파일 유틸 생성
 		UtilFile utilFile = new UtilFile();
 		
@@ -302,6 +303,7 @@ public class RestProjectController {
 		//프로젝트 상세의 포지션별 자리수
 		List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
 		
+		// 맵에 담아서 리턴
 		Map<String, Object> memberEditBoxList = new HashMap<String, Object>();
 		
 		memberEditBoxList.put("pmlist", pmlist);
@@ -330,6 +332,43 @@ public class RestProjectController {
 		
 		
 		return project_info;
+	}
+	
+	@RequestMapping(value = "memberplus", method=RequestMethod.GET)
+	public String MemberPlus(String project_id, int select_num, P_MemberVo member) {
+		String returnURL = null;
+		
+		//프로젝트 상세의 포지션별 자리수
+		List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
+		List<P_MemberVo> updataList = new ArrayList<P_MemberVo>();
+		
+	
+		if(select_num == 0) {
+			returnURL = "NumZero";
+			return returnURL;
+			
+		}else if(select_num > 0){
+			for(int i = 0; i < select_num; i ++) {
+				updataList.add(member);
+			}
+			// 쿼리 업데이트
+			service.setProjectMemberList(updataList);
+			returnURL = "Update";
+			return returnURL;
+			
+		}else if(select_num < 0) {
+			
+			int AbsNum =  Math.abs(select_num);
+			
+			service.CountMemberDel(project_id, member.getPosition_id() ,AbsNum+"");
+			// 쿼리 업데이트
+			returnURL = "Delete";
+			return returnURL;
+			
+		}
+	
+		
+		return returnURL;
 	}
 	
 }

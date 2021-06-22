@@ -174,4 +174,7 @@ public interface ProjectDao {
 	
 	// 리더 받은사람 멤버 삭제
 	public int getAuthMemberDel(ApplyVo apply);
+	
+	// 카운터 수 대로 멤버 삭제
+	public int CountMemberDel(String project_id, String position_id, String count);
 }

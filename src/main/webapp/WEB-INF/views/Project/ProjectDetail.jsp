@@ -70,7 +70,7 @@
 							<img src="${pageContext.request.contextPath}/resources/upload/${project.member_image}">
 						</div>
 						<p>
-							<a href="#">
+							<a href="${pageContext.request.contextPath}/member/memberdetailpage?memberid=${project.member_id}" target="_blank">
 							<b>${project.member_nickname}</b>
 							</a>
 						</p>
@@ -439,13 +439,15 @@ $(document).ready(function(){
 		     					
 		     					// -------------------------------------------------------
 		     					// 멤버 추가
+		     					var NoDump = 0;
 		     					$('.MemberPlusBtn').unbind("click").bind("click", function(){
-		     						memberCount ++;
-		     						if(memberCount > 10){
-		     							swal("맴버는 10명이상의 구인이 불가능합니다.", "", "error");
+		     						
+		     						NoDump ++;
+		     						if(NoDump > 1){
+		     							swal("현재 지정한 값을 반영 후 시도하시기 바랍니다.", "", "error");
 		     						}else{
 		     							
-		     						
+	     							memberCount ++;	
 		     						$.ajax({
      						     		url:"/ajaxproject/PositionList",
      						     		dataType:"html",
@@ -469,21 +471,21 @@ $(document).ready(function(){
    					    	    		memberPlusBox += "<input type='button' class='Down_num' value='-'>"
 										memberPlusBox += "</td>"
 										memberPlusBox += "<td width='30%'>"			
-										memberPlusBox += "<input class='PlusMember_ListBtn' type='button' value='추가'>"
+										memberPlusBox += "<input class='PlusMember_ListBtn' type='button' value='반영'>"
 										memberPlusBox += "</td>"
      					    	    	memberPlusBox += "</tr>"	
      						     		
    					    	    		$('.project_boxdiv').append(memberPlusBox);
    					    	    		
-     					    	    	
    					    	    		$('.MemberPlusBtnWarp').unbind("click").bind("click", function(){
    					    	    			var UpBtn = $(this)[0].children[0];
    					    					var DownBtn = $(this)[0].children[2];
    					    					var Count = $(this)[0].children[1];
    					    					
+   					    					console.log(memberCount);
    					    					// + 이벤트
    					    					$(UpBtn).unbind("click").bind("click", function(){
-
+		
    					    						if (memberCount < 10) {
    					    							var Count_ = parseInt($(Count).val());
    					    							$(Count).val(Count_ + 1);
@@ -491,20 +493,61 @@ $(document).ready(function(){
    					    						} else {
    					    							swal("맴버는 10명이상의 구인이 불가능합니다.", "", "error");
    					    						}
+   					    						console.log(memberCount);
 
    					    					})
 
    					    					// - 이벤트
    					    					$(DownBtn).unbind("click").bind("click", function(){
-   					    						if (parseInt($(Count).val()) > 1) {
-   					    							var Count_ = parseInt($(Count).val());
-   					    							$(Count).val(Count_ - 1);
-   					    							memberCount--;
-   					    						}
-
+					    							if(parseInt($(Count).val()) <= -9){
+					    								swal("더 이상 값을 반영 할 수 없습니다.", "", "error");
+					    								$(Count).val(-9);
+					    								return false;
+					    							}
+					    							var Count_ = parseInt($(Count).val());
+					    							$(Count).val(Count_ - 1);
+					    							memberCount--;
+					    							console.log(memberCount);
    					    					})
    					    					
    					    	    		})
+   					    	    		
+   					    	    		// 반영 버튼
+   					    	    		$('.PlusMember_ListBtn').unbind("click").bind("click", function(){
+   					    	    			var num = $('.MemberPlusBtnWarp > input')[1];	
+   					    	    			var selectPosition = $('.MemberPlus_SelectBox').val();
+   					    	    			
+   					    	    			if(memberCount > 10){
+   					    	    				swal("멤버는 10명 이상 모집이 불가능합니다.","","error");
+   					    	    				return null;
+   					    	    			}
+   					    	    				
+   					    	    			data = {"project_id":project_id,
+   					    	    					"select_num":$(num).val(),
+   					    	    					"position_id":selectPosition}
+   					    	    			
+   					    	    			
+   					    	    			$.ajax({
+   		     						     		url:"/ajaxproject/memberplus",
+   		     						     		dataType:"html",
+   		     						     		data:data,
+   		     						     		success: function(responsedata){    
+   		     						     	
+   		   						     				if(responsedata == "NumZero"){
+   		   						     					swal("0이 아닌 값을 입력 후 반영해주세요.", "", "error");
+   		   						     				}else if(responsedata == "Update"){
+   		   						     					swal("멤버가 추가 입력 되었습니다.", "", "success");
+   		   						     					$('#memberEdit').trigger('click');
+   		   						     				}else if(responsedata == "Delete"){
+   		   						     					swal("모집 멤버를 삭제 하였습니다.", "* 이미 모집된 멤버가 있을 경우 반영되지않습니다.", "warning");
+   		   						     					$('#memberEdit').trigger('click');
+   		   						     				}
+   		   						     					
+   		     						     		}
+   					    	    			
+   					    	    			})
+   					    	    		})
+   					    	    		
    					    	    		
    					    	    		
      						     		}
@@ -552,7 +595,7 @@ $(document).ready(function(){
 		     					     						table += "</div></td>";
 		     					     						table += "</td>";
 		     						     					table += "<td>";
-		     						     					table += "<a href='${PageContext.request.contextPath}/member/memberdetailpage?memberid=" + elt.member_id +"'>" + elt.member_nickname + "</a>";		     					
+		     						     					table += "<a href='${PageContext.request.contextPath}/member/memberdetailpage?memberid=" + elt.member_id +"' target='_blank' >" + elt.member_nickname + "</a>";		     					
 		     						     					table += "</td>";
 		     						     					table += "<td>";
 		     							     					if(elt.apply_ok == "0"){

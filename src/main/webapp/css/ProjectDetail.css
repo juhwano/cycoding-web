@@ -373,7 +373,8 @@ p{
 
 .memberListcurrFull{
 	color: black;
-	text-align: left;
+    padding-left: 30px !important;
+    text-align: left;
 }
 
 .memberPlus{
@@ -435,7 +436,29 @@ p{
     margin-bottom: 20px;
 }
 
-
+@media(max-width : 960px){
+	
+	.NavBox {
+	    width: 25%;
+	    height: 900px;
+	    float: right;
+	    margin-bottom: 20px;
+	   display: none;
+	}
+	.mainBox {
+	   width: 100%;
+	   float: right;
+	   margin-bottom: 20px;
+	}
+	
+	.memberListcurr {
+    padding-left: 30px !important;
+    color: red;
+    text-align: left;
+    width: 35%;
+	}
+	
+}
 
 
 .ProjectNav{
@@ -524,12 +547,17 @@ p{
     font-weight: 500;
 }
 
+.MemberPlusBtnWarp >input[type=button]:hover{
+	font-size: 18px;
+    font-weight: 600;
+}
+
 .MemberPlus_SelectBox{
 	background-color: white;
     background-clip: padding-box;
     border: 0.0625rem solid #D1D5DB;
     padding: 0 3px;
-    width: 30%;
+    width: 50%;
 }
 
 .PlusMember_ListBtn{

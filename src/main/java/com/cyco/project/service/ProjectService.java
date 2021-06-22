@@ -422,7 +422,7 @@ public class ProjectService {
 		 	2. 비회원, 추가기입x 회원일경우 조회수 높은순으로 출력
 		 	3. 
 		*/
-		System.out.println("member_id : "+member_id);
+		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		
@@ -607,5 +607,14 @@ public class ProjectService {
 		
 		return result;
 	}
-
+	
+	// 프로젝트 삭제
+	public int CountMemberDel(String project_id, String postiion_id, String count) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CountMemberDel(project_id, postiion_id, count);
+		
+		return result;
+	}
+	
 }
