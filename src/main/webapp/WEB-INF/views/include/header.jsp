@@ -194,7 +194,7 @@
 												<li class="subdrop"><a href="">프로젝트</a>
 													<ul  class="susub">
 														<li>진행중인 프로젝트</li>
-														<li>나의 프로젝트/후기</li>
+														<li><a href="${pageContext.request.contextPath}/mypage/myProject">나의 프로젝트/후기</a></li>
 													</ul>
 												</li>												
 											<li class="subdrop"><a href="">알림</a>

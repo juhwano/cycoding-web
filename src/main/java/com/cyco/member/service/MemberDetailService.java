@@ -20,8 +20,10 @@ import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.dao.ProjectDao;
 
@@ -438,5 +440,24 @@ public class MemberDetailService {
 			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 			memberdao.deleteApply(applyid);
 		}
+		
+		//내프로젝트, 후기 페이지
+		//로그인한 회원이 팀장인 프로젝트목록 가져오기
+		public List<Project_TeamLeaderVo> getTeamLeader(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<Project_TeamLeaderVo> teamLeaderList = memberdao.getTeamLeader(memberid);
+			
+			return teamLeaderList;
+		}
+		
+		//로그인한 회원이 팀원인 프로젝트목록 가져오기
+		public List<V_myProjectVo> getTeamMember(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<V_myProjectVo> teamMemberList = memberdao.getTeamMember(memberid);
+			
+			return teamMemberList;
+		}
+		
+		//
 
 }

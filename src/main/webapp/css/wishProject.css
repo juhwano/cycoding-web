@@ -176,3 +176,190 @@
     background-color: #bfbfbf;
     font-size: 14px;
 }
+
+/* myProject용 css */
+.info_text_point{
+	font-size: 12px !important;
+    color: #8e8ea2 !important;
+    margin-left: 30px;
+    text-align: right;
+}
+
+.leaderIcon{
+	color: #ffcc00;
+}
+
+/* 리뷰영역 */
+.reviewBox {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 40px;
+	
+	border-top: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	padding-top: 40px;
+    padding-bottom: 40px;
+    
+	/* height: 400px; */
+	
+	text-align: left;
+	background-color: #fff;
+}
+
+/* 리뷰 없을 때 */
+.review_nothing{
+	text-align: center;
+	position: relative;
+    width: 80% !important;
+    margin-bottom: 1.875rem;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    
+    color: #94A7AE;
+    font-size: 14px;
+}
+
+/* 리뷰 1개 */
+.reviews{
+	position: relative;
+    width: 90% !important;
+    margin-bottom: 1.875rem;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+
+.reviewWriter{
+	display: inline-block;
+    margin: 0 .5rem .5rem 0;
+	font-size: 1rem;
+    /* line-height: 1.5rem; */
+    letter-spacing: -.01875rem;
+}
+
+.star-rate{
+	display: inline-block;
+	padding: 0;
+    margin: 0;
+    line-height: 0;
+    /* width: 120px; */
+}
+
+.review-star{
+	font-size: 12px;
+	color: #ffdb4d;
+}
+
+.review-date{
+	color: #a6a6a6;
+	font-size: 14px;
+	display: inline-block;
+	padding: 0;
+    margin-left: 10px;
+    line-height: 0;
+	width: 100px;
+}
+
+.review-content{
+	color: #737373;
+    margin-bottom: 0;
+	font-size: .875rem;
+    line-height: 1.3125rem;
+    font-weight: 400;
+    letter-spacing: -.0125rem;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+/* 탑버튼 */
+#topBtn {
+	position: fixed;
+	right: 22px;
+	bottom: 22px;
+	display: none;
+	z-index: 100;
+	width: 50px;
+}
+
+/* 더보기 링크 */
+.moreSec{
+	width: 100%;
+	text-align: center;
+	margin-top: 60px;
+}
+
+.moreLink{
+	font-size: 16px;
+	color: #ca8fab;
+	cursor: pointer;
+}
+
+/* 모달창 */
+/*모달창*/
+.modal.fade .modal-dialog{
+	margin: auto;
+	height:800px;
+	width:800px;
+	max-width:1000px;
+}
+.modal.show .modal-dialog{
+	margin: auto;
+	height:1000px;
+	width:800px;
+	max-width:1000px;
+}
+
+.modal-header{
+	text-align:center;
+}
+
+#modal-title{
+	color:gray;
+	font-size:21px;
+	text-align:center;
+	font-weight:bold;
+	width:100%;
+	margin:0 !important;
+}
+.modal-login {
+	color: #636363;
+	width: 350px;
+	margin: auto;
+}
+.modal-login .modal-header {
+	border-bottom: none;
+	position: relative;
+	text-align: center;
+}
+.modal-content{
+
+	margin-top:200px;
+}
+
+.modal-login .btn {
+	background: #00ce81;
+	border: none;
+	line-height: normal;
+}
+.modal-login .btn:hover, .modal-login .btn:focus {
+	background: #00bf78;
+}
+
+#modal-body{
+	overflow:auto;
+/* 	overflow-anchor: none; */
+	padding:0 30px 30px 30px;
+}
+.modal-login .modal-footer {
+	background: #ecf0f1;
+	border-color: #dee4e7;
+	text-align: center;
+	margin: 0 -20px -20px;
+	border-radius: 5px;
+	font-size: 13px;
+	justify-content: center;
+}

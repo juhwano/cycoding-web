@@ -1,4 +1,4 @@
-let card;
+var card;
 let step=4;
 let start=4;
 let count;
@@ -62,7 +62,7 @@ $(document).ready(function() {
                      console.log("이번 엔드포인트 : " + start);
                      
                      console.log("리뷰날짜:" + reviewList[current].review_date);
-                     console.log("리뷰날짜 형식: " + typeof reviewList[current].review_date);
+                    // console.log("리뷰날짜 형식: " + typeof reviewList[current].review_date);
                      
 				    card=	"	<div class='col-12 reviews'>	"
 					card+=	"	<h5 class='reviewWriter'>"+reviewList[current].member_nickname+"</h5>	"
