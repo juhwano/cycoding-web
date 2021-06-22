@@ -342,6 +342,72 @@
 		</if>
 		order by vpd.p_views desc
 	</select>
-	<!-- 추천리스트 -->
+	
+	<!-- 프로젝트 지원한 멤버 아이디 -->
+	<select id="getApplyMemberList" resultType="com.cyco.project.vo.V_ApplyMemberList">
+		SELECT MEMBER_NICKNAME,MEMBER_ID,MEMBER_IMAGE, GRADE, POSITION_NAME, PROJECT_ID, APPLYPOSITIONNAME, APPLY_POSITION_ID, APPLY_OK
+		FROM V_APPLYMEMBER_LIST 
+		WHERE DELETE_COUNT IS NULL AND PROJECT_ID = #{project_id} AND APPLY_POSITION_ID = #{apply_position_id}
+	</select>
+	
+	<!-- 지원 멤버 승인 -->
+	<update id="ApplyMember_Ok" >
+		UPDATE  APPLY SET APPLY_OK = 1 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 지원 멤버 거절 -->
+	<update id="ApplyMember_No">
+		UPDATE  APPLY SET APPLY_OK = 2 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 지원 멤버 추방 -->
+	<update id="ApplyMember_GetOut">
+		UPDATE  APPLY SET APPLY_OK = 3 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</update>
+	
+	<select id="getPositionConut" resultType="int">
+		SELECT count(*) FROM P_MEMBER WHERE PROJECT_ID = #{project_id} AND POSITION_ID = #{position_id}
+	</select>
+	
+	<!-- 지원 멤버 승인시 맴버 필드 업데이트 -->
+	<update id="ApplyMemberUpdate">
+		UPDATE P_MEMBER p
+		SET MEMBER_ID = #{member_id}
+		WHERE PROJECT_ID = #{project_id} AND MEMBER_ID IS NULL AND POSITION_ID = #{position_id} AND rownum = 1
+	</update>
+	
+	<!-- 프로젝트 맴버 null 값 있는지 확인 -->
+	<select id="getIsMemberApplyount" resultType="int">
+		SELECT count(*) FROM P_MEMBER WHERE POSITION_ID = #{position_id} AND PROJECT_ID = #{project_id} AND MEMBER_ID IS NOT NULL
+	</select>
+	
+	<!-- 멤버 강퇴 -->
+	<update id="getOutMember">
+		UPDATE P_MEMBER SET MEMBER_ID = NULL WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND POSITION_ID = #{position_id}
+	</update>
+	
+	<!-- 리더 권한 주기 -->
+	<update id="ToHandOverAuth" >
+		UPDATE PROJECT SET MEMBER_ID = #{member_id} WHERE PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 권한 준 리더 멤버로 교체 -->
+	<insert id="ReaderMemberChange">
+		INSERT INTO P_MEMBER (PROJECT_ID,POSITION_ID,MEMBER_ID) VALUES(#{project_id}, #{position_id}, #{member_id})
+	</insert>
+	
+	<!-- 권한 받은 멤버 삭제 -->
+	<delete id="getAuthMemberDel">
+		DELETE FROM P_MEMBER WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id}
+	</delete>
+	
+	
+	<!-- 카운터 수 대로 멤버 삭제 -->
+	<delete id="CountMemberDel" >
+		<![CDATA[
+		DELETE FROM P_MEMBER WHERE PROJECT_ID = #{param1} AND POSITION_ID = #{param2} AND MEMBER_ID IS NULL AND rownum <= #{param3}
+		 ]]>
+	</delete>
+	
 	
 </mapper>

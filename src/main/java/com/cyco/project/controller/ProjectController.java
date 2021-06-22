@@ -42,6 +42,7 @@ import com.cyco.project.vo.V_PmPostion_Count;
 import com.cyco.project.vo.V_p_pd_Join_NameVo;
 import com.cyco.utils.UtilFile;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 
 @Controller
@@ -258,27 +259,9 @@ public class ProjectController {
 	//해당 프로젝트로 링크 변경해야됨
 	@RequestMapping(value="detail",method = RequestMethod.GET)
 	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m) {
-	/*
-	 	필요한 데이터
-	 	1. 모집현황 - 모집 포지션 , 구인 인원, 현재 확정인원 --> 포지션별로 group.
-	 		--> select count(member_id) as curr,count(*) as max,position_name ,position_id 
-				from v_pm_position
-				where project_id=1
-				group by position_name,position_id
-				;
-	 	
-	 	7. 확정된 팀원 목록 - 프로필사진, member_id, 닉네임
-	 		--> getPmemberCountLIst(project_id)
-	 	
-	 	밑에는 V_PjAdrField_Join_V_PDetail에서 가져오면 될듯.
-	 	2. 프로젝트 모집분야 - PROJECT테이블 : field_code
-	 	3. 프로젝트 모집상태 - P_DETAILE 테이블 : p_state
-	 	4. 프로젝트 제목 --> P_DETAILE 테이블 : p_title
-	 	5. 프로젝트 본문 --> p_content
-	 	6. 프로젝트 기간 - P_DETAILE 테이블 : duration_id
-	 	7. 프로젝트 생성자 정보 - 프로필사진, member_id, 닉네임
-	 	
-	 */
+
+	
+		
 		//프로젝트 멤버 검색
 		List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
 		
@@ -291,12 +274,13 @@ public class ProjectController {
 		//프로젝트 상세 내용을 담은 객체
 		V_PjAdrField_Join_V_PDetail project = service.getOneProject(project_id);
 		
-		
+	
+	
+	
 		m.addAttribute("project",project);
 		m.addAttribute("pmcountlist",pmcountlist);
 		m.addAttribute("pmlist",pmlist);
 		m.addAttribute("pjsk",pjsk);
-		
 		
 		
 		return "Project/ProjectDetail";
