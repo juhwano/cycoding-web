@@ -22,23 +22,11 @@ public class AdminRestController {
 	@Autowired
 	private AdminService service;
 	
-	@RequestMapping(value="/skill", method=RequestMethod.GET)
-	public String getSkillNameCheck(@RequestParam("name") String name) {
-		int result = service.getSkillNameCheck(name);
-		if(result>0) {
-			System.out.println("중복발생");
-			return "true";
-		}
-		else {
-			System.out.println("중복값 없음");
-			return "false";
-		}
-	}
-	@RequestMapping(value="/skill", method=RequestMethod.POST)
-	public Map<String, String> getSkillUpdate(@RequestBody Map<String, List<SkillVo>> data) {
+	//사이트 관리
+	@RequestMapping(value="/site", method=RequestMethod.POST)
+	public Map<String, String> getSkillUpdate(@RequestBody Map<String, Object> data) {
 		
-		System.out.println(data);
-		Map<String, String> map= service.updateSkillList(data);
+		Map<String, String> map= service.updateSiteList(data);
 		
 		return map;
 	}

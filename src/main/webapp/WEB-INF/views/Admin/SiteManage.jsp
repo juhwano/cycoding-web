@@ -35,27 +35,28 @@
 					
 				</div>
 			</div>
+			<!-- Skill List -->
 			<div class="card_list">
 			<div class="listname-head">
 				<div class="listname">
 				<span>기술 목록</span>
 				</div>
 			<div class="addbox">
-			<span>추가 할 기술 목록 : </span>
-			<input type="text" class="form-control" id="skillInput" placeholder="Enter로 추가">
+			<span>추가 할 기술 이름 : </span>
+			<input type="text" class="form-control" id="skill_input" placeholder="Enter로 추가">
 			</div>
 				
 				</div>
 				
 				<hr>
-				<div class="wholearea">
+				<div class="skill_wholearea">
 				<p class="Project_p">
 					<b style="color: red;">*</b> 활성화 될 목록
 				</p>
 						<div class = tagarea id="skill_tagarea">
 							<c:forEach var="skill" items="${skillList}">
 								<c:if test="${skill.skill_enabled eq 1}">
-									<div class="tags">
+									<div class="tags skill_tags">
 										<input type="text" name="skill_name" value="${skill.skill_name}" readonly="readonly">
 										<input type="text" name="skill_enabled" value="${skill.skill_enabled}" hidden="">
 										<input type="text" name="skill_code" value="${skill.skill_code}" hidden="">
@@ -71,7 +72,7 @@
 						<div class=selectedarea id="skill_selectedarea">
 							<c:forEach var="skill" items="${skillList}">
 							<c:if test="${skill.skill_enabled eq 0}">
-								<div class="clicked">
+								<div class="clicked skill_clicked">
 									<input type="text" name="skill_name" value="${skill.skill_name}" readonly="readonly">
 										<input type="text" name="skill_enabled" value="${skill.skill_enabled}" hidden="">
 										<input type="text" name="skill_code" value="${skill.skill_code}" hidden="">
@@ -84,34 +85,37 @@
 			</div>
 			<div class="updateContainer">
 				<div class="updateWrapper">
-					<button class="updateBtn" id="skillBtn">수정하기</button>
+					<button class="updateBtn" id="skill_Btn">수정하기</button>
 				</div>
 			</div>
+			<!-- Skill List -->
 			
+			<!-- Field List -->
 			<div class="card_list">
 			<div class="listname-head">
 				<div class="listname">
-				<span>기술 목록</span>
+				<span>분야 목록</span>
 				</div>
 			<div class="addbox">
-			<input type="text" class="form-control" placeholder="Enter로 추가">
+			<span>추가 할 분야 이름 : </span>
+			<input type="text" class="form-control" id="field_input" placeholder="Enter로 추가">
 			</div>
 				
 				</div>
 				
 				<hr>
-				<div>
+				<div class="field_wholearea">
 				<p class="Project_p">
 					<b style="color: red;">*</b> 활성화 될 목록
 				</p>
-					<div>
-						<div class="tagarea" id="position_tagarea">
-							<c:forEach var="skill" items="${skillList}">
-								<c:if test="${skill.skill_enabled eq 1}">
-									<div class="tags">
-										<input type="text" value="${skill.skill_name}"
-											readonly="readonly"> <input type="text"
-											value="${skill.skill_code}" hidden="">
+						<div class = tagarea id="field_tagarea">
+							<c:forEach var="field" items="${fieldList}">
+								<c:if test="${field.field_enabled eq 1}">
+									<div class="tags field_tags">
+										<input type="text" name="field_name" value="${field.field_name}" readonly="readonly">
+										<input type="text" name="field_enabled" value="${field.field_enabled}" hidden="">
+										<input type="text" name="field_code" value="${field.field_code}" hidden="">
+										
 									</div>
 								</c:if>
 							</c:forEach>
@@ -120,45 +124,53 @@
 						<p class="Project_p">
 							<b style="color: red;">*</b> 비 활성화 될 목록
 						</p>
-						<div id="selectedarea">
-							<c:forEach var="skill" items="${skillList}">
-							<c:if test="${skill.skill_enabled eq 0}">
-								<div class="clicked">
-									<input type="text" value="${skill.skill_name}"
-										readonly="readonly"> <input type="text"
-										value="${skill.skill_code}" hidden=""
-										name="skill_code">
+						<div class=selectedarea id="field_selectedarea">
+							<c:forEach var="field" items="${fieldList}">
+							<c:if test="${field.field_enabled eq 0}">
+								<div class="clicked field_clicked">
+									<input type="text" name="field_name" value="${field.field_name}" readonly="readonly">
+										<input type="text" name="field_enabled" value="${field.field_enabled}" hidden="">
+										<input type="text" name="field_code" value="${field.field_code}" hidden="">
 								</div>
 							</c:if>
 							</c:forEach>
 						</div>
-					</div>
+				
 				</div>
 			</div>
+			<div class="updateContainer">
+				<div class="updateWrapper">
+					<button class="updateBtn" id="field_Btn">수정하기</button>
+				</div>
+			</div>
+			<!-- Field List -->
+			
+			<!-- Position List -->
 			<div class="card_list">
-				<div class="listname-head">
-					<div class="listname">
-					<span>기술 목록</span>
-					</div>
-					<div class="addbox">
-					<input type="text" class="form-control" placeholder="Enter로 추가">
-					</div>
-					
+			<div class="listname-head">
+				<div class="listname">
+				<span>포지션 목록</span>
+				</div>
+			<div class="addbox">
+			<span>추가 할 포지션 이름 : </span>
+			<input type="text" class="form-control" id="position_input" placeholder="Enter로 추가">
+			</div>
+				
 				</div>
 				
 				<hr>
-				<div>
+				<div class="position_wholearea">
 				<p class="Project_p">
 					<b style="color: red;">*</b> 활성화 될 목록
 				</p>
-					<div>
-						<div id="tagarea">
-							<c:forEach var="skill" items="${skillList}">
-								<c:if test="${skill.skill_enabled eq 1}">
-									<div class="tags">
-										<input type="text" value="${skill.skill_name}"
-											readonly="readonly"> <input type="text"
-											value="${skill.skill_code}" hidden="">
+						<div class = tagarea id="position_tagarea">
+							<c:forEach var="position" items="${positionList}">
+								<c:if test="${position.position_enabled eq 1}">
+									<div class="tags position_tags">
+										<input type="text" name="position_name" value="${position.position_name}" readonly="readonly">
+										<input type="text" name="position_enabled" value="${position.position_enabled}" hidden="">
+										<input type="text" name="position_code" value="${position.position_id}" hidden="">
+										
 									</div>
 								</c:if>
 							</c:forEach>
@@ -167,21 +179,27 @@
 						<p class="Project_p">
 							<b style="color: red;">*</b> 비 활성화 될 목록
 						</p>
-						<div id="selectedarea">
-							<c:forEach var="skill" items="${skillList}">
-							<c:if test="${skill.skill_enabled eq 0}">
-								<div class="clicked">
-									<input type="text" value="${skill.skill_name}"
-										readonly="readonly"> <input type="text"
-										value="${skill.skill_code}" hidden=""
-										name="skill_code">
+						<div class=selectedarea id="position_selectedarea">
+							<c:forEach var="position" items="${positionList}">
+							<c:if test="${position.position_enabled eq 0}">
+								<div class="clicked position_clicked">
+									<input type="text" name="position_name" value="${position.position_name}" readonly="readonly">
+										<input type="text" name="position_enabled" value="${position.position_enabled}" hidden="">
+										<input type="text" name="position_code" value="${position.position_id}" hidden="">
 								</div>
 							</c:if>
 							</c:forEach>
 						</div>
-					</div>
+				
 				</div>
 			</div>
+			<div class="updateContainer">
+				<div class="updateWrapper">
+					<button class="updateBtn" id="position_Btn">수정하기</button>
+				</div>
+			</div>
+			<!-- Position List -->
+			
 		</div>
 		 </section>
 </body>
