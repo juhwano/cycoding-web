@@ -23,6 +23,7 @@ import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
+import com.cyco.project.vo.V_ApplyMemberList;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
@@ -421,7 +422,7 @@ public class ProjectService {
 		 	2. 비회원, 추가기입x 회원일경우 조회수 높은순으로 출력
 		 	3. 
 		*/
-		System.out.println("member_id : "+member_id);
+		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		
@@ -526,6 +527,95 @@ public class ProjectService {
 		}
 		return result;
 	}
-
+	
+	
+	
+	// 프로젝트 지원한 멤버 아이디
+	public List<V_ApplyMemberList> getApplyMemberList(V_ApplyMemberList memberlist){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<V_ApplyMemberList> member = dao.getApplyMemberList(memberlist);
+		
+		return member;
+		
+	}
+	
+	// 프로젝트 승인시 처리 서비스
+	@Transactional
+	public int ApplyMember_Ok(ApplyVo apply) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		int result = 0;
+		
+		int check = dao.getIsMemberApplyount(apply);
+		int maxPostionCount = dao.getPositionConut(apply);
+		
+		
+		if (check == maxPostionCount) {
+			result = -1;
+		    return result;	
+		}else {
+			dao.ApplyMember_Ok(apply);
+			
+			P_MemberVo membervo = new P_MemberVo(apply.getMember_id(), apply.getProject_id(), apply.getPosition_id());
+			
+			result = dao.ApplyMemberUpdate(membervo);
+		}
+		
+		
+		return result;
+	}
+	
+	// 프로젝트 거절
+	public int ApplyMember_No(ApplyVo apply) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.ApplyMember_No(apply);
+		
+		
+		return result;
+	}
+	
+	// 프로젝트 추방
+	@Transactional
+	public int getOutMember(P_MemberVo p_member) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		ApplyVo apply = new ApplyVo();
+		apply.setMember_id(p_member.getMember_id());
+		apply.setProject_id(p_member.getProject_id());
+		
+		
+		int result = dao.getOutMember(p_member);
+		
+		dao.ApplyMember_GetOut(apply);
+		
+		return result;
+	}
+	
+	// 프로젝트 위임
+	@Transactional
+	public int ToHandOverAuth(ApplyVo apply, P_MemberVo member) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		// 리더 변경
+		int result = dao.ToHandOverAuth(apply);
+		// 리더 -> 멤버로 변경
+		dao.ReaderMemberChange(member);
+		
+		// 권한 받은 멤버 삭제
+		dao.getAuthMemberDel(apply);
+		
+		return result;
+	}
+	
+	// 프로젝트 삭제
+	public int CountMemberDel(String project_id, String postiion_id, String count) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CountMemberDel(project_id, postiion_id, count);
+		
+		return result;
+	}
+	
 }
 

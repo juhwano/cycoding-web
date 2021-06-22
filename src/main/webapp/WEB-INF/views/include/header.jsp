@@ -145,12 +145,14 @@
 										</div></li>
 
 									<!-- 로그인 -->
-									<li class="nav-item dropdown"><a
-										href="${pageContext.request.contextPath}/admin.cy"
+									<li class="nav-item dropdown">
+									<a href="#"
 										class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 										id="supportDropdown" aria-expanded="false"> 관리자 페이지 <span
 											class="fas fa-angle-down nav-link-arrow ms-1"></span>
-									</a><div class="user_info" style="display: none">
+									</a>
+									<div class="user_info" style="display: none">
+
 											<div class="mypage">
 												
 												<a
@@ -194,7 +196,7 @@
 												<li class="subdrop"><a href="">프로젝트</a>
 													<ul  class="susub">
 														<li>진행중인 프로젝트</li>
-														<li>나의 프로젝트/후기</li>
+														<li><a href="${pageContext.request.contextPath}/mypage/myProject">나의 프로젝트/후기</a></li>
 													</ul>
 												</li>
 											<li><a href="${pageContext.request.contextPath}/messages/">내 쪽지</a></li>												

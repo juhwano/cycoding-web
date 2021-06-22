@@ -56,7 +56,7 @@
                      value="${member.MEMBER_EMAIL}" readonly>
                      <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
                   <li class="itemlist"><span class="item">비밀번호</span><input
-                     type="password" class="info" value="password"
+                     type="password" id="password" name="password" class="info" value="password"
                      readonly>
                      <button type="button" class="modify_items m-btn">수정</button></li>
                   <li class="itemlist"><span class="item">닉네임</span><input
@@ -363,8 +363,6 @@
 					
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
 							<button id="cancel_quit">닫기</button>
-							
-							
 						</a>
 						<%-- <input type="hidden" name="quit_id" id="quit_id" value="${member.MEMBER_ID}" > --%>
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">

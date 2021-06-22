@@ -25,7 +25,6 @@ $(function() {
 					
 					
 					
-					console.log(memberNum);
 					memberNum -= $(DelNum)[0].value;
 					
 					
@@ -42,7 +41,6 @@ $(function() {
 				var DownBtn = $(this)[0].children[2];
 				var Count = $(this)[0].children[1];
 
-				console.log($(Count).val());
 				
 				
 				// + 이벤트

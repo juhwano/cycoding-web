@@ -20,7 +20,6 @@
 <c:set var="pmlist" value="${pmlist}" />
 <c:set var="pjsk" value="${pjsk}" />
 
-
 <body>
 	<div class="projectDetail">
 	<div class="container">
@@ -71,7 +70,7 @@
 							<img src="${pageContext.request.contextPath}/resources/upload/${project.member_image}">
 						</div>
 						<p>
-							<a href="#">
+							<a href="${pageContext.request.contextPath}/member/memberdetailpage?memberid=${project.member_id}" target="_blank">
 							<b>${project.member_nickname}</b>
 							</a>
 						</p>
@@ -124,7 +123,8 @@
 			</div>
 			
 		</div>
-	<!-- 메인 박스 -->	
+		
+	<!-- 텝  -->	
 	<div class="mainBox">
 		<div class="m_menubarBox">
 				<ul class="Project_menuBar">
@@ -136,101 +136,13 @@
 					</c:if>
 				</ul>
 		</div>
+	<!-- -->
+		
 	<!-- 안에 정보들만 바꾸기 -->	
-		<!-- 본문 -->
-	<div class="ChangeContentBox">
-		
-		<div class="Project_info">
-		<div class="ProjectMember">
-			<p>모집현황</p>
-			<p class="Project_p"><b style="color: red;">*</b> 원하는 분야에 지원해보세요!</p>
-			<hr>
+	<!-- 본문 -->
+	<div class="ChangeContentBox">	
+	</div>
 
-
-			<div id="PositionBox">
-				<table class="project_boxdiv">
-						<c:forEach items="${pmcountlist}" var="pmcountlist">
-							<tr class="Project_memberList">
-								<td width="50%">${pmcountlist.position_name}</td>
-								<c:choose>
-								<c:when test="${pmcountlist.curr eq pmcountlist.max}">
-									<td class="memberListcurrFull" width="15%">${pmcountlist.curr} / ${pmcountlist.max} </td>
-									<td width="30%" class="FullBtnWarp">
-										<input type="button" value="마감">
-									</td>	
-								</c:when>
-								<c:otherwise>
-									<td class="memberListcurr" width="15%">${pmcountlist.curr} / ${pmcountlist.max} </td>
-									<td width="30%" class="BtnWarp">
-										<c:if test="${sessionScope.member_id != project.member_id }">
-										<input class="ProjectApplyBtn" type="button" value="지원">
-										<label for="ProjectApplyBtn" hidden>${pmcountlist.position_id}</label>
-										<label for="ProjectApplyBtn" hidden>${pmcountlist.position_name}</label>
-										</c:if>
-									</td>
-								</c:otherwise>
-								</c:choose>
-							</tr>	
-						</c:forEach>
-				</table>
-			</div>
-		</div>
-
-
-		<div class="ProjectContent">
-			<p>- 프로젝트 소개</p>
-			
-			<p class="Project_content">${project.p_content}</p>
-		</div>
-		</div>
-		
-		<!-- QnA Box -->
-		<div class="QnABox" style="display:none">
-		qnabox
-		</div>
-		
-		
-		<!-- MemberEditBox -->
-		<div class="MemberEditBox" style="display:none">
-			<div class="ProjectMember">
-				<p>지원내역</p>
-				<p class="Project_p"><b style="color: red;">*</b> 나의 프로젝트에 지원한 멤버 목록입니다.</p>
-				<hr>
-				<div id="PositionBox">
-					<table class="project_boxdiv">
-							<c:forEach items="${pmcountlist}" var="pmcountlist">
-								<tr class="Project_memberList">
-									<td width="50%">${pmcountlist.position_name}</td>
-									<c:choose>
-									<c:when test="${pmcountlist.curr eq pmcountlist.max}">
-										<td class="memberListcurrFull" width="15%">${pmcountlist.curr} / ${pmcountlist.max} </td>
-										<td width="30%" class="FullBtnWarp">
-											<input type="button" value="마감">
-										</td>	
-									</c:when>
-									<c:otherwise>
-										<td class="memberListcurr" width="15%">${pmcountlist.curr} / ${pmcountlist.max} </td>
-										<td width="30%" class="BtnWarp">
-										
-											<input class="ProjectApplyBtn" type="button" value="상세보기">
-											<label for="ProjectApplyBtn" hidden>${pmcountlist.position_id}</label>
-											<label for="ProjectApplyBtn" hidden>${pmcountlist.position_name}</label>
-											
-										</td>
-									</c:otherwise>
-									</c:choose>
-								</tr>	
-							</c:forEach>
-					</table>
-				</div>
-			</div>
-			
-		</div>
-			
-			
-			
-		</div>
-		<!-- changeBoxEnd -->	
 	</div>
 		<!-- 모달 -->
        	<div class="Project_Detail_modal">
@@ -245,14 +157,17 @@
 				<p class="Project_p Apply_p"><b style="color: red;">*</b> 예를 누를시 정보제공 및 유의사항에 동의한 것으로 간주됩니다.</p>	
 				<p class="Apply_p"><b>유의사항</b></p>	
 				<p class="Project_p Apply_p">- 귀하의 프로필 정보가 프로젝트 리더에게 제공됩니다.</p>	
-				<p class="Project_p Apply_p">- 프로젝트내의 분쟁사항은 저희 사이코에서 절대 책임지지 않습니다.</p>	
+				<p class="Project_p Apply_p">- 프로젝트내의 분쟁사항은 저희 사이코딩에서 절대 책임지지 않습니다.</p>	
 				<p class="Project_p Apply_p">- 프로젝트의 리더의 선택으로 지원이 거절 될 수 있습니다.</p>	
-				
+				<p class="Project_p Apply_p">- 지원이 거절 될 시 본 프로젝트에 더이상 지원이 불가능합니다.</p>	
 				
 				</div>		
 				</div>
 			</form>	
-			</div>		
+		</div>		
+		<div class="Project_Apply_modal">	
+		</div>
+			
        </div> 
 
 	</div>
@@ -260,116 +175,8 @@
 </body>
 	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
-	
-	if($('.member_list').children().length < 1){
-		$('.member_list').append("<tr><td class='ProjectDetail_p'>아직 프로젝트 멤버가 없습니다.</td></tr>");
-	}
-	
-	
-	$('.Project_menuBar > li ').click(function(){
-		
-		$('.Project_menuBar > li ').attr('class','menuli');
-		
-		
-		if($(this).attr('id') == "project_info"){
-			$('.Project_info').attr('style','display:block');
-			$('.QnABox').attr('style','display:none');
-			$('.MemberEditBox').attr('style','display:none');
-			$('html').scrollTop(0);
-			
-		}else if($(this).attr('id') == "Qna"){
-			$('.QnABox').attr('style','display:block');
-			$('.Project_info').attr('style','display:none');
-			$('.MemberEditBox').attr('style','display:none');
-			$('html').scrollTop(0);
-			
-		}else if($(this).attr('id') == "memberEdit"){
-			$('.MemberEditBox').attr('style','display:block');
-			$('.QnABox').attr('style','display:none');
-			$('.Project_info').attr('style','display:none');
-			$('html').scrollTop(0);
-			
-		}
-		
-		$(this).attr('class','menuliClick');
-		
-	})
-	
-	
-	$('.Project_Detail_modal').hide();
-	
-	$(document).off("click").on('click', '.ProjectApplyBtn', function(){
-		var Applycode = this.nextElementSibling.textContent;
-		var Applyname = this.nextElementSibling.nextElementSibling.textContent;
-		var checkdata = {"member_id":${sessionScope.member_id},
-						"project_id":${project.project_id}};
-		
-		if('${project.p_state}' != '모집중'){
-			swal("지원이 마감되었습니다.","","error");
-			return false;
-		}
-		
-		
-		$.ajax({
-     		url:"/ajaxproject/projectCheckApply",
-     		dataType:"html",
-     		data: checkdata,
-     		success: function(responsedata){    			
-     			console.log(responsedata);
-     			if(responsedata == "is_project"){
-     				swal("현재 진행 중인 프로젝트가 존재합니다.","","warning");
-     				return false;
-     			}else if(responsedata == "ProjectApply"){
-     				swal("현재 프로젝트에 이미 지원 하였습니다.","","warning");
-     				return false;
-     			}else{
-     				
-     				var Applydata = {"project_id":${project.project_id},
-     								"position_id":Applycode,
-     								"member_id":${sessionScope.member_id}};
-     				
-     				
-     				 $('.ApplyName').empty();
-     			     $('.ApplyName').append(Applyname);
-     			     $('.Project_Detail_modal').show();
-     				
-     			     $('.ApplyBtn_No').unbind('click').bind('click',function(){
-     			    	 $('.Project_Detail_modal').hide();
-     			     });
-     			     
-     			     $('.ApplyBtn_Ok').unbind('click').bind('click',function(){
-     			    	 
-     			    	 $.ajax({
-     			     		url:"/ajaxproject/projectapply",
-     			     		dataType:"html",
-     			     		data: Applydata,
-     			     		success: function(responsedata){    			
-     			     			console.log(responsedata);
-     			     			if(responsedata == "true"){
-     			     				swal("지원 되었습니다.","","success");
-     			     				setTimeout(function() {
-     			     						document.location.reload(true);
-     			     					}, 1000);
-     			     				
-     			     			}else{
-     			     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-     			     				setTimeout(function() {
-     		     						document.location.reload(true);
-     		     					}, 1000);
-     			     			}
-     			     			
-     			     		}
-     			     	});
-     			    	 
-     			    	 
-     			     });
-     				
-     			}
-     			
-     		}
-     	});
-	     
-	});
-	
+	var project_id = "${project.project_id}";
+	var login_memberid = "${sessionScope.member_id}";
 </script>
+<script src="${pageContext.request.contextPath}/assets/js/projectdetail.js" ></script>
 </html>

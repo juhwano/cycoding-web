@@ -68,8 +68,6 @@ public class MemberController {
 			//리뷰목록
 			List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
 			
-			System.out.println("리뷰목록: " + memberdetailservice.getReviewList(memberid));
-			
 			JSONArray reviewList = JSONArray.fromObject(row_reviewList);
 			System.out.println("리뷰목록JSON: " + reviewList);
 			mmp.addAttribute("reviewList", reviewList);

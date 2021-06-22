@@ -100,7 +100,7 @@ $(document).ready(function() {
 			$.ajax({
             url: "ajax/phonecheck",
             data: {
-                phone: $("#phone").val()
+                phone: $("#m_phone").val()
             },
             type: "get",
             dataType: "text",

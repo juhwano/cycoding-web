@@ -145,7 +145,7 @@
                     		
                     		<div class="ProjectSkill">
                     			<p>기술 스텍</p>
-                    			<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는데 필요한 기술 스텍을 선택하세요.</p>
+                    			<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는데 필요한 기술 스택을 선택하세요.</p>
                    				<hr>
 								<div id="m_skill">
 									<div>

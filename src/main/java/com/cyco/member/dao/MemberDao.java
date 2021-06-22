@@ -14,9 +14,11 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
+import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.project.vo.P_DetailVo;
 
 
@@ -131,11 +133,11 @@ public interface MemberDao {
 	
 	//회원 상세 페이지 리뷰목록 가져오기
 	public List<ReviewVo> getReviewList(String userid);
-	
 
 	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
 	public List<P_DetailVo> checkProjectBeforeInvite(String memberid);
-	//북마크, 지원목록 페이지
+	
+	//##북마크, 지원목록 페이지
 	//북마크한 프로젝트 목록
 	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid);
 	
@@ -147,6 +149,15 @@ public interface MemberDao {
 	
 	//지원 취소
 	public void deleteApply(String applyid);
+	
+	//##내 프로젝트 목록/후기 페이지
+	//로그인한 회원이 팀장인 프로젝트 목록
+	public List<Project_TeamLeaderVo> getTeamLeader(String memberid);
+	
+	//로그인한 회원이 팀원인 프로젝트 목록
+	public List<V_myProjectVo> getTeamMember(String memberid);
 
+	//후기작성용 팀장,팀원 목록
+	public List<V_myProjectVo> getReviewMember(String projectid);
 
 }
