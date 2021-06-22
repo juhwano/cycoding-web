@@ -243,6 +243,30 @@
    <delete id="deleteApply">
    		delete from apply where apply_id = ${apply_id}
    </delete>
+   
+   <!-- 내프로젝트/후기 페이지 -->
+   <!-- 로그인한 회원이 팀장인 프로젝트목록 -->
+   <select id="getTeamLeader" resultType="com.cyco.member.vo.Project_TeamLeaderVo">
+	   	select p.project_id, pd.p_title, pd.p_state, p.member_id, f.field_name
+		from p_detail pd
+		left join project p on p.project_id = pd.project_id
+		left join p_field f on p.field_code = f.field_code
+		where p.member_id = ${member_id}
+   </select>
+   
+   <!-- 로그인한 회원이 팀원인 프로젝트 목록 -->
+   <select id="getTeamMember" resultType="com.cyco.member.vo.V_myProjectVo">
+   		select project_id, p_title, teamleader, teammember, position_name, field_name, p_state
+		from V_myProject 
+		where teammember = ${member_id}
+   </select>
+   
+   <!-- 리뷰 작성용 팀장, 팀원 목록 -->
+   <select id="getReviewMember" resultType="com.cyco.member.vo.V_myProjectVo">
+		select project_id, p_title, teamleader, teammember, position_name, field_name, p_state
+		from V_myProject 
+		where project_id = ${project_id}
+   </select>
 
 
 	

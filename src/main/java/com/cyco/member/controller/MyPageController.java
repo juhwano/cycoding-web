@@ -32,7 +32,12 @@ import com.cyco.common.vo.BookMark_Join_P_detailVo;
 
 import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
+import com.cyco.member.vo.Project_TeamLeaderVo;
+import com.cyco.member.vo.ReviewVo;
+import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.utils.UtilFile;
+
+import net.sf.json.JSONArray;
 
 
 @RequestMapping("mypage/")
@@ -192,7 +197,7 @@ public class MyPageController {
 
 	}
 
-	//북마크 페이지 이동
+	//북마크/지원내역 페이지 이동
 	@RequestMapping(value="wishProject")
 	public String wishProject(Model m, HttpSession session) {
 		
@@ -209,6 +214,31 @@ public class MyPageController {
 		System.out.println("apply_list: " + apply_list);
 		return "/Member/wishProject";
 
+	}
+	
+	//내프로젝트/후기 페이지로 이동
+	@RequestMapping(value="myProject")
+	public String myProject(Model m, HttpSession session) {
+		//로그인한 회원이 팀리더인 목록
+		List<Project_TeamLeaderVo> teamLeaderList = null;
+		teamLeaderList = memberdetailservice.getTeamLeader(String.valueOf(session.getAttribute("member_id")));
+		
+		m.addAttribute("teamLeaderList", teamLeaderList);
+
+		//로그인한 회원이 팀멤버인 목록
+		List<V_myProjectVo> teamMemberList = null;
+		teamMemberList = memberdetailservice.getTeamMember(String.valueOf(session.getAttribute("member_id")));
+		
+		m.addAttribute("teamMemberList", teamMemberList);
+		
+		//리뷰목록
+		List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(String.valueOf(session.getAttribute("member_id")));
+		
+		JSONArray reviewList = JSONArray.fromObject(row_reviewList);
+		System.out.println("리뷰목록JSON: " + reviewList);
+		m.addAttribute("reviewList", reviewList);
+		
+		return "/Member/MyProject";
 	}
 
 }

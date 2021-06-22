@@ -363,8 +363,6 @@
 					
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
 							<button id="cancel_quit">닫기</button>
-							
-							
 						</a>
 						<%-- <input type="hidden" name="quit_id" id="quit_id" value="${member.MEMBER_ID}" > --%>
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
