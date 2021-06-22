@@ -25,7 +25,7 @@ public class AdminRestController {
 	//사이트 관리
 	@RequestMapping(value="/site", method=RequestMethod.POST)
 	public Map<String, String> getSkillUpdate(@RequestBody Map<String, Object> data) {
-		//
+		
 		Map<String, String> map= service.updateSiteList(data);
 		
 		return map;
