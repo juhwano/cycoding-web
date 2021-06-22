@@ -32,7 +32,7 @@
 							<tr class="table_head">
 								<th>분야</th>
 								<th>프로젝트명</th>
-								<th>포지션</th>
+								<th>내 포지션</th>
 								<th>상태</th>
 							</tr>
 						</thead>
@@ -80,7 +80,7 @@
 							<tr class="table_head">
 								<th>분야</th>
 								<th>프로젝트명</th>
-								<th>포지션</th>
+								<th>내 포지션</th>
 								<th>후기</th>
 							</tr>
 						</thead>
@@ -103,7 +103,11 @@
 										<td><a href="/project/detail?project_id=${M_project.project_id}">${M_project.p_title}</a></td>
 										<td>${M_project.position_name}</td>
 										<!-- 여기 채워야돼~~ -->
-										<td><a href="#reviewModal"><p class="state_ing">작성하기</p></a></td>
+										<td>
+											<a href="#reviewModal" class="trigger-btn" data-toggle="modal">
+												<p class="state_ing reviewWrite" id="${M_project.project_id}">작성하기</p>
+											</a>
+										</td>
 									</tr>
 								</c:if>
 							</c:forEach>
@@ -119,7 +123,7 @@
 		</div>
 		
 		<div class="wish_section bookmark_sec">
-			<p class="wish_title">REVIEW</p>
+			<p class="wish_title">MY REVIEW</p>
 				<!-- 리뷰 div -->
 				<div id="review" class="details">
 					<div class="reviewBox">
@@ -178,21 +182,64 @@
 				<div class="modal-header">
 					<p id="modal-title">후기 작성하기</p>
 				</div>
+				<div class="info_text_sec">
+					<p class="review_info_text">
+						✨ 함께 프로젝트한 멤버에 대한 후기를 50글자 이내로 작성해주세요 ✨
+					</p>
+				</div>
 				<div id="modal-body">
 					<div id="contentarea">
-						
-						
-						
-						
-						
-						
+						<form class="writeReview" method="post" action="주소넣기">
+							<div class="writeReviewSec">
+								<table class="table wish_table apply_table">
+									<thead>
+										<tr class="table_head">
+											<th>닉네임</th>
+											<th>포지션</th>
+											<th>리뷰</th>
+											<th>별점</th>
+										</tr>
+									</thead>
+									<tbody class="reviewWriteTable">
+										<tr>
+											<td>열글자열글자열글자열</td>
+											<td>팀장</td>
+											<td><input type="text" class="writeReviewContent form-control"></td>
+											<td><div class="star-input">
+								            	<input type="hidden" name="grade" class="gradesubmit" value="">
+													<span class="input"> 
+														<input type="radio" name="star-input" value="1" id="p1"> <label for="p1">1</label> 
+														<input type="radio" name="star-input" value="2" id="p2"> <label for="p2">2</label> 
+														<input type="radio" name="star-input" value="3" id="p3"> <label for="p3">3</label>  
+														<input type="radio" name="star-input" value="4" id="p4"> <label for="p4">4</label>
+														<input type="radio" name="star-input" value="5" id="p5"> <label for="p5">5</label> 
+													</span>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>저쩌구</td>
+											<td>웹프론트앤드</td>
+											<td><input type="text" class="writeReviewContent form-control"></td>
+											<td>★★★★★</td>
+										</tr>
+										<tr>
+											<td>어쩌구</td>
+											<td>웹서버</td>
+											<td><input type="text" class="writeReviewContent form-control"></td>
+											<td>★★★★★</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
 					</div>
 					<div id="buttonarea">
 						<a href="#reviewModal" class="trigger-btn" data-toggle="modal">
 							<button id="cancel_quit">닫기</button>
 						</a>
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
-							<button id="quit">작성</button>
+							<button id="write_ok">작성</button>
 						</a>
 					</div>
 
@@ -210,5 +257,7 @@
 	/* js로 보내주기 */
 	var reviewList = ${reviewList};
 </script>
-<script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/assets/js/memberdetail.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myProject.js"></script>
+
 </html>

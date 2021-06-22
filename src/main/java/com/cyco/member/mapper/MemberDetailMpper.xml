@@ -261,11 +261,20 @@
 		where teammember = ${member_id}
    </select>
    
-   <!-- 리뷰 작성용 팀장, 팀원 목록 -->
-   <select id="getReviewMember" resultType="com.cyco.member.vo.V_myProjectVo">
-		select project_id, p_title, teamleader, teammember, position_name, field_name, p_state
-		from V_myProject 
-		where project_id = ${project_id}
+   <!-- 리뷰 작성용 프로젝트팀장 조회 -->
+   <select id="writeReviewLeader" resultType="com.cyco.member.vo.MyProject_Join_Member">
+		select distinct v.teamleader, m.member_nickname, v.project_id
+		from v_myproject v
+		join member m on v.teamleader = m.member_id
+		where project_id = ${param1} and not v.teamleader = ${param2}
+   </select>
+   
+   <!-- 리뷰 작성용 프로젝트멤버 조회 -->
+   <select id="writeReviewMember" resultType="com.cyco.member.vo.MyProject_Join_Member">
+   		select v.teammember, v.position_name, m.member_nickname, v.project_id
+		from v_myproject v
+		join member m on v.teammember = m.member_id
+		where project_id = ${param1} and not v.teammember = ${param2}
    </select>
 
 
