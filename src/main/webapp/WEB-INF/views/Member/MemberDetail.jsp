@@ -39,6 +39,7 @@
 			<div id="cycoder">
 				<p>${member.MEMBER_NICKNAME}</p>
 				<a href="#invitation_modal" class="trigger-btn" data-toggle="modal"><button type="button" id="invitation">초대하기</button></a>
+				<a href="#message_modal" class="trigger-btn" data-toggle="modal"><button type="button" id="send">쪽지보내기</button></a>
 			</div>
 
 			<!-- 			<div id="modals">
@@ -282,7 +283,30 @@
 			</div>
 		</div>
 	</div>
-	
+			<div id="message_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">SEND</p>
+				</div>
+				<div id="modal-body">
+					<!-- <div id="msg_img"></div> -->
+					<div id="messagearea">
+						<span>메시지를 입력하세요</span>					
+					</div>
+					<input type="hidden" name="text" id="text">
+					<div id="textcount"></div>
+					<div id="msg_buttonarea">
+						
+						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
+							<button class="send_btn" id="msg_btn"><i class="far fa-paper-plane"></i></button>		
+						</a> 
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 	
 </body>
 <jsp:include page="../include/footer.jsp"></jsp:include>

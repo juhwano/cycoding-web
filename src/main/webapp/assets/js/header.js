@@ -47,8 +47,10 @@ function chekcBell(id) {
 
 //알림 리스트 비동기로 바꿔주기
 function updatealarmlist(id) {
-
-	$.ajax({
+	
+	return new Promise(function(resolve,reject){
+		
+		$.ajax({
 		url: "/alarm/updatealarmlist",
 		type: "post",
 		data: { id: id },
@@ -75,7 +77,7 @@ function updatealarmlist(id) {
 
 						$("#alarmsub").append(
 
-							"<li><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
+							"<li><a href='/member/memberdetailpage?member_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
 
 						);
 
@@ -111,7 +113,7 @@ function updatealarmlist(id) {
 
 						$("#alarmsub").append(
 
-							"<li><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
+							"<li><a href='/member/memberdetailpage?member_id=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
 
 						);
 
@@ -121,6 +123,14 @@ function updatealarmlist(id) {
 						$("#alarmsub").append(
 
 							"<li><a href=''" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 질문에 답변이 달렸습니다</p></a></li>"
+
+						);
+
+					} else if (data.alarm_CODE == "CHAT_O") {
+
+						$("#alarmsub").append(
+
+							"<li><a href='/messages/'><p id='" + data.alarm_ID + "' class='alarm_content'>새로운 쪽지가 도착했습니다</p></a></li>"
 
 						);
 
@@ -136,14 +146,20 @@ function updatealarmlist(id) {
 
 			$("#alarmsub").append(
 
-				"<li class='last'><a href='/mypage/myalarm'><button id='more'>더보기</button></a></li>"
+				"<li class='last'><a href='/mypage/myalarm'><p class='alarm_content'>알림 더보기</p></a></li>"
 
 			);
+			
+			resolve(res);
 		},
 		error: function(xhr) {
 			console.log(xhr)
 		}
 	});
+		
+	})
+	
+	
 }
 
 

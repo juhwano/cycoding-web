@@ -11,6 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import com.cyco.alarm.dao.AlarmDao;
 import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.ToNoteVo;
+import com.cyco.alarm.vo.V_FromNote_Member_Vo;
+import com.cyco.alarm.vo.V_ToNote_Member_Vo;
 
 @Repository
 public class AlarmService {
@@ -40,6 +44,36 @@ public class AlarmService {
 		if(row > 0) {
 			bo = true;
 		}	
+		return bo;
+		
+	}
+	
+	//쪽지일 경우 위 서비스와 함께 발신, 수신함에도 인서트
+	public boolean insertNote(HashMap<String, String> data) {
+		
+		Boolean bo = false;
+		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		FromNoteVo frn = new FromNoteVo();
+		ToNoteVo tn = new ToNoteVo();
+		frn.setMEMBER_TO(data.get("member_id"));
+		frn.setMEMBER_FROM(data.get("sender"));
+		frn.setNOTE_CONTENT(data.get("message"));
+		
+		System.out.println("발신 : " + frn.toString());
+		
+		tn.setMEMBER_TO(data.get("member_id"));
+		tn.setMEMBER_FROM(data.get("sender"));
+		tn.setNOTE_CONTENT(data.get("message"));
+		System.out.println("수신 : " + frn.toString());
+
+		int frow = alarmdao.insertFromNote(frn);
+		int nrow = alarmdao.insertToNote(tn);
+		
+		if(frow > 0 && nrow > 0) {
+			bo = true;
+		}	
+		
 		return bo;
 		
 	}
@@ -81,5 +115,22 @@ public class AlarmService {
 		return row;
 		
 	}
-
+	
+	//알림 페이지 최초 로딩시 수신 메시지 불러오기
+	public List<V_ToNote_Member_Vo> getReceivedMessages(String useremail){
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		List<V_ToNote_Member_Vo> list = alarmdao.getReceivedMessages(useremail);
+		
+		return list;
+		
+	}
+	
+	//알림 페이지 최초 로딩시 발신 메시지 불러오기
+	public List<V_FromNote_Member_Vo> getSendMessages(String useremail){
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		List<V_FromNote_Member_Vo> list = alarmdao.getSendMessages(useremail);
+		
+		return list;
+		
+	}
 }

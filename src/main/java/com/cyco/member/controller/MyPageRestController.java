@@ -123,6 +123,8 @@ public class MyPageRestController {
 	@RequestMapping(value="phonecheck",method=RequestMethod.GET)
 	public String checkPhoneNameMyPage(String phone) {
 		
+		System.out.println("현재 phone" + phone);
+		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		String result = "able";
 		

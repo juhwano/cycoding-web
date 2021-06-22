@@ -56,7 +56,7 @@
                      value="${member.MEMBER_EMAIL}" readonly>
                      <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
                   <li class="itemlist"><span class="item">비밀번호</span><input
-                     type="password" class="info" value="password"
+                     type="password" id="password" name="password" class="info" value="password"
                      readonly>
                      <button type="button" class="modify_items m-btn">수정</button></li>
                   <li class="itemlist"><span class="item">닉네임</span><input

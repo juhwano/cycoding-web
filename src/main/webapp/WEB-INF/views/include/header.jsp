@@ -198,7 +198,8 @@
 														<li>진행중인 프로젝트</li>
 														<li><a href="${pageContext.request.contextPath}/mypage/myProject">나의 프로젝트/후기</a></li>
 													</ul>
-												</li>												
+												</li>
+											<li><a href="${pageContext.request.contextPath}/messages/">내 쪽지</a></li>												
 											<li class="subdrop"><a href="">알림</a>
 												<ul class="susub" id="alarmsub"></ul>
 											</li>
@@ -247,6 +248,30 @@
 				</div>
 			</div>
 			<!-- END LOADER -->
+			
+					<!-- 새 메시지 알림 창 -->
+	<div id="new_note_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">새 쪽지가 도착했습니다</p>
+				</div>
+				<div id="modal-body">
+					
+					<div class="alert_messagearea">
+						<!-- <div class="msg_content"></div> -->
+					</div>
+					<div class="msg_buttonarea">
+
+						<a href="#new_note_modal" class="trigger-btn" data-toggle="modal">
+							<button class="msg_btn" id="msg_btn">닫기</button>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 	</main>
 
 	<!-- 반응형 토글 -->
@@ -317,6 +342,8 @@ $('#alram').click(function() {
 	var logineduser = "${sessionScope.member_id}";
 	var loginednickname = "${sessionScope.nickname}"
 	var wsurl = "ws://localhost:8090/websocket/${sessionScope.member_id}"	
+	
+	
 	function openSocket() {
 	/*var ws = new WebSocket("wss://localhost:8090/alarm/{code, sender, receiver}");   */
 	ws = new WebSocket(wsurl);
@@ -336,12 +363,17 @@ $('#alram').click(function() {
 		let data = event.data;
 
 		console.log("서버에서 받은 메시지 ",JSON.parse(data));
-		updatealarmlist(logineduser);
-		
-		//알림페이지에 알림 하나 추가하는 함수
-		addNewAlarm(JSON.parse(data));
-		
+		updatealarmlist(logineduser).then(function(){
+			console.log("실행됨")
+
+			//알림페이지에 알림 하나 추가하는 함수
+			addNewAlarm(JSON.parse(data));
+			
+			
+		});	
 		changeBell_New();
+		
+		
 		
 	}		
 	 	ws.onclose = function(event){
@@ -351,8 +383,11 @@ $('#alram').click(function() {
 	}
 }
 	
-	//알림 보내고 디비에 반영하는 함수
+	//보낸 알림 디비에 반영하는 함수
 	function insertAlarm(data){
+		
+		//서버로 알림 보내기(웹소켓)
+		ws.send(data);
 		
 		$.ajax({
 			
@@ -392,12 +427,12 @@ $('#alram').click(function() {
 			$(this).parent().hover(function(){
 			}, function(){
 				$(this).find(".sub").slideUp();
-			})
+			});
 			
 		});
 		
 		//서브메뉴 다운
-/* 		$(".susub").hide();
+ 		$(".susub").hide();
 		$(".subdrop").hover(function(){
 			
 			$(this).find(".susub").slideDown();
@@ -405,15 +440,7 @@ $('#alram').click(function() {
 			}, function(){
 				$(this).find(".susub").slideUp();
 			})
-		}); */
-		$(".susub").hide();
-		$(".subdrop").hover(function(){
-			
-			$(this).find(".susub").slideDown();
-			$(this).hover(function(){
-			})
 		});
-		
 	});
 ///////////////////////////////////////////
 	
