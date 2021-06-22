@@ -38,36 +38,37 @@ public class AdminService {
 		return list;
 	}
 	
-	//ajax
-	public int getSkillNameCheck(String name) {
-		AdminDao dao = sqlsession.getMapper(AdminDao.class);
-		int result = dao.getSkillNameCheck(name);
-		return result;
-	}
-	public Map<String, String> updateSkillList(Map<String, List<SkillVo>> data) {
+	// ------------------------ ajax -------------------------------
+	
+
+	public Map<String, String> updateSiteList(Map<String, Object> data) {
 		AdminDao dao = sqlsession.getMapper(AdminDao.class);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		List<SkillVo> newlist =  data.get("new");
-		List<SkillVo> updatelist = data.get("update");
-		int addresult=0;
-		int upresult=0;
+		List<Object> newlist = (List<Object>) data.get("new"); // 추가될 객체 배열
+		List<Object> updatelist=(List<Object>) data.get("update"); // 업데이트될 객체배열
+		String code= (String) data.get("code"); // skill / field / position 구분자
+		
+		
+		int addresult=0; // insert 결과 행수
+		int upresult=0; // update 결과행수
 		if(newlist.size()>0) {
-			addresult+=dao.insertSkill(newlist);
+			//여러개 한번에 insert 가능
+			addresult+=dao.insertSite(newlist, code);
 		}
 		if(updatelist.size()>0) {
-			for(SkillVo skill : updatelist) {
-				System.out.println(skill);
-				upresult+=dao.updateSkill(skill);
+			//여러개 update불가능... 개수만큼 반복적으로 update
+			for(Object obj : updatelist) {
+				upresult+=dao.updateSite(obj, code);
 			} 
 			
 		}
-		System.out.println("insert : " + addresult);
-		System.out.println("update : " + upresult);
+		// 두가지의 결과 행 수를 담은 map 반환
 		map.put("add", Integer.toString(addresult));
 		map.put("update", Integer.toString(upresult));
 		
 		return map;
 	}
+	// ------------------------ ajax -------------------------------
 }
