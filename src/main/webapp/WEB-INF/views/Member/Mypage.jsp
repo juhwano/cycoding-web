@@ -41,13 +41,6 @@
 				<p>${member.MEMBER_NICKNAME}</p>
 			</div>
 
-			<div id="modals">
-				<ul>
-					<li>지원내역</li>
-					<li>프로젝트</li>
-				</ul>
-			</div>
-
 			<div id="detail_box">
 
 				<div id="persnal" class="details">
@@ -370,8 +363,6 @@
 					
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
 							<button id="cancel_quit">닫기</button>
-							
-							
 						</a>
 						<%-- <input type="hidden" name="quit_id" id="quit_id" value="${member.MEMBER_ID}" > --%>
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
@@ -419,5 +410,7 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=4"></script>
+		
 </body>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 </html>

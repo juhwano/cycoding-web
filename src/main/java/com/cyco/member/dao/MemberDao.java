@@ -2,18 +2,24 @@ package com.cyco.member.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.cyco.common.vo.Apply_Join_P_datailVo;
+import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
+import com.cyco.member.vo.V_myProjectVo;
+import com.cyco.project.vo.P_DetailVo;
 
 
 @Repository
@@ -50,6 +56,9 @@ public interface MemberDao {
 	
 	//로그인시 닉네임, 아이디값 메인으로 가져오기
 	public HashMap<String, String> getLoginedName(String memberemail);
+	
+	//로그인시 받은 알림 있는지 체크
+	public Integer getOldAlarm(String memberid);
 	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
@@ -124,5 +133,31 @@ public interface MemberDao {
 	
 	//회원 상세 페이지 리뷰목록 가져오기
 	public List<ReviewVo> getReviewList(String userid);
+
+	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
+	public List<P_DetailVo> checkProjectBeforeInvite(String memberid);
+	
+	//##북마크, 지원목록 페이지
+	//북마크한 프로젝트 목록
+	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid);
+	
+	//북마크 취소
+	public void deletBookMark(String projectid, String memberid);
+	
+	//지원한 프로젝트 목록
+	public List<Apply_Join_P_datailVo> getApplyList(String memberid);
+	
+	//지원 취소
+	public void deleteApply(String applyid);
+	
+	//##내 프로젝트 목록/후기 페이지
+	//로그인한 회원이 팀장인 프로젝트 목록
+	public List<Project_TeamLeaderVo> getTeamLeader(String memberid);
+	
+	//로그인한 회원이 팀원인 프로젝트 목록
+	public List<V_myProjectVo> getTeamMember(String memberid);
+
+	//후기작성용 팀장,팀원 목록
+	public List<V_myProjectVo> getReviewMember(String projectid);
 
 }

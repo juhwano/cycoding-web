@@ -207,6 +207,67 @@
 <!--    set have_point = (select have_point from point where member_id= ${param1}) + ${param2}  -->
 <!--    where member_id = ${param1} -->
    </update>
+   
+   <select id="checkProjectBeforeInvite" resultType="com.cyco.project.vo.P_DetailVo">
+   		select pd.p_title, pd.project_id from project p left join p_detail pd 
+		    on p.project_id=pd.project_id 
+		    where p.member_id=${memberid} and pd.p_state='모집중'
+   </select>
+
+   <!-- 북마크/지원목록 페이지 -->
+   <!-- 북마크 목록 불러오기 -->
+   <select id="getBookmarkList" resultType="com.cyco.common.vo.BookMark_Join_P_detailVo">
+	   	select p.project_id, p.p_title, p.p_state, b.member_id
+		from bookmark b
+		join p_detail p
+		on p.project_id = b.project_id
+		where b.member_id = ${member_id}
+   </select>
+   
+   <!-- 북마크 제거 -->
+	<delete id="deletBookMark">
+		delete from bookmark where project_id=${param1} and member_id=${param2}
+	</delete>
+
+	<!-- 지원목록 불러오기 -->
+	<select id="getApplyList" resultType="com.cyco.common.vo.Apply_Join_P_datailVo">
+		select a.apply_date, a.apply_id, p.project_id, p.p_title, p.p_state, a.member_id, a.apply_ok
+		from apply a
+		join p_detail p 
+		on p.project_id = a.project_id
+		where a.member_id = ${member_id}
+		order by a.apply_date
+   </select>
+   
+   <!-- 지원 취소 -->
+   <delete id="deleteApply">
+   		delete from apply where apply_id = ${apply_id}
+   </delete>
+   
+   <!-- 내프로젝트/후기 페이지 -->
+   <!-- 로그인한 회원이 팀장인 프로젝트목록 -->
+   <select id="getTeamLeader" resultType="com.cyco.member.vo.Project_TeamLeaderVo">
+	   	select p.project_id, pd.p_title, pd.p_state, p.member_id, f.field_name
+		from p_detail pd
+		left join project p on p.project_id = pd.project_id
+		left join p_field f on p.field_code = f.field_code
+		where p.member_id = ${member_id}
+   </select>
+   
+   <!-- 로그인한 회원이 팀원인 프로젝트 목록 -->
+   <select id="getTeamMember" resultType="com.cyco.member.vo.V_myProjectVo">
+   		select project_id, p_title, teamleader, teammember, position_name, field_name, p_state
+		from V_myProject 
+		where teammember = ${member_id}
+   </select>
+   
+   <!-- 리뷰 작성용 팀장, 팀원 목록 -->
+   <select id="getReviewMember" resultType="com.cyco.member.vo.V_myProjectVo">
+		select project_id, p_title, teamleader, teammember, position_name, field_name, p_state
+		from V_myProject 
+		where project_id = ${project_id}
+   </select>
+
 
 	
 </mapper>

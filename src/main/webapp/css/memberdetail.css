@@ -21,20 +21,18 @@ ul {
 	height: 200px;
 	border-radius: 50%;
 }
-
-#modals {
-	margin: 50px auto;
-	width: 300px;
-}
-
-#modals ul {
-	display: flex;
-	margin: auto;
-	padding: 0;
-}
-
-#modals li {
-	width: 150px;
+#invitation{
+		text-align: center;
+	background-color:white;
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color: #94A7AE;
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+	padding: 5px;
+	margin: 10px auto;
+	
 }
 
 #cycoder p {
@@ -467,3 +465,51 @@ ul {
 	text-align: center;
 }
 
+
+/* 회원 초대 모달창 */
+#modal-title{
+	font-weight: 800;
+	font-size:21px;
+	color:gray;
+	margin:auto;
+}
+#inv_img{
+	width:200px;
+	height:200px;
+	background-size: cover;
+    background-position: center;
+	background-image: url(../assets/img/member_detail/invite.png);
+    background-repeat: no-repeat;
+    margin:10px auto;
+}
+#contentarea{
+	text-align:center;
+	padding:20px;
+}
+
+#inv_buttonarea{
+	text-align:center;
+	margin-bottom:20px;
+}
+.inv_btn{
+	color:#F4F2F3;
+	background-color: #94A7AE;
+	border:none;
+	padding:10px;
+	margin-bottom:20px;
+}
+#confirm_inv{
+
+	width:70px;
+	padding:5px;
+	
+}
+.modal-content{
+	    margin-top: 40%;
+}
+.modal.show .modal-dialog{
+	height: 800px;
+}
+#modal-dialog modal-login{
+	height:800px;
+}
