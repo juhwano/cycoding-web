@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.cyco.common.vo.Apply_Join_P_datailVo;
+import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
@@ -130,8 +132,21 @@ public interface MemberDao {
 	//회원 상세 페이지 리뷰목록 가져오기
 	public List<ReviewVo> getReviewList(String userid);
 	
+
 	//회원 상세 프로젝트 초대 모달 전에 초대할 프로젝트는 있는지 확인
-	public P_DetailVo checkProjectBeforeInvite(String memberid);
+	public List<P_DetailVo> checkProjectBeforeInvite(String memberid);
+	//북마크, 지원목록 페이지
+	//북마크한 프로젝트 목록
+	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid);
 	
+	//북마크 취소
+	public void deletBookMark(String projectid, String memberid);
+	
+	//지원한 프로젝트 목록
+	public List<Apply_Join_P_datailVo> getApplyList(String memberid);
+	
+	//지원 취소
+	public void deleteApply(String applyid);
+
 
 }

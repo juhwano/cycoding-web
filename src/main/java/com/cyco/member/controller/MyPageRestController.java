@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cyco.common.vo.Apply_Join_P_datailVo;
+import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
@@ -432,6 +436,36 @@ public class MyPageRestController {
         
      return msg;
      
+  }
+  
+  
+  //북마크, 지원목록 페이지
+  
+  //북마크 취소
+  @RequestMapping(value="markCancle", method = RequestMethod.GET)
+  public List<BookMark_Join_P_detailVo> markCancle(@RequestParam String project_id, HttpSession session) {
+	  String member_id = String.valueOf(session.getAttribute("member_id"));
+	  //DB에서 북마크 내역 삭제
+	  memberdetailservice.deleteBookMark(project_id, member_id);
+	  
+	  //목록 재로딩
+	  List<BookMark_Join_P_detailVo> bookmark_list = null;
+	  bookmark_list = memberdetailservice.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+	  
+	  return bookmark_list;
+  }
+  
+  //지원 취소
+  @RequestMapping(value="applyCancle", method = RequestMethod.GET)
+  public List<Apply_Join_P_datailVo> applyCancle(@RequestParam String apply_id, HttpSession session) {
+	  //DB에서 북마크 내역 삭제
+	  memberdetailservice.deleteApply(apply_id);
+	  
+	  //목록 재로딩
+	  List<Apply_Join_P_datailVo> apply_list = null;
+	  apply_list = memberdetailservice.getApplyList(String.valueOf(session.getAttribute("member_id")));
+	  
+	  return apply_list;
   }
 
 }

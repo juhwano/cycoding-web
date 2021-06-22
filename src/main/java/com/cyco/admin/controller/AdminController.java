@@ -22,7 +22,7 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
-	@RequestMapping(value="member", method=RequestMethod.GET)
+	@RequestMapping(value="/member", method=RequestMethod.GET)
 	public String memberManage() {
 		
 		

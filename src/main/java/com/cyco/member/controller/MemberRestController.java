@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,15 +61,19 @@ public class MemberRestController {
 	}
 	
 	//회원 초대 전에 초대할 프로젝트 있는지 확인
-	@RequestMapping(value = "ajax/checkprojectbeforeinvite", method = RequestMethod.POST,produces = "application/json; charset=utf8")
+	@RequestMapping(value = "ajax/checkprojectbeforeinvite", method = {RequestMethod.GET, RequestMethod.POST},produces = "application/json; charset=utf8")
 	public HashMap<String, String> checkProjectBeforeInvite(String member_id) {
 		
-		P_DetailVo p_detail =memberdetailservice.checkProjectBeforeInvite(member_id);
+		
+		System.out.println("현재 멤버 아이디" + member_id);
+		
+		List<P_DetailVo> p_detail =memberdetailservice.checkProjectBeforeInvite(member_id);
 		HashMap<String, String> map = new HashMap<String, String>();
-		if(p_detail != null) {
+		
+		if(p_detail.size() != 0) {
 			System.out.println(p_detail.toString());
-			map.put("p_title",p_detail.getP_title());
-			map.put("project_id", p_detail.getProject_id());
+			map.put("p_title",p_detail.get(0).getP_title());
+			map.put("project_id", p_detail.get(0).getProject_id());
 		}	
 		
 		return map;
