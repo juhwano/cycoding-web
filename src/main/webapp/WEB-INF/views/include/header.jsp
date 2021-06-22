@@ -146,16 +146,27 @@
 										</div></li>
 
 									<!-- 로그인 -->
-									<li class="nav-item dropdown"><a
-										href="${pageContext.request.contextPath}/admin.cy"
+									<li class="nav-item dropdown">
+									<a
+										href="#"
 										class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 										id="supportDropdown" aria-expanded="false"> 관리자 페이지 <span
 											class="fas fa-angle-down nav-link-arrow ms-1"></span>
 									</a>
-										<div class="dropdown-menu dropdown-menu-lg"
-											aria-labelledby="supportDropdown">
-											<div class="col-auto px-0"></div>
-										</div></li>
+										<div class="user_info">
+		                                 <div class="mypage">
+		                                    <a href="#">관리자 페이지</a>
+		                                 </div>
+		                                 <div class="Nav_Drop_A">
+		                                    <a href="#">회원관리</a>
+		                                 </div>
+		                                 <div class="Nav_Drop_A">
+		                                    <a href="/admin/site">사이트관리</a>
+		                                 </div>
+		                                 <div class="logout">
+		                                    <a href="${pageContext.request.contextPath}/logout">로그아웃</a>
+		                                 </div>
+		                              </div></li>
 
 								</se:authorize>
 

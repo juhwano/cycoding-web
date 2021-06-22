@@ -109,12 +109,28 @@ $(function() {
 								  
 								   $.ajax({  
 										type : "post",
-										url  : "editAjax",
+										enctype: 'multipart/form-data',
+										url  : "/ajaxproject/editAjax",
+										data: formData,	
+										processData: false, 
+										contentType: false,
+										traditional: true,
 										success : function(data){  
-											console.log(data);
+											if(data == "true"){
+												swal("수정 되었습니다.","","success")
+												.then((value) => {
+												  window.location.href = "/project/detail?project_id="+project_id;
+												});
+												
+											}else{
+												swal("알수없는 에러가 발생하였습니다.","잠시 후 다시 시도해주세요.","error")
+												.then((value) => {
+												  window.location.href = "/project/detail?project_id="+project_id;
+												});
+											}
 											
 										} 
-									 })   
+									 })  
 								  
 							  } else {
 								  return false;
