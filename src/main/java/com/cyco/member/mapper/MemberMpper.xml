@@ -40,5 +40,11 @@
 	
 	</update>
 	
+	<select id="getOldAlarm" resultType="Integer">
+	
+		select count(*) from ALARM where member_id=${memberid} and Alarm_OK=0
+	
+	</select>
+	
 
 </mapper>

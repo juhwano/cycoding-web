@@ -1,10 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <c:set var="member" value="${aboutmember}" />
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
@@ -27,6 +24,11 @@
 
 <body>
 	<main>
+	
+	<!-- 로그인한 유저 -->
+	<input type="hidden" id="current_id" value="${sessionScope.Member_id}">
+	<!-- 이 페이지의 회원 -->
+	<input type="hidden" id="m_id" name="m_id" value="${param.memberid}">
 
 		<div id="wrap">
 			<div id="profile_img">
@@ -36,6 +38,7 @@
 			</div>
 			<div id="cycoder">
 				<p>${member.MEMBER_NICKNAME}</p>
+				<a href="#invitation_modal" class="trigger-btn" data-toggle="modal"><button type="button" id="invitation">초대하기</button></a>
 			</div>
 
 			<!-- 			<div id="modals">
@@ -50,6 +53,7 @@
 				<div id="info" class="details">
 					<p class="cycoder_title">
 						ABOUT<br>CYCODER
+						
 					<p class="sub_title"></p>
 
 					<div class="infolist">
@@ -252,6 +256,34 @@
 			</div>
 		</div>
 	</main>
+	
+	
+	<div id="invitation_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">INVITATION</p>
+				</div>
+				<div id="modal-body">
+					<div id="inv_img"></div>
+					<div id="contentarea">
+						<%-- <p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p> --%>
+					</div>
+					<div id="inv_buttonarea">
+						
+						<!-- <a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
+							<button class="inv_btn" id="confirm_inv">초대</button>		
+						</a> -->
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
+	
 </body>
 <jsp:include page="../include/footer.jsp"></jsp:include>
 <script type="text/javascript">
@@ -259,6 +291,7 @@
 	var reviewList = ${reviewList};
 	
 	console.log(${fn:length(reviewList)});
+
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

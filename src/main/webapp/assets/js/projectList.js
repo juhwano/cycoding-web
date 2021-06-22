@@ -5,6 +5,10 @@ let card;
  
  /* 페이지 모두 로딩 후 실행 */
  $(document).ready(function(){
+	/*페이지 로딩시 selectbox 초기화*/
+	$(function(){
+		$('.form-select').val('').prop('selected', true);
+	})
         /* 탑버튼 */
     $(function() {
         $(window).scroll(function() {
@@ -35,12 +39,11 @@ let card;
             },
             success:function(filtered_list){
                 project_list = JSON.parse(filtered_list);
-
                 /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
                 $('#card_section').empty();
                 start=0;
                 moreBtn(project_list, start);
-                                 
+				$('#ProjectNameSearch').val('');
             }
         })
     }
@@ -53,14 +56,13 @@ let card;
              type: 'get',
              dataType:"text",
              data: {projectname:project_name},
-             success:function(membercount_list){
-                 project_list = JSON.parse(membercount_list);
-                 
-                 /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
-                 $('.form-select').val('').prop('selected', true);
-                 $('#card_section').empty();
-                 start=0;
-                 moreBtn(project_list, start);
+             success:function(membercount_list){                 
+                project_list = JSON.parse(membercount_list);
+                    /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
+                    $('.form-select').val('').prop('selected', true);
+                    $('#card_section').empty();
+                    start=0;
+                    moreBtn(project_list, start);
                  
              }
          })
@@ -72,11 +74,13 @@ let card;
          if(!project_list.length>0){
              //리스트는 없는데 더보기버튼이 있으면 안되기때문에 none
              $('#moreBtn').css('display', 'none');
+			 $('.zerocontainer').css('display', 'block');
              
          }
          else{
              //리스트가 존재한다면 더보기버튼 보여주기.
              $('#moreBtn').css('display', 'inline-block');
+			 $('.zerocontainer').css('display', 'none');
              /*
                  project_list 뿌리기
                  
@@ -104,12 +108,11 @@ let card;
 				if(bookmark_list[i].project_id == project_list[current].project_id) {
 					card +="<i class='fas fa-heart bookmark marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
 					break;
-				}else if(i=bookmark_list.length-1) {
+				} else if(i==bookmark_list.length-1) {
 					card +="<i class='fas fa-heart bookmark no_marking' id='"+project_list[current].project_id+"' onclick='BookMarking("+project_list[current].project_id+")'></i>"
 				}
 			}
 	}
-    // card+=		"	<i	class='far	fa-heart	bookmark'></i>							"
      
      card+=		"	</div>										"
      card+=		"	<a href='/project/detail?project_id="+project_list[current].project_id+"'><img	class='m_img_size'	src='/assets/img/projectimg/"+project_list[current].p_image+"'></a>							"
@@ -160,6 +163,7 @@ let card;
                  }
                  }
      }
+
      /* 더보기버튼 */
      $('#moreBtn').click(function(){
          moreBtn(project_list,start)
@@ -177,6 +181,11 @@ let card;
      $('#searchIcon').click(function(){
          //input태그의 값을 변수에 담에주고 search()함수 호출
          let project_name = $('#ProjectNameSearch').val();
+		if(project_name == ""){
+		 alert('검색어를 입력해주세요 😥')
+         $('#ProjectNameSearch').focus();
+         return;
+		}
          search(project_name);
      })
 
@@ -190,6 +199,8 @@ let card;
          filter(adr_code, field_code, skill_code, p_state);
      });
      
+
+
    var swiper = new Swiper(".mySwiper", {
         slidesPerView: 3,
         spaceBetween: 30,
