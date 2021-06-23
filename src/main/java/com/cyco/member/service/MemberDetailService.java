@@ -474,4 +474,13 @@ public class MemberDetailService {
 			
 			return writeReviewMember;
 		}
+		
+		//리뷰 작성하기
+		public void setReview(List<ReviewVo> writeReviewList) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.setReview(writeReviewList);
+		}
+		
+		//로그인한 회원이 작성한 리뷰 가져오기
+		
 }

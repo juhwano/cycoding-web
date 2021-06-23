@@ -176,6 +176,7 @@
 		</div>
 	</div>
 	
+	<!-- 리뷰 작성용 모달 -->
 	<div id="reviewModal" class="modal fade">
 		<div class="modal-dialog modal-login">
 			<div class="modal-content">
@@ -189,7 +190,7 @@
 				</div>
 				<div id="modal-body">
 					<div id="contentarea">
-						<form class="writeReview" method="post" action="주소넣기">
+						<form class="writeReview" method="post" action="insertReview">
 							<div class="writeReviewSec">
 								<table class="table wish_table apply_table">
 									<thead>
@@ -201,34 +202,9 @@
 										</tr>
 									</thead>
 									<tbody class="reviewWriteTable">
-										<tr>
-											<td>열글자열글자열글자열</td>
-											<td>팀장</td>
-											<td><input type="text" class="writeReviewContent form-control"></td>
-											<td><div class="star-input">
-								            	<input type="hidden" name="grade" class="gradesubmit" value="">
-													<span class="input"> 
-														<input type="radio" name="star-input" value="1" id="p1"> <label for="p1">1</label> 
-														<input type="radio" name="star-input" value="2" id="p2"> <label for="p2">2</label> 
-														<input type="radio" name="star-input" value="3" id="p3"> <label for="p3">3</label>  
-														<input type="radio" name="star-input" value="4" id="p4"> <label for="p4">4</label>
-														<input type="radio" name="star-input" value="5" id="p5"> <label for="p5">5</label> 
-													</span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>저쩌구</td>
-											<td>웹프론트앤드</td>
-											<td><input type="text" class="writeReviewContent form-control"></td>
-											<td>★★★★★</td>
-										</tr>
-										<tr>
-											<td>어쩌구</td>
-											<td>웹서버</td>
-											<td><input type="text" class="writeReviewContent form-control"></td>
-											<td>★★★★★</td>
-										</tr>
+										
+										<!-- 리뷰 작성용 모달 -->
+										
 									</tbody>
 								</table>
 							</div>
@@ -258,6 +234,6 @@
 	var reviewList = ${reviewList};
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/myProject.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myProject.js?ver=1"></script>
 
 </html>

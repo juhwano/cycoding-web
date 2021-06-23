@@ -186,7 +186,7 @@
 	
 	</update>
 	
-	<!-- 회원상세 리뷰목록 가져오기 -->
+	<!-- 회원상세 (회원에게 작성된 리뷰) 리뷰목록 가져오기 -->
 	<!-- select  r.* , m.member_nickname
 		from review r left join member m
 		on r.writer_id = m.member_id
@@ -277,6 +277,25 @@
 		where project_id = ${param1} and not v.teammember = ${param2}
    </select>
 
-
+	<!-- 리뷰 작성 -->
+	<insert id="setReview">
+		<foreach collection="list" item="review" open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO REVIEW (REVIEW_ID,REVIEW_CONTENT,REVIEW_DATE,REVIEW_GRADE,WRITER_ID,REVIEW_MEMBER,PROJECT_ID) 
+			VALUES
+			(
+			review_seq, 
+			#{review.review_content}, 
+			sysdate, 
+			#{review.review_grade}, 
+			#{review.writer_id}, 
+			#{review.review_member},
+			#{review.project_id}
+			)
+		</foreach>
+	</insert>
 	
+	<!-- 로그인한 회원이 작성한 리뷰 가져오기 -->
+	<select id="getMyReview" resultType="com.cyco.member.vo.ReviewVo">
+		select * from review where writer_id = ${member_id}
+	</select>	
 </mapper>

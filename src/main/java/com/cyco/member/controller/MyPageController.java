@@ -4,6 +4,7 @@ package com.cyco.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -240,5 +241,42 @@ public class MyPageController {
 		
 		return "/Member/MyProject";
 	}
+	
+	//insertReview
+	  @RequestMapping(value="insertReview", method = RequestMethod.POST)
+	  public void insertReview(@RequestParam("review_member") String[] review_member, 
+			  @RequestParam("project_id") String[] project_id, 
+			  @RequestParam("review_content") String[] review_content, 
+			  @RequestParam("review_grade") String[] review_grade, 
+			  HttpSession session, HttpServletResponse res) throws IOException {
+		  
+		  List<ReviewVo> writeReviewList = new ArrayList<ReviewVo>();
+		  
+		  System.out.println(review_member.toString());
+		  System.out.println(project_id.toString());
+		  System.out.println(review_content.toString());
+		  System.out.println(review_grade.toString());
+		  
+		  Date now = new Date();
+		  
+		  for(int i = 0; i < review_member.length; i++) {
+			  ReviewVo review = new ReviewVo();
+			  review.setReview_content(review_content[i]);
+			  review.setReview_grade(Integer.parseInt(review_grade[i]));
+			  review.setWriter_id(String.valueOf(session.getAttribute("member_id")));
+			  review.setReview_member(review_member[i]);
+			  review.setProject_id(project_id[i]);
+			  
+			  review.setReview_id(0);
+			  review.setReview_date(now);
+			  review.setMember_nickname("a");
+			  System.out.println(review.toString());
+			  writeReviewList.add(review);
+		  }
+		  
+		  memberdetailservice.setReview(writeReviewList);
+		  
+		  res.sendRedirect("myProject");
+	  }
 
 }

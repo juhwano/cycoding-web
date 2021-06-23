@@ -163,5 +163,11 @@ public interface MemberDao {
 	
 	//후기작성용 팀원 조회
 	public List<MyProject_Join_Member> writeReviewMember(String projectid, String memberid);
+	
+	//후기 작성
+	public void setReview(List<ReviewVo> reviewList);
+	
+	//로그인한 회원이 작성한 리뷰 가져오기
+	public List<ReviewVo> getMyReview(String memberid);
 
 }

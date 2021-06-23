@@ -11,9 +11,9 @@ public class ReviewVo {
 	private String review_content;
 	private Date review_date;
 	private int review_grade;
-	private int writer_id;
-	private int review_member;
-	private int project_id;
+	private String writer_id;
+	private String review_member;
+	private String project_id;
 	
 	private String member_nickname;
 }
