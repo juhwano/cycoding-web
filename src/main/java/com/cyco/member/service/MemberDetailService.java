@@ -482,5 +482,17 @@ public class MemberDetailService {
 		}
 		
 		//로그인한 회원이 작성한 리뷰 가져오기
+		public List<ReviewVo> getMyReview(String memberid) {
+
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<ReviewVo> reviewList = memberdao.getMyReview(memberid);
+			
+			return reviewList;
+		}
 		
+		//리뷰작성시 포인트지급
+		public void giveReviewPoint(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.giveReviewPoint(memberid);
+		}
 }

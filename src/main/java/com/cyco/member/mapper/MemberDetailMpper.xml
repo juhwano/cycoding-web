@@ -298,4 +298,10 @@
 	<select id="getMyReview" resultType="com.cyco.member.vo.ReviewVo">
 		select * from review where writer_id = ${member_id}
 	</select>	
+	
+	<!-- 리뷰 작성시 포인트 지급 -->
+	<update id="giveReviewPoint">
+		UPDATE point SET have_point=have_point+10 WHERE member_id = ${member_id}
+	</update>
+	
 </mapper>

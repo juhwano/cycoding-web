@@ -16,6 +16,7 @@
 <body>
 	<c:set var="teamLeaderList" value="${teamLeaderList}" />
 	<c:set var="teamMemberList" value="${teamMemberList}" />
+	<c:set var="myReview" value="${myReview}" />
 	
 	<div class="wish_container">
 		<div class="wish_section apply_sec">
@@ -86,28 +87,72 @@
 						</thead>
 						<tbody>
 						<c:forEach var="L_project" items="${teamLeaderList}">
+							<!-- 작성완료 버튼 노출 for each문 break용 -->
+							<c:set var="reviewWriteOk" value="false" />
+							
 								<c:if test="${L_project.p_state eq '완료'}">
 									<tr>
 										<td>${L_project.field_name}</td>
 										<td><a href="/project/detail?project_id=${L_project.project_id}">${L_project.p_title}</a></td>
 										<td>팀장 <i class="fas fa-crown leaderIcon"></i></td>
-										<!-- 여기 채워야됨 -->
-										<td><p class="state_ban">작성완료</p></td>
+									<!-- 회원이 해당 프로젝트의 리뷰를 작성했는지 확인 -->
+									<c:forEach var="review" items="${myReview}" varStatus="mark_status">
+										<c:if test="${reviewWriteOk eq false}">
+											<c:choose>
+												<c:when test="${review.project_id eq L_project.project_id}"> 
+													<!--  <td><p class="state_ban">작성완료</p></td> -->
+													 	<td>
+															<a href="#myReviewModal" class="trigger-btn" data-toggle="modal">
+																<p class="state_ban reviewWrite" id="${M_project.project_id}">보러가기</p>
+															</a>
+														</td>
+												<c:set var="reviewWriteOk" value="true" />
+												</c:when>
+												<c:when test="${mark_status.last}">
+													 <td>
+														<a href="#reviewModal" class="trigger-btn" data-toggle="modal">
+															<p class="state_ing reviewWrite" id="${M_project.project_id}">작성하기</p>
+														</a>
+													</td>
+												</c:when> 
+											</c:choose>
+										</c:if>
+									  </c:forEach>
 									</tr>
 								</c:if>
 							</c:forEach>
 							<c:forEach var="M_project" items="${teamMemberList}">
+								<!-- 작성완료 버튼 노출 for each문 break용 -->
+								<c:set var="reviewWriteOk" value="false" />
+								
 								<c:if test="${M_project.p_state eq '완료'}">
 									<tr>
 										<td>${M_project.field_name}</td>
 										<td><a href="/project/detail?project_id=${M_project.project_id}">${M_project.p_title}</a></td>
 										<td>${M_project.position_name}</td>
-										<!-- 여기 채워야돼~~ -->
-										<td>
-											<a href="#reviewModal" class="trigger-btn" data-toggle="modal">
-												<p class="state_ing reviewWrite" id="${M_project.project_id}">작성하기</p>
-											</a>
-										</td>
+										<!-- 회원이 해당 프로젝트의 리뷰를 작성했는지 확인 -->
+										<c:forEach var = "review" items="${myReview}" varStatus="mark_status">
+											<c:if test="${reviewWriteOk eq false}">
+												<c:choose>
+													<c:when test="${review.project_id eq M_project.project_id}"> 
+														 <!-- <td><p class="state_ban">작성완료</p></td> -->
+														<td>
+															<a href="#myReviewModal" class="trigger-btn" data-toggle="modal">
+																<p class="state_ban reviewWrite" id="${M_project.project_id}">보러가기</p>
+															</a>
+														</td>
+													<c:set var="reviewWriteOk" value="true" />
+													</c:when>
+													<c:when test="${mark_status.last}">
+														 <td>
+															<a href="#reviewModal" class="trigger-btn" data-toggle="modal">
+																<p class="state_ing reviewWrite" id="${M_project.project_id}">작성하기</p>
+															</a>
+														</td>
+													</c:when> 
+												</c:choose>
+											</c:if>
+										  </c:forEach>
 									</tr>
 								</c:if>
 							</c:forEach>
@@ -216,6 +261,51 @@
 						</a>
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
 							<button id="write_ok">작성</button>
+						</a>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
+	<!-- 내가 작성한 리뷰 노출 모달 -->
+	<div id="myReviewModal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">MY REVIEW</p>
+				</div>
+				<div class="info_text_sec">
+					<p class="review_info_text">
+						✨ 프로젝트 멤버에게 작성한 리뷰 ✨
+					</p>
+				</div>
+				<div id="modal-body">
+					<div id="contentarea">
+							<div class="writeReviewSec">
+								<table class="table wish_table apply_table">
+									<thead>
+										<tr class="table_head">
+											<th>닉네임</th>
+											<th>포지션</th>
+											<th>리뷰</th>
+											<th>별점</th>
+										</tr>
+									</thead>
+									<tbody class="myReviewTable">
+										
+										<!-- 내가 작성한 리뷰 노출 모달 -->
+										
+									</tbody>
+								</table>
+							</div>
+					</div>
+					<div id="buttonarea">
+						<a href="#myReviewModal" class="trigger-btn" data-toggle="modal">
+							<button id="cancel_quit">닫기</button>
 						</a>
 					</div>
 

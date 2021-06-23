@@ -145,10 +145,12 @@ var reviewWriteTable = $('.reviewWriteTable');
 			}
 		};
 		
-		swal("후기가 작성되었습니다" , "10point가 지급되었습니다 🎉" ,"success", {
+		swal("후기가 작성되었습니다" , "10point가 지급되었습니다 🎉 잠시만 기다려주세요!" ,"success", {
 			  buttons: false,
 			  timer: 2000,
 			});
+			
+		giveReviewPoint();
 		
 		setTimeout(function() {
   			$('.writeReview').submit();
@@ -157,6 +159,20 @@ var reviewWriteTable = $('.reviewWriteTable');
 		
 	 });
 	 
+	 //후기작성시 포인트지급
+function giveReviewPoint(){
+	
+	$.ajax({
+		
+		url:"ajax/giveReviewpoint",
+		type:"post",
+		success:function(data){
+			console.log("포인트지급완료");
+		}
+		
+	});
+	
+}
 	 
 
 })

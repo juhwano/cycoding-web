@@ -167,7 +167,11 @@ public interface MemberDao {
 	//후기 작성
 	public void setReview(List<ReviewVo> reviewList);
 	
+	//후기 작성시 포인트 지급
+	public void giveReviewPoint(String memberid);
+	
 	//로그인한 회원이 작성한 리뷰 가져오기
 	public List<ReviewVo> getMyReview(String memberid);
+	
 
 }

@@ -30,7 +30,7 @@ import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
-
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.vo.Project_TeamLeaderVo;
@@ -220,24 +220,35 @@ public class MyPageController {
 	//내프로젝트/후기 페이지로 이동
 	@RequestMapping(value="myProject")
 	public String myProject(Model m, HttpSession session) {
+		String memberid = String.valueOf(session.getAttribute("member_id"));
+		
 		//로그인한 회원이 팀리더인 목록
 		List<Project_TeamLeaderVo> teamLeaderList = null;
-		teamLeaderList = memberdetailservice.getTeamLeader(String.valueOf(session.getAttribute("member_id")));
+		teamLeaderList = memberdetailservice.getTeamLeader(memberid);
 		
 		m.addAttribute("teamLeaderList", teamLeaderList);
 
 		//로그인한 회원이 팀멤버인 목록
 		List<V_myProjectVo> teamMemberList = null;
-		teamMemberList = memberdetailservice.getTeamMember(String.valueOf(session.getAttribute("member_id")));
+		teamMemberList = memberdetailservice.getTeamMember(memberid);
 		
 		m.addAttribute("teamMemberList", teamMemberList);
 		
 		//리뷰목록
-		List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(String.valueOf(session.getAttribute("member_id")));
+		List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
 		
 		JSONArray reviewList = JSONArray.fromObject(row_reviewList);
 		System.out.println("리뷰목록JSON: " + reviewList);
 		m.addAttribute("reviewList", reviewList);
+		
+		//로그인한 회원이 작성한 리뷰 목록
+		List<ReviewVo> myReview = memberdetailservice.getMyReview(memberid);
+		if(myReview.isEmpty()) {
+			ReviewVo dummyReview = new ReviewVo();
+			dummyReview.setReview_content("dummy");
+			myReview.add(dummyReview);
+		}
+		m.addAttribute("myReview", myReview);
 		
 		return "/Member/MyProject";
 	}
