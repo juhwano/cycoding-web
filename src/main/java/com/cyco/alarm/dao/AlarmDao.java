@@ -35,5 +35,8 @@ public interface AlarmDao {
 	
 	//쪽지 페이지 진입시 발신 메시지 불러오기
 	public List<V_FromNote_Member_Vo> getSendMessages(String useremail);
+	
+	//받은 쪽지 확인하면 상태 업데이트
+	public Integer updateNoteOk(String noteid);
 
 }

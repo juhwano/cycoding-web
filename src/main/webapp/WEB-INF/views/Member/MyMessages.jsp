@@ -28,11 +28,13 @@
 				<p class="wish_title">MESSAGES</p>
 				<div class="wish_project_list">
 					<div class="table_sec">
-						<div class="info_text_sec">
-							<p class="table_name_text">받은 쪽지</p>
+						<div class="info_text_sec" id="msg_filter">
+							<p class="table_name_text checked_title" id="all_note">받은 쪽지</p>
+							<p class="table_name_text" id="read_note">읽은 쪽지</p>
+							<p class="table_name_text" id="never_read_note">안 읽은 쪽지</p>
 						</div>
 
-						<table class="table wish_table apply_table" id="newalarms">
+						<table class="table wish_table apply_table" id="to">
 							<thead>
 
 								<tr class="table_head">
@@ -48,13 +50,15 @@
 								<c:choose>
 									<c:when test="${not empty tolist}">
 
-										<tbody class="apply_table_sec">
+										
 											<c:choose>
 
 												<c:when test="${tolist.NOTE_OK eq '0'}">
-													<tr class="new" id="to${tolist.NOTE_ID}">
+												
+												<tbody class="apply_table_sec new">
+													<tr id="to${tolist.NOTE_ID}">
 														<td class="isread"><i class="far fa-envelope"></i></td>
-														<td class="sender"><a
+														<td class="sender" id="from${tolist.MEMBER_FROM}"><a
 															href="/member/memberdetailpage?memberid=${tolist.MEMBER_FROM}">${tolist.MEMBER_NICKNAME}</a></td>
 														<td class="content"><a href="#to_note_modal"
 															class="trigger-btn msg-trigger" data-toggle="modal">${tolist.NOTE_CONTENT}</a>
@@ -64,14 +68,15 @@
 														<td class="del_check"><input type="checkbox"
 															class="del_received"></td>
 													</tr>
-
+</tbody>
 												</c:when>
 
 												<c:when test="${tolist.NOTE_OK eq '1'}">
-													<tr class="read" id="to${tolist.NOTE_ID}">
+												<tbody class="apply_table_sec read">
+													<tr id="to${tolist.NOTE_ID}">
 														<td class="isread"><i
 															class="fas fa-envelope-open-text"></i></td>
-														<td class="sender"><a
+														<td class="sender" id="from${tolist.MEMBER_FROM}"><a
 															href="/member/memberdetailpage?memberid=${tolist.MEMBER_FROM}">${tolist.MEMBER_NICKNAME}</a></td>
 														<td class="content"><a href="#to_note_modal"
 															class="trigger-btn msg-trigger" data-toggle="modal">${tolist.NOTE_CONTENT}</a>
@@ -81,13 +86,14 @@
 														<td class="del_check"><input type="checkbox"
 															class="del_received"></td>
 													</tr>
+													</tbody>
 												</c:when>
 
 											</c:choose>
 
 
 
-										</tbody>
+										
 									</c:when>
 									<c:otherwise>
 										<tbody class="apply_table_sec">
@@ -114,7 +120,7 @@
 						<div class="info_text_sec">
 							<p class="table_name_text">보낸 쪽지</p>
 						</div>
-						<table class="table wish_table apply_table" id="newalarms">
+						<table class="table wish_table apply_table" id="from">
 							<thead>
 
 								<tr class="table_head">
@@ -174,23 +180,45 @@
 	<!-- 수신 창 -->
 	<div id="to_note_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
-			<div class="modal-content">
+		<!-- 수신 메시지 보이는 영역 답장하기 클릭시 비활성화 -->
+			<div class="modal-content" id="message_content">
 				<div class="modal-header">
-					<p id="modal-title">MESSAGE</p>
+					<p id="modal-title">쪽지 읽기</p>
 				</div>
 				<div id="modal-body">
 					<!-- <div id="msg_img"></div> -->
 					<div class="messagearea">
 						<div class="msg_content"></div>
 					</div>
+					<input type="hidden" id="reply_to">
 					<div class="msg_buttonarea">
 
-						<a href="#to_note_modal" class="trigger-btn" data-toggle="modal">
 							<button class="msg_btn" id="reply_btn">답장하기</button>
-						</a>
 						<a href="#to_note_modal" class="trigger-btn" data-toggle="modal">
 							<button class="close_modal">닫기</button>
 						</a>
+					</div>
+
+				</div>
+			</div>
+			
+			<!-- 답장하기 클릭시 활성화 -->
+			<div class="modal-content" id="reply_content">
+				<div class="modal-header">
+					<p id="modal-title">답장쓰기</p>
+				</div>
+				<div id="modal-body">
+					<!-- <div id="msg_img"></div> -->
+					<div id="messagearea">
+				
+					</div>
+					<input type="hidden" name="text" id="text">
+					<div id="textcount"></div>
+					<div id="msg_buttonarea">
+						
+						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
+							<button class="send_btn" id="msg_btn"><i class="far fa-paper-plane"></i></button>		
+						</a> 
 					</div>
 
 				</div>
@@ -203,18 +231,44 @@
 		<div class="modal-dialog modal-login">
 			<div class="modal-content">
 				<div class="modal-header">
-					<p id="modal-title">MESSAGE</p>
+					<p id="modal-title">쪽지 쓰기</p>
 				</div>
 				<div id="modal-body">
 					<!-- <div id="msg_img"></div> -->
-					<div class="messagearea">
+					<div class="messagearea clickedarea">
 						<div class="msg_content"></div>
 					</div>
 					<div class="msg_buttonarea">
 
 						<a href="#from_note_modal" class="trigger-btn" data-toggle="modal">
-							<button class="close_modal" id="msg_btn">닫기</button>
+							<button class="close_modal">닫기</button>
 						</a>
+					</div>
+
+				</div>
+			</div>			
+		</div>
+	</div>
+	
+	<!-- 쪽지 보내기 -->
+	<div id="reply_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content" id="reply_content">
+				<div class="modal-header">
+					<p id="modal-title">SEND</p>
+				</div>
+				<div id="modal-body">
+					<!-- <div id="msg_img"></div> -->
+					<div id="messagearea">
+						<span>쪽지가 전송되었습니다</span>					
+					</div>
+					<input type="hidden" name="text" id="text">
+					<div id="textcount"></div>
+					<div id="msg_buttonarea">
+						
+						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
+							<button class="send_btn" id="msg_btn"><i class="far fa-paper-plane"></i></button>		
+						</a> 
 					</div>
 
 				</div>

@@ -1,6 +1,5 @@
 package com.cyco.alarm.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -116,7 +115,7 @@ public class AlarmService {
 		
 	}
 	
-	//알림 페이지 최초 로딩시 수신 메시지 불러오기
+	//쪽지 페이지 최초 로딩시 수신 메시지 불러오기
 	public List<V_ToNote_Member_Vo> getReceivedMessages(String useremail){
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<V_ToNote_Member_Vo> list = alarmdao.getReceivedMessages(useremail);
@@ -125,12 +124,26 @@ public class AlarmService {
 		
 	}
 	
-	//알림 페이지 최초 로딩시 발신 메시지 불러오기
+	//쪽지 페이지 최초 로딩시 발신 메시지 불러오기
 	public List<V_FromNote_Member_Vo> getSendMessages(String useremail){
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<V_FromNote_Member_Vo> list = alarmdao.getSendMessages(useremail);
 		
 		return list;
 		
+	}
+	
+	//쪽지 읽었을 때 상태 업데이트
+	public Boolean updateNoteOk(String noteid) {
+		
+		Boolean bo = false;
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		int row = alarmdao.updateNoteOk(noteid);
+		
+		if(row > 0) {
+			bo = true;
+		}
+		
+		return bo;
 	}
 }

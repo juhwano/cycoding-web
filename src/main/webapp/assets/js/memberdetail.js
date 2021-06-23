@@ -150,9 +150,11 @@ $(document).ready(function() {
 						console.log(data);
 						//서버로 메시지 보내기
 						//ws.send(JSON.stringify(data));
+						
 
 						//디비에 반영
 						insertAlarm(JSON.stringify(data));
+						swal($("#cycoder p").text() + "님을 초대했습니다","","success");
 
 					});
 				}
@@ -203,6 +205,7 @@ $(document).on("click","#msg_btn", function() {
 		
 		console.log(data);
 		//전송 확인 모달 띄우는 거 하자
+		swal("쪽지를 발송했습니다","","success");
 		
 		// 알림 테이블에 반영, 알림 보내기
 		insertAlarm(JSON.stringify(data));

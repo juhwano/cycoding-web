@@ -91,5 +91,13 @@ public class AlarmRestController {
 		return bo;
 	}
 	
+	//쪽지 읽은 상태 디비 반영
+	@RequestMapping(value="updatenoteok", method={RequestMethod.GET, RequestMethod.POST})
+	public Boolean updateNoteOk(String noteid) {
+		System.out.println("쪽지 번호 : " + noteid);
+		
+		return alarmservice.updateNoteOk(noteid);
+	}
+	
 	
 }

@@ -201,7 +201,9 @@
 												</li>
 											<li><a href="${pageContext.request.contextPath}/messages/">내 쪽지</a></li>												
 											<li class="subdrop"><a href="">알림</a>
-												<ul class="susub" id="alarmsub"></ul>
+												<ul class="susub" id="alarmsub">
+											
+												</ul>
 											</li>
 												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 											
@@ -295,7 +297,7 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 	
 	<!-- header.js -->
-	<script src="${pageContext.request.contextPath}/assets/js/header.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/header.js?ver=2"></script>
 	<script type="text/javascript">
 /* ==============================================
 Loader -->
@@ -372,9 +374,7 @@ $('#alram').click(function() {
 			
 		});	
 		changeBell_New();
-		
-		
-		
+	
 	}		
 	 	ws.onclose = function(event){
 		    console.log("연결 해제");
@@ -421,12 +421,12 @@ $('#alram').click(function() {
 		//드롭다운 메뉴
 		$(".sub").hide();
 		$(".mydropdow").hover(function(){
-			console.log($(this));
 			
 			$(this).find(".sub").slideDown();
 			$(this).parent().hover(function(){
 			}, function(){
-				$(this).find(".sub").slideUp();
+				let _this = $(this)
+				setTimeout(function(){_this.find(".sub").slideUp(600)},2000)
 			});
 			
 		});
@@ -438,12 +438,48 @@ $('#alram').click(function() {
 			$(this).find(".susub").slideDown();
 			$(this).hover(function(){
 			}, function(){
-				$(this).find(".susub").slideUp();
+				/* let _this = $(this)
+				setTimeout(function(){_this.find(".sub").slideUp(600)},1000) */
 			})
 		});
+		
+		//헤더에 있는 새 알림 클릭해서 이동하면 상태 확인으로 업데이트 하기
+		//li나 p태그에 바로 클릭이벤트를 걸면 동적 추가 태그라서 그런지 이벤트 발생을 안 하고
+		//document 단위에서 걸면 페이지의 다른 영역에서도 계속 이벤트 발생 
+		//$(document).on("click", $("#alarmsub").children("li"), function() {
+/* 		$(".alarm_content").on("click",function(){
+			console.log("이벤트");
+			$.ajax({
+
+				url: "/alarm/checkalarm",
+				data: { alarm_id: $(this).find("p").attr("id") },
+				dataType: "text",
+				type: "post",
+				success: function(res) {
+					console.log("헤더 알림 리스트에서 상태 업데이트 ", res);
+
+				},
+				error: function(xhr) {
+					console.log(xhr);
+				}
+
+			});
+			
+			
+
+		}); */
+		
+/* 		
+		$("main").on('click', function(e){
+
+			e.stopPropagation();
+
+		}); */
+		
+
 	});
 ///////////////////////////////////////////
-	
+
 </script>
 
 </body>
