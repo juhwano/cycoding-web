@@ -16,6 +16,19 @@
 		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
 	</select>
 	
+	<select id="getMemberList" parameterType="string" resultType="com.cyco.admin.vo.MemberListVo">
+			select info.member_id, info.member_nickname, nvl(info.position_name,'-') as position_name, nvl(info.skill_name,'-') as skill_name, info.enabled, nvl(count.count,0) as count
+			from V_M_INFO info
+			left join V_FINISH_COUNT count
+			on info.member_id = count.member_id
+			where info.member_id != 0
+				<if test='nickname != null'>
+					and info.member_nickname like '%${nickname}%'
+				</if>
+			order by info.member_id
+			    
+	</select>
+	
 
 	<!-- =================        ajax        =============================     -->
 	
@@ -51,9 +64,7 @@
 				from dual
 			</foreach>) A
 		</when>
-		
 	</choose>
-	
 	</insert>
 	
 	<update id="updateSite">
@@ -76,5 +87,11 @@
 		
 	</choose>
 	</update> 
+	
+	<update id="updateMemberEnabled">
+		update member
+		set enabled=${data.enabled}
+		where member_id=${data.member_id}
+	</update>
 <!--                        ajax                                  -->
 </mapper>

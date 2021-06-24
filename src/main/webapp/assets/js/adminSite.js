@@ -184,7 +184,7 @@ $(document).on("click",".updateBtn",function(){
         data["update"]=update_arr;//key : "update"   -   value : update_arr
         data["code"]=btn_param;//key : "code"   -   value : btn_param(skill/field/position)
         $.ajax({
-            type:"post",
+            type:"put",
             url:"/ajaxadmin/site",
             contentType: "application/json",
             data:JSON.stringify(data),//JSON string으로 서버에 보냄
