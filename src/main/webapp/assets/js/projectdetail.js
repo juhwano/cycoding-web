@@ -85,11 +85,13 @@ $(document).ready(function(){
 	     				var Applyname = this.nextElementSibling.nextElementSibling.textContent;
 	     				var checkdata = {"member_id":login_memberid,
 	     								"project_id":project_id};
+	     								
+	     			
+	     			/*	if('${project.p_state}' != '모집중'){
 	     				
-	     				if('${project.p_state}' != '모집중'){
 	     					swal("지원이 마감되었습니다.","","error");
 	     					return false;
-	     				}
+	     				}*/
 	     				
 	     				
 	     				$.ajax({
