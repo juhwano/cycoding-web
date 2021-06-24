@@ -57,6 +57,13 @@ $(document).ready(function() {
       })
 
    })
+   
+   /* 엔터키로 검색 */
+   $("#memberNickname").keydown(function(key){
+          if (key.keyCode == 13) {// keyCode 13 : Enter키
+             $('#memberSearch').click()
+         }
+     })
 
    /* 닉네임검색 */
    $("#memberSearch").click(function() {

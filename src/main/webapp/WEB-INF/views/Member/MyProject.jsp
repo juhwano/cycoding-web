@@ -11,6 +11,7 @@
 <link type="text/css"
 	href="${pageContext.request.contextPath}/css/wishProject.css"
 	rel="stylesheet">
+	
 </head>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <body>
@@ -37,6 +38,10 @@
 								<th>상태</th>
 							</tr>
 						</thead>
+						
+						<!-- 진행한 프로젝트가 한개도 없는 경우 문구 출력용 -->
+						<c:set var="ing_project_nothing" value="true"/>
+						
 						<tbody class="apply_table_sec">
 							<c:forEach var="L_project" items="${teamLeaderList}">
 								<c:if test="${L_project.p_state eq '모집중' || L_project.p_state eq '진행중'}">
@@ -51,6 +56,7 @@
 											<td><p class="state_end">모집중</p></td>
 										</c:if>
 									</tr>
+									<c:set var="ing_project_nothing" value="false"/>
 								</c:if>
 							</c:forEach>
 							<c:forEach var="M_project" items="${teamMemberList}">
@@ -66,9 +72,15 @@
 											<td><p class="state_end">모집중</p></td>
 										</c:if>
 									</tr>
+									<c:set var="ing_project_nothing" value="false"/>
 								</c:if>
 							</c:forEach>
 						</tbody>
+						<!-- 테스트 못함 (회원가입안됨) -->
+						<c:if test="${ing_project_nothing eq true}">
+							<tr><td><p>현재 진행중인 프로젝트가 없어요!</p></td></tr>
+							<c:set var="ing_project_nothing" value="false"/>
+						</c:if>
 					</table>
 					<div class="marginBox"></div>
 					

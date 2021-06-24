@@ -509,3 +509,22 @@ star-input>.input.focus {
 	text-align: right;
 	vertical-align: middle;
 }
+
+/* 별 셀렉트박스 */
+.starSelectBox {
+	word-wrap: normal;
+    border: 0.0625rem solid #D1D5DB;
+    height: 27px;
+    width: max-content;
+    font-size: 14px;
+    padding-bottom: 5px;
+    color: #ffcc00;
+}
+
+select:focus {
+  border-color: #c0a9bd;
+  box-shadow: 0 0 1px 3px #c0a9bd;
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #ffcc00;
+  outline: none;
+}

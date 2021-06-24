@@ -267,12 +267,17 @@ public class MyPageController {
 		  
 		  Date now = new Date();
 		  
-		  System.out.println("리뷰작성길이" + review_member.length);
+		  System.out.println("리뷰별점? " + review_grade.toString());
+		  System.out.println("리뷰별점? " + review_grade.length);
+		  for(int i = 0; i < review_grade.length; i++) {
+			  System.out.println("i번째"+review_grade[i]);
+		  }
 		  
 		  for(int i = 0; i < review_member.length; i++) {
 			  ReviewVo review = new ReviewVo();
 			  review.setReview_content(review_content[i]);
 			  review.setReview_grade(Integer.parseInt(review_grade[i]));
+				/* review.setReview_grade(review_grade[i]); */
 			  review.setWriter_id(String.valueOf(session.getAttribute("member_id")));
 			  review.setReview_member(review_member[i]);
 			  review.setProject_id(project_id[i]);

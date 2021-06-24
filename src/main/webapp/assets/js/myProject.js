@@ -5,9 +5,17 @@ var reviewWriteTable = $('.reviewWriteTable');
 /* 리뷰 조회 모달 테이블 */
 var myReviewTable = $('.myReviewTable');
 
+
+
  /* 페이지 모두 로딩 후 실행 */
  $(document).ready(function(){
-	/* 리뷰 작성 모달 */
+	
+	/* 별점 클릭시 인풋태그에 넣기 */
+	$(".m_sel").change(function() {
+      console.log('셀렉트')
+     })
+	
+		/* 리뷰 작성 모달 */
 	$(".reviewWrite").on("click",function(){
 		
 		var projectid = $(this).attr('id');
@@ -25,9 +33,14 @@ var myReviewTable = $('.myReviewTable');
 	            
 	            reviewWriteTable.empty();
 	            
-	        
+	            /* 혼자 프로젝트를 진행한 경우 모달 띄워주기 위한 변수 */
+				var soloProject = true;
+	            
+	            /*for(let i = 0; i < memberList.length; i++) {*/
 	             $.each(memberList, function(index, member){
 					if(member.position_name == '팀장' && member.member_nickname != 'dummy') {
+					
+					soloProject = false;
 						
 					reviewCard =	"	<tr>	"
 					reviewCard +=	"	<input type='hidden' name='review_member' value='"+member.teamleader+"'>	"
@@ -36,14 +49,14 @@ var myReviewTable = $('.myReviewTable');
 					reviewCard +=	"	<td>팀장 <i class='fas fa-crown leaderIcon'></i></td>	"
 					reviewCard +=	"	<td><input type='text' name='review_content' maxlength='49' class='writeReviewContent form-control'></td>	"
 					reviewCard +=	"	<td><div class='star-input'>	"
-					reviewCard +=	"	<input type='hidden' name='review_grade' class='gradesubmit' value=''>	"
-					reviewCard +=	"	<span class='input'> 	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='1' id='p1'> <label for='p1'>1</label> 	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='2' id='p2'> <label for='p2'>2</label> 	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='3' id='p3'> <label for='p3'>3</label>  "
-					reviewCard +=	"	<input type='radio' name='star-input' value='4' id='p4'> <label for='p4'>4</label>	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='5' id='p5'> <label for='p5'>5</label> 	"
-					reviewCard +=	"	</span>	"
+					reviewCard +=	"	<select class='starSelectBox' name='review_grade'>	"
+					reviewCard +=	"	<option value=''> </option>	"
+					reviewCard +=	"	<option value='1'>★</option>	"
+					reviewCard +=	"	<option value='2'>★★</option>	"
+					reviewCard +=	"	<option value='3'>★★★</option>	"
+					reviewCard +=	"	<option value='4'>★★★★</option>	"
+					reviewCard +=	"	<option value='5'>★★★★★</option>	"
+					reviewCard +=	"	</select>	"
 					reviewCard +=	"	</div>	"
 					reviewCard +=	"	</td>	"
 					reviewCard +=	"	</tr>	"
@@ -56,6 +69,8 @@ var myReviewTable = $('.myReviewTable');
 				$.each(memberList, function(index, member){
 					if(member.position_name != '팀장') {
 						
+					soloProject = false;
+						
 					reviewCard =	"	<tr>	"
 					reviewCard +=	"	<input type='hidden' name='review_member' value='"+member.teammember+"'>	"
 					reviewCard +=	"	<input type='hidden' name='project_id' value='"+member.project_id+"'>	"
@@ -63,14 +78,14 @@ var myReviewTable = $('.myReviewTable');
 					reviewCard +=	"	<td>"+member.position_name+"</td>	"
 					reviewCard +=	"	<td><input type='text' name='review_content' maxlength='49' class='writeReviewContent form-control'></td>	"
 					reviewCard +=	"	<td><div class='star-input'>	"
-					reviewCard +=	"	<input type='hidden' name='review_grade' class='gradesubmit' value=''>	"
-					reviewCard +=	"	<span class='input'> 	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='1' id='p1'> <label for='p1'>1</label> 	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='2' id='p2'> <label for='p2'>2</label> 	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='3' id='p3'> <label for='p3'>3</label>  "
-					reviewCard +=	"	<input type='radio' name='star-input' value='4' id='p4'> <label for='p4'>4</label>	"
-					reviewCard +=	"	<input type='radio' name='star-input' value='5' id='p5'> <label for='p5'>5</label> 	"
-					reviewCard +=	"	</span>	"
+					reviewCard +=	"	<select class='starSelectBox' name='review_grade'>	"
+					reviewCard +=	"	<option value=''> </option>	"
+					reviewCard +=	"	<option value='1'>★</option>	"
+					reviewCard +=	"	<option value='2'>★★</option>	"
+					reviewCard +=	"	<option value='3'>★★★</option>	"
+					reviewCard +=	"	<option value='4'>★★★★</option>	"
+					reviewCard +=	"	<option value='5'>★★★★★</option>	"
+					reviewCard +=	"	</select>	"
 					reviewCard +=	"	</div>	"
 					reviewCard +=	"	</td>	"
 					reviewCard +=	"	</tr>	"
@@ -78,12 +93,10 @@ var myReviewTable = $('.myReviewTable');
 					reviewWriteTable.append(reviewCard);
 					}
 				})
-				
-				$('.star-input').click(function(){
-					console.log(this);
-				})	
-			
 	            
+	            if(soloProject == true) {
+					swal("리뷰를 작성할 멤버가 없습니다.", "해당 프로젝트는 멤버가 없이 진행된 프로젝트입니다.", "warning");
+				}
 	        },
 	        error:function(xhr){
 	            console.log(xhr);
@@ -100,8 +113,7 @@ var myReviewTable = $('.myReviewTable');
 			var $star = $(".star-input"),
 			    $result = $star.find("output>b");
 				
-				
-			  	$('.star-input')
+			  	$(document)
 			  	.on("focusin", ".star-input>.input", 
 					function(){
 			   		 $(this).addClass("focus");
@@ -117,10 +129,10 @@ var myReviewTable = $('.myReviewTable');
 			 	 })
 			  
 			    .on("change", ".star-input :radio", function(){
-			    	console.log("냠 " + $result.text($(this).next().text()));
+			    	$result.text($(this).next().text());
 			    	
 			    	var grade_code = $('.star-input>.input').find(":checked").val()
-					console.log("별개수: " + grade_code)
+			
 			    	$('.gradesubmit').val($('.star-input>.input').find(":checked").val());
 			  	})
 			    .on("mouseover", ".star-input label", function(){
@@ -135,8 +147,12 @@ var myReviewTable = $('.myReviewTable');
 			    		}
 			  	});
 			};
-	
+			
 			starRating();
+			
+			
+	
+			
 	
 			
 	
@@ -151,6 +167,15 @@ var myReviewTable = $('.myReviewTable');
 			 console.log(contents[i].value);
 			 if(contents[i].value == '') {
 				swal("모든 멤버의 후기를 작성해주세요! " , "" ,"warning");
+				return;
+			}
+		};
+		
+		var stars = document.getElementsByClassName('starSelectBox');
+		for (var i = 0; i < stars.length; i++) {
+			 console.log(stars[i].value);
+			 if(stars[i].value == '') {
+				swal("모든 멤버의 별점을 입력해주세요!" , "" ,"warning");
 				return;
 			}
 		};
@@ -207,7 +232,7 @@ function giveReviewPoint(){
 					reviewCard =	"	<tr>	"
 					reviewCard +=	"	<td>"+review.member_nickname+"</td>	"
 					
-					if(review.position_name == null) {
+					if(review.position_name == null && review.member_nickname !== 'dummy') {
 						reviewCard +=	"	<td>팀장 <i class='fas fa-crown leaderIcon'></i></td>	"
 					}else if(review.position_name != null){
 						reviewCard +=	"	<td>"+review.position_name+"</td>	"
