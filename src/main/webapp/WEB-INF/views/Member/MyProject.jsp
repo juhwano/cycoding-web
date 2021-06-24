@@ -27,7 +27,7 @@
 					<!-- 프로젝트목록 -->
 					<!-- 지원목록 영역 -->
 					<div class="info_text_sec">
-						<p class="table_name_text">진행중인 프로젝트</p>
+						<p class="table_name_text">회원 목록</p>
 					</div>
 					<table class="table wish_table apply_table">
 						<thead>

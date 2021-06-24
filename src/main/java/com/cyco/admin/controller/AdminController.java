@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cyco.admin.service.AdminService;
+import com.cyco.admin.vo.MemberListVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.vo.V_MlistVo;
 
 @RequestMapping("/admin")
 @Controller
@@ -21,11 +23,22 @@ public class AdminController {
 	private AdminService service;
 	
 	@RequestMapping(value="/member", method=RequestMethod.GET)
-	public String memberManage() {
+	public String memberManage(Model m) {
+		/*
+		 	필요한 데이터들 : < 회원 >
+		 	1. 회원번호 / 닉네임 / 포지션 / 대표기술
+		 		private int m_id;
+				private String m_nick;
+				private String position;
+				private String skill;
+				
+		 	2. 참여했었고 완료된 프로젝트 회수
+		 
+		 */
+		List<MemberListVo> memberList = service.getMemberList();
+		m.addAttribute("memberList",memberList);
 		
-		
-		
-		return "Admin/MemberMange";
+		return "Admin/MemberManage";
 	}
 	@RequestMapping(value="/site", method=RequestMethod.GET)
 	public String siteManage(Model m) {
