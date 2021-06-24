@@ -1,12 +1,13 @@
 package com.cyco.alarm.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cyco.alarm.dao.AlarmDao;
 import com.cyco.alarm.vo.AlarmVo;
@@ -27,6 +28,7 @@ public class AlarmService {
 	}
 	
 	//알림이 일어나면 테이블에 인서트
+	@Transactional
 	public boolean insertAlarm(HashMap<String, String> data) {
 		
 		Boolean bo = false;
@@ -38,44 +40,64 @@ public class AlarmService {
 		alarm.setALARM_CODE(data.get("code"));
         alarm.setMEMBER_ID(data.get("member_id"));
         alarm.setURL(data.get("url"));
-		int row = alarmdao.insertAlarm(alarm);
+        int row = alarmdao.insertAlarm(alarm);	
 		
-		if(row > 0) {
+		//쪽지일 경우
+		if(data.get("code").equals("CHAT_O")) {
+			
+			FromNoteVo frn = new FromNoteVo(); ToNoteVo tn = new ToNoteVo();
+			frn.setMEMBER_TO(data.get("member_id"));
+			frn.setMEMBER_FROM(data.get("sender"));
+			frn.setNOTE_CONTENT(data.get("message"));
+
+			System.out.println("발신 : " + frn.toString());
+
+			tn.setMEMBER_TO(data.get("member_id"));
+			tn.setMEMBER_FROM(data.get("sender"));
+			tn.setNOTE_CONTENT(data.get("message")); System.out.println("수신 : " +
+			frn.toString());
+
+			alarmdao.insertFromNote(frn); 
+			alarmdao.insertToNote(tn);
+
+		}
+		
+		if(row > 0){
 			bo = true;
-		}	
+		}
+
 		return bo;
 		
 	}
 	
 	//쪽지일 경우 위 서비스와 함께 발신, 수신함에도 인서트
-	public boolean insertNote(HashMap<String, String> data) {
-		
-		Boolean bo = false;
-		
-		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
-		FromNoteVo frn = new FromNoteVo();
-		ToNoteVo tn = new ToNoteVo();
-		frn.setMEMBER_TO(data.get("member_id"));
-		frn.setMEMBER_FROM(data.get("sender"));
-		frn.setNOTE_CONTENT(data.get("message"));
-		
-		System.out.println("발신 : " + frn.toString());
-		
-		tn.setMEMBER_TO(data.get("member_id"));
-		tn.setMEMBER_FROM(data.get("sender"));
-		tn.setNOTE_CONTENT(data.get("message"));
-		System.out.println("수신 : " + frn.toString());
-
-		int frow = alarmdao.insertFromNote(frn);
-		int nrow = alarmdao.insertToNote(tn);
-		
-		if(frow > 0 && nrow > 0) {
-			bo = true;
-		}	
-		
-		return bo;
-		
-	}
+	/*
+	 * public boolean insertNote(HashMap<String, String> data) {
+	 * 
+	 * Boolean bo = false;
+	 * 
+	 * AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class); FromNoteVo frn =
+	 * new FromNoteVo(); ToNoteVo tn = new ToNoteVo();
+	 * frn.setMEMBER_TO(data.get("member_id"));
+	 * frn.setMEMBER_FROM(data.get("sender"));
+	 * frn.setNOTE_CONTENT(data.get("message"));
+	 * 
+	 * System.out.println("발신 : " + frn.toString());
+	 * 
+	 * tn.setMEMBER_TO(data.get("member_id"));
+	 * tn.setMEMBER_FROM(data.get("sender"));
+	 * tn.setNOTE_CONTENT(data.get("message")); System.out.println("수신 : " +
+	 * frn.toString());
+	 * 
+	 * int frow = alarmdao.insertFromNote(frn); int nrow =
+	 * alarmdao.insertToNote(tn);
+	 * 
+	 * if(frow > 0 && nrow > 0) { bo = true; }
+	 * 
+	 * return bo;
+	 * 
+	 * }
+	 */
 	
 	//헤더 알림 메뉴에 최신 알림만 뿌려주기
 	public List<AlarmVo> getNewAlarms(String memberid){
@@ -90,7 +112,25 @@ public class AlarmService {
 	public List<AlarmVo> getAllAlarms(String useremail){
 		
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
-		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);	
+		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);
+		/*
+		 * List<AlarmVo> list = alarmdao.getAllAlarms(useremail); List<AlarmVo> alarms =
+		 * new ArrayList<AlarmVo>(); int count = 0; for(int i = 0; i < list.size(); i++)
+		 * { if(!list.get(i).getALARM_CODE().equals("CAHT_O")) {
+		 * alarms.add(list.get(i));
+		 * 
+		 * } else { count++;
+		 * 
+		 * if(count == 1) { //회원의 알림테이블에 쪽지 알림이 있을 경우, 쪽지 테이블에서 안 읽은 쪽지 있는지 체크 int
+		 * messages = alarmdao.hasNewMessages(useremail);
+		 * 
+		 * if(messages > 0) { System.out.println("여길 타나"); alarms.add(list.get(i)); }
+		 * 
+		 * }
+		 * 
+		 * } }
+		 */
+		
 		
 		return alarms;
 	}

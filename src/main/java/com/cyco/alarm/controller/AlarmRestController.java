@@ -55,10 +55,11 @@ public class AlarmRestController {
 		Boolean bo = alarmservice.insertAlarm(data);
 		
 		//쪽지일 경우 쪽지 테이블에도 인서트
-		if(data.get("code").equals("CHAT_O")) {
-			bo = alarmservice.insertNote(data);
-			
-		}
+		/*
+		 * if(data.get("code").equals("CHAT_O")) { bo = alarmservice.insertNote(data);
+		 * 
+		 * }
+		 */
 		
 		return bo;
 	}

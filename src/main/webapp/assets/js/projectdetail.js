@@ -128,6 +128,7 @@ $(document).ready(function(){
 	     		     			     		success: function(responsedata){    		
 	     		     			     			if(responsedata == "true"){
 	     		     			     				swal("지원 되었습니다.","","success");
+
 	     		     			     				setTimeout(function() {
 	     		     			     						document.location.reload(true);
 	     		     			     					}, 1000);
