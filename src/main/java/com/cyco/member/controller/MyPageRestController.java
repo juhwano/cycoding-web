@@ -24,6 +24,7 @@ import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 
@@ -483,10 +484,19 @@ public class MyPageRestController {
 	  
 	  //팀장 포지션에 '팀장'넣기
 	  teamLeader.setPosition_name("팀장");
-	  //배열에 팀장 넣기
+	  //배열에 팀장 넣기 
 	  writeReviewMember.add(teamLeader);
 	  
 	  return writeReviewMember;
+  }
+  
+  //로그인한 회원이 해당 프로젝트에 작성한 리뷰 조회
+  @RequestMapping(value="myProjectReview", method = RequestMethod.GET)
+  public List<MyReviewVo> myProjectReview(@RequestParam String projectid, HttpSession session) {
+	  
+	  List<MyReviewVo> myprojectReview = memberdetailservice.getMyProjectReview(projectid, String.valueOf(session.getAttribute("member_id")));
+	  
+	  return myprojectReview;
   }
   
   

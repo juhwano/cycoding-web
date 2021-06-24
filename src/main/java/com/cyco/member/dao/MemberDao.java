@@ -15,6 +15,7 @@ import com.cyco.common.vo.SkillVo;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
 import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
@@ -172,6 +173,9 @@ public interface MemberDao {
 	
 	//로그인한 회원이 작성한 리뷰 가져오기
 	public List<ReviewVo> getMyReview(String memberid);
+	
+	//로그인한 회원이 해당 프로젝트에 남긴 리뷰 조회
+	public List<MyReviewVo> getMyProjectReview(String projectid, String memberid);
 	
 
 }

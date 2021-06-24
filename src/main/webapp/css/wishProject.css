@@ -461,61 +461,44 @@ star-input>.input.focus {
 
 .star-input>.input>label:hover, .star-input>.input>input:focus+label,
 	.star-input>.input>input:checked+label {
-	background-size: 150px;
+	background-size: 120px;
 	background-position: 0 bottom;
+	top: -6px;
 }
 
 .star-input>.input>label:hover ~label {
 	background-image: none;
 }
 
-.star-input>.input>label[for="p1_2"] {
-	width: 15px;
-	z-index: 10;
-}
 
 .star-input>.input>label[for="p1"] {
-	width: 30px;
+	width: 24px;
 	z-index: 9;
 }
 
-.star-input>.input>label[for="p2_2"] {
-	width: 45px;
-	z-index: 8;
-}
 
 .star-input>.input>label[for="p2"] {
-	width: 60px;
+	width: 48px;
 	z-index: 7;
 }
 
-.star-input>.input>label[for="p3_2"] {
-	width: 75px;
-	z-index: 6;
-}
+
 
 .star-input>.input>label[for="p3"] {
-	width: 90px;
+	width: 72px;
 	z-index: 5;
 }
 
-.star-input>.input>label[for="p4_2"] {
-	width: 105px;
-	z-index: 4;
-}
+
 
 .star-input>.input>label[for="p4"] {
-	width: 120px;
+	width: 96px;
 	z-index: 3;
 }
 
-.star-input>.input>label[for="p5_2"] {
-	width: 135px;
-	z-index: 2;
-}
 
 .star-input>.input>label[for="p5"] {
-	width: 150px;
+	width: 120px;
 	z-index: 1;
 }
 

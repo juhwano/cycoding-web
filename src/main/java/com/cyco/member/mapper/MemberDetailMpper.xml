@@ -304,4 +304,25 @@
 		UPDATE point SET have_point=have_point+10 WHERE member_id = ${member_id}
 	</update>
 	
+	<!-- 로그인한 회원이 해당 프로젝트에 남긴 리뷰 조회 -->
+	<select id="getMyProjectReview" resultType="com.cyco.member.vo.MyReviewVo">
+		select distinct r.review_member,
+                m.member_nickname, 
+                r.review_content, 
+                r.review_grade, 
+                pos.position_name
+		from
+		(select member_id from project p where p.project_id = ${param1} union all
+		select member_id from p_member pm  where pm.project_id = ${param1}) a
+		left join member m
+		on a.member_id = m.member_id
+		left join review r
+		on a.member_id = r.review_member
+		left join p_member pm2
+		on pm2.member_id = a.member_id and pm2.project_id= ${param1}
+		left join position pos
+		on pos.position_id = pm2.position_id
+		where r.writer_id = ${param2}
+	</select>
+	
 </mapper>

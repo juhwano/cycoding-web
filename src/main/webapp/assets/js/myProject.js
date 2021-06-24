@@ -2,6 +2,8 @@
 let reviewCard; 
 /* 리뷰 작성 모달 테이블 */
 var reviewWriteTable = $('.reviewWriteTable');
+/* 리뷰 조회 모달 테이블 */
+var myReviewTable = $('.myReviewTable');
 
  /* 페이지 모두 로딩 후 실행 */
  $(document).ready(function(){
@@ -23,9 +25,9 @@ var reviewWriteTable = $('.reviewWriteTable');
 	            
 	            reviewWriteTable.empty();
 	            
-	            /*for(let i = 0; i < memberList.length; i++) {*/
+	        
 	             $.each(memberList, function(index, member){
-					if(member.position_name == '팀장') {
+					if(member.position_name == '팀장' && member.member_nickname != 'dummy') {
 						
 					reviewCard =	"	<tr>	"
 					reviewCard +=	"	<input type='hidden' name='review_member' value='"+member.teamleader+"'>	"
@@ -76,6 +78,11 @@ var reviewWriteTable = $('.reviewWriteTable');
 					reviewWriteTable.append(reviewCard);
 					}
 				})
+				
+				$('.star-input').click(function(){
+					console.log(this);
+				})	
+			
 	            
 	        },
 	        error:function(xhr){
@@ -93,7 +100,8 @@ var reviewWriteTable = $('.reviewWriteTable');
 			var $star = $(".star-input"),
 			    $result = $star.find("output>b");
 				
-			  	$(document)
+				
+			  	$('.star-input')
 			  	.on("focusin", ".star-input>.input", 
 					function(){
 			   		 $(this).addClass("focus");
@@ -109,10 +117,10 @@ var reviewWriteTable = $('.reviewWriteTable');
 			 	 })
 			  
 			    .on("change", ".star-input :radio", function(){
-			    	$result.text($(this).next().text());
+			    	console.log("냠 " + $result.text($(this).next().text()));
 			    	
 			    	var grade_code = $('.star-input>.input').find(":checked").val()
-			
+					console.log("별개수: " + grade_code)
 			    	$('.gradesubmit').val($('.star-input>.input').find(":checked").val());
 			  	})
 			    .on("mouseover", ".star-input label", function(){
@@ -129,8 +137,10 @@ var reviewWriteTable = $('.reviewWriteTable');
 			};
 	
 			starRating();
+	
 			
-			
+	
+		
 	/* 리뷰 작성 버튼 클릭 */
 	
 	/* 모든 리뷰 작성헀는지 확인 후 리뷰 insert */
@@ -147,14 +157,14 @@ var reviewWriteTable = $('.reviewWriteTable');
 		
 		swal("후기가 작성되었습니다" , "10point가 지급되었습니다 🎉 잠시만 기다려주세요!" ,"success", {
 			  buttons: false,
-			  timer: 2000,
+			  timer: 1500,
 			});
 			
 		giveReviewPoint();
 		
 		setTimeout(function() {
   			$('.writeReview').submit();
-		}, 2000);
+		}, 1500);
 		
 		
 	 });
@@ -173,6 +183,60 @@ function giveReviewPoint(){
 	});
 	
 }
+
+	//로그인한 회원이 해당 프로젝트에 작성한 리뷰 조회 - ajax/myProjectReview
+	$(".reviewPrint").on("click",function(){
+		
+		var projectid = $(this).attr('id');
+		console.log("노출할 프로젝트아이디"+projectid);
+		
+		
+		$.ajax({
+	        url:"ajax/myProjectReview?projectid="+projectid,
+	        type:"get",
+	        dataType:"text",
+	        success:function(data){
+	            
+	            reviewList = JSON.parse(data);
+	            
+	            myReviewTable.empty();
+	            
+	        
+	             $.each(reviewList, function(index, review){
+						
+					reviewCard =	"	<tr>	"
+					reviewCard +=	"	<td>"+review.member_nickname+"</td>	"
+					
+					if(review.position_name == null) {
+						reviewCard +=	"	<td>팀장 <i class='fas fa-crown leaderIcon'></i></td>	"
+					}else if(review.position_name != null){
+						reviewCard +=	"	<td>"+review.position_name+"</td>	"
+					}
+					
+					reviewCard +=	"	<td>"+review.review_content+"</td>	"
+
+					reviewCard += 	" <td> "
+					for(let i = 1; i<=reviewList[index].review_grade; i++) {
+						reviewCard +=	"	<i class='fas fa-star review-star'></i>	"
+					}
+					reviewCard += 	" </td> "
+					reviewCard +=	"	</tr>	"
+					
+					myReviewTable.append(reviewCard);
+					
+				})
+					
+				
+			
+	            
+	        },
+	        error:function(xhr){
+	            console.log(xhr);
+	        }
+	
+	    });
+	    
+	})
 	 
 
 })

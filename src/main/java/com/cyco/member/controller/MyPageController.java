@@ -263,12 +263,11 @@ public class MyPageController {
 		  
 		  List<ReviewVo> writeReviewList = new ArrayList<ReviewVo>();
 		  
-		  System.out.println(review_member.toString());
-		  System.out.println(project_id.toString());
-		  System.out.println(review_content.toString());
-		  System.out.println(review_grade.toString());
+		  System.out.println("리뷰 작성중");
 		  
 		  Date now = new Date();
+		  
+		  System.out.println("리뷰작성길이" + review_member.length);
 		  
 		  for(int i = 0; i < review_member.length; i++) {
 			  ReviewVo review = new ReviewVo();

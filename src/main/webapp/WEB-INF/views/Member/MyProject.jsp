@@ -103,7 +103,7 @@
 													<!--  <td><p class="state_ban">작성완료</p></td> -->
 													 	<td>
 															<a href="#myReviewModal" class="trigger-btn" data-toggle="modal">
-																<p class="state_ban reviewWrite" id="${M_project.project_id}">보러가기</p>
+																<p class="state_ban reviewPrint" id="${L_project.project_id}">보러가기</p>
 															</a>
 														</td>
 												<c:set var="reviewWriteOk" value="true" />
@@ -111,7 +111,7 @@
 												<c:when test="${mark_status.last}">
 													 <td>
 														<a href="#reviewModal" class="trigger-btn" data-toggle="modal">
-															<p class="state_ing reviewWrite" id="${M_project.project_id}">작성하기</p>
+															<p class="state_ing reviewWrite" id="${L_project.project_id}">작성하기</p>
 														</a>
 													</td>
 												</c:when> 
@@ -138,7 +138,7 @@
 														 <!-- <td><p class="state_ban">작성완료</p></td> -->
 														<td>
 															<a href="#myReviewModal" class="trigger-btn" data-toggle="modal">
-																<p class="state_ban reviewWrite" id="${M_project.project_id}">보러가기</p>
+																<p class="state_ban reviewPrint" id="${M_project.project_id}">보러가기</p>
 															</a>
 														</td>
 													<c:set var="reviewWriteOk" value="true" />
@@ -324,6 +324,6 @@
 	var reviewList = ${reviewList};
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/myProject.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myProject.js?ver=2"></script>
 
 </html>

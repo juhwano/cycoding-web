@@ -21,6 +21,7 @@ import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
 import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
@@ -464,6 +465,12 @@ public class MemberDetailService {
 			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 			MyProject_Join_Member writeReviewLeader = memberdao.writeReviewLeader(projectid, memberid);
 			
+			if(writeReviewLeader == null) {
+				MyProject_Join_Member dummyMember = new MyProject_Join_Member();
+				dummyMember.setMember_nickname("dummy");
+				writeReviewLeader = dummyMember;
+			}
+			
 			return writeReviewLeader;
 		}
 		
@@ -494,5 +501,14 @@ public class MemberDetailService {
 		public void giveReviewPoint(String memberid) {
 			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 			memberdao.giveReviewPoint(memberid);
+		}
+		
+		//로그인한 회원이 해당 프로젝트에 작성한 리뷰 조회
+		public List<MyReviewVo> getMyProjectReview(String projectid, String memberid) {
+			
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<MyReviewVo> myProjectReview = memberdao.getMyProjectReview(projectid, memberid);
+			
+			return myProjectReview;
 		}
 }
