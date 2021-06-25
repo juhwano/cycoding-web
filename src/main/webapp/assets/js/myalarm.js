@@ -120,7 +120,6 @@ $(document).ready(function() {
 function addNewAlarm(message) {
 	console.log(message);
 	swal("새 알림이 도착했습니다","","info");
-	//setTimeout("location.reload()", 15000)
 	
 	let newalarm = $("#alarmsub").children(":first").children().children();
 
@@ -158,7 +157,7 @@ function addNewAlarm(message) {
 				
 				//내 프로젝트에 누가 지원함
 				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/member/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/member/memberdetail?member_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
 				
 			} else if(message.code == "MY_RV"){
 				//누가 내게 리뷰를 남김
@@ -199,7 +198,7 @@ function addNewAlarm(message) {
 				
 				//내 프로젝트에 누가 지원함
 				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/member/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/member/memberdetail?member_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
 				
 			} else if(message.code == "MY_RV"){
 				//누가 내게 리뷰를 남김

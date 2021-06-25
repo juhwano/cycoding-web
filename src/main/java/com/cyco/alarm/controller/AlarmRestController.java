@@ -1,9 +1,13 @@
 package com.cyco.alarm.controller;
 
-
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.member.service.MemberService;
 
 @RestController
@@ -46,33 +52,46 @@ public class AlarmRestController {
 		return list;
 	}
 	
-	//알림 발생시 디비에 반영하기
-	@RequestMapping(value="insertalarm", method= {RequestMethod.GET, RequestMethod.POST})
-	public Boolean insertAlarm(@RequestBody HashMap<String, String> data) {
-
+	//쪽지 전송시 디비에 반영하기
+	@RequestMapping(value="insertnote", method= {RequestMethod.GET, RequestMethod.POST})
+	public Boolean insertNote(@RequestBody HashMap<String, Object> data) {
+	//public Boolean insertNote(@RequestBody String data) throws ParseException {
+	//public Boolean insertNote(@RequestBody List<Object> list) {
+		System.out.println("This is insertNote");
+		//System.out.println("list : " + list.toString());
 		System.out.println("data : " + data.toString());
 		
-		Boolean bo = alarmservice.insertAlarm(data);
+/*		JSONParser parser = new JSONParser();
+		JSONObject  jsonObj = (JSONObject) parser.parse(data);
 		
-		//쪽지일 경우 쪽지 테이블에도 인서트
+		System.out.println("jsonObj : " + jsonObj.toString());*/
+		
 		/*
-		 * if(data.get("code").equals("CHAT_O")) { bo = alarmservice.insertNote(data);
+		 * AlarmVo alarm = (AlarmVo)jsonObj.get("alarm"); FromNoteVo frn =
+		 * (FromNoteVo)jsonObj.get("note"); ToNoteVo tn = (ToNoteVo)jsonObj.get("note");
 		 * 
-		 * }
+		 * 
 		 */
-		
+		JSONArray jsonarr = JSONArray.fromObject("data");
+		 AlarmVo alarm = (AlarmVo)data.get("alarm"); 
+		 FromNoteVo frn = (FromNoteVo)data.get("note"); 
+		 ToNoteVo tn = (ToNoteVo)data.get("note");
+		 
+		 Boolean bo = alarmservice.insertNote(alarm, frn, tn);
+		 
+
 		return bo;
 	}
 	
 	//알림 확인한 것 디비에 상태 반영
 	@RequestMapping(value="checkalarm", method= {RequestMethod.GET, RequestMethod.POST})
-	public Boolean chekcAlarm(String alarm_id) {
+	public String chekcAlarm(String alarm_id) {
 		System.out.println("상태 변경 :"+alarm_id);
-		Boolean bo = false;
+		String bo = "false";
 		int row = alarmservice.checkAlarm(alarm_id);
 		
 		if(row > 0) {
-			bo = true;
+			bo = "true";
 		}
 		
 		return bo;

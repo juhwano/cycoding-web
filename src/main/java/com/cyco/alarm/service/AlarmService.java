@@ -1,7 +1,5 @@
 package com.cyco.alarm.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,59 +16,40 @@ import com.cyco.alarm.vo.V_ToNote_Member_Vo;
 
 @Repository
 public class AlarmService {
-	
+
 	private SqlSession sqlsession;
-	
-	
+
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-	
-	//알림이 일어나면 테이블에 인서트
+
+	//쪽지 보내고 알림 테이블에도 인서트
 	@Transactional
-	public boolean insertAlarm(HashMap<String, String> data) {
-		
+	public boolean insertNote(AlarmVo alarm, FromNoteVo frn, ToNoteVo tn ) {
+
 		Boolean bo = false;
 		
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
-		AlarmVo alarm = new AlarmVo();
-		
-		alarm.setALARM_CONTENT(data.get("content"));
-		alarm.setALARM_CODE(data.get("code"));
-        alarm.setMEMBER_ID(data.get("member_id"));
-        alarm.setURL(data.get("url"));
-        int row = alarmdao.insertAlarm(alarm);	
-		
-		//쪽지일 경우
-		if(data.get("code").equals("CHAT_O")) {
-			
-			FromNoteVo frn = new FromNoteVo(); ToNoteVo tn = new ToNoteVo();
-			frn.setMEMBER_TO(data.get("member_id"));
-			frn.setMEMBER_FROM(data.get("sender"));
-			frn.setNOTE_CONTENT(data.get("message"));
+		/*
+		 * AlarmVo alarm = (AlarmVo)data.get("alarm"); FromNoteVo frn =
+		 * (FromNoteVo)data.get("note"); ToNoteVo tn = (ToNoteVo)data.get("note");
+		 */
 
-			System.out.println("발신 : " + frn.toString());
+		alarmdao.insertFromNote(frn);
+		alarmdao.insertToNote(tn);
 
-			tn.setMEMBER_TO(data.get("member_id"));
-			tn.setMEMBER_FROM(data.get("sender"));
-			tn.setNOTE_CONTENT(data.get("message")); System.out.println("수신 : " +
-			frn.toString());
+		int row = alarmdao.insertAlarm(alarm);
 
-			alarmdao.insertFromNote(frn); 
-			alarmdao.insertToNote(tn);
-
-		}
-		
-		if(row > 0){
+		if (row > 0) {
 			bo = true;
 		}
 
 		return bo;
-		
+
 	}
-	
-	//쪽지일 경우 위 서비스와 함께 발신, 수신함에도 인서트
+
+	// 쪽지일 경우 위 서비스와 함께 발신, 수신함에도 인서트
 	/*
 	 * public boolean insertNote(HashMap<String, String> data) {
 	 * 
@@ -98,19 +77,19 @@ public class AlarmService {
 	 * 
 	 * }
 	 */
-	
-	//헤더 알림 메뉴에 최신 알림만 뿌려주기
-	public List<AlarmVo> getNewAlarms(String memberid){
-		
+
+	// 헤더 알림 메뉴에 최신 알림만 뿌려주기
+	public List<AlarmVo> getNewAlarms(String memberid) {
+
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
-		List<AlarmVo> alarms = alarmdao.getNewAlarms(memberid);	
-		
+		List<AlarmVo> alarms = alarmdao.getNewAlarms(memberid);
+
 		return alarms;
 	}
-	
-	//알림페이지 초기 진입시 전체 알림 뿌려주기
-	public List<AlarmVo> getAllAlarms(String useremail){
-		
+
+	// 알림페이지 초기 진입시 전체 알림 뿌려주기
+	public List<AlarmVo> getAllAlarms(String useremail) {
+
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);
 		/*
@@ -130,60 +109,59 @@ public class AlarmService {
 		 * 
 		 * } }
 		 */
-		
-		
+
 		return alarms;
 	}
-	
-	//알림 확인시 상태 업데이트
+
+	// 알림 확인시 상태 업데이트
 	public Integer checkAlarm(String alarm_id) {
-		
+
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		int row = alarmdao.checkAlarm(alarm_id);
-		
+
 		return row;
-		
+
 	}
-	
-	//알림 삭제
+
+	// 알림 삭제
 	public Integer deleteAlarm(String alarm_id) {
-		
+
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		int row = alarmdao.deleteAlarm(alarm_id);
-		
+
 		return row;
-		
+
 	}
-	
-	//쪽지 페이지 최초 로딩시 수신 메시지 불러오기
-	public List<V_ToNote_Member_Vo> getReceivedMessages(String useremail){
+
+	// 쪽지 페이지 최초 로딩시 수신 메시지 불러오기
+	public List<V_ToNote_Member_Vo> getReceivedMessages(String useremail) {
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<V_ToNote_Member_Vo> list = alarmdao.getReceivedMessages(useremail);
-		
+
 		return list;
-		
+
 	}
-	
-	//쪽지 페이지 최초 로딩시 발신 메시지 불러오기
-	public List<V_FromNote_Member_Vo> getSendMessages(String useremail){
+
+	// 쪽지 페이지 최초 로딩시 발신 메시지 불러오기
+	public List<V_FromNote_Member_Vo> getSendMessages(String useremail) {
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<V_FromNote_Member_Vo> list = alarmdao.getSendMessages(useremail);
-		
+
 		return list;
-		
+
 	}
-	
-	//쪽지 읽었을 때 상태 업데이트
+
+	// 쪽지 읽었을 때 상태 업데이트
 	public Boolean updateNoteOk(String noteid) {
-		
+
 		Boolean bo = false;
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		int row = alarmdao.updateNoteOk(noteid);
-		
-		if(row > 0) {
+
+		if (row > 0) {
 			bo = true;
 		}
-		
+
 		return bo;
 	}
 }

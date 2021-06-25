@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
@@ -114,22 +115,23 @@ public class RestProjectController {
 	
 	
 	@RequestMapping(value="projectapply", method=RequestMethod.GET)
-	public String setProjectApply(ApplyVo apply) {
+	public String setProjectApply(HashMap<String, Object> Applydata) {
 		String returnUrl = "false";
+		
+		ApplyVo apply =  (ApplyVo)Applydata.get("Applydata");
+		AlarmVo alarm = (AlarmVo)Applydata.get("data");
 		
 		int check = service.CheckProjectApply(apply);
 		if(check > 0) {
 			return returnUrl;
 		}else {
-			int result = service.setProjectApply(apply);
+			int result = service.setProjectApply(apply, alarm);
 			
-			if(result > 0) {
+			if(result > 0 ) {
 				returnUrl = "true";
 			}
 		}
-		
-		
-		
+				
 		return returnUrl;
 	}
 	

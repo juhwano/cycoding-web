@@ -50,11 +50,11 @@
 								<c:choose>
 									<c:when test="${not empty tolist}">
 
-										
-											<c:choose>
 
-												<c:when test="${tolist.NOTE_OK eq '0'}">
-												
+										<c:choose>
+
+											<c:when test="${tolist.NOTE_OK eq '0'}">
+
 												<tbody class="apply_table_sec new">
 													<tr id="to${tolist.NOTE_ID}">
 														<td class="isread"><i class="far fa-envelope"></i></td>
@@ -68,10 +68,10 @@
 														<td class="del_check"><input type="checkbox"
 															class="del_received"></td>
 													</tr>
-</tbody>
-												</c:when>
+												</tbody>
+											</c:when>
 
-												<c:when test="${tolist.NOTE_OK eq '1'}">
+											<c:when test="${tolist.NOTE_OK eq '1'}">
 												<tbody class="apply_table_sec read">
 													<tr id="to${tolist.NOTE_ID}">
 														<td class="isread"><i
@@ -86,14 +86,10 @@
 														<td class="del_check"><input type="checkbox"
 															class="del_received"></td>
 													</tr>
-													</tbody>
-												</c:when>
+												</tbody>
+											</c:when>
 
-											</c:choose>
-
-
-
-										
+										</c:choose>
 									</c:when>
 									<c:otherwise>
 										<tbody class="apply_table_sec">
@@ -180,7 +176,7 @@
 	<!-- 수신 창 -->
 	<div id="to_note_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
-		<!-- 수신 메시지 보이는 영역 답장하기 클릭시 비활성화 -->
+			<!-- 수신 메시지 보이는 영역 답장하기 클릭시 비활성화 -->
 			<div class="modal-content" id="message_content">
 				<div class="modal-header">
 					<p id="modal-title">쪽지 읽기</p>
@@ -193,7 +189,7 @@
 					<input type="hidden" id="reply_to">
 					<div class="msg_buttonarea">
 
-							<button class="msg_btn" id="reply_btn">답장하기</button>
+						<button class="msg_btn" id="reply_btn">답장하기</button>
 						<a href="#to_note_modal" class="trigger-btn" data-toggle="modal">
 							<button class="close_modal">닫기</button>
 						</a>
@@ -201,7 +197,7 @@
 
 				</div>
 			</div>
-			
+
 			<!-- 답장하기 클릭시 활성화 -->
 			<div class="modal-content" id="reply_content">
 				<div class="modal-header">
@@ -209,16 +205,16 @@
 				</div>
 				<div id="modal-body">
 					<!-- <div id="msg_img"></div> -->
-					<div id="messagearea">
-				
-					</div>
+					<div id="messagearea"></div>
 					<input type="hidden" name="text" id="text">
 					<div id="textcount"></div>
 					<div id="msg_buttonarea">
-						
+
 						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
-							<button class="send_btn" id="msg_btn"><i class="far fa-paper-plane"></i></button>		
-						</a> 
+							<button class="send_btn" id="msg_btn">
+								<i class="far fa-paper-plane"></i>
+							</button>
+						</a>
 					</div>
 
 				</div>
@@ -246,10 +242,10 @@
 					</div>
 
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
-	
+
 	<!-- 쪽지 보내기 -->
 	<div id="reply_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
@@ -260,15 +256,17 @@
 				<div id="modal-body">
 					<!-- <div id="msg_img"></div> -->
 					<div id="messagearea">
-						<span>쪽지가 전송되었습니다</span>					
+						<span>쪽지가 전송되었습니다</span>
 					</div>
 					<input type="hidden" name="text" id="text">
 					<div id="textcount"></div>
 					<div id="msg_buttonarea">
-						
+
 						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
-							<button class="send_btn" id="msg_btn"><i class="far fa-paper-plane"></i></button>		
-						</a> 
+							<button class="send_btn" id="msg_btn">
+								<i class="far fa-paper-plane"></i>
+							</button>
+						</a>
 					</div>
 
 				</div>

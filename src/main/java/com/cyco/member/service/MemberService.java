@@ -72,6 +72,26 @@ public class MemberService {
 		return row;
 	}
 	
+	//로그인시 참여중인 프로젝트 있는지 체크
+	public HashMap<String, String> hasProject(String memberid){
+		
+		HashMap<String, String> p_info = new HashMap<String, String>();
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		if(memberdao.isProjectManager(memberid) != null) {
+			p_info.put("project_id",(String)memberdao.isProjectManager(memberid).getProject_id());
+			p_info.put("p_title",(String)memberdao.isProjectManager(memberid).getP_title());
+			
+		}else if(memberdao.isInProject(memberid) != null){
+			p_info.put("project_id", (String)memberdao.isInProject(memberid).get("project_id"));
+			p_info.put("p_title", (String)memberdao.isInProject(memberid).get("p_title"));
+		} else {
+			p_info.put("project_id", "none");
+		}
+		
+		System.out.println("p_info " + p_info.toString());
+		return p_info;
+	}
 
 	//기본 회원리스트 호출
 	public List<V_MlistVo> memberList() {

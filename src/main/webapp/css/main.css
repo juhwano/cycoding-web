@@ -133,11 +133,14 @@
 	height:20px;
 	opacity: .8 !important;
 }
-.mydropdow{
+#alarmbell_li{
+	margin-right:30px;
+}
+/* .mydropdow{
 	position: absolute;
 	top:16px;
 	height:100px;
-}
+} */
 .sub{
 	position: absolute;
     top: 38px;
@@ -159,21 +162,7 @@
 .sub ul li:hover{
 	background-color: #F4F2F3;
 }
-/* #mydropdow ul{
-	display:none;
-	height:auto; 
-	padding:0px; 
-	margin:0px; 
-	border:0px; 
-	position:absolute; 
-	width:200px; 
-	z-index:200;
 
-}
-
-#mydropdow:hover ul{
-	display:block;
-} */
 
 .Alram_box{
     position: absolute;

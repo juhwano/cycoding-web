@@ -64,7 +64,7 @@ public class RegisterRestComtroller {
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; //이메일로 받는 인증코드 부분 (난수)
         
-        String setfrom = "mnd3259@gmail.com";
+        String setfrom = "cycoding196@gmail.com";
         String tomail = request.getParameter("email"); // 받는 사람 이메일
         String title = "[CYCODING]사이좋게 코딩하자 사이코딩 인증 메일입니다"; // 제목
         String content =

@@ -20,6 +20,7 @@ import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
 import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_MemberVo;
 
 
 @Repository
@@ -60,6 +61,11 @@ public interface MemberDao {
 	//로그인시 받은 알림 있는지 체크
 	public Integer getOldAlarm(String memberid);
 	
+	//로그인시 참여중인(팀장으로) 프로젝트 있는지 체크
+	public P_DetailVo isProjectManager(String memberid);
+	//로그인시 참여중인(멤버로) 프로젝트 있는지 체크
+	public HashMap<String, String> isInProject(String memberid);
+	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
 	
@@ -67,9 +73,7 @@ public interface MemberDao {
 	public Integer editProfile(String id, String filename);
 	
 	//마이페이지 개인정보 수정
-	public Integer editPersnalInfo(String column, String info, int userid);
-	//마이페이지 개인정보 수정 시 닉네임 중복체크
-	
+	public Integer editPersnalInfo(String column, String info, int userid);	
 	
 	//마이페이지+회원상세 기술 가져오기
 	public List<SkillVo> getSkills();

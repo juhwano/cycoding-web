@@ -159,8 +159,7 @@
 				<p class="Project_p Apply_p">- 귀하의 프로필 정보가 프로젝트 리더에게 제공됩니다.</p>	
 				<p class="Project_p Apply_p">- 프로젝트내의 분쟁사항은 저희 사이코딩에서 절대 책임지지 않습니다.</p>	
 				<p class="Project_p Apply_p">- 프로젝트의 리더의 선택으로 지원이 거절 될 수 있습니다.</p>	
-				<p class="Project_p Apply_p">- 지원이 거절 될 시 본 프로젝트에 더이상 지원이 불가능합니다.</p>	
-				
+				<p class="Project_p Apply_p">- 지원이 거절 될 시 본 프로젝트에 더이상 지원이 불가능합니다.</p>				
 				</div>		
 				</div>
 			</form>	
@@ -171,6 +170,9 @@
        </div> 
 
 	</div>
+	
+	<!-- 지원 알림에 필요한 정보 -->
+	<input type="hidden" value="${project.member_id}" id="leader_id">
 	
 </body>
 	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>

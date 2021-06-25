@@ -28,12 +28,12 @@ $(document).ready(function() {
 	})
 	//글자수 제한
 	$('#messagearea').on('input', function() {
-		$('#textcount').html($(this).text().length + " / 150");
+		$('#textcount').html($(this).text().length + " / 100");
 
-		if ($(this).text().length > 150) {
-			//$(this).text($(this).val().substring(0, 150));			
-			$('#textcount').html("150 / 150");
-			swal("쪽지는 150자 이상 쓸 수 없습니다", "", "warning");
+		if ($(this).text().length > 100) {
+			$(this).text($(this).val().substring(0, 100));			
+			$('#textcount').html("100 / 100");
+			swal("쪽지는 100자 이상 쓸 수 없습니다", "", "warning");
 		}
 	});
 
@@ -137,8 +137,9 @@ $(document).on("click", "#msg_btn", function() {
 	console.log("받는 사람 : ", $("#reply_to").val())
 	//우선 div의 텍스트를 다루기 용이하도록 input태그의 값으로 만든다
 	$("#text").val($("#messagearea").text());
+	
 	console.log("쪽지 보내기")
-
+	console.log($("#text").val());
 	var data = {
 		code: "CHAT_O",
 		url: logineduser,

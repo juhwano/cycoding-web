@@ -174,12 +174,12 @@ $(document).ready(function() {
 	})
 	//글자수 제한
 	$('#messagearea').on('input', function() {
-		$('#textcount').html($(this).text().length + " / 200");		
+		$('#textcount').html($(this).text().length + " / 100");		
 
-		if ($(this).text().length > 300) {
-			$(this).text($(this).val().substring(0, 150));
-			swal("쪽지는 200자 이상 쓸 수 없습니다", "", "warning");
-			$('#textcount').html("200 / 200");
+		if ($(this).text().length > 100) {
+			$(this).text($(this).val().substring(0, 100));
+			swal("쪽지는 100자 이상 쓸 수 없습니다", "", "warning");
+			$('#textcount').html("100 / 100");
 		}
 	});
 	
@@ -193,22 +193,43 @@ $(document).on("click","#msg_btn", function() {
 	//우선 div의 텍스트를 다루기 용이하도록 input태그의 값으로 만든다
 	$("#text").val($("#messagearea").text());
 	console.log("쪽지 보내기")
-	
-		var data = {
-			code: "CHAT_O",
-			url: logineduser,
-			message:$("#text").val(),
-			member_id: $("#m_id").val(),
+		
+		var alarm = {
+			ALARM_CODE: "CHAT_O",
+			URL: logineduser,
+			MEMBER_ID: $("#m_id").val(),
 			sender: logineduser,
 			content: loginednickname + "님이 회원님에게 쪽지를 보냈습니다"
+			}
+		var data = {
+			alarm,
+			note:{
+				MEMBER_FROM:logineduser,
+				MEMBER_TO:$("#m_id").val(),
+				NOTE_CONTENT:$("#text").val()
+			}
 		};
-		
+
 		console.log(data);
-		//전송 확인 모달 띄우는 거 하자
-		swal("쪽지를 발송했습니다","","success");
-		
-		// 알림 테이블에 반영, 알림 보내기
-		insertAlarm(JSON.stringify(data));
+		//쪽지 테이블에 반영
+		console.log("쪽지 테이블에 반영")
+		$.ajax({
+			url:"/alarm/insertnote",
+			data:JSON.stringify(data),
+			type:"post",
+			dataType:"text",
+			contentType: "application/json",
+			success:function(res){
+				if(res == "true"){
+					swal("쪽지를 발송했습니다","","success")
+				} else{
+					swal("쪽지 발송하지 못했습니다","잠시 후 시도해주세요","error")
+				}
+			}
+			
+		});
+		//알림 보내기
+		insertAlarm(JSON.stringify(alarm));
 
 });
 

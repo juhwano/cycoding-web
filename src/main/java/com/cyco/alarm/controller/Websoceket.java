@@ -57,8 +57,8 @@ public class Websoceket {
         	JSONObject  jsonObj = (JSONObject) parser.parse(message);
         	System.out.println(jsonObj.toString());
         	
-        	String code = (String)jsonObj.get("code");
-            String receiver = (String)jsonObj.get("member_id");
+        	String code = (String)jsonObj.get("ALARM_CODE");
+            String receiver = (String)jsonObj.get("MEMBER_ID");
             String msg = "";
             String sender = (String)jsonObj.get("loginednickname");
 
