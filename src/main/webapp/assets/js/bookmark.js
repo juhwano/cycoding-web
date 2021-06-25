@@ -6,7 +6,7 @@ function BookMarking(projectid) {
             type: 'get',
             dataType:"text",
             success:function(result){
-                console.log("result: "+ result);
+	
                 
                 if(result == "insert") {
 					swal("" , "북마크 내역은 북마크페이지에서도 확인하실 수 있습니다." ,"success");

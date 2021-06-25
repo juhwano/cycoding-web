@@ -28,7 +28,6 @@ function chekcBell(id) {
 			if (res == "true") {
 
 				changeBell_New()
-				//updatealarmlist(id)
 
 			} else {
 
@@ -47,138 +46,119 @@ function chekcBell(id) {
 
 //알림 리스트 비동기로 바꿔주기
 function updatealarmlist(id) {
-	
-	return new Promise(function(resolve,reject){
-		
-		$.ajax({
-		url: "/alarm/updatealarmlist",
-		type: "post",
-		data: { id: id },
-		dataType: "json",
-		success: function(res) {
-			console.log(res)
 
-			if (res.length != 0) {
+	return new Promise(function(resolve, reject) {
+
+		$.ajax({
+			url: "/alarm/updatealarmlist",
+			type: "post",
+			data: { id: id },
+			dataType: "json",
+			success: function(res) {
+				console.log(res)
 
 				$("#alarmsub").empty();
 
-				$.each(res, function(index, data) {
+				if (res.length != 0) {
 
-					// 프로젝트에 초대됨
-					if (data.alarm_CODE == "PR_IN") {
-						$("#alarmsub").append(
+					$.each(res, function(index, data) {
 
-							"<li><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>프로젝트에 초대되었습니다</p></a></li>"
+						// 프로젝트에 초대됨
+						if (data.alarm_CODE == "PR_IN") {
+							$("#alarmsub").append(
 
-						);
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>프로젝트에 초대되었습니다</p></a></li>"
 
-						// 내 프로젝트에 누가 지원함
-					} else if (data.alarm_CODE == "PR_A") {
+							);
 
-						$("#alarmsub").append(
+							// 내 프로젝트에 누가 지원함
+						} else if (data.alarm_CODE == "PR_A") {
 
-							"<li><a href='/member/memberdetailpage?member_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
+							$("#alarmsub").append(
 
-						);
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
 
-						// 내가 지원 내역이 승인됨
-					} else if (data.alarm_CODE == "PR_S") {
+							);
 
-						$(".susub").append(
+							// 내가 지원 내역이 승인됨
+						} else if (data.alarm_CODE == "PR_S") {
 
-							"<li><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
+							$(".susub").append(
 
-						);
+								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
 
-						// 내 지원 내역이 거절됨
-					} else if (data.alarm_CODE == "PR_F") {
+							);
 
-						$("#alarmsub").append(
+							// 내 지원 내역이 거절됨
+						} else if (data.alarm_CODE == "PR_F") {
 
-							"<li><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 거절되었습니다</p></a></li>"
+							$("#alarmsub").append(
 
-						);
+								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 거절되었습니다</p></a></li>"
 
-						// 내가 지원/참여한 프로젝트의 상태가 변경됨(모집/진행/종료)
-					} else if (data.alarm_CODE == "PR_UP") {
+							);
 
-						$("#alarmsub").append(
+							// 내가 지원/참여한 프로젝트의 상태가 변경됨(모집/진행/종료)
+						} else if (data.alarm_CODE == "PR_UP") {
 
-							"<li><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트의 상태가 바뀌었습니다</p></a></li>"
+							$("#alarmsub").append(
 
-						);
+								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트의 상태가 바뀌었습니다</p></a></li>"
 
-						// 누군가 나에게 후기를남김
-					} else if (data.alarm_CODE == "MY_RV") {
+							);
 
-						$("#alarmsub").append(
+							// 누군가 나에게 후기를남김
+						} else if (data.alarm_CODE == "MY_RV") {
 
-							"<li><a href='/member/memberdetailpage?member_id=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
+							$("#alarmsub").append(
 
-						);
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
+
+							);
 
 
-					} else if (data.alarm_CODE == "QNAR") {
+						} else if (data.alarm_CODE == "QNAR") {
 
-						$("#alarmsub").append(
+							$("#alarmsub").append(
 
-							"<li><a href=''" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 질문에 답변이 달렸습니다</p></a></li>"
+								"<li class='header_alarm'><a href=''" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 질문에 답변이 달렸습니다</p></a></li>"
 
-						);
+							);
 
-					} else if (data.alarm_CODE == "CHAT_O") {
+						} else if (data.alarm_CODE == "CHAT_O") {
 
-						$("#alarmsub").append(
+							$("#alarmsub").append(
 
-							"<li><a href='/messages/'><p id='" + data.alarm_ID + "' class='alarm_content'>새로운 쪽지가 도착했습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/messages/'><p id='" + data.alarm_ID + "' class='alarm_content'>새로운 쪽지가 도착했습니다</p></a></li>"
+								//"<li class='header_alarm'><p id='" + data.alarm_ID + "' class='alarm_content'>새로운 쪽지가 도착했습니다</p></li>"
+							);
 
-						);
+						}
+					});
 
-					}
-				});
+				} else {
 
-			} else {
+					$("#alarmsub").append(
+						"<li><p class='alarm_content'>새 알림이 없습니다</p></li>"
+					);
+				}
 
 				$("#alarmsub").append(
-					"<li><p class='alarm_content'>새 알림이 없습니다</p></li>"
+
+					"<li class='last'><a href='/mypage/myalarm'><p class='alarm_content'>알림 더보기</p></a></li>"
+
 				);
+
+				resolve(res);
+			},
+			error: function(xhr) {
+				console.log(xhr)
 			}
+		});
 
-			$("#alarmsub").append(
-
-				"<li class='last'><a href='/mypage/myalarm'><p class='alarm_content'>알림 더보기</p></a></li>"
-
-			);
-			
-			resolve(res);
-		},
-		error: function(xhr) {
-			console.log(xhr)
-		}
-	});
-		
 	})
-	
-	
+
 }
 
 
-//헤더에 있는 새 알림 클릭해서 이동하면 상태 확인으로 업데이트 하기
-//$(document).on("click",$(".susub").children("li"),function(){
-$(".susub").children("li").on("click", function() {
-	$.ajax({
 
-		url: "/alarm/checkalarm",
-		data: { alarm_id: $(this).find("p").attr("id") },
-		dataType: "text",
-		type: "post",
-		success: function(res) {
-			console.log(res);
-		},
-		error: function(xhr) {
-			console.log(xhr);
-		}
-
-	});
-
-});

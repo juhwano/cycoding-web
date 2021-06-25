@@ -20,24 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.BookmarkVo;
-import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
-import com.cyco.common.vo.SkillVo;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_MemberVo;
+import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
-import com.cyco.project.vo.ProjectNameVo;
 import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_ApplyMemberList;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
 import com.cyco.utils.UtilFile;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.sf.json.JSONArray;
 
 @RestController
 @RequestMapping("ajaxproject")
@@ -89,7 +88,7 @@ public class RestProjectController {
 	}
 	
 
-	@RequestMapping(value="projectCheckApply", method=RequestMethod.GET)
+	@RequestMapping(value="projectCheckApply", method= RequestMethod.GET)
 	public String CheckProjectApply(ApplyVo apply) {
 		String returnUrl = "true";
 		
@@ -113,21 +112,25 @@ public class RestProjectController {
 	}
 	
 	
-	@RequestMapping(value="projectapply", method=RequestMethod.GET)
-	public String setProjectApply(ApplyVo apply) {
+	@RequestMapping(value="projectapply", method={RequestMethod.POST,RequestMethod.GET})
+	public String setProjectApply(@RequestBody HashMap<String, Object> Applydata) {
 		String returnUrl = "false";
 		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		ApplyVo apply = objectMapper.convertValue(Applydata.get("apply"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(Applydata.get("alarm"), AlarmVo.class);
+
 		int check = service.CheckProjectApply(apply);
 		if(check > 0) {
 			return returnUrl;
 		}else {
-			int result = service.setProjectApply(apply);
+			int result = service.setProjectApply(apply, alarm);
 			
-			if(result > 0) {
+			if(result > 0 ) {
 				returnUrl = "true";
 			}
 		}
-		
 		return returnUrl;
 	}
 	
@@ -368,5 +371,119 @@ public class RestProjectController {
 		
 		return returnURL;
 	}
+	
+	// 프로젝트 탈퇴
+	@RequestMapping(value = "projectWithdrawal", method=RequestMethod.GET)
+	public String ProjectWithdrawal(HttpSession session, String project_id, String state) {
+		// 로그인 아이디 가져오기 
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		
+		
+		String returnURL = service.ProjectWithdrawal(member_id, project_id, state);
+				
+				
+		
+		return returnURL;
+	}
+	
+	// 프로젝트 qna 가져오기
+	@RequestMapping(value = "getprojectqna", method=RequestMethod.GET)
+	public List<P_QnaVo> getProjectQna(String project_id){
+	
+		
+		List<P_QnaVo> qna = service.getProjectQna(project_id);
+		
+		return qna;
+	}
+	
+	// 프로젝트 qna 댓글 가져오기
+	@RequestMapping(value = "getProjectQnaReply", method=RequestMethod.GET)
+	public Map<String, Object> getProjectQna(String project_id, String REF, String member_id){
+		
+		// 댓글 가져오기
+		List<P_QnaVo> qna = service.getProjectQnaReply(project_id, REF);
+		
+		//프로젝트 멤버 검색
+		List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
+		
+		int Reader = service.ProjectReaderCheck(project_id,member_id);
+		
+		Map<String, Object> ReturnObj = new HashMap<String, Object>();
+		
+		
+		
+		ReturnObj.put("qna", qna);
+		ReturnObj.put("pmlist", pmlist);
+		ReturnObj.put("Reader", Reader);
+		
+				
+				
+		return ReturnObj;
+	}
+	
+	// 프로젝트 qna 작성
+	@RequestMapping(value = "writeQna", method=RequestMethod.GET)
+	public String writeQna(P_QnaVo qnavo){
+		
+		
+		String returnURL = "false";
+		
+		int result = service.writeQna(qnavo); 
+		if(result > 0) {
+			returnURL = "true";
+		}
+		
+		
+		return returnURL;
+	}
+	
+	// 프로젝트 qna 댓글 작성
+	@RequestMapping(value = "writeQnaReply", method=RequestMethod.GET)
+	public String writeQnaReply(P_QnaVo qnavo){
+		
+		
+		String returnURL = "false";
+		
+		int result = service.writeQnaReply(qnavo); 
+		if(result > 0) {
+			returnURL = "true";
+		}
+	
+		
+		return returnURL;
+	}
+	
+	// 프로젝트 qna 수정
+	@RequestMapping(value = "editQna", method=RequestMethod.GET)
+	public String EditQna(P_QnaVo qnavo){
+		String returnURL = "false";
+		
+		int result = service.EditQna(qnavo); 
+		if(result > 0) {
+			returnURL = "true";
+		}
+		
+		
+		return returnURL;
+	}
+	
+	// 플젝 qna 삭제
+	@RequestMapping(value = "DeleteQna", method=RequestMethod.GET)
+	public String DeleteQna(P_QnaVo qnavo){
+		String returnURL = "false";
+		
+		int result = service.DeleteQna(qnavo); 
+		if(result > 0) {
+			returnURL = "true";
+		}
+		
+		
+		return returnURL;
+	}
+	
+	
+	
+	
 	
 }

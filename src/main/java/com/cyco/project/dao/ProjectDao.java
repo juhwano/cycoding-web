@@ -15,6 +15,7 @@ import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVo;
+import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
@@ -97,7 +98,7 @@ public interface ProjectDao {
 	public void setProjectSkillList(List<P_SkillVo> s);
 	// -----------------------------------------
 	
-  //완료가 아닌 프로젝트가 있는지 확인
+    //완료가 아닌 프로젝트가 있는지 확인
 	public int CheckProject(String member_id);
   
 	// 프로젝트 지원체크  맴버아이디랑, 프로젝트 아이디 넣어야함
@@ -163,7 +164,7 @@ public interface ProjectDao {
 	// 멤버 강퇴
 	public int getOutMember(P_MemberVo p_member);
 	
-	// 지원 멤버 추방
+	// 지원 멤버 추방시 지원내역 변경쿼리
 	public int ApplyMember_GetOut(ApplyVo apply);
 	
 	// 리더 권한 위임
@@ -177,4 +178,42 @@ public interface ProjectDao {
 	
 	// 카운터 수 대로 멤버 삭제
 	public int CountMemberDel(String project_id, String position_id, String count);
+	
+	// 해당프로젝트에 멤버 있는지 확인
+	public int isNotNullMember(String project_id);
+	
+	// 해당프로젝트에 멤버 없는지 확인
+	public int isNullMember(String project_id);
+	
+	// 해당프로젝트 리더인지 확인
+	public int ProjectReaderCheck(String project_id,String member_id);
+	
+	// 해당멤버 포지션 가져오기
+	public P_MemberVo getmemberPosition(String member_id,String project_id);
+	
+	// 프로젝트 삭제
+	public int DeleteProject(String project_id,String member_id);
+	
+	//프로젝트 qna
+	public List<P_QnaVo> getProjectQna(String project_id);
+	
+	//프로젝트 qna
+	public List<P_QnaVo> getProjectQnaReply(String project_id, String REF);
+	
+	//프로젝트 qna 작성
+	public int writeQna(P_QnaVo qanvo);
+	
+	//프로젝트 qna 댓글 작성
+	public int writeQnaReply(P_QnaVo qnavo);
+	
+	//프로젝트 qna 수정
+	public int EditQna(P_QnaVo qnavo);
+	
+	//프로젝트 qna 삭제
+	public int DeleteQna(P_QnaVo qnavo);
+	
+	//프로젝트 qna 댓글 숫자 
+	public int QnaReplyCount(P_QnaVo qnavo);
+	
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
@@ -22,6 +23,7 @@ import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
 import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_MemberVo;
 
 
 @Repository
@@ -62,6 +64,11 @@ public interface MemberDao {
 	//로그인시 받은 알림 있는지 체크
 	public Integer getOldAlarm(String memberid);
 	
+	//로그인시 참여중인(팀장으로) 프로젝트 있는지 체크
+	public P_DetailVo isProjectManager(String memberid);
+	//로그인시 참여중인(멤버로) 프로젝트 있는지 체크
+	public HashMap<String, String> isInProject(String memberid);
+	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
 	
@@ -69,9 +76,7 @@ public interface MemberDao {
 	public Integer editProfile(String id, String filename);
 	
 	//마이페이지 개인정보 수정
-	public Integer editPersnalInfo(String column, String info, int userid);
-	//마이페이지 개인정보 수정 시 닉네임 중복체크
-	
+	public Integer editPersnalInfo(String column, String info, int userid);	
 	
 	//마이페이지+회원상세 기술 가져오기
 	public List<SkillVo> getSkills();
@@ -158,7 +163,12 @@ public interface MemberDao {
 	
 	//로그인한 회원이 팀원인 프로젝트 목록
 	public List<V_myProjectVo> getTeamMember(String memberid);
-
+  
+	//후기작성용 팀장,팀원 목록
+	public List<V_myProjectVo> getReviewMember(String projectid);
+	
+	//멤버 권한 수정
+	public int UpdateAuth(M_AuthVo auth);
 	//후기작성용 팀장 조회
 	public MyProject_Join_Member writeReviewLeader(String projectid, String memberid);
 	

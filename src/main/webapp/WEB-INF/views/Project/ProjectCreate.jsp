@@ -25,7 +25,6 @@
 <c:set var="membervo" value="${MemberVo}"></c:set>
 
 <body>
-
 	<div class="project_area">
 	  <div class="area-img">
 	  	 <p>프로젝트 생성</p>
@@ -41,17 +40,17 @@
                     		<div class="ProjectHeader">
                     			<div class="ProjectHeader_Left">
                     				<p></p>
-									<p>프로젝트 명</p>
+									<p class="p_bold">프로젝트 명</p>
 									<p class="Project_p"><b style="color:red;">*</b> 직관적인 프로젝트명을 사용하시면 클릭률이 올라갑니다.</p>
 									<hr>
 									
-	                    			<input class="ProjectTitle form-control" type="text" placeholder="제목을 입력해주세요." name="p_title">  
+	                    			<input class="ProjectTitle form-control" type="text" placeholder="제목을 입력해주세요." name="p_title" maxlength="30">  
 	                    			<p></p>
                     			</div>
                     			
                     			
                     			<div class="ProjectHeader_Right">
-                    			<p class="">대표 이미지</p>
+                    			<p class="p_bold">대표 이미지</p>
 								<p class="Project_p"><b style="color:red;">*</b> 프로젝트 썸네일에 사용될 이미지를 선택해주세요.</p>
 								<hr>
 								<div class="Project_Create_img_box">
@@ -64,7 +63,7 @@
                     		</div>
                     		
                     		<div class="ProjectMember">
-                    			<p>모집인원</p>
+                    			<p class="p_bold">모집인원</p>
                     			
                     			<p class="Project_p"><b style="color:red;">*</b> 원하는 분야를 추가하여 모집해보세요. (추후 추가/수정 가능합니다.)</p>
                     			<hr>
@@ -93,7 +92,7 @@
                     		<div class="NavBox"> 
                     		  <div class="ProjectNav">
                     			<div class="Leader_Detail">  
-                    				<p>❗️리더 정보</p>
+                    				<p class="p_bold">️<i class="fas fa-crown leaderIcon"></i> 리더 정보</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 리더 정보는 마이페이지를 통해서 수정하시기 바랍니다.</p>
                     				<input type="text" value="${membervo.MEMBER_ID}" name="member_id" hidden>
                     				<div class="Leader_DetailBox">
@@ -106,7 +105,7 @@
                     			</div>
                     			<div class="Nav_Detail">
                     				<hr>
-                    				<p>프로젝트 지역</p>
+                    				<p class="p_bold">프로젝트 지역</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는 지역은 어디인가요?</p>
     								<select class="Project_SelectBox" name="adr_code">
 								    	<c:forEach items="${adrvo}" var="adr">
@@ -114,7 +113,7 @@
 										</c:forEach>
 									</select> 
                     				<hr>
-                    				<p>프로젝트 기간</p>
+                    				<p class="p_bold">프로젝트 기간</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 프로젝트의 예상 기간을 선택해주세요.</p>
     								<select class="Project_SelectBox" name="duration_id">
 								    	<c:forEach items="${durationvo}" var="duration">
@@ -122,7 +121,7 @@
 										</c:forEach>
 									</select>                				
                     				<hr>
-                    				<p>프로젝트 분야</p>
+                    				<p class="p_bold">프로젝트 분야</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 어떤 분야의 프로젝트를 진행할 것인지 선택해주세요.</p>
                     				<select class="Project_SelectBox" name="field_code">
 	                    				<c:forEach items="${fieldvo}" var="field">
@@ -137,14 +136,14 @@
                     		</div>
                     		
                     		<div class="ProjectContent">
-                    			<p>프로젝트 내용</p>
+                    			<p class="p_bold">프로젝트 내용</p>
                     			<p class="Project_p"><b style="color:red;">*</b> 설명이 풍부한 프로젝트는, 아닌 프로젝트에 비해 지원율이 50% 높습니다.</p>
                     			<hr>
-                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요." name="p_content" class="ProjectContents"></textarea>
+                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요.(2000자 까지 작성 가능합니다)" name="p_content" class="ProjectContents" maxlength="2000"></textarea>
                     		</div>
                     		
                     		<div class="ProjectSkill">
-                    			<p>기술 스텍</p>
+                    			<p class="p_bold">기술 스텍</p>
                     			<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는데 필요한 기술 스택을 선택하세요.</p>
                    				<hr>
 								<div id="m_skill">

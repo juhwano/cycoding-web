@@ -9,8 +9,8 @@ import lombok.Data;
 public class FromNoteVo {
 	
 	private String NOTE_ID;
-	private String MEMBER_FROM;
-	private String MEMBER_TO;
-	private String NOTE_CONTENT;
+	private String member_FROM;
+	private String member_TO;
+	private String note_CONTENT;
 	private Date NOTE_DATE;
 }

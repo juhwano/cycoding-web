@@ -19,6 +19,7 @@
 <c:set var="pmcountlist" value="${pmcountlist}" />
 <c:set var="pmlist" value="${pmlist}" />
 <c:set var="pjsk" value="${pjsk}" />
+<c:set var="bookmark" value="${bookMark}" />
 
 <body>
 	<div class="projectDetail">
@@ -46,24 +47,30 @@
 					</tr>
 				</table>
 
-				<div class="userIdWrap">
-					<div class="leaderImg">
-						<img
-							src="${pageContext.request.contextPath}/resources/upload/${project.member_image}">
-					</div>
-					<span class="userIdTxt">${project.member_nickname}</span>
-				</div>
 			</div>
-			
-			<div class="m_img_top">
-			  	 <i class="far fa-heart bookmark" onclick='location.href="#"'> 찜</i>
-		   </div>
+			<c:choose>
+				<c:when test="${sessionScope.member_id eq project.member_id && project.p_state eq '모집중'}">
+			  		<div class="m_Edit_top">
+						<a class="ProjectEditBtn" href="${pageContext.request.contextPath}/project/edit?project_id=${project.project_id}">프로젝트 수정</a>
+					</div>
+				</c:when>		
+			<c:otherwise>
+		   			<div class="m_img_top">
+		   				<c:if test="${bookmark > 0}">
+				  		 <i class="far fa-heart bookmark marking" id="${project.project_id}" onclick="BookMarking(${project.project_id})"> 찜</i>
+				  		</c:if>
+				  		<c:if test="${bookmark eq 0}">
+				  		 <i class="far fa-heart bookmark" id="${project.project_id}" onclick="BookMarking(${project.project_id})"> 찜</i>
+				  		</c:if>
+			  		</div>
+		   </c:otherwise>
+		   </c:choose>
 		</div>
 		
 		<div class="NavBox">
 			<div class="ProjectNav">
 				<div class="Leader_Detail">
-					<p>❗️ 리더 정보</p>
+					<p><i class="fas fa-crown leaderIcon"></i> 리더 정보</p>
 					<p class="Project_p"><b style="color: red;">*</b> 현재 프로젝트의 리더입니다.</p>
 					<div class="Leader_DetailBox">
 						<div class="LeaderImg_Box">
@@ -116,9 +123,18 @@
 						</c:forEach>
 							</table>
 						</div>	
-					 <c:if test="${sessionScope.member_id eq project.member_id && project.p_state eq '모집중'}">
-					 <div class="ProjectEditBox"><a class="ProjectEditBtn" href="${pageContext.request.contextPath}/project/edit?project_id=${project.project_id}">프로젝트 수정</a></div>
-					</c:if>
+					<c:if test="${sessionScope.member_id eq project.member_id && project.p_state != '완료'}">		
+					 <div class="ProjectEditBox">
+						 <button class="ProjectDeleteBtn">프로젝트 탈퇴</button>
+					 </div>
+					</c:if> 
+						<c:forEach items="${pmlist}" var="pmlist">
+								<c:if test="${pmlist.member_id eq sessionScope.member_id && project.p_state != '완료'}">
+									 <div class="ProjectEditBox">
+										 <button class="ProjectDeleteBtn">프로젝트 탈퇴</button>
+									 </div>
+								</c:if>	
+						</c:forEach>
 				</div>
 			</div>
 			
@@ -129,7 +145,7 @@
 		<div class="m_menubarBox">
 				<ul class="Project_menuBar">
 					<li class="menuliClick" id="project_info"><p>정보</p></li>
-					<li class="menuli" id="Qna"><p>Q & A</p></li>
+					<li class="menuli" id="Qna"><p>질문</p></li>
 					
 					<c:if test="${sessionScope.member_id eq project.member_id}">
 					<li class="menuli" id="memberEdit"><p>멤버관리</p></li>
@@ -159,8 +175,7 @@
 				<p class="Project_p Apply_p">- 귀하의 프로필 정보가 프로젝트 리더에게 제공됩니다.</p>	
 				<p class="Project_p Apply_p">- 프로젝트내의 분쟁사항은 저희 사이코딩에서 절대 책임지지 않습니다.</p>	
 				<p class="Project_p Apply_p">- 프로젝트의 리더의 선택으로 지원이 거절 될 수 있습니다.</p>	
-				<p class="Project_p Apply_p">- 지원이 거절 될 시 본 프로젝트에 더이상 지원이 불가능합니다.</p>	
-				
+				<p class="Project_p Apply_p">- 지원이 거절 될 시 본 프로젝트에 더이상 지원이 불가능합니다.</p>				
 				</div>		
 				</div>
 			</form>	
@@ -172,11 +187,17 @@
 
 	</div>
 	
+	<!-- 지원 알림에 필요한 정보 -->
+	<input type="hidden" value="${project.member_id}" id="leader_id">
+	
 </body>
 	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript">
-	var project_id = "${project.project_id}";
-	var login_memberid = "${sessionScope.member_id}";
+var _0x31fc=['${project.project_id}','178855RGavXW','${project.p_state}','37VnHasv','39916fOFiFp','1893147VnsHwf','${Check}','${sessionScope.member_id}','497148RJynbO','237957ozyIkE','663078oVifUy','1229106SqRSJF','2ujhgEn'];var _0x45b67c=_0x1e6a;(function(_0x430c4d,_0x13e42b){var _0x9fd092=_0x1e6a;while(!![]){try{var _0x1616a3=parseInt(_0x9fd092(0x11d))*-parseInt(_0x9fd092(0x129))+parseInt(_0x9fd092(0x122))+-parseInt(_0x9fd092(0x124))+parseInt(_0x9fd092(0x123))+-parseInt(_0x9fd092(0x127))+-parseInt(_0x9fd092(0x121))*-parseInt(_0x9fd092(0x125))+parseInt(_0x9fd092(0x11e));if(_0x1616a3===_0x13e42b)break;else _0x430c4d['push'](_0x430c4d['shift']());}catch(_0x4b19d4){_0x430c4d['push'](_0x430c4d['shift']());}}}(_0x31fc,0xdc9c9));function _0x1e6a(_0xf46c44,_0x2bbba1){return _0x1e6a=function(_0x31fcf9,_0x1e6ae1){_0x31fcf9=_0x31fcf9-0x11d;var _0xa0abe0=_0x31fc[_0x31fcf9];return _0xa0abe0;},_0x1e6a(_0xf46c44,_0x2bbba1);}var project_id=_0x45b67c(0x126),login_memberid=_0x45b67c(0x120),project_state=_0x45b67c(0x128),check=_0x45b67c(0x11f);
+	
+	
 </script>
-<script src="${pageContext.request.contextPath}/assets/js/projectdetail.js" ></script>
+<!-- 북마크 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bookmark.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/assets/js/projectdetail.js"></script>
 </html>
