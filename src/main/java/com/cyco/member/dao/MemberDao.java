@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
@@ -159,5 +160,7 @@ public interface MemberDao {
 
 	//후기작성용 팀장,팀원 목록
 	public List<V_myProjectVo> getReviewMember(String projectid);
-
+	
+	//멤버 권한 수정
+	public int UpdateAuth(M_AuthVo auth);
 }

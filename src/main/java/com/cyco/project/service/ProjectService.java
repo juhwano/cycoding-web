@@ -12,14 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.BookmarkVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.dao.MemberDao;
+import com.cyco.member.service.MemberService;
 import com.cyco.project.dao.ProjectDao;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVo;
+import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
@@ -36,6 +40,8 @@ public class ProjectService {
 	@Autowired
 	private SqlSession sqlsession;
 	
+	@Autowired
+	private MemberService memberService;
 	
 //	public List<ProjectVO> getProjectList(String adr_code, String field_name, String p_state, String skill_code){
 //	첫 프로젝트 리스트 화면 출력.
@@ -456,7 +462,7 @@ public class ProjectService {
 					else {
 						System.out.println("모집중이고 조회수 순으로 출력");
 						resultlist=getOrderedViewsList(null);
-						break;
+						return resultlist;
 					}
 					filtered_list = allFilteredList(map);
 					
@@ -608,6 +614,17 @@ public class ProjectService {
 		return result;
 	}
 	
+	// 리터 체크
+	public int ProjectReaderCheck(String project_id, String member_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		// 리더 변경
+		int result = dao.ProjectReaderCheck(project_id,member_id);
+	
+		
+		return result;
+	}
+	
 	// 프로젝트 삭제
 	public int CountMemberDel(String project_id, String postiion_id, String count) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
@@ -617,5 +634,138 @@ public class ProjectService {
 		return result;
 	}
 	
+	// 프로젝트 탈퇴
+	@Transactional
+	public String ProjectWithdrawal(String member_id, String project_id, String state) {
+		String returnURL = "Error";
+		
+		System.out.println(member_id);
+		System.out.println(project_id);
+		System.out.println(state);
+		
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		// 프로젝트 리더 인지 확인
+		int projectReader = dao.ProjectReaderCheck(project_id, member_id);
+		
+		// 리더이면
+		if(projectReader > 0) {
+				// 멤버 있는지 확인
+				int isMember = dao.isNotNullMember(project_id);
+			
+				if(isMember > 0) {
+					returnURL = "isMember";
+					return returnURL;
+				}
+			
+				// 프로젝트 삭제
+				int delete = dao.DeleteProject(project_id, member_id);
+				
+					if(delete > 0) {
+						returnURL = "DeleteProjecet";
+						return returnURL;
+					}else {
+						returnURL = "Error";
+						return returnURL;
+					}
+					
+		// 리더가 아니면	
+		}else {
+			
+			P_MemberVo p_member = dao.getmemberPosition(member_id, project_id);
+			// 프로젝트 상태가 모집중이 아니면
+			int OutMember = dao.getOutMember(p_member);
+			
+			
+			if(state != "모집중") {
+				M_AuthVo m_Ayth = new M_AuthVo("4", member_id);
+				// 멤버 권한 4로 변경 ( 페널티 게정 )
+				memberdao.UpdateAuth(m_Ayth);
+				
+			}
+			
+			if(OutMember > 0) {
+				returnURL = "OutProjecet";
+				return returnURL;
+			}else {
+				returnURL = "Error";
+				return returnURL;
+			}
+			
+		}
+	}
+	
+	// qna 리스트 가져오기
+	public List<P_QnaVo> getProjectQna(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<P_QnaVo> p_qna = dao.getProjectQna(project_id);
+		
+		return p_qna;
+		
+	}
+	
+	// qna댓글 가져오기
+	public List<P_QnaVo> getProjectQnaReply(String project_id, String REF){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<P_QnaVo> p_qna = dao.getProjectQnaReply(project_id,REF);
+		
+		return p_qna;
+		
+	}
+	
+	// qna 글쓰기
+	public int writeQna(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.writeQna(qnavo);
+		
+		return result;
+	}
+	
+	// qna 댓글 쓰기
+	public int writeQnaReply(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.writeQnaReply(qnavo);
+		
+		return result;
+	}
+	
+	// qna 수정
+	public int EditQna(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.EditQna(qnavo);
+		
+		return result;
+	}
+	
+	// qna 삭제
+	public int DeleteQna(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.DeleteQna(qnavo);
+		
+		return result;
+	}
+	
+	// 멤버가 가득 찼는지 확인
+	public String MemberFullCheck(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		String returnURL = "false";
+		
+		int isnull = dao.isNullMember(project_id);
+		int isNotnull = dao.isNotNullMember(project_id);
+		
+		if(isnull == isNotnull) {
+			returnURL = "true";
+		}
+		
+		return returnURL;
+		
+	}
 }
 

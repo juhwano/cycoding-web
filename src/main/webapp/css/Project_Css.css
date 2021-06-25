@@ -11,6 +11,10 @@
 	padding: 20px 20px 0 20px !important;
 }
 
+.p_bold{
+	font-weight: 400;
+}
+
 .pd_rl_20{
 	padding: 0 20px !important;
 }
@@ -26,6 +30,9 @@
 .project_area {
     width: 100%;
     height: 300px;
+}
+.leaderIcon{
+   color: #ffcc00;
 }
 
 .area-img{
@@ -115,7 +122,7 @@
 
 .Project_p{
 	margin: 0;
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 }
 
 .project_boxdiv{
@@ -156,7 +163,7 @@
     text-align: center;
     border: none !important;
     width: 20px !important;
-	
+	pointer-events: none; 
 }
 
 .number:hover{
@@ -234,8 +241,7 @@
 }
 
 .LeaderImg_Box{
-	width: 15%;
-	height: 15%;
+	width: 30px;
 	border-radius: 15px;
 	border: 0.0625rem solid #D1D5DB;
 	display: inline-block;
@@ -273,6 +279,7 @@
     background-color: #F9FAFB;
     outline-style: none;
     word-break: break-all;
+    resize: none;
 }
 
 .PositionBtn{
@@ -281,7 +288,6 @@
     text-align: end;
     position: relative;
     transform: translateY(-60px);
-
 
 }
 
@@ -337,24 +343,25 @@
 }
 
 .tags{
-	text-align:center;
-	border: 3px solid #94A7AE;
-	box-sizing: border-box;
-	color:#94A7AE;	
-	width:150px;
-	font-size:16px;
-	padding:10px;
-	margin:10px;
+    text-align: center;
+    border: 2px solid #94A7AE;
+    box-sizing: border-box;
+    color: #94A7AE;
+    width: 150px;
+    font-size: 16px;
+    padding: 8px;
+    margin: 10px;
     border-radius: 25px;
 }
 
 .tags > input{
 	text-align: center;
-	border: none;
-	color: #94A7AE;
-	width: 100%;
-	cursor: pointer;
-	background-color: #F9FAFB;
+    border: none;
+    color: #94A7AE;
+    width: 100%;
+    cursor: pointer;
+    background-color: #F9FAFB;
+    font-weight: 500;
 }
 
 .tags:hover, .clicked:hover{
@@ -364,22 +371,23 @@ top:-5px;
 }
 
 .clicked{
-	border: 3px solid #CA8FAB;
+	border: 2px solid #CA8FAB;
 	color:#CA8FAB;
 	width:150px;
 	font-size:16px;
-	padding:10px;
+	padding:8px;
 	margin:10px;
 	text-align:center;
     border-radius: 25px;
 }
 .clicked >input{
 	text-align: center;
-	border: none;
-	color: #CA8FAB;
-	width: 100%;
-	cursor: pointer;
-	background-color: #F9FAFB;
+    border: none;
+    color: #CA8FAB;
+    width: 100%;
+    cursor: pointer;
+    background-color: #F9FAFB;
+    font-weight: 500;
 }
 
 #buttonarea{
@@ -569,25 +577,25 @@ top:-5px;
 }
 
 .statusOpenTag{
-	width: 18%;
-    display: inline-block;
-    border: 1px solid;
-    color: white;
-    background-color: #1cde2e;
-    border-radius: 8px;
-    padding: 3px;
-    margin-right: 10px;
-}
-
-.statusGoingTag{
-	text-align: center;
 	display: inline-block;
     border: 1px solid;
     color: white;
-    background-color: #e71837;
-    border-radius: 8px;
-    padding: 3px;
+    background-color: #77b300;
+    border-radius: 50px;
+    padding: 3px 8px;
     margin-right: 10px;
+    outline: none;
+}
+
+.statusGoingTag{
+    display: inline-block;
+    border: 1px solid;
+    color: white;
+    background-color: #e71837;
+    border-radius: 50px;
+    padding: 3px 8px;
+    margin-right: 10px;
+   	outline: none;
 }
 
 .statusCompletionTag{
