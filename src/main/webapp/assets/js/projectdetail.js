@@ -17,7 +17,7 @@ $(document).ready(function(){
 	$('.Project_Apply_modal').hide();
 	$('.Project_Detail_modal').hide();
 	
-	if("true" == "true"){
+	if("true" == "false"){
 		$('.Project_Apply_modal').empty();
 		    
 			var table = "<div class='ProjectApplyMemberListDiv'>";

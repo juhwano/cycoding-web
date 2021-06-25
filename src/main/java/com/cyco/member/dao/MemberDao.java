@@ -187,5 +187,10 @@ public interface MemberDao {
 	//로그인한 회원이 해당 프로젝트에 남긴 리뷰 조회
 	public List<MyReviewVo> getMyProjectReview(String projectid, String memberid);
 	
+	//이메일, 비밀번호 찾기
+	//이메일찾기 전 해당 유저의 정보가 존재하는지 확인
+	public int beforeFindEmail(String userName, String userPhone);
+	//이메일찾기
+	public String findEmail(String userName, String userPhone);
 
 }

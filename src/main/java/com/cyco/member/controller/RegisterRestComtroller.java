@@ -1,6 +1,7 @@
 package com.cyco.member.controller;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -13,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -174,6 +176,31 @@ public class RegisterRestComtroller {
 		
 		return result;
 	}
-
+	
+	@RequestMapping(value="ajax/findEmail")
+	public String findEmail(@RequestParam Map<String, String> data) {
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		String result = "";
+		
+		String userName = data.get("userName");
+		String userPhone = data.get("userPhone");
+		
+		int exist = memberdao.beforeFindEmail(userName, userPhone);
+		
+		if(exist == 0) {
+			result = "noExist";
+		}else {
+			String userEmail = memberdao.findEmail(userName, userPhone);
+			int indexOf = userEmail.indexOf("@");
+			
+			StringBuffer sb = new StringBuffer(userEmail);
+			String cutEmail = sb.replace( 3 , indexOf, "*******" ).toString();
+			
+			System.out.println("이메일잘렸나여 " + cutEmail);
+			result = cutEmail;
+		}
+		
+		return result;
+	}
 
 }

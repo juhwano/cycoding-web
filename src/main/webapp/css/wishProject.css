@@ -528,3 +528,11 @@ select:focus {
   color: #ffcc00;
   outline: none;
 }
+
+/* 프로젝트 없는 경우 */
+.not_project{
+	margin: 30px;
+    color: #94A7AE;
+    font-weight: 500;
+    font-size: 18px;	
+}
