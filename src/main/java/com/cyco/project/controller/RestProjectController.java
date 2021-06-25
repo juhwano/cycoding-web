@@ -172,8 +172,7 @@ public class RestProjectController {
 		}else {
 			ajax = "false";
 		}
-		
-		
+
 		return ajax;
     
   }

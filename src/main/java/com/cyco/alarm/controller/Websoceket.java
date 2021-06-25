@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -55,20 +56,41 @@ public class Websoceket {
         	JSONParser parser = new JSONParser();
 
         	JSONObject  jsonObj = (JSONObject) parser.parse(message);
-        	System.out.println(jsonObj.toString());
+        	System.out.println("jsonObj : " +jsonObj.toString());
         	
         	String code = (String)jsonObj.get("alarm_CODE");
-            String receiver = (String)jsonObj.get("member_ID");
-            String msg = "";           
+        	
+        	List<String> receiver = new ArrayList<String>();
+        	
+        	if((String)jsonObj.get("member_ID") == null){
+        		System.out.println("수신인이 여럿일 때");
+        		
+        		JSONArray arr = (JSONArray) jsonObj.get("members");
+
+        		for(int i = 0; i < arr.size(); i++) {
+        			receiver.add(arr.get(i).toString());
+        			System.out.println("re : " + receiver.get(i));
+        		}
+        		
+        	} else {
+        		
+        		receiver.add((String)jsonObj.get("member_ID"));
+        		System.out.println("receiver : " + receiver.get(0));
+        	}
+           
             jsonObj.put("sender", session.getUserProperties().get("currentId"));
             //메시지 보내는 부분
-            for(int i =0; i < sessionList.size(); i++) {
-            	
-              if(receiver.equals(sessionList.get(i).getUserProperties().get("currentId"))) {
-            	  	
-            	   System.out.println(sessionList.get(i).getUserProperties().get("currentId")+"에게 메시지 보내기");
-            	   sessionList.get(i).getAsyncRemote().sendText(jsonObj.toJSONString());
-               }
+            
+            for(int i =0; i < receiver.size(); i++) {
+
+              for(int j = 0; j < sessionList.size(); j++) {
+
+            	  if(receiver.get(i).equals(sessionList.get(j).getUserProperties().get("currentId"))) {             	  	
+
+               	   sessionList.get(j).getAsyncRemote().sendText(jsonObj.toJSONString());
+                  }
+            	  
+              }
             }
                            
         }catch (Exception e) {

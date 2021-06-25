@@ -379,7 +379,7 @@ $('#alram').click(function() {
 			sender: logineduser,
 			content: 알림 띄울 내용
 		} */
-	//보낸 알림 디비에 반영하는 함수
+	//알림 보내기(트랜잭션)
 	function insertAlarm(data){
 		return new Promise(function(resolve, reject) {
 		//서버로 알림 보내기(웹소켓)
@@ -401,6 +401,37 @@ $('#alram').click(function() {
 				console.log(xhr)
 			}			
 		}); */
+		
+	}
+	
+	//알림 보내고 알림 테이블에 인서트(다른 동작과 트랜잭션X)
+	//프로젝트 초대, 상태 변경
+	function makeAlarm(data){
+		
+		return new Promise(function(resolve, reject) {
+		
+			$.ajax({
+			
+			url:"/alarm/makealarm",
+			type:"post",
+			dataType:"json",
+			data:data,
+			dataType:"text",
+			contentType: "application/json; charset=utf-8;",
+			success:function(res){
+				console.log(res)
+				//서버로 알림 보내기(웹소켓)
+				console.log(data);
+				ws.send(data);
+				
+			},
+			error:function(xhr){
+				console.log(xhr)
+			}			
+		});
+			
+			resolve(response);
+		});
 		
 	}
 	

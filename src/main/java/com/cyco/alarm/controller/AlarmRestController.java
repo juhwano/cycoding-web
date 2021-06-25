@@ -1,5 +1,6 @@
 package com.cyco.alarm.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,5 +105,33 @@ public class AlarmRestController {
 		return alarmservice.updateNoteOk(noteid);
 	}
 	
-	
+	//트랜잭션 안 걸린 알림들 디비 반영
+	@RequestMapping(value="makealarm", method={RequestMethod.GET, RequestMethod.POST})
+	public Boolean makeAlarm(@RequestBody AlarmVo data) {
+		System.out.println("makeAlarm");
+		System.out.println("data : " + data.toString());
+		
+		List<AlarmVo> list = new ArrayList<AlarmVo>();
+		
+		if(data.getALARM_CODE().equals("PR_UP")) {
+			
+			for(int i = 0; i < data.getMembers().size(); i++) {
+				
+				AlarmVo alarm = new AlarmVo();
+				alarm.setALARM_CODE(data.getALARM_CODE());
+				alarm.setALARM_CONTENT(data.getALARM_CONTENT());
+				alarm.setURL(data.getURL());
+				alarm.setMEMBER_ID(data.getMembers().get(i));
+				list.add(alarm);	
+			}
+			
+		}else {
+			
+			list.add(data);
+		}
+		
+		Boolean bo = alarmservice.makeAlarm(list);
+		
+		return bo;
+	}
 }

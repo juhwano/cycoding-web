@@ -83,8 +83,9 @@ public class MemberService {
 			p_info.put("p_title",(String)memberdao.isProjectManager(memberid).getP_title());
 			
 		}else if(memberdao.isInProject(memberid) != null){
-			p_info.put("project_id", (String)memberdao.isInProject(memberid).get("project_id"));
-			p_info.put("p_title", (String)memberdao.isInProject(memberid).get("p_title"));
+			p_info.put("project_id", String.valueOf(memberdao.isInProject(memberid).get("PROJECT_ID")));
+			p_info.put("p_title", String.valueOf(memberdao.isInProject(memberid).get("P_TITLE")));
+
 		} else {
 			p_info.put("project_id", "none");
 		}

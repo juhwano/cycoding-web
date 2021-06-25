@@ -17,10 +17,12 @@ public interface AlarmDao {
 	//쪽지 수신함 insert
 	public Integer insertToNote(ToNoteVo tonote);
 	
-	//모든 알림 이벤트가 일어나면 알림 게시판에 인서트가 일어난다
+	//모든 알림 이벤트가 일어나면 알림 게시판에 인서트가 일어난다(트랜잭션)
 	public Integer insertAlarm(AlarmVo alarm);
 	//--------------------------------------------------
-
+	// 이건 트랜잭션 없이 알림 insert
+	public int makeAlarm(List<AlarmVo> alarms);
+	
 	//알림 헤더 메뉴에서 보여줄 것들
 	public List<AlarmVo> getNewAlarms(String memberid);
 
@@ -44,5 +46,7 @@ public interface AlarmDao {
 	
 	//받은 쪽지 확인하면 상태 업데이트
 	public Integer updateNoteOk(String noteid);
+	
+	
 
 }

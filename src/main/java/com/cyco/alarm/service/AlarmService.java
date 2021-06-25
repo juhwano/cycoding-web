@@ -23,6 +23,23 @@ public class AlarmService {
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
+	
+	//프로젝트 초대, 프로젝트 상태 변경
+	public boolean makeAlarm(List<AlarmVo> alarms) {
+		
+		Boolean bo = false;
+		System.out.println("makeAlarm Service");
+		System.out.println(alarms.toString());
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+        int row = alarmdao.makeAlarm(alarms);	
+	
+		if(row > 0){
+			bo = true;
+		}
+
+		return bo;
+		
+	}
 
 	//쪽지 보내고 알림 테이블에도 인서트
 	@Transactional

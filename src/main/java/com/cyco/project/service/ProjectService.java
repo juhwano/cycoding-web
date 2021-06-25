@@ -583,6 +583,7 @@ public class ProjectService {
 	}
 	
 	// 프로젝트 거절
+	@Transactional
 	public int ApplyMember_No(ApplyVo apply, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
@@ -777,6 +778,14 @@ public class ProjectService {
 		
 		return returnURL;
 		
+	}
+	
+	//프로젝트 상태 변경시 알림 보낼 멤버 목록
+	public List<String> getTeamMembers(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<String> members = dao.getTeamMembers(project_id);
+		
+		return members;
 	}
 }
 
