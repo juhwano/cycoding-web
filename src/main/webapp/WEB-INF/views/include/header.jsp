@@ -152,7 +152,9 @@
 								<se:authentication property="name" var="LoginUser" />
 
 								<se:authorize
-									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER')">
+
+									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
+
 									<!-- 로그인 -->
 									<li class="nav-item dropdown" id="alarmbell_li"><img
 										class="alarmbell"

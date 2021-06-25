@@ -52,7 +52,7 @@
 										</select>
 										</td>
 										<td class="projectTit">
-										<input class="ProjectTitle form-control" type="text" placeholder="제목을 입력해주세요." name="p_title" value="${project.p_title}">
+										<input class="ProjectTitle form-control" type="text" placeholder="제목을 입력해주세요." name="p_title" value="${project.p_title}" maxlength="30">
 										</td>
 										<td width="33%"></td>
 										</tr>
@@ -62,7 +62,7 @@
 							</div>
                     		<div class="NavBox"> 
                    			<div class="ProjectEdit_imgBox">
-                   			<p>대표 이미지</p>
+                   			<p class="p_bold">대표 이미지</p>
 							<p class="Project_p"><b style="color:red;">*</b> 프로젝트 썸네일에 사용될 이미지를 선택해주세요.</p>
 							<hr>
 								<div class="Project_Create_img_box">
@@ -74,7 +74,7 @@
                     		  <div class="ProjectNav">
                     			<div class="Leader_Detail">  
                     				
-                    				<p>❗️리더 정보</p>
+                    				<p class="p_bold"><i class="fas fa-crown leaderIcon"></i> 리더 정보</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 리더 정보는 마이페이지를 통해서 수정하시기 바랍니다.</p>
                     				<input type="text" value="${membervo.MEMBER_ID}" name="member_id" hidden>
                     				<input type="text" value="${project.project_id}" name="project_id" hidden>
@@ -88,7 +88,7 @@
                     			</div>
                     			<div class="Nav_Detail">
                     				<hr>
-                    				<p>프로젝트 분야</p>
+                    				<p class="p_bold">프로젝트 분야</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 어떤 분야의 프로젝트를 진행할 것인지 선택해주세요.</p>
                     				<select class="Project_SelectBox" name="field_code">
                     					<option value="${project.field_code}" hidden selected>${project.field_name} 개발</option>
@@ -99,7 +99,7 @@
 										</c:forEach>	
 									</select>
                     				<hr>
-                    				<p>프로젝트 지역</p>
+                    				<p class="p_bold">프로젝트 지역</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는 지역은 어디인가요?</p>
     								<select class="Project_SelectBox" name="adr_code">
     									<option value="${project.adr_code}" hidden selected>${project.adr_name}</option>
@@ -108,7 +108,7 @@
 										</c:forEach>
 									</select> 
                     				<hr>
-                    				<p>프로젝트 기간</p>
+                    				<p class="p_bold">프로젝트 기간</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 프로젝트의 예상 기간을 선택해주세요.</p>
     								<select class="Project_SelectBox" name="duration_id">
     									<option value="${project.duration_id}" hidden selected>${project.duration_date}</option>
@@ -124,14 +124,14 @@
                     		</div>
                     		
                     		<div class="ProjectContent margin_delete">
-                    			<p>프로젝트 내용</p>
+                    			<p class="p_bold">프로젝트 내용</p>
                     			<p class="Project_p"><b style="color:red;">*</b> 설명이 풍부한 프로젝트는, 아닌 프로젝트에 비해 지원율이 50% 높습니다.</p>
                     			<hr>
-                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요." name="p_content" class="ProjectContents">${project.p_content}</textarea>
+                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요.(2000자 까지 작성 가능합니다)" maxlength="2000" name="p_content" class="ProjectContents">${project.p_content}</textarea>
                     		</div>
                     		
                     		<div class="ProjectSkill">
-                    			<p>기술 스텍</p>
+                    			<p class="p_bold">기술 스텍</p>
                     			<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는데 필요한 기술 스텍을 선택하세요.</p>
                    				<hr>
 								<div id="m_skill">

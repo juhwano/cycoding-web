@@ -196,7 +196,7 @@
 	
 	</update>
 	
-	<!-- 회원상세 리뷰목록 가져오기 -->
+	<!-- 회원상세 (회원에게 작성된 리뷰) 리뷰목록 가져오기 -->
 	<!-- select  r.* , m.member_nickname
 		from review r left join member m
 		on r.writer_id = m.member_id
@@ -272,13 +272,68 @@
 		where teammember = ${member_id}
    </select>
    
-   <!-- 리뷰 작성용 팀장, 팀원 목록 -->
-   <select id="getReviewMember" resultType="com.cyco.member.vo.V_myProjectVo">
-		select project_id, p_title, teamleader, teammember, position_name, field_name, p_state
-		from V_myProject 
-		where project_id = ${project_id}
+   <!-- 리뷰 작성용 프로젝트팀장 조회 -->
+   <select id="writeReviewLeader" resultType="com.cyco.member.vo.MyProject_Join_Member">
+		select distinct v.teamleader, m.member_nickname, v.project_id
+		from v_myproject v
+		join member m on v.teamleader = m.member_id
+		where project_id = ${param1} and not v.teamleader = ${param2}
+   </select>
+   
+   <!-- 리뷰 작성용 프로젝트멤버 조회 -->
+   <select id="writeReviewMember" resultType="com.cyco.member.vo.MyProject_Join_Member">
+   		select v.teammember, v.position_name, m.member_nickname, v.project_id
+		from v_myproject v
+		join member m on v.teammember = m.member_id
+		where project_id = ${param1} and not v.teammember = ${param2}
    </select>
 
-
+	<!-- 리뷰 작성 -->
+	<insert id="setReview">
+		<foreach collection="list" item="review" open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO REVIEW (REVIEW_ID,REVIEW_CONTENT,REVIEW_DATE,REVIEW_GRADE,WRITER_ID,REVIEW_MEMBER,PROJECT_ID) 
+			VALUES
+			(
+			review_seq, 
+			#{review.review_content}, 
+			sysdate, 
+			#{review.review_grade}, 
+			#{review.writer_id}, 
+			#{review.review_member},
+			#{review.project_id}
+			)
+		</foreach>
+	</insert>
+	
+	<!-- 로그인한 회원이 작성한 리뷰 가져오기 -->
+	<select id="getMyReview" resultType="com.cyco.member.vo.ReviewVo">
+		select * from review where writer_id = ${member_id}
+	</select>	
+	
+	<!-- 리뷰 작성시 포인트 지급 -->
+	<update id="giveReviewPoint">
+		UPDATE point SET have_point=have_point+10 WHERE member_id = ${member_id}
+	</update>
+	
+	<!-- 로그인한 회원이 해당 프로젝트에 남긴 리뷰 조회 -->
+	<select id="getMyProjectReview" resultType="com.cyco.member.vo.MyReviewVo">
+		select distinct r.review_member,
+                m.member_nickname, 
+                r.review_content, 
+                r.review_grade, 
+                pos.position_name
+		from
+		(select member_id from project p where p.project_id = ${param1} union all
+		select member_id from p_member pm  where pm.project_id = ${param1}) a
+		left join member m
+		on a.member_id = m.member_id
+		left join review r
+		on a.member_id = r.review_member
+		left join p_member pm2
+		on pm2.member_id = a.member_id and pm2.project_id= ${param1}
+		left join position pos
+		on pos.position_id = pm2.position_id
+		where r.writer_id = ${param2}
+	</select>
 	
 </mapper>

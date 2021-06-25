@@ -1,6 +1,7 @@
 package com.cyco.member.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,9 @@ import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
+import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 
 @RequestMapping("mypage/ajax/")
@@ -469,5 +473,40 @@ public class MyPageRestController {
 	  
 	  return apply_list;
   }
+  
+  //리뷰 작성할 회원 목록 불러오기
+  @RequestMapping(value="writeReviewMember", method = RequestMethod.GET)
+  public List<MyProject_Join_Member> writeReviewMember(@RequestParam String projectid, HttpSession session) {
+	  //팀장
+	  MyProject_Join_Member teamLeader = memberdetailservice.writeReviewLeader(projectid, String.valueOf(session.getAttribute("member_id")));
+	  //팀원
+	  List<MyProject_Join_Member> writeReviewMember = memberdetailservice.writeReviewMember(projectid, String.valueOf(session.getAttribute("member_id")));
+	  
+	  //팀장 포지션에 '팀장'넣기
+	  teamLeader.setPosition_name("팀장");
+	  //배열에 팀장 넣기 
+	  writeReviewMember.add(teamLeader);
+	  
+	  return writeReviewMember;
+  }
+  
+  //로그인한 회원이 해당 프로젝트에 작성한 리뷰 조회
+  @RequestMapping(value="myProjectReview", method = RequestMethod.GET)
+  public List<MyReviewVo> myProjectReview(@RequestParam String projectid, HttpSession session) {
+	  
+	  List<MyReviewVo> myprojectReview = memberdetailservice.getMyProjectReview(projectid, String.valueOf(session.getAttribute("member_id")));
+	  
+	  return myprojectReview;
+  }
+  
+  
+  	//후기작성시 포인트 지급
+	@RequestMapping(value="giveReviewpoint",method=RequestMethod.POST)
+	public String giveReviewPoint(HttpSession session) {
+		
+		memberdetailservice.giveReviewPoint(String.valueOf(session.getAttribute("member_id")));
+		
+		return "givePoint";
+	}
 
 }
