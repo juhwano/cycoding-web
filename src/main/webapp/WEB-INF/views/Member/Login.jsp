@@ -213,7 +213,20 @@ function enterkey() {
 		btnclick();
 	
 	} 	
-}			
+}
+
+//회원가입 실패여부
+$(document).ready(function(){
+	
+	var msg = "<c:out value="${msg}" />";
+
+	console.log(msg);
+
+	if(alarm != ""){
+		swal("회원가입이 완료되었습니다","","success");
+	}
+	
+});
 
 </script>
 </body>

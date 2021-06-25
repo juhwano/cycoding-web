@@ -16,25 +16,82 @@
 		SELECT POSITION_ID, POSITION_NAME, POSITION_ENABLED FROM POSITION
 	</select>
 	
-	<select id="getSkillNameCheck" resultType="int">
-		select count(*) from skill
-		where skill_name='${name}'
+	<select id="getMemberList" parameterType="string" resultType="com.cyco.admin.vo.MemberListVo">
+			select info.member_id, info.member_nickname, nvl(info.position_name,'-') as position_name, nvl(info.skill_name,'-') as skill_name, info.enabled, nvl(count.count,0) as count
+			from V_M_INFO info
+			left join V_FINISH_COUNT count
+			on info.member_id = count.member_id
+			where info.member_id != 0
+				<if test='nickname != null'>
+					and info.member_nickname like '%${nickname}%'
+				</if>
+			order by info.member_id
+			    
 	</select>
 	
-	<insert id="insertSkill">
-	insert into SKILL (SKILL_CODE,SKILL_NAME, SKILL_ENABLED)
-	select 'SK'||sk_seq.nextval, A.* from(
-		<foreach collection="list" item="skill" separator="union all">
-			select 
-			#{skill.skill_name} as skill_name,
-			#{skill.skill_enabled} as skill_enabled
-			from dual
-		</foreach>) A
-	</insert>
-	<update id="updateSkill" parameterType="com.cyco.common.vo.SkillVo">
-			update skill
-			set skill_enabled=#{skill_enabled} 
-			where skill_code=#{skill_code}
-	</update> 
 
+	<!-- =================        ajax        =============================     -->
+	
+	<insert id="insertSite">
+	<choose>
+		<when test='code == "skill"'>
+			insert into SKILL (SKILL_CODE,SKILL_NAME, SKILL_ENABLED)
+			select 'SK'||sk_seq.nextval, A.* from(
+			<foreach collection="list" item="list" separator="union all">
+				select 
+				#{list.skill_name} as skill_name,
+				#{list.skill_enabled} as skill_enabled
+				from dual
+			</foreach>) A
+		</when>
+		<when test='code == "field"'>
+			insert into p_field (field_CODE,field_NAME, field_ENABLED)
+			select 'PF'||pf_seq.nextval, A.* from(
+			<foreach collection="list" item="list" separator="union all">
+				select 
+				#{list.field_name} as field_name,
+				#{list.field_enabled} as field_enabled
+				from dual
+			</foreach>) A
+		</when>
+		<when test='code == "position"'>
+			insert into position (position_id,position_NAME, position_ENABLED)
+			select 'POS'||pos_seq.nextval, A.* from(
+			<foreach collection="list" item="list" separator="union all">
+				select 
+				#{list.position_name} as position_name,
+				#{list.position_enabled} as position_enabled
+				from dual
+			</foreach>) A
+		</when>
+	</choose>
+	</insert>
+	
+	<update id="updateSite">
+	<choose>
+		<when test='code == "skill"'>
+			update ${code}
+			set skill_enabled = #{obj.skill_enabled} 
+			where skill_code = #{obj.skill_code}
+		</when>
+		<when test='code == "field"'>
+			update p_field
+			set field_enabled = #{obj.field_enabled} 
+			where field_code = #{obj.field_code}
+		</when>
+		<when test='code == "position"'>
+			update ${code}
+			set position_enabled = #{obj.position_enabled} 
+			where position_id = #{obj.position_code}
+		</when>
+		
+	</choose>
+	</update> 
+	
+	<update id="updateMemberEnabled">
+		update member
+		set enabled=${data.enabled}
+		where member_id=${data.member_id}
+	</update>
+<!--                        ajax                                  -->
 </mapper>

@@ -3,6 +3,10 @@ package com.cyco.alarm.dao;
 import java.util.List;
 
 import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.ToNoteVo;
+import com.cyco.alarm.vo.V_FromNote_Member_Vo;
+import com.cyco.alarm.vo.V_ToNote_Member_Vo;
 
 public interface AlarmDao {
 	
@@ -20,5 +24,16 @@ public interface AlarmDao {
 	
 	//알림 삭제
 	public Integer deleteAlarm(String alarm_id);
+	
+	//쪽지 발신함 insert
+	public Integer insertFromNote(FromNoteVo fnote);
+	//쪽지 수신함 insert
+	public Integer insertToNote(ToNoteVo tonote);
+	
+	//쪽지 페이지 진입시 수신 메시지 불러오기
+	public List<V_ToNote_Member_Vo> getReceivedMessages(String useremail);
+	
+	//쪽지 페이지 진입시 발신 메시지 불러오기
+	public List<V_FromNote_Member_Vo> getSendMessages(String useremail);
 
 }

@@ -41,4 +41,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</delete>
 	
+	<insert id="insertFromNote" parameterType="com.cyco.alarm.vo.FromNoteVo">
+		insert into from_note (NOTE_ID, MEMBER_FROM, MEMBER_TO,NOTE_CONTENT, NOTE_DATE) 
+			values(FRM_SEQ.nextval,${MEMBER_FROM}, ${MEMBER_TO}, #{NOTE_CONTENT}, sysdate)
+	</insert>
+	
+		<insert id="insertToNote" parameterType="com.cyco.alarm.vo.ToNoteVo">
+		insert into to_note (NOTE_ID, MEMBER_FROM, MEMBER_TO,NOTE_CONTENT, NOTE_DATE, NOTE_OK) 
+			values(TO_SEQ.nextval,${MEMBER_FROM}, ${MEMBER_TO}, #{NOTE_CONTENT}, sysdate, '0')
+	</insert>
+	
+	<select id="getReceivedMessages" resultType="com.cyco.alarm.vo.V_ToNote_Member_Vo">
+		select t.NOTE_ID, t.MEMBER_FROM, t.MEMBER_TO, t.NOTE_CONTENT, t.NOTE_DATE, t.NOTE_OK, t.MEMBER_NICKNAME from v_to_note t left join member m
+		on m.member_id=t.member_to
+		where m.member_email=#{useremail} order by t.NOTE_ID desc
+	</select>
+	
+	<select id="getSendMessages" resultType="com.cyco.alarm.vo.V_FromNote_Member_Vo">
+		select f.NOTE_ID, f.MEMBER_FROM, f.MEMBER_TO, f.NOTE_CONTENT, f.NOTE_DATE, f.MEMBER_NICKNAME from v_from_note f left join member m
+		on m.member_id=f.member_from
+		where m.member_email=#{useremail} order by f.NOTE_ID desc
+	</select>
+	
 </mapper>

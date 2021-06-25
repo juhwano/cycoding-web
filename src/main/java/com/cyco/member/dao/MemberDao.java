@@ -15,6 +15,8 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
 import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
@@ -157,10 +159,29 @@ public interface MemberDao {
 	
 	//로그인한 회원이 팀원인 프로젝트 목록
 	public List<V_myProjectVo> getTeamMember(String memberid);
-
+  
 	//후기작성용 팀장,팀원 목록
 	public List<V_myProjectVo> getReviewMember(String projectid);
 	
 	//멤버 권한 수정
 	public int UpdateAuth(M_AuthVo auth);
+	//후기작성용 팀장 조회
+	public MyProject_Join_Member writeReviewLeader(String projectid, String memberid);
+	
+	//후기작성용 팀원 조회
+	public List<MyProject_Join_Member> writeReviewMember(String projectid, String memberid);
+	
+	//후기 작성
+	public void setReview(List<ReviewVo> reviewList);
+	
+	//후기 작성시 포인트 지급
+	public void giveReviewPoint(String memberid);
+	
+	//로그인한 회원이 작성한 리뷰 가져오기
+	public List<ReviewVo> getMyReview(String memberid);
+	
+	//로그인한 회원이 해당 프로젝트에 남긴 리뷰 조회
+	public List<MyReviewVo> getMyProjectReview(String projectid, String memberid);
+	
+
 }

@@ -129,8 +129,6 @@ public class RestProjectController {
 			}
 		}
 		
-		
-		
 		return returnUrl;
 	}
 	
