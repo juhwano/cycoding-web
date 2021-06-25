@@ -13,12 +13,11 @@ if (login_memberid == "") {
 	
 $(document).ready(function(){
 	
-	
 	// 모달 숨기기
 	$('.Project_Apply_modal').hide();
 	$('.Project_Detail_modal').hide();
 	
-	if("false" == "true"){
+	if("true" == "true"){
 		$('.Project_Apply_modal').empty();
 		    
 			var table = "<div class='ProjectApplyMemberListDiv'>";
