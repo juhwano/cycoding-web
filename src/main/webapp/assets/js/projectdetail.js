@@ -8,6 +8,7 @@ if (login_memberid == "") {
 if (project_id == "") {
 	swal("잘못된 접근입니다.", "", "error").then((willDelete) => {
 		location.href = "../main";
+
 	})
 }
 
@@ -19,6 +20,7 @@ $(document).ready(function() {
 	$('.Project_Detail_modal').hide();
 
 	if ("false" == "true") {
+
 		$('.Project_Apply_modal').empty();
 
 		var table = "<div class='ProjectApplyMemberListDiv'>";
