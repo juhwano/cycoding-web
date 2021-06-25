@@ -145,34 +145,29 @@ function addNewAlarm(message) {
 		if($(this).find("tr").text().trim() == today){
 			count = 1;
 			
-			if(message.code == "PR_IN" || message.code == "PR_S" || message.code == "PR_F" || message.code == "PR_UP"){
+			if(message.alarm_CODE == "PR_IN" || message.alarm_CODE == "PR_S" || message.alarm_CODE == "PR_F" || message.alarm_CODE == "PR_UP"){
 					
 				//프로젝트에 초대됨, 참여 승인됨, 거절됨, 프로젝트 상태 바뀜
 				$(this).after(
 					'<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.alarm_CONTENT+'</a></td></tr></tbody>'
 					);
 				
-			} else if(message.code == "PR_A"){
+			} else if(message.alarm_CODE == "PR_A"){
 				
 				//내 프로젝트에 누가 지원함
 				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/member/memberdetail?member_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/member/memberdetailpage?memberid='+message.url+'">'+message.alarm_CONTENT+'</a></td></tr></tbody>');
 				
-			} else if(message.code == "MY_RV"){
+			} else if(message.alarm_CODE == "MY_RV"){
 				//누가 내게 리뷰를 남김
 				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.alarm_CONTENT+'</a></td></tr></tbody>');
 				
-			} else if(message.code == "QNAR"){
-				//내 질문에 답변이 달림
-				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
-					
-			} else if(message.code == "CHAT_O"){
+			} else if(message.alarm_CODE == "CHAT_O"){
 				//쪽지가 옴
 				$(this).after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/messages/">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/messages/">'+message.alarm_CONTENT+'</a></td></tr></tbody>');
 			}
 		} 	
 		
@@ -186,33 +181,29 @@ function addNewAlarm(message) {
 				
 			);
 			
-			if(message.code == "PR_IN" || message.code == "PR_S" || message.code == "PR_F" || message.code == "PR_UP"){
+			if(message.alarm_CODE == "PR_IN" || message.alarm_CODE == "PR_S" || message.alarm_CODE == "PR_F" || message.alarm_CODE == "PR_UP"){
 					
 				//프로젝트에 초대됨, 참여 승인됨, 거절됨, 프로젝트 상태 바뀜
 				$("#newday").after(
 					'<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>'
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.alarm_CONTENT+'</a></td></tr></tbody>'
 					);
 				
-			} else if(message.code == "PR_A"){
+			} else if(message.alarm_CODE == "PR_A"){
 				
 				//내 프로젝트에 누가 지원함
 				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/member/memberdetail?member_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/member/memberdetailpage?memberid='+message.url+'">'+message.alarm_CONTENT+'</a></td></tr></tbody>');
 				
-			} else if(message.code == "MY_RV"){
+			} else if(message.alarm_CODE == "MY_RV"){
 				//누가 내게 리뷰를 남김
 				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/project/detail?project_id='+message.url+'">'+message.alarm_CONTENT+'</a></td></tr></tbody>');
 				
-			} else if(message.code == "QNAR"){
-				//내 질문에 답변이 달림
-				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/project/detail?project_id='+message.url+'">'+message.content+'</a></td></tr></tbody>');
-			}else if(message.code == "CHAT_O"){
+			} else if(message.alarm_CODE == "CHAT_O"){
 				//쪽지가 옴
 				$("#newday").after('<tbody class="apply_table_sec"><tr id="'+newalarm.attr("id")+'"><td>'
-					+'<a href="/messages/">'+message.content+'</a></td></tr></tbody>');
+					+'<a href="/messages/">'+message.alarm_CONTENT+'</a></td></tr></tbody>');
 			}
 	}
 	

@@ -76,7 +76,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/member/memberdetailpage?member_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
 
 							);
 
@@ -112,7 +112,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/member/memberdetailpage?member_id=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
 
 							);
 

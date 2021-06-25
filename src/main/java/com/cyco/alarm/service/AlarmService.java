@@ -35,7 +35,8 @@ public class AlarmService {
 		 * AlarmVo alarm = (AlarmVo)data.get("alarm"); FromNoteVo frn =
 		 * (FromNoteVo)data.get("note"); ToNoteVo tn = (ToNoteVo)data.get("note");
 		 */
-
+		System.out.println("frn" + frn);
+		System.out.println("alarm" + alarm);
 		alarmdao.insertFromNote(frn);
 		alarmdao.insertToNote(tn);
 

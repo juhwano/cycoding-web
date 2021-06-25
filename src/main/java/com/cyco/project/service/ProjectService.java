@@ -346,6 +346,8 @@ public class ProjectService {
 	public int setProjectApply(ApplyVo apply, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		System.out.println("apply" + apply.toString());
+		System.out.println("alarm" + alarm.toString());
 		
 		 dao.setProjectApply(apply);
 		 int result = alarmdao.insertAlarm(alarm);

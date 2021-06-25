@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
@@ -37,6 +39,7 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
 import com.cyco.utils.UtilFile;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sf.json.JSONArray;
 
@@ -90,7 +93,7 @@ public class RestProjectController {
 	}
 	
 
-	@RequestMapping(value="projectCheckApply", method=RequestMethod.GET)
+	@RequestMapping(value="projectCheckApply", method= RequestMethod.GET)
 	public String CheckProjectApply(ApplyVo apply) {
 		String returnUrl = "true";
 		
@@ -114,13 +117,15 @@ public class RestProjectController {
 	}
 	
 	
-	@RequestMapping(value="projectapply", method=RequestMethod.GET)
-	public String setProjectApply(HashMap<String, Object> Applydata) {
+	@RequestMapping(value="projectapply", method={RequestMethod.POST,RequestMethod.GET})
+	public String setProjectApply(@RequestBody HashMap<String, Object> Applydata) {
 		String returnUrl = "false";
 		
-		ApplyVo apply =  (ApplyVo)Applydata.get("Applydata");
-		AlarmVo alarm = (AlarmVo)Applydata.get("data");
+		ObjectMapper objectMapper = new ObjectMapper();
 		
+		ApplyVo apply = objectMapper.convertValue(Applydata.get("apply"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(Applydata.get("alarm"), AlarmVo.class);
+
 		int check = service.CheckProjectApply(apply);
 		if(check > 0) {
 			return returnUrl;

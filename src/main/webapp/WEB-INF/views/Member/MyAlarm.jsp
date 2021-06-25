@@ -56,7 +56,7 @@
 													</c:when>
 													
 													<c:when test="${newlist.ALARM_CODE eq 'PR_A'}">
-														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/member/detail?member_id=${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
+														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/member/memberdetailpage?memberid=${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
 													</c:when>
 													
 													<c:when test="${newlist.ALARM_CODE eq 'MY_RV'}">

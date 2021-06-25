@@ -195,18 +195,20 @@ $(document).on("click","#msg_btn", function() {
 	console.log("쪽지 보내기")
 		
 		var alarm = {
-			ALARM_CODE: "CHAT_O",
-			URL: logineduser,
-			MEMBER_ID: $("#m_id").val(),
-			sender: logineduser,
-			content: loginednickname + "님이 회원님에게 쪽지를 보냈습니다"
+			alarm_CODE: "CHAT_O",
+			url: logineduser,
+			member_ID: $("#m_id").val(),
+			//sender: logineduser,
+			alarm_CONTENT: loginednickname + "님이 회원님에게 쪽지를 보냈습니다"
 			}
+			
+			
 		var data = {
 			alarm,
 			note:{
-				MEMBER_FROM:logineduser,
-				MEMBER_TO:$("#m_id").val(),
-				NOTE_CONTENT:$("#text").val()
+				member_FROM:logineduser,
+				member_TO:$("#m_id").val(),
+				note_CONTENT:$("#text").val()
 			}
 		};
 

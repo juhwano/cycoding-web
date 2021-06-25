@@ -379,10 +379,11 @@ $('#alram').click(function() {
 		} */
 	//보낸 알림 디비에 반영하는 함수
 	function insertAlarm(data){
-
+		return new Promise(function(resolve, reject) {
 		//서버로 알림 보내기(웹소켓)
 		ws.send(data);
-
+		resolve(res);
+		});
 /* 		$.ajax({
 			
 			url:"/alarm/insertalarm",

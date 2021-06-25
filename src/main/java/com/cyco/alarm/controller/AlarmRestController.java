@@ -2,12 +2,8 @@ package com.cyco.alarm.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +15,7 @@ import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.alarm.vo.FromNoteVo;
 import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.member.service.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping(value="/alarm/")
@@ -54,29 +51,17 @@ public class AlarmRestController {
 	
 	//쪽지 전송시 디비에 반영하기
 	@RequestMapping(value="insertnote", method= {RequestMethod.GET, RequestMethod.POST})
-	public Boolean insertNote(@RequestBody HashMap<String, Object> data) {
-	//public Boolean insertNote(@RequestBody String data) throws ParseException {
-	//public Boolean insertNote(@RequestBody List<Object> list) {
+	public Boolean insertNote(@RequestBody Map<String, Object> data) {
+
 		System.out.println("This is insertNote");
-		//System.out.println("list : " + list.toString());
 		System.out.println("data : " + data.toString());
 		
-/*		JSONParser parser = new JSONParser();
-		JSONObject  jsonObj = (JSONObject) parser.parse(data);
+		ObjectMapper objectMapper = new ObjectMapper();
 		
-		System.out.println("jsonObj : " + jsonObj.toString());*/
+		AlarmVo alarm= objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
+		FromNoteVo frn = objectMapper.convertValue(data.get("note"), FromNoteVo.class);
+		ToNoteVo tn = objectMapper.convertValue(data.get("note"), ToNoteVo.class);
 		
-		/*
-		 * AlarmVo alarm = (AlarmVo)jsonObj.get("alarm"); FromNoteVo frn =
-		 * (FromNoteVo)jsonObj.get("note"); ToNoteVo tn = (ToNoteVo)jsonObj.get("note");
-		 * 
-		 * 
-		 */
-		JSONArray jsonarr = JSONArray.fromObject("data");
-		 AlarmVo alarm = (AlarmVo)data.get("alarm"); 
-		 FromNoteVo frn = (FromNoteVo)data.get("note"); 
-		 ToNoteVo tn = (ToNoteVo)data.get("note");
-		 
 		 Boolean bo = alarmservice.insertNote(alarm, frn, tn);
 		 
 

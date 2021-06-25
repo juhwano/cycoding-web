@@ -101,6 +101,7 @@ $(document).ready(function() {
 							dataType: "html",
 							data: checkdata,
 							success: function(responsedata) {
+								
 								if (responsedata == "is_project") {
 									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
 									return false;
@@ -110,12 +111,11 @@ $(document).ready(function() {
 
 								} else {
 									
-									var data = {
-											"ALARM_CODE": "PR_A",
-											"URL": project_id,
-											"MEMBER_ID": $("#leader_id").val(),
-											"sender": logineduser,
-											"ALARM_CONTENT": loginednickname + "님이 회원님의 프로젝트에 지원하셨습니다"
+						  				var alarm = {
+											"alarm_CODE": "PR_A",
+											"url": logineduser,
+											"member_ID": $("#leader_id").val(),
+											"alarm_CONTENT": loginednickname + "님이 회원님의 프로젝트에 지원하셨습니다"
 										}
 
 									var Applydata = {
@@ -124,10 +124,9 @@ $(document).ready(function() {
 											"position_id": Applycode,
 											"member_id": login_memberid,
 										},
-										data
+										alarm
 
 									};
-
 
 									$('.ApplyName').empty();
 									$('.ApplyName').append(Applyname);
@@ -142,13 +141,19 @@ $(document).ready(function() {
 										$.ajax({
 											url: "/ajaxproject/projectapply",
 											dataType: "html",
-											data: Applydata,
+											type:"post",
+											contentType: "application/json",
+											data: JSON.stringify(Applydata),
 											success: function(responsedata) {
 												if (responsedata == "true") {
 													swal("지원 되었습니다.", "", "success");
 
 													//프로젝트 지원 알림 보내기
-													insertAlarm(JSON.stringify(data));
+													insertAlarm(JSON.stringify(alarm)).then(function(){
+														setTimeout(function() {
+															document.location.reload(true);
+														}, 1000)
+													});
 													/*setTimeout(function() {
 															document.location.reload(true);
 														}, 1000);*/
