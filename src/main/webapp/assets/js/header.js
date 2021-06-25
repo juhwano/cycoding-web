@@ -83,7 +83,7 @@ function updatealarmlist(id) {
 							// 내가 지원 내역이 승인됨
 						} else if (data.alarm_CODE == "PR_S") {
 
-							$(".susub").append(
+							$("#alarmsub").append(
 
 								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
 
@@ -115,7 +115,6 @@ function updatealarmlist(id) {
 								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
 
 							);
-
 
 						} else if (data.alarm_CODE == "CHAT_O") {
 

@@ -113,7 +113,7 @@ public class AlarmRestController {
 		
 		List<AlarmVo> list = new ArrayList<AlarmVo>();
 		
-		if(data.getALARM_CODE().equals("PR_UP")) {
+		if(data.getMEMBER_ID() == null) {
 			
 			for(int i = 0; i < data.getMembers().size(); i++) {
 				

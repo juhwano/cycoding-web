@@ -166,7 +166,7 @@
 												<li><a
 													href="${pageContext.request.contextPath}/messages/">내
 														쪽지</a></li>
-												<li class="subdrop"><a href="">알림</a>
+												<li class="subdrop"><a href="#">알림</a>
 													<ul class="susub" id="alarmsub">
 
 													</ul></li>
