@@ -31,10 +31,7 @@ public class AlarmService {
 		Boolean bo = false;
 		
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
-		/*
-		 * AlarmVo alarm = (AlarmVo)data.get("alarm"); FromNoteVo frn =
-		 * (FromNoteVo)data.get("note"); ToNoteVo tn = (ToNoteVo)data.get("note");
-		 */
+
 		System.out.println("frn" + frn);
 		System.out.println("alarm" + alarm);
 		alarmdao.insertFromNote(frn);
@@ -49,36 +46,7 @@ public class AlarmService {
 		return bo;
 
 	}
-
-	// 쪽지일 경우 위 서비스와 함께 발신, 수신함에도 인서트
-	/*
-	 * public boolean insertNote(HashMap<String, String> data) {
-	 * 
-	 * Boolean bo = false;
-	 * 
-	 * AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class); FromNoteVo frn =
-	 * new FromNoteVo(); ToNoteVo tn = new ToNoteVo();
-	 * frn.setMEMBER_TO(data.get("member_id"));
-	 * frn.setMEMBER_FROM(data.get("sender"));
-	 * frn.setNOTE_CONTENT(data.get("message"));
-	 * 
-	 * System.out.println("발신 : " + frn.toString());
-	 * 
-	 * tn.setMEMBER_TO(data.get("member_id"));
-	 * tn.setMEMBER_FROM(data.get("sender"));
-	 * tn.setNOTE_CONTENT(data.get("message")); System.out.println("수신 : " +
-	 * frn.toString());
-	 * 
-	 * int frow = alarmdao.insertFromNote(frn); int nrow =
-	 * alarmdao.insertToNote(tn);
-	 * 
-	 * if(frow > 0 && nrow > 0) { bo = true; }
-	 * 
-	 * return bo;
-	 * 
-	 * }
-	 */
-
+	
 	// 헤더 알림 메뉴에 최신 알림만 뿌려주기
 	public List<AlarmVo> getNewAlarms(String memberid) {
 

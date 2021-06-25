@@ -555,8 +555,9 @@ public class ProjectService {
 	
 	// 프로젝트 승인시 처리 서비스
 	@Transactional
-	public int ApplyMember_Ok(ApplyVo apply) {
+	public int ApplyMember_Ok(ApplyVo apply, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class); 
 		int result = 0;
 		
 		int check = dao.getIsMemberApplyount(apply);
@@ -569,9 +570,12 @@ public class ProjectService {
 		}else {
 			dao.ApplyMember_Ok(apply);
 			
+			
 			P_MemberVo membervo = new P_MemberVo(apply.getMember_id(), apply.getProject_id(), apply.getPosition_id());
 			
 			result = dao.ApplyMemberUpdate(membervo);
+			System.out.println("찍히나");
+			alarmdao.insertAlarm(alarm);
 		}
 		
 		
@@ -579,11 +583,11 @@ public class ProjectService {
 	}
 	
 	// 프로젝트 거절
-	public int ApplyMember_No(ApplyVo apply) {
+	public int ApplyMember_No(ApplyVo apply, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		int result = dao.ApplyMember_No(apply);
-		
+		alarmdao.insertAlarm(alarm);
 		
 		return result;
 	}

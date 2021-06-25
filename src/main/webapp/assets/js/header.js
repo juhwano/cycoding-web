@@ -76,7 +76,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
 
 							);
 
@@ -85,7 +85,7 @@ function updatealarmlist(id) {
 
 							$(".susub").append(
 
-								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
 
 							);
 
@@ -94,7 +94,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 거절되었습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 거절되었습니다</p></a></li>"
 
 							);
 
@@ -103,7 +103,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트의 상태가 바뀌었습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트의 상태가 바뀌었습니다</p></a></li>"
 
 							);
 
@@ -116,14 +116,6 @@ function updatealarmlist(id) {
 
 							);
 
-
-						} else if (data.alarm_CODE == "QNAR") {
-
-							$("#alarmsub").append(
-
-								"<li class='header_alarm'><a href=''" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 질문에 답변이 달렸습니다</p></a></li>"
-
-							);
 
 						} else if (data.alarm_CODE == "CHAT_O") {
 

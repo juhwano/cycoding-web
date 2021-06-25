@@ -111,7 +111,7 @@ public class RestProjectController {
 		return returnUrl;
 	}
 	
-	
+	//프로젝트 지원
 	@RequestMapping(value="projectapply", method={RequestMethod.POST,RequestMethod.GET})
 	public String setProjectApply(@RequestBody HashMap<String, Object> Applydata) {
 		String returnUrl = "false";
@@ -215,18 +215,22 @@ public class RestProjectController {
 	}
 	
 
-	@RequestMapping(value = "applyMemberOk", method=RequestMethod.GET)
-	public String ApplyMember_Ok(ApplyVo apply) {
+	@RequestMapping(value = "applyMemberOk", method={RequestMethod.POST,RequestMethod.GET})
+	public String ApplyMember_Ok(@RequestBody HashMap<String, Object> data) {
 		String returnUrl = null;
 		
+		ObjectMapper objectMapper = new ObjectMapper();
 		
+		ApplyVo apply = objectMapper.convertValue(data.get("apply"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
 		// 프로젝트 지원 승인시 프로젝트 맴버 같이 업데이트
-		int result = service.ApplyMember_Ok(apply);
+		int result = service.ApplyMember_Ok(apply, alarm);
 		
 		if(result == -1) {
 			returnUrl = "checkd";
 		}else if(result > 0){
 			returnUrl = "true";
+
 		}else {
 			returnUrl = "false";
 		}
@@ -236,11 +240,16 @@ public class RestProjectController {
 	}
 	
 	
-	@RequestMapping(value = "applyMemberNo", method=RequestMethod.GET)
-	public String ApplyMember_No(ApplyVo apply) {
+	@RequestMapping(value = "applyMemberNo", method={RequestMethod.POST,RequestMethod.GET})
+	public String ApplyMember_No(@RequestBody HashMap<String, Object> data) {
 		String returnUrl = null;
 		
-		int result = service.ApplyMember_No(apply);
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		ApplyVo apply = objectMapper.convertValue(data.get("apply"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
+		
+		int result = service.ApplyMember_No(apply, alarm);
 		
 		if(result > 0) {
 			returnUrl = "true";

@@ -196,7 +196,7 @@
 															<c:otherwise>
 															<li id="myproject_title">
 															<a href="${pageContext.request.contextPath}/project/detail?project_id=${sessionScope.project_id}">
-																${sessionScope.p_title}</a>
+																진행중 프로젝트</a>
 															</li>
 															</c:otherwise>
 														</c:choose>
