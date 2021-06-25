@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cyco.alarm.dao.AlarmDao;
+import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.M_AuthVo;
@@ -345,11 +347,16 @@ public class ProjectService {
 		return result;
 	}
 	
-	// 프로젝트 지원내역
-	public int setProjectApply(ApplyVo apply) {
+	// 프로젝트 지원하고 알림테이블에도 인서트
+	@Transactional
+	public int setProjectApply(ApplyVo apply, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		System.out.println("apply" + apply.toString());
+		System.out.println("alarm" + alarm.toString());
 		
-		int result = dao.setProjectApply(apply);
+		 dao.setProjectApply(apply);
+		 int result = alarmdao.insertAlarm(alarm);
 		
 		return result;
 	}

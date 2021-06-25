@@ -194,6 +194,14 @@ body{
 
 /* 추천리스트 */
 /* Swiper Css */
+ 
+ .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+	        background-image: none !important;
+} 
+
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+	background-image: none !important;
+}
 
 #wouldyoulike{
 	color: #C0A9BD;

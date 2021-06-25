@@ -172,7 +172,7 @@ public class ProjectController {
 			@RequestParam("uploadFile") MultipartFile uploadFile, 
 			MultipartHttpServletRequest request,
 			Authentication auth,
-			Model model) {
+			Model model, HttpSession session) {
 		
 		MemberVo member = memberService.getMember(auth.getName());
 		int ProjectCount = service.CheckProject(""+member.getMEMBER_ID());
@@ -233,6 +233,9 @@ public class ProjectController {
 			
 			model.addAttribute("msg", "true");
 			model.addAttribute("projectId",ProjectId);
+			
+			session.setAttribute("project_id", ProjectId);
+			session.setAttribute("p_title", detail.getP_title());
 		}
 	
 		

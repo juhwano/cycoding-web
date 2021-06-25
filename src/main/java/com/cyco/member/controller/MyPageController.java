@@ -171,7 +171,7 @@ public class MyPageController {
 		
 	}
 	
-	//알림 전체 불러오기
+	//알림 페이지 이동/전체 불러오기
 	@RequestMapping(value="myalarm",method=RequestMethod.GET)
 	public ModelAndView myAlarm(Authentication auth) {
 		

@@ -133,94 +133,83 @@
 
 								<!-- 어드민  -->
 								<se:authorize access="hasRole('ROLE_ADMIN')">
-									<!--알림 -->
-									<li class="nav-item dropdown"><a href="register"
-										class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-										id="supportDropdown" aria-expanded="false"> <img
-											src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
-									</a>
-										<div class="dropdown-menu dropdown-menu-lg"
-											aria-labelledby="supportDropdown">
-											<div class="col-auto px-0"></div>
-										</div></li>
 
-									<!-- 로그인 -->
-									<li class="nav-item dropdown">
-									<a href="#"
-										class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-										id="supportDropdown" aria-expanded="false"> 관리자 페이지 <span
-											class="fas fa-angle-down nav-link-arrow ms-1"></span>
-									</a>
-									<div class="user_info" style="display: none">
-
-											<div class="mypage">
-												
-												<a
-													href="#">관리자 페이지</a>
-
-											</div>
-
-
-											<div class="Nav_Drop_A">
-												<a href="">회원관리</a>
-											</div>
-											<div class="Nav_Drop_A">
-												<a href="">사이트관리</a>
-											</div>
-											<div class="logout">
-												<a href="${pageContext.request.contextPath}/logout">로그아웃</a>
-											</div>
-										</div></li>
-									
-
-
+									<li class="nav-item dropdown mydropdow"  id="my_dropdown">
+										<div>관리자 페이지 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
+										<div class="sub" id="my_sub">
+											<ul>
+												<li><a href="#">통계</a></li>
+												<li><a
+													href="${pageContext.request.contextPath}/admin/member">회원관리</a></li>
+												<li><a
+													href="${pageContext.request.contextPath}/admin/site">사이트관리</a></li>
+												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+											</ul>
+										</div>
 								</se:authorize>
 
 								<!-- 기본 회원들 헤더 -->
 								<se:authentication property="name" var="LoginUser" />
 
 								<se:authorize
-									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
-									<!-- 로그인 -->
-									<li class="nav-item dropdown mydropdow">
-									<div> ${sessionScope.nickname}님  <img class="alarmbell"
-											src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg"></div>								
-										<!-- 1차 메뉴 -->
-										<div class="sub">
-										<ul>											
-											<li><a href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a></li>
-											<li><a href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
-											
-											
-												<%-- <li><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>	 --%>
-												<li class="subdrop"><a href="">프로젝트</a>
-													<ul  class="susub">
-														<li>진행중인 프로젝트</li>
-														<li><a href="${pageContext.request.contextPath}/mypage/myProject">나의 프로젝트/후기</a></li>
-													</ul>
-												</li>
-											<li><a href="${pageContext.request.contextPath}/messages/">내 쪽지</a></li>												
-											<li class="subdrop"><a href="">알림</a>
-												<ul class="susub" id="alarmsub"></ul>
-											</li>
-												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-											
-										</ul>
-										</div>
-										</li>
-										<!--알림 -->
-									<li class="nav-item dropdown" id="alram"><a href="#"
-										class="nav-link" id="supportDropdown"> 
-									</a> <!-- 드랍 박스 -->
-										<div class="Alram_box" style="display: none">
-											<div id="myalarm">
-												<ul id="alarmlist">
-													
-												</ul>
-											</div>
 
+									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
+
+									<!-- 로그인 -->
+									<li class="nav-item dropdown" id="alarmbell_li"><img
+										class="alarmbell"
+										src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
+
+										<!-- 1차 메뉴 알림 -->
+										<div class="sub" id="a_sub" >
+											<ul>
+												<li><a
+													href="${pageContext.request.contextPath}/messages/">내
+														쪽지</a></li>
+												<li class="subdrop"><a href="">알림</a>
+													<ul class="susub" id="alarmsub">
+
+													</ul></li>
+											</ul>
 										</div></li>
 										
+										<!-- 1차 메뉴 개인-->
+									<li class="nav-item dropdown mydropdow" id="my_dropdown">
+										<div>${sessionScope.nickname}님 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
+										<div class="sub" id="my_sub">
+											<ul>
+												<li><a
+													href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a></li>
+												<li><a
+													href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
+
+												<li class="subdrop"><a href="#">프로젝트</a>
+													<ul class="susub" id="project_sub">
+													
+													<!-- 현재 참여중인 프로젝트 있는지 확인 -->
+														<c:choose>
+															<c:when test="${sessionScope.project_id eq 'none'}">
+															
+															<li id="myproject_title"><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>
+															
+															</c:when>															
+															<c:otherwise>
+															<li id="myproject_title">
+															<a href="${pageContext.request.contextPath}/project/detail?project_id=${sessionScope.project_id}">
+																${sessionScope.p_title}</a>
+															</li>
+															</c:otherwise>
+														</c:choose>
+														<li><a
+															href="${pageContext.request.contextPath}/mypage/myProject">나의
+																프로젝트/후기</a></li>
+													</ul></li>
+
+												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+
+											</ul>
+										</div>
+									</li>
 								</se:authorize>
 
 							</ul>
@@ -248,30 +237,31 @@
 				</div>
 			</div>
 			<!-- END LOADER -->
-			
-					<!-- 새 메시지 알림 창 -->
-	<div id="new_note_modal" class="modal fade">
-		<div class="modal-dialog modal-login">
-			<div class="modal-content">
-				<div class="modal-header">
-					<p id="modal-title">새 쪽지가 도착했습니다</p>
-				</div>
-				<div id="modal-body">
-					
-					<div class="alert_messagearea">
-						<!-- <div class="msg_content"></div> -->
-					</div>
-					<div class="msg_buttonarea">
 
-						<a href="#new_note_modal" class="trigger-btn" data-toggle="modal">
-							<button class="msg_btn" id="msg_btn">닫기</button>
-						</a>
-					</div>
+			<!-- 새 메시지 알림 창 -->
+			<div id="new_note_modal" class="modal fade">
+				<div class="modal-dialog modal-login">
+					<div class="modal-content">
+						<div class="modal-header">
+							<p id="modal-title">새 쪽지가 도착했습니다</p>
+						</div>
+						<div id="modal-body">
 
+							<div class="alert_messagearea">
+								<!-- <div class="msg_content"></div> -->
+							</div>
+							<div class="msg_buttonarea">
+
+								<a href="#new_note_modal" class="trigger-btn"
+									data-toggle="modal">
+									<button class="msg_btn" id="msg_btn">닫기</button>
+								</a>
+							</div>
+
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 	</main>
 
 	<!-- 반응형 토글 -->
@@ -293,9 +283,10 @@
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	
+
 	<!-- header.js -->
-	<script src="${pageContext.request.contextPath}/assets/js/header.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/js/header.js?ver=2"></script>
 	<script type="text/javascript">
 /* ==============================================
 Loader -->
@@ -364,17 +355,13 @@ $('#alram').click(function() {
 
 		console.log("서버에서 받은 메시지 ",JSON.parse(data));
 		updatealarmlist(logineduser).then(function(){
-			console.log("실행됨")
 
 			//알림페이지에 알림 하나 추가하는 함수
 			addNewAlarm(JSON.parse(data));
 			
-			
 		});	
 		changeBell_New();
-		
-		
-		
+	
 	}		
 	 	ws.onclose = function(event){
 		    console.log("연결 해제");
@@ -383,13 +370,23 @@ $('#alram').click(function() {
 	}
 }
 	
+	//insertAlarm 파라미터로 받을 기본 data 형식
+	/* var data = {
+			code: "PR_IN",
+			url: res.project_id,
+			//기타 추가 정보
+			member_id: 받는 사람,
+			sender: logineduser,
+			content: 알림 띄울 내용
+		} */
 	//보낸 알림 디비에 반영하는 함수
 	function insertAlarm(data){
-		
+		return new Promise(function(resolve, reject) {
 		//서버로 알림 보내기(웹소켓)
 		ws.send(data);
-		
-		$.ajax({
+		resolve(res);
+		});
+/* 		$.ajax({
 			
 			url:"/alarm/insertalarm",
 			type:"post",
@@ -403,7 +400,7 @@ $('#alram').click(function() {
 			error:function(xhr){
 				console.log(xhr)
 			}			
-		});
+		}); */
 		
 	}
 	
@@ -415,35 +412,54 @@ $('#alram').click(function() {
 			openSocket();
 			chekcBell(logineduser);
 			updatealarmlist(logineduser);
+		
 		}
 		
 		
 		//드롭다운 메뉴
-		$(".sub").hide();
-		$(".mydropdow").hover(function(){
-			console.log($(this));
+		$("#my_sub").hide();
+		$("#my_dropdown").click(function(){
 			
-			$(this).find(".sub").slideDown();
-			$(this).parent().hover(function(){
+			$(this).find("#my_sub").slideDown();
+			$(this).parent().click(function(){
 			}, function(){
-				$(this).find(".sub").slideUp();
+				let _this = $(this)
+				setTimeout(function(){_this.find("#my_sub").slideUp(600)},3000)
+			});
+			
+		});
+				
+		
+		//알림 드롭다운
+		$("#a_sub").hide();
+		$("#alarmbell_li").click(function(){
+			
+			$(this).find("#a_sub").slideDown();
+			$(this).parent().click(function(){
+			}, function(){
+				let _this = $(this)
+				setTimeout(function(){_this.find("#a_sub").slideUp(600)},3000)
+				//_this.find("#a_sub").slideUp(600)
 			});
 			
 		});
 		
 		//서브메뉴 다운
  		$(".susub").hide();
-		$(".subdrop").hover(function(){
+		$(".subdrop").click(function(){
 			
 			$(this).find(".susub").slideDown();
-			$(this).hover(function(){
+			$(this).click(function(){
 			}, function(){
-				$(this).find(".susub").slideUp();
+				 let _this = $(this)
+				setTimeout(function(){_this.find(".sub").slideUp(600)},3000)
 			})
 		});
+	
+
 	});
 ///////////////////////////////////////////
-	
+
 </script>
 
 </body>

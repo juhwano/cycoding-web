@@ -20,25 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.BookmarkVo;
-import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
-import com.cyco.common.vo.SkillVo;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
-import com.cyco.project.vo.ProjectNameVo;
 import com.cyco.project.vo.ProjectVo;
 import com.cyco.project.vo.V_ApplyMemberList;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
 import com.cyco.utils.UtilFile;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.sf.json.JSONArray;
 
 @RestController
 @RequestMapping("ajaxproject")
@@ -90,7 +88,7 @@ public class RestProjectController {
 	}
 	
 
-	@RequestMapping(value="projectCheckApply", method=RequestMethod.GET)
+	@RequestMapping(value="projectCheckApply", method= RequestMethod.GET)
 	public String CheckProjectApply(ApplyVo apply) {
 		String returnUrl = "true";
 		
@@ -114,21 +112,25 @@ public class RestProjectController {
 	}
 	
 	
-	@RequestMapping(value="projectapply", method=RequestMethod.GET)
-	public String setProjectApply(ApplyVo apply) {
+	@RequestMapping(value="projectapply", method={RequestMethod.POST,RequestMethod.GET})
+	public String setProjectApply(@RequestBody HashMap<String, Object> Applydata) {
 		String returnUrl = "false";
 		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		ApplyVo apply = objectMapper.convertValue(Applydata.get("apply"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(Applydata.get("alarm"), AlarmVo.class);
+
 		int check = service.CheckProjectApply(apply);
 		if(check > 0) {
 			return returnUrl;
 		}else {
-			int result = service.setProjectApply(apply);
+			int result = service.setProjectApply(apply, alarm);
 			
-			if(result > 0) {
+			if(result > 0 ) {
 				returnUrl = "true";
 			}
 		}
-		
 		return returnUrl;
 	}
 	

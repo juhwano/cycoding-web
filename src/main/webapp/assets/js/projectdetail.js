@@ -1,6 +1,6 @@
-	
-	if(login_memberid == ""){
-		swal("로그인을 하여야 확인 가능합니다.","", "error").then((willDelete) => {
+
+if (login_memberid == "") {
+	swal("로그인을 하여야 확인 가능합니다.", "", "error").then((willDelete) => {
 		location.href = "../login";
 		})
 	}
@@ -53,18 +53,19 @@ $(document).ready(function(){
 	if($('.member_list').children().length < 1){
 		$('.member_list').append("<tr><td class='ProjectDetail_p'>아직 프로젝트 멤버가 없습니다.</td></tr>");
 	}
-		
-	
-	$('.Project_menuBar > li ').unbind("click").bind("click", function(){
-		
-		$('.Project_menuBar > li ').attr('class','menuli');
-		
+
+
+	$('.Project_menuBar > li ').unbind("click").bind("click", function() {
+
+		$('.Project_menuBar > li ').attr('class', 'menuli');
+
 		// 프로젝트 info
-		if($(this).attr('id') == "project_info"){
+		if ($(this).attr('id') == "project_info") {
 			$('html').scrollTop(0);
 			$('.ChangeContentBox').empty();
-			
+
 			$.ajax({
+
 	     		url:"/ajaxproject/projectinfo",
 	     		dataType:"html",
 	     		data: {project_id:project_id},
@@ -124,50 +125,70 @@ $(document).ready(function(){
 	     				var Applyname = this.nextElementSibling.nextElementSibling.textContent;
 	     				var checkdata = {"member_id":login_memberid,
 	     								"project_id":project_id};
-	     								
-	     		
 	     				
 	     				$.ajax({
-	     		     		url:"/ajaxproject/projectCheckApply",
-	     		     		dataType:"html",
-	     		     		data: checkdata,
-	     		     		success: function(responsedata){    		
-	     		     			if(responsedata == "is_project"){
-	     		     				swal("현재 진행 중인 프로젝트가 존재합니다.","","warning");
-	     		     				return false;
-	     		     			}else if(responsedata == "ProjectApply"){
-	     		     				swal("현재 프로젝트에 이미 지원 하였습니다.","","warning");
-	     		     				return false;
-	     		     				
-	     		     			}else{
-	     		     				
-	     		     				var Applydata = {"project_id":project_id,
-	     		     								"position_id":Applycode,
-	     		     								"member_id":login_memberid};
-	     		     				
-	     		     				
-	     		     				 $('.ApplyName').empty();
-	     		     			     $('.ApplyName').append(Applyname);
-	     		     			     $('.Project_Detail_modal').show();
-	     		     				
-	     		     			     $('.ApplyBtn_No').unbind('click').bind('click',function(){
-	     		     			    	 $('.Project_Detail_modal').hide();
-	     		     			     });
-	     		     			     
-	     		     			     $('.ApplyBtn_Ok').unbind('click').bind('click',function(){
-	     		     			    	 
-	     		     			    	 $.ajax({
-	     		     			     		url:"/ajaxproject/projectapply",
-	     		     			     		dataType:"html",
-	     		     			     		data: Applydata,
-	     		     			     		success: function(responsedata){    		
-	     		     			     			if(responsedata == "true"){
-	     		     			     				swal("지원 되었습니다.","","success");
-	     		     			     				setTimeout(function() {
-	     		     			     						document.location.reload(true);
-	     		     			     					}, 1000);
-	     		     			     				
-	     		     			     			}else{
+							url: "/ajaxproject/projectCheckApply",
+							dataType: "html",
+							data: checkdata,
+							success: function(responsedata) {
+								
+								if (responsedata == "is_project") {
+									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
+									return false;
+								} else if (responsedata == "ProjectApply") {
+									swal("현재 프로젝트에 이미 지원 하였습니다.", "", "warning");
+									return false;
+
+								} else {
+									
+						  				var alarm = {
+											"alarm_CODE": "PR_A",
+											"url": logineduser,
+											"member_ID": $("#leader_id").val(),
+											"alarm_CONTENT": loginednickname + "님이 회원님의 프로젝트에 지원하셨습니다"
+										}
+
+									var Applydata = {
+										apply:{
+											"project_id": project_id,
+											"position_id": Applycode,
+											"member_id": login_memberid,
+										},
+										alarm
+
+									};
+
+									$('.ApplyName').empty();
+									$('.ApplyName').append(Applyname);
+									$('.Project_Detail_modal').show();
+
+									$('.ApplyBtn_No').unbind('click').bind('click', function() {
+										$('.Project_Detail_modal').hide();
+									});
+
+									$('.ApplyBtn_Ok').unbind('click').bind('click', function() {
+
+										$.ajax({
+											url: "/ajaxproject/projectapply",
+											dataType: "html",
+											type:"post",
+											contentType: "application/json",
+											data: JSON.stringify(Applydata),
+											success: function(responsedata) {
+												if (responsedata == "true") {
+													swal("지원 되었습니다.", "", "success");
+
+													//프로젝트 지원 알림 보내기
+													insertAlarm(JSON.stringify(alarm)).then(function(){
+														setTimeout(function() {
+															document.location.reload(true);
+														}, 1000)
+													});
+													/*setTimeout(function() {
+															document.location.reload(true);
+														}, 1000);*/
+
+												}else{
 	     		     			     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
 	     		     			     				setTimeout(function() {
 	     		     		     						document.location.reload(true);
@@ -537,8 +558,9 @@ $(document).ready(function(){
 			
 			$('html').scrollTop(0);
 			$('.ChangeContentBox').empty();
-			
+
 			// 멤버관리 리스트 뿌려주는 ajax
+
 			 $.ajax({
 		     		url:"/ajaxproject/getMemberEditBox",
 		     		dataType:"html",
@@ -1111,17 +1133,16 @@ $(document).ready(function(){
 		     		}
 		     	});
 			
-			
 		}
 		// -----------------------------------------------------------------------------
-		
-		$(this).attr('class','menuliClick');
-		
+
+		$(this).attr('class', 'menuliClick');
+
 	})
-	
+
 	// 페이지 시작 시 포르젝트 인포 보여주기
 	$('#project_info').trigger('click');
-	
+
 	// 프로젝트 탈퇴
 	$('.ProjectDeleteBtn').unbind('click').bind('click',function(){
 		
@@ -1203,6 +1224,5 @@ $(document).ready(function(){
 		
 	})
 	
-	
-	
+
 })
