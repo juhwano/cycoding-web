@@ -789,5 +789,11 @@ public class ProjectService {
 		
 		return members;
 	}
+	
+	//프로젝트 상세 진입시 조회수 증가
+	public void addViews(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.addViews(project_id);
+	}
 }
 

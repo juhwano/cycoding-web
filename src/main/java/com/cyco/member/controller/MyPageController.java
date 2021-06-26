@@ -60,33 +60,6 @@ public class MyPageController {
 		return "/Member/MypageCheck";
 	}
 	
-	/*
-	@RequestMapping(value = "mypageCheck", method = RequestMethod.POST)
-    public void MypageCheck(String useremail, String userPwd, Model model, HttpServletResponse response) {
-		System.out.println("컨트롤러 오니..?");
-		System.out.println("useremail " + useremail);
-		System.out.println("userPwd " + userPwd);
-		
-		if(memberdetailservice.checkPwd(useremail, userPwd)) {
-			try {
-				response.sendRedirect("mypage?useremail="+useremail);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('비밀번호를 잘못 입력하셨습니다.'); history.go(-1);</script>");
-				out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-	*/
 	
 	//마이페이지 정보 불러오기
 	@RequestMapping(value="mypage")

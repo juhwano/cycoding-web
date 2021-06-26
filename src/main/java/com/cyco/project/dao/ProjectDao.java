@@ -218,5 +218,8 @@ public interface ProjectDao {
 	//프로젝트 수정시 상태 알림 보내줄 회원 목록 가져오기
 	public List<String> getTeamMembers(String project_id);
 	
+	//프로젝트 상세페이지 진입시 조회수 증가
+	public void addViews(String project_id);
+	
 	
 }

@@ -492,4 +492,10 @@
 		select member_id from p_member where project_id=${project_id} and member_id is not null
 	
 	</select>
+	
+	<!-- 프로젝트 진입시 조회수 증가 addViews -->
+	<update id="addViews">
+		UPDATE p_detail SET p_views = p_views+1 WHERE project_id = ${project_id}
+	</update>
+	
 </mapper>

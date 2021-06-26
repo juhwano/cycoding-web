@@ -69,6 +69,24 @@ public class MemberController {
 			System.out.println("상세 페이지 회원 " +memberdetailservice.getMemberDetail(memberid).toString());
 			//리뷰목록
 			List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
+			int answer = 0;
+			if(row_reviewList.size() != 0) {
+				for (int i = 0; i < row_reviewList.size() ; i++) {
+					answer = answer + row_reviewList.get(i).getReview_grade() ;
+				}
+				double gradeAvg = 0;
+				gradeAvg = (double)answer/row_reviewList.size();
+				System.out.println("반올림하기 전 gradeAvg: " + gradeAvg);
+				gradeAvg = Math.round(gradeAvg * 100) / 100.0;
+				
+				System.out.println("row_reviewList.size(): " + row_reviewList.size());
+				System.out.println("answer: " + answer + "/gradeAvg: " + gradeAvg);
+				
+				mmp.addAttribute("gradeAvg", gradeAvg);
+			}
+			
+		    
+			
 			
 			JSONArray reviewList = JSONArray.fromObject(row_reviewList);
 			System.out.println("리뷰목록JSON: " + reviewList);

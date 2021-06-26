@@ -260,9 +260,11 @@ public class ProjectController {
 	}
 	
 	
-	//해당 프로젝트로 링크 변경해야됨
+	//프로젝트 상세 페이지
 	@RequestMapping(value="detail",method = RequestMethod.GET)
 	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m, HttpSession session) {
+		//조회수증가
+		service.addViews(project_id);
 
 		int reader = service.ProjectReaderCheck(project_id, String.valueOf(session.getAttribute("member_id")));
 		
