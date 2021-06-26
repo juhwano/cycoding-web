@@ -138,7 +138,7 @@
 										<div>관리자 페이지 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
 										<div class="sub" id="my_sub">
 											<ul>
-												<li><a href="#">통계</a></li>
+												<li><a href="${pageContext.request.contextPath}/admin/chart">통계</a></li>
 												<li><a
 													href="${pageContext.request.contextPath}/admin/member">회원관리</a></li>
 												<li><a
