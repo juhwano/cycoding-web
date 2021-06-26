@@ -170,7 +170,6 @@ public class AlarmService {
 	}
 	
 	//비동기 쪽지 리스트 불러오기
-	
 	  public List<NoteVo> getNoteList(String useremail, String table) {
 	  
 	  AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
@@ -192,10 +191,11 @@ public class AlarmService {
 		  
 		  from_notelist = alarmdao.getSendMessages(useremail);
 		  
-		  for(int i = 0; i < to_notelist.size(); i++) {
+		  for(int i = 0; i < from_notelist.size(); i++) {
 			  
 			  notelist.add(from_notelist.get(i));
-		  }
+			  
+		  }	  
 		  
 	  }
 	  
