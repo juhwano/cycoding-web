@@ -133,17 +133,20 @@
 	height:20px;
 	opacity: .8 !important;
 }
-.mydropdow{
+#alarmbell_li{
+	margin-right:30px;
+}
+/* .mydropdow{
 	position: absolute;
 	top:16px;
 	height:100px;
-}
+} */
 .sub{
 	position: absolute;
     top: 38px;
     left: -115px;
     width: 220px;
-    z-index: 999;
+    z-index: 997;
     background-color: white;
     padding:0;
 }
@@ -159,21 +162,7 @@
 .sub ul li:hover{
 	background-color: #F4F2F3;
 }
-/* #mydropdow ul{
-	display:none;
-	height:auto; 
-	padding:0px; 
-	margin:0px; 
-	border:0px; 
-	position:absolute; 
-	width:200px; 
-	z-index:200;
 
-}
-
-#mydropdow:hover ul{
-	display:block;
-} */
 
 .Alram_box{
     position: absolute;
@@ -199,8 +188,9 @@
 .susub li{
 	background-color: #F4F2F3;
 	height:40px;
-	padding:5px 0px;
-	margin:0;	
+	padding:10px 0px;
+	margin:0;
+
 }
 
 .susub li:hover{
@@ -208,6 +198,7 @@
 }
 .alarm_content{
 	font-size:12px;
+	z-index: 999;	
 }
 /* .susub li:last-child{
 	background-color:#94A7AE;

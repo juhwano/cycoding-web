@@ -57,8 +57,10 @@ public class MemberController {
 		@RequestMapping(value="memberdetailpage")
 		public ModelAndView getMemberDetail(@RequestParam("memberid") String memberid){
 			
-			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
+			System.out.println("member_id" + memberid);
 			
+			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
+			System.out.println("useremail" + useremail);
 			ModelMap mmp = new ModelMap();
 			
 			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));

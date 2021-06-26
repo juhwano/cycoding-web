@@ -283,7 +283,8 @@
 			</div>
 		</div>
 	</div>
-			<div id="message_modal" class="modal fade">
+	
+	<div id="message_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
 			<div class="modal-content">
 				<div class="modal-header">

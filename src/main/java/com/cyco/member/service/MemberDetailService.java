@@ -20,6 +20,8 @@ import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
 import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
@@ -458,6 +460,55 @@ public class MemberDetailService {
 			return teamMemberList;
 		}
 		
-		//
+		//리뷰작성용 팀장 조회
+		public MyProject_Join_Member writeReviewLeader(String projectid, String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			MyProject_Join_Member writeReviewLeader = memberdao.writeReviewLeader(projectid, memberid);
+			
+			if(writeReviewLeader == null) {
+				MyProject_Join_Member dummyMember = new MyProject_Join_Member();
+				dummyMember.setMember_nickname("dummy");
+				writeReviewLeader = dummyMember;
+			}
+			
+			return writeReviewLeader;
+		}
+		
+		//리뷰작성용 팀원 조회
+		public List<MyProject_Join_Member> writeReviewMember(String projectid, String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<MyProject_Join_Member> writeReviewMember = memberdao.writeReviewMember(projectid, memberid);
+			
+			return writeReviewMember;
+		}
+		
+		//리뷰 작성하기
+		public void setReview(List<ReviewVo> writeReviewList) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.setReview(writeReviewList);
+		}
+		
+		//로그인한 회원이 작성한 리뷰 가져오기
+		public List<ReviewVo> getMyReview(String memberid) {
 
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<ReviewVo> reviewList = memberdao.getMyReview(memberid);
+			
+			return reviewList;
+		}
+		
+		//리뷰작성시 포인트지급
+		public void giveReviewPoint(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.giveReviewPoint(memberid);
+		}
+		
+		//로그인한 회원이 해당 프로젝트에 작성한 리뷰 조회
+		public List<MyReviewVo> getMyProjectReview(String projectid, String memberid) {
+			
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<MyReviewVo> myProjectReview = memberdao.getMyProjectReview(projectid, memberid);
+			
+			return myProjectReview;
+		}
 }

@@ -960,7 +960,6 @@ function deleteExperience(del_btn){
 //프로젝트 경험 수정!!!!!!!!!!!!
 $(document).on("click",".edit_exbox",function(){
 
-    console.log("무야호");
     let exbox = $(this).parent().parent().parent().children();
 
 	//클릭한 버튼이 속한 박스의 인풋태그들을 활성화시킨다

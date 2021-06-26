@@ -82,17 +82,18 @@ public class ProjectController {
 		//북마크 리스트
 		//유저가 로그인되어있으면 북마크 리스트 보내주기
 		/*if(session.getAttribute("member_id")!=null) {*/
-			List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
-			if(raw_bookmark_list.isEmpty()) {
-				raw_bookmark_list.add(new BookmarkVo(0, "0", "0"));
-				System.out.println("비어있나요 " + raw_bookmark_list);
-			}
-			JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
-			m.addAttribute("bookmark_list",bookmark_list);
-			/*
-			 * }else { List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
-			 * m.addAttribute("bookmark_list",x_bookmark_list); }
-			 */
+		List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+		
+		if(raw_bookmark_list.isEmpty()) {
+			raw_bookmark_list.add(new BookmarkVo(0, "0", "0"));
+			System.out.println("비어있나요 " + raw_bookmark_list);
+		}
+		JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
+		m.addAttribute("bookmark_list",bookmark_list);
+		/*
+		 * }else { List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
+		 * m.addAttribute("bookmark_list",x_bookmark_list); }
+		 */
 		
 		List<V_PjAdrField_Join_V_PDetail> rcm_list;
 		if(session.getAttribute("member_id")!=null) {
@@ -171,7 +172,7 @@ public class ProjectController {
 			@RequestParam("uploadFile") MultipartFile uploadFile, 
 			MultipartHttpServletRequest request,
 			Authentication auth,
-			Model model) {
+			Model model, HttpSession session) {
 		
 		MemberVo member = memberService.getMember(auth.getName());
 		int ProjectCount = service.CheckProject(""+member.getMEMBER_ID());
@@ -232,6 +233,9 @@ public class ProjectController {
 			
 			model.addAttribute("msg", "true");
 			model.addAttribute("projectId",ProjectId);
+			
+			session.setAttribute("project_id", ProjectId);
+			session.setAttribute("p_title", detail.getP_title());
 		}
 	
 		
@@ -258,9 +262,14 @@ public class ProjectController {
 	
 	//해당 프로젝트로 링크 변경해야됨
 	@RequestMapping(value="detail",method = RequestMethod.GET)
-	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m) {
+	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m, HttpSession session) {
 
-	
+		int reader = service.ProjectReaderCheck(project_id, String.valueOf(session.getAttribute("member_id")));
+		
+		String Check = "false";
+		if(reader > 0) {
+			Check = service.MemberFullCheck(project_id);
+		}
 		
 		//프로젝트 멤버 검색
 		List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
@@ -274,13 +283,16 @@ public class ProjectController {
 		//프로젝트 상세 내용을 담은 객체
 		V_PjAdrField_Join_V_PDetail project = service.getOneProject(project_id);
 		
+		int BookMark = service.checkBookMark(project_id, String.valueOf(session.getAttribute("member_id")));
 	
 	
-	
+		
+		m.addAttribute("Check",Check);
 		m.addAttribute("project",project);
 		m.addAttribute("pmcountlist",pmcountlist);
 		m.addAttribute("pmlist",pmlist);
 		m.addAttribute("pjsk",pjsk);
+		m.addAttribute("bookMark",BookMark);
 		
 		
 		return "Project/ProjectDetail";

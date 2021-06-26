@@ -77,10 +77,6 @@ function validation() {
     //비밀번호 일치 체크
     $("#passwordC").on("input",function(){
         
-        console.log("이벤트 발생");
-        console.log("비밀번호 ", password);
-        console.log("비밀번호 확인 ", passwordC);
-        
         if($('#password').val() != $('#passwordC').val()) {
 			$("#pwdcCheck").css("color","#CA8FAB");
             $("#pwdcCheck").text("비밀번호가 일치하지 않습니다");
@@ -95,7 +91,6 @@ function validation() {
     //중복체크, 인증메일링 두 가지
     $('#emailCheckBtn').click(function() {
         let email = $('#email').val().trim();
-		
 		
         console.log(email);
         if (email == '') {

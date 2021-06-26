@@ -26,8 +26,26 @@ a{
 
 .info_text_sec{
 	width:98%;
-	margin: 0 auto;
+	margin: 0 auto;	
 }
+.checked_title{
+	color: #94A7AE !important;
+}
+
+#msg_filter{
+	display:flex;
+}
+
+#msg_filter p{
+	color:gray;
+}
+
+#msg_filter p:after{
+	content:"";
+	padding:10px;
+	
+}
+
 
 .info_text{
 	font-size: 12px !important;
@@ -106,24 +124,34 @@ checkbox:checked{
 	background-color: #94A7AE;
 }
 
+.read{
+	color:#94A7AE;
+}
+.read a{
+	color:#94A7AE;
+}
+
 /*모달창*/
+.modal-content{
+	height: 500px;
+}
 .messagearea{
-	width:400px;
-	height:400px;
+	width:300px;
+	height:300px;
 	background-size: cover;
     background-position: center;
 	background-image: url(../assets/img/alarm/message.png);
     background-repeat: no-repeat;
     background-position:center;
     margin:30px auto;
-    overflow: auto;
+    overflow:hidden;
     border:none;
     align-items: center;
     padding:20px;
 }
 .clickedarea{
-	width:400px;
-	height:400px;
+	width:300px;
+	height:300px;
 	background-size: cover;
     background-position: center;
 	background-image: url(../assets/img/alarm/read.png);
@@ -131,7 +159,7 @@ checkbox:checked{
     background-repeat: no-repeat;
     background-position:center;
     margin:30px auto;
-    overflow: auto;
+    overflow:hidden;
     border:none;
     align-items: center;
     padding:20px;
@@ -155,7 +183,7 @@ checkbox:checked{
 }
 .msg_buttonarea{
 	text-align: center;
-	margin:20px;
+	margin-bottom:20px;
 }
 .msg_btn{
 	width:80px;
@@ -170,6 +198,71 @@ checkbox:checked{
 	background-color: #F4F2F3;
 	border:none;
 	padding:5px;
+}
+
+/*답장하기*/
+#reply_content{
+	display:none;	
+}
+#messagearea{
+	width:300px;
+	height:300px;
+	background-size: cover;
+    background-position: center;
+	background-image: url(../assets/img/alarm/read.png);
+	opacity:.5;
+    background-repeat: no-repeat;
+    background-position:center;
+    margin:30px auto;
+    overflow: auto;
+    outline:none;
+    box-shadow: 1px;
+    border: 0.2rem solid #94A7AE;
+    align-items: center;
+    padding:20px;
+}
+
+#messagearea:focus{
+	background-image: url(../assets/img/alarm/read.png);
+	opacity:.5;
+    background-repeat: no-repeat;
+    background-position:center;
+    overflow: auto;
+    outline:none;
+    box-shadow: 1px;
+    border: 0.2rem solid #94A7AE;
+    margin-bottom:5px;
+}
+#messagearea span{
+	text-align: center;
+    margin: 0;
+    position: relative;
+	top: 20%;
+    left: 18%;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: white
+}
+#textcount{
+	width:300px;
+	margin:auto;
+	text-align: right;
+	color: #94A7AE;
+}
+
+#msg_buttonarea{
+	text-align:center;
+	margin-bottom:20px;
+}
+
+#msg_btn{
+	color:#F4F2F3;
+	background-color: #94A7AE;
+	border:none;
+	padding:10px;
+	margin:20px auto;
+	width: 70px;
+	
 }
 
 /*쪽지 수신창*/

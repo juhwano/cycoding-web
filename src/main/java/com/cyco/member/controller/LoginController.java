@@ -43,13 +43,18 @@ public class LoginController {
 	  public ModelAndView checkInfo(String username, HttpSession session) {
 		  
 		  HashMap<String, String> map = memberservice.getLoginedName(username);
-
+		  
 		  memberservice.checkDeleteDate(String.valueOf(map.get("MEMBER_ID")));
 		  ModelMap mmp = new ModelMap();
+		  
+		  HashMap<String, String> project = memberservice.hasProject(String.valueOf(map.get("MEMBER_ID")));
+		  
+		  session.setAttribute("project_id", project.get("project_id"));
+		  session.setAttribute("p_title", project.get("p_title"));
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
 		  session.setAttribute("member_id", map.get("MEMBER_ID"));		 
 		  
-		  //로그인 했을 때 알림 받기 쿼리
+		  //로그인 했을 때 밀린 알림 받기
 		  int row = memberservice.getOldAlarm(String.valueOf(map.get("MEMBER_ID")));
 		  
 		  if(row> 0) {

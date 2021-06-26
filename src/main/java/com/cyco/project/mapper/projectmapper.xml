@@ -180,7 +180,7 @@
 	
 	<!-- 프로젝트 지원내역 -->
 	<insert id="setProjectApply" >
-		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id})
+		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID,APPLY_DATE) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id},sysdate)
 	</insert>
 	
 	<!-- 생성된 프로젝트 정보 다 가져오는 테이블 -->
@@ -360,7 +360,7 @@
 		UPDATE  APPLY SET APPLY_OK = 2 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
 	</update>
 	
-	<!-- 지원 멤버 추방 -->
+	<!-- 지원 멤버 추방시 지원내역 변경쿼리 -->
 	<update id="ApplyMember_GetOut">
 		UPDATE  APPLY SET APPLY_OK = 3 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
 	</update>
@@ -408,6 +408,83 @@
 		DELETE FROM P_MEMBER WHERE PROJECT_ID = #{param1} AND POSITION_ID = #{param2} AND MEMBER_ID IS NULL AND rownum <= #{param3}
 		 ]]>
 	</delete>
+	
+	<!--  해당프로젝트에 멤버 있는지 확인 -->
+	<select id="isNotNullMember" resultType="int">
+		SELECT count(*) FROM PROJECT p 
+		INNER JOIN P_MEMBER pm 
+		ON p.PROJECT_ID = pm.PROJECT_ID 
+		WHERE pm.MEMBER_ID IS NOT NULL AND pm.PROJECT_ID = #{project_id}
+	</select>
+	
+	<!--  해당프로젝트에 멤버 있는지 확인 -->
+	<select id="isNullMember" resultType="int">
+		SELECT count(*) FROM PROJECT p 
+		INNER JOIN P_MEMBER pm 
+		ON p.PROJECT_ID = pm.PROJECT_ID 
+		WHERE pm.MEMBER_ID IS NULL AND pm.PROJECT_ID = #{project_id}
+	</select>
+	
+	
+	<!-- 프로젝트 리더인지 체크 -->
+	<select id="ProjectReaderCheck" resultType="int">
+		SELECT count(*) FROM PROJECT WHERE PROJECT_ID = #{param1} AND MEMBER_ID = #{param2}
+	</select>
+	
+	<!-- 프로젝트 삭제 -->
+	<delete id="DeleteProject">
+		DELETE FROM PROJECT WHERE PROJECT_ID = #{param1} AND MEMBER_ID = #{param2} 
+	</delete>
+	
+
+	<!-- 해당멤버 포지션 가져오기 -->
+	<select id="getmemberPosition" resultType="com.cyco.project.vo.P_MemberVo">
+		SELECT MEMBER_ID, PROJECT_ID, POSITION_ID FROM P_MEMBER WHERE MEMBER_ID = #{param1} AND PROJECT_ID = #{param2}
+	</select>
+	
+	<!-- Qna 게사판 가져오기 -->
+	<select id="getProjectQna" resultType="com.cyco.project.vo.P_QnaVo">
+		SELECT QNA_ID, PROJECT_ID, QNA_CONTENT, QNA_DATE, ENABLED, STEP, REF, MEMBER_ID, MEMBER_NICKNAME, MEMBER_IMAGE 
+		FROM V_P_QNA 
+		WHERE project_id = #{project_id} AND STEP = 0
+		ORDER BY REF DESC, STEP asc
+	</select>
+	
+	<select id="getProjectQnaReply" resultType="com.cyco.project.vo.P_QnaVo">
+		SELECT QNA_ID, PROJECT_ID, QNA_CONTENT, QNA_DATE, ENABLED, STEP, REF, MEMBER_ID, MEMBER_NICKNAME, MEMBER_IMAGE 
+		FROM V_P_QNA 
+		WHERE project_id = #{param1} AND STEP > 0 AND REF = #{param2}
+		ORDER BY REF DESC, STEP ASC
+	</select>
+	
+	<insert id="writeQna">
+		insert into P_QNA (QNA_ID,PROJECT_ID,MEMBER_ID, QNA_CONTENT,QNA_DATE,ENABLED,STEP,REF ) 
+		values 
+		(PQ_SEQ.nextval,#{project_id},#{member_id},#{qna_content},sysdate,1,0,PQ_SEQ.nextval)
+	</insert>
+	
+	<insert id="writeQnaReply">
+		 <selectKey keyProperty="step" resultType="String" order="BEFORE">
+		    SELECT NVL(MAX(step),0)+1 AS step FROM P_QNA WHERE PROJECT_ID = #{project_id} AND REF = #{ref}
+		  </selectKey>
+			insert into P_QNA (QNA_ID,PROJECT_ID,MEMBER_ID, QNA_CONTENT,QNA_DATE,ENABLED,STEP,REF )
+			values (PQ_SEQ.nextval,#{project_id},#{member_id},#{qna_content},sysdate, 1, #{step}, #{ref})
+	</insert>
+	
+	<update id="EditQna">
+		UPDATE P_QNA SET QNA_CONTENT = #{qna_content} WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND REF = #{ref}
+	</update>
+	
+	<update id="DeleteQna">
+		UPDATE P_QNA SET QNA_CONTENT = '삭제된 글입니다.', ENABLED = 0 WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND REF = #{ref}
+	</update>
+	
+	<select id="QnaReplyCount">
+		SELECT count(*) 
+		FROM V_P_QNA 
+		WHERE project_id = 128 AND STEP > 0 AND REF = 34
+		ORDER BY "REF" DESC, STEP asc
+	</select>
 	
 	
 </mapper>

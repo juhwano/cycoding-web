@@ -4,6 +4,7 @@ package com.cyco.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
-
+import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.vo.Project_TeamLeaderVo;
@@ -170,7 +171,7 @@ public class MyPageController {
 		
 	}
 	
-	//알림 전체 불러오기
+	//알림 페이지 이동/전체 불러오기
 	@RequestMapping(value="myalarm",method=RequestMethod.GET)
 	public ModelAndView myAlarm(Authentication auth) {
 		
@@ -219,26 +220,78 @@ public class MyPageController {
 	//내프로젝트/후기 페이지로 이동
 	@RequestMapping(value="myProject")
 	public String myProject(Model m, HttpSession session) {
+		String memberid = String.valueOf(session.getAttribute("member_id"));
+		
 		//로그인한 회원이 팀리더인 목록
 		List<Project_TeamLeaderVo> teamLeaderList = null;
-		teamLeaderList = memberdetailservice.getTeamLeader(String.valueOf(session.getAttribute("member_id")));
+		teamLeaderList = memberdetailservice.getTeamLeader(memberid);
 		
 		m.addAttribute("teamLeaderList", teamLeaderList);
 
 		//로그인한 회원이 팀멤버인 목록
 		List<V_myProjectVo> teamMemberList = null;
-		teamMemberList = memberdetailservice.getTeamMember(String.valueOf(session.getAttribute("member_id")));
+		teamMemberList = memberdetailservice.getTeamMember(memberid);
 		
 		m.addAttribute("teamMemberList", teamMemberList);
 		
 		//리뷰목록
-		List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(String.valueOf(session.getAttribute("member_id")));
+		List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
 		
 		JSONArray reviewList = JSONArray.fromObject(row_reviewList);
 		System.out.println("리뷰목록JSON: " + reviewList);
 		m.addAttribute("reviewList", reviewList);
 		
+		//로그인한 회원이 작성한 리뷰 목록
+		List<ReviewVo> myReview = memberdetailservice.getMyReview(memberid);
+		if(myReview.isEmpty()) {
+			ReviewVo dummyReview = new ReviewVo();
+			dummyReview.setReview_content("dummy");
+			myReview.add(dummyReview);
+		}
+		m.addAttribute("myReview", myReview);
+		
 		return "/Member/MyProject";
 	}
+	
+	//insertReview
+	  @RequestMapping(value="insertReview", method = RequestMethod.POST)
+	  public void insertReview(@RequestParam("review_member") String[] review_member, 
+			  @RequestParam("project_id") String[] project_id, 
+			  @RequestParam("review_content") String[] review_content, 
+			  @RequestParam("review_grade") String[] review_grade, 
+			  HttpSession session, HttpServletResponse res) throws IOException {
+		  
+		  List<ReviewVo> writeReviewList = new ArrayList<ReviewVo>();
+		  
+		  System.out.println("리뷰 작성중");
+		  
+		  Date now = new Date();
+		  
+		  System.out.println("리뷰별점? " + review_grade.toString());
+		  System.out.println("리뷰별점? " + review_grade.length);
+		  for(int i = 0; i < review_grade.length; i++) {
+			  System.out.println("i번째"+review_grade[i]);
+		  }
+		  
+		  for(int i = 0; i < review_member.length; i++) {
+			  ReviewVo review = new ReviewVo();
+			  review.setReview_content(review_content[i]);
+			  review.setReview_grade(Integer.parseInt(review_grade[i]));
+				/* review.setReview_grade(review_grade[i]); */
+			  review.setWriter_id(String.valueOf(session.getAttribute("member_id")));
+			  review.setReview_member(review_member[i]);
+			  review.setProject_id(project_id[i]);
+			  
+			  review.setReview_id(0);
+			  review.setReview_date(now);
+			  review.setMember_nickname("a");
+			  System.out.println(review.toString());
+			  writeReviewList.add(review);
+		  }
+		  
+		  memberdetailservice.setReview(writeReviewList);
+		  
+		  res.sendRedirect("myProject");
+	  }
 
 }

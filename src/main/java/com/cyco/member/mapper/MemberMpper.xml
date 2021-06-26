@@ -4,7 +4,7 @@
 <mapper namespace="com.cyco.member.dao.MemberDao">
 
 
-	
+	<!-- 회원가입할 때 정보 확인  -->
 	<select id="checkEmail" resultType="integer">
 		
 		select MEMBER_ID from member where MEMBER_EMAIL = #{email}
@@ -22,7 +22,9 @@
 		select MEMBER_ID from member where MEMBER_PHONE = #{phone}
 	
 	</select>
-
+	<!-- 회원가입할 때 정보 확인  -->
+	
+	<!-- 회원 가입 -->
 	<insert id="registMember" parameterType="com.cyco.common.vo.MemberVo">
 	
 		insert into member(MEMBER_ID, MEMBER_EMAIL,MEMBER_PWD,MEMBER_NAME,MEMBER_NICKNAME,MEMBER_PHONE,MEMBER_IMAGE,ENABLED) 
@@ -34,16 +36,31 @@
 		select member_nickname, member_id from member where member_email=#{memberemail}
 	</select>
 	
+	<!-- 로그인시 탈퇴날짜 null로 업데이트 -->
 	<update id="checkDeleteDate">
 	
 		update m_detail set delete_count=null where member_id=${memberid}
 	
 	</update>
 	
+	<!-- 로그인시 미확인 알림 있으면 알림창 한 번 띄워주기 -->
 	<select id="getOldAlarm" resultType="Integer">
 	
 		select count(*) from ALARM where member_id=${memberid} and Alarm_OK=0
 	
+	</select>
+	
+	<!-- 로그인시 팀장으로 참여중인 프로젝트 있는지 확인 -->
+	<select id="isProjectManager" resultType="com.cyco.project.vo.P_DetailVo">
+		select pd.p_title, pd.project_id from p_detail pd left join project p
+		on pd.project_id=p.project_id
+		where p.member_id=${memberid}
+	</select>
+	
+	<select id="isInProject" resultType="java.util.HashMap">
+		select pm.project_id, pd.p_title from p_member pm left join p_detail pd
+		on pm.project_id=pd.project_id
+		where pm.member_id=${memberid}
 	</select>
 	
 
