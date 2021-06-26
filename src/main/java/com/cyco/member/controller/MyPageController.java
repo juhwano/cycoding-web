@@ -256,7 +256,8 @@ public class MyPageController {
 			  review.setProject_id(project_id[i]);
 			  
 			  review.setReview_id(0);
-			  review.setReview_date(now);
+			  //review.setReview_date(now);
+			  review.setReview_date("0");
 			  review.setMember_nickname("a");
 			  System.out.println(review.toString());
 			  writeReviewList.add(review);
