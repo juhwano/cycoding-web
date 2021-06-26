@@ -36,6 +36,7 @@
 						<input class="check-input" id="userPwdName" placeholder="이름" name="userName" type="text">
 						<input class="check-input" id="userEmail" placeholder="이메일" name="userEmail" type="text">
 						<input class="check-input" id="userConfirm" placeholder="인증번호" name="userConfirm" type="text">
+						<p class="checkBtn" id="confirmEnd">인증완료</p>
 					</div>
 					<button type="button" class="checkBtn" id="findPwdBtn">찾기</button>
 					<button type="button" class="checkBtn" id="userConfirmBtn">인증</button>
@@ -59,6 +60,29 @@
 						<div class="modalLinkSec">
 							<a href="login">로그인하러가기</a>
 						</div>
+					</div>
+				</div>		
+			</div>
+		</div>	
+		
+		<!-- 비밀번호 변경 모달 -->
+       	<div id="editPwdModal" class="editPwdModal">
+	       	<div class="emailBox">
+				<div class="emailModalDiv">
+					<div class="modal_XBtn">
+						<i class="fas fa-times"></i>
+					</div>
+					<div class="modalPwdIcon">
+						<i class="fas fa-user-lock"></i>
+					</div>
+					<div class="pwdModalInfo">
+						<p>변경하실 비밀번호를 입력해주세요.</p>
+						<input class="check-input" id="newPwd" placeholder="비밀번호" name="newPwd" type="password">
+						<input class="check-input" id="newPwdCheck" placeholder="비밀번호체크" name="newPwdCheck" type="password">
+						<button type="button" class="checkBtn" id="newPwdBtn">변경</button>
+					</div>
+					<div class="modalLinkSecPwd">
+							<a href="login">로그인하러가기</a>
 					</div>
 				</div>		
 			</div>

@@ -164,3 +164,58 @@
 #userConfirm, #userConfirmBtn{
 	display: none;
 }
+
+#confirmEnd{
+	display: none;
+}
+
+/* 비밀번호 변경 모달 */
+#editPwdModal {
+	display: none;
+	
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+}
+
+.modalPwdIcon{
+	width: 100%;
+	height: 80px;
+	text-align: center;
+	font-size: 50px;
+	color: #ca8fab;
+}
+
+.pwdModalInfo > input {
+	margin-bottom: 10px !important;
+}
+
+.pwdModalInfo > p {
+	margin-bottom: 28px !important;
+    color: #c08fab;
+    font-size: 18px;
+}
+
+.pwdModalInfo{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px !important;
+}
+
+#newPwdBtn {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+/* 비밀번호 변경 후 로그인페이지 이동 링크 보여주기 */
+.modalLinkSecPwd{
+	display: none;
+}

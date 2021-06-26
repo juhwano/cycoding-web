@@ -7,11 +7,13 @@ import java.util.Random;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.member.dao.MemberDao;
+import com.cyco.member.service.EmailService;
+import com.cyco.member.service.MemberDetailService;
 
 @RequestMapping(value="register/")
 @RestController
 public class RegisterRestComtroller {
+	
+	MemberDetailService memberdetailservice;
+
+	@Autowired
+	public void setMemberDetailService(MemberDetailService memberdetailservice) {
+		this.memberdetailservice = memberdetailservice;
+	}
+	
+	@Autowired
+	PasswordEncoder pwdEncoder;
    
    private SqlSession sqlsession;
 
@@ -33,6 +47,9 @@ public class RegisterRestComtroller {
 	
 	@Autowired
 	JavaMailSender mailSender;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@RequestMapping(value="emailcheck.ajax", method=RequestMethod.GET)
 	public String checkEmail(String email) {
@@ -229,6 +246,10 @@ public class RegisterRestComtroller {
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; //이메일로 받는 인증코드 부분 (난수)
         
+        //템플릿 test
+        String template = "com/cyco/member/vo/emailtemplate.vm";
+        //
+        
         String setfrom = "cycoding196@gmail.com";
         String tomail = request.getParameter("userEmail"); // 받는 사람 이메일
         String title = "[CYCODING]사이좋게 코딩하자 사이코딩 인증 메일입니다"; // 제목
@@ -288,5 +309,20 @@ public class RegisterRestComtroller {
         return result;
         
     }
+	
+	// 회원 개인정보 수정
+	@RequestMapping(value = "editPwd.ajax")
+	public String editPwd(String newPwd, String userEmail, HttpSession session) {
+		
+		String userPwd = pwdEncoder.encode(newPwd);
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		memberdao.findPwdEdit(userEmail, userPwd);
+			
+		return "success";
+	}
+	
+	
 
 }

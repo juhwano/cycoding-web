@@ -116,6 +116,92 @@
                                     if(dice == $("#userConfirm").val()){
                                         swal("인증이 완료되었습니다." , "" ,"success");
                                         
+                                        $("#userConfirm").css("display", "none");
+										$("#userConfirmBtn").css("display", "none");
+										
+										$("#confirmEnd").css("display", "inline-block");
+										$("#editPwdModal").css("display", "flex");
+										
+										
+        								
+        								$("#newPwdBtn").click(function(){
+	
+											let newPwd = $('#newPwd').val();
+	        								let newPwdCheck = $('#newPwdCheck').val();
+											
+	        								if (newPwd == '') {
+									            swal("비밀번호를 입력해주세요" , "" ,"error");
+									            $("#newPwd").focus();
+									            checking = false;
+									            return;
+									        }else if (newPwdCheck == '') {
+												swal("비밀번호를 한번 더 입력해주세요." , "" ,"error");
+									            $("#newPwdCheck").focus();
+									            checking = false;
+									            return;
+											}
+											
+											//비밀번호 유효성 
+								            let num = newPwd.search(/[0-9]/g);
+								            let eng = newPwd.search(/[a-z]/ig);
+								    
+								            if (newPwd.length < 8 || newPwd.length > 13) {
+								    
+								                swal("비밀번호는 8-20자리 이내로 입력하세요." , "" ,"error");
+								                $("#newPwd").focus();
+								                checking = false;
+								                return;
+								    
+								            } else if (newPwd.search(/\s/) != -1) {
+								    
+								                swal("비밀번호는 공백을 입력할 수 없습니다." , "" ,"error");
+								                checking = false;
+								                $("#newPwd").focus();
+								                checking = false;
+								                return;
+								    
+								            } else if (num < 0 || eng < 0 ) {
+								    
+								                swal("영문, 숫자를 포함하여 입력하세요." , "" ,"error");
+								                $("#password").focus();
+								                checking = false;
+								                return;
+								            }
+								            
+								            if(newPwd != newPwdCheck){
+												swal({
+								                    title: "비밀번호가 일치하지 않습니다",
+								                    icon: "error"
+								                });
+								                $("#newPwdCheck").focus();
+								                checking = false;
+								                return;
+											}
+											
+											
+											
+											$.ajax({
+									                url:"register/editPwd.ajax",
+									                data:{
+									                   newPwd : newPwd,
+									                   userEmail : userEmail
+									                },
+									                type:"get",
+									                dataType:"text",
+									                success:function(data){
+														
+														if(data == "success"){
+															swal("수정되었습니다" , "변경한 비밀번호로 로그인해주세요!" ,"success");
+															$(".pwdModalInfo").css("display", "none");
+															$(".modalLinkSecPwd").css("display", "block");
+						
+														}
+													}
+													
+												})
+											
+										});
+                                        
                                     } else if( $("#userConfirm").val() == ""){
                                         swal("인증번호를 입력해주세요." , "" ,"error");
                                     } else if(dice != $("#userConfirm").val()){
