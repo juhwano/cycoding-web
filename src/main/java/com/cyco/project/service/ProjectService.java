@@ -502,7 +502,9 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 
 		List<V_PjAdrField_Join_V_PDetail> list = dao.getRecommList(filtered_list);
-		list = list.subList(0, 9);
+		if(list.size()>9) {
+			list = list.subList(0, 9);
+		}
 		return list;
 		
 	}
