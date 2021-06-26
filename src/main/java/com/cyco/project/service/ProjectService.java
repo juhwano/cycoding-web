@@ -502,7 +502,9 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 
 		List<V_PjAdrField_Join_V_PDetail> list = dao.getRecommList(filtered_list);
-		list = list.subList(0, 9);
+		if(list.size()>9) {
+			list = list.subList(0, 9);
+		}
 		return list;
 		
 	}
@@ -786,6 +788,12 @@ public class ProjectService {
 		List<String> members = dao.getTeamMembers(project_id);
 		
 		return members;
+	}
+	
+	//프로젝트 상세 진입시 조회수 증가
+	public void addViews(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.addViews(project_id);
 	}
 }
 

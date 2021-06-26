@@ -9,6 +9,8 @@
 <c:set var="experiences" value="${experiences}" />
 <c:set var="reviewList" value="${reviewList}" />
 
+<c:set var="gradeAvg" value="${gradeAvg}" />
+
 
 <!DOCTYPE html>
 <html>
@@ -201,7 +203,7 @@
 
 				<!-- 리뷰 div -->
 				<div id="review" class="details">
-					<p class="cycoder_title">REVIEW
+					<p class="cycoder_title">REVIEW</p>
 					<div class="reviewBox">
 					
 					<c:set var="last_flag" value="true"/>
@@ -209,10 +211,20 @@
 					<c:set var="list_size" value="${fn:length(reviewList)}"/>
 					
 					<!-- 리뷰가 1개도 없는 경우 문구 출력 -->
-					<c:if test="${list_size == 0}">
+					<c:if test="${list_size eq 0}">
 						<div class="review_nothing">
 							<p> 아직 남겨진 리뷰가 없습니다. </p>
 						</div>
+					</c:if>
+					
+					<c:if test="${list_size ne 0}">
+						<div class="review_avg">
+							<p>${member.MEMBER_NICKNAME} 님의 평점</p>
+							<div class="gradeAvg">
+								${gradeAvg}
+							</div>
+						</div>
+						<hr class="reviewAvgHr">
 					</c:if>
 					
 					<!-- 리뷰 리스트 뿌리기 -->
@@ -238,7 +250,6 @@
 						<!-- 리뷰 end -->
 						
 					</div>
-					
 						<div class="moreSec">
 						<!-- 리뷰 끝나면 더보기 버튼 안보이게하기 -->
 							<c:if test="${not last_flag}">

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cyco.admin.dao.AdminDao;
+import com.cyco.admin.vo.ChartCount;
 import com.cyco.admin.vo.MemberListVo;
+import com.cyco.admin.vo.StateCountVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -53,8 +55,57 @@ public class AdminService {
 		List<MemberListVo> list = dao.getMemberList(""); //파라미터가 ""이면 전체검색
 		return list;
 	}
-
-	//---------------------------------------------------------------------
+	
+	//---------------------- Chart ---------------------------
+	//정상적으로 활동중인 회원 수
+	public int getMemberCount() {
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getMemberCount();
+	}
+	
+	//지금까지 생성된 프로젝트 수
+	public int getProjectCount() {
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getProjectCount();
+	}
+	
+	//프로젝트가 가지는 기술, 포지션, 분야 랭크
+	public List<ChartCount> getPSkillCount(){
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getPSkillCount();
+	}
+	public List<ChartCount> getPpositionCount(){
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getPpositionCount();
+		
+	}
+	public List<ChartCount> getPFieldCount(){
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getPFieldCount();
+	}
+	
+	//화원이 가지는 기술, 포지션
+	public List<ChartCount> getMSkillCount(){
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getMSkillCount();
+	}
+	public List<ChartCount> getMpositionCount(){
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getMpositionCount();
+		
+	}
+	
+	
+	//프로젝트 상태 카운트 - 도넛예정
+	public List<StateCountVo> getStateCount() {
+		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		return dao.getStateCount();
+	}
+	
+	
+	
+	
+	
 	
 	// ------------------------ ajax -------------------------------
 	
