@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.alarm.vo.FromNoteVo;
-import com.cyco.alarm.vo.NoteVo;
 import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.alarm.vo.V_FromNote_Member_Vo;
 import com.cyco.alarm.vo.V_ToNote_Member_Vo;
@@ -29,7 +28,7 @@ public interface AlarmDao {
 
 	//알림페이지에서 전체 알림(+ 새 쪽지 있없 여부 체크 위해 쪽지 테이블 체크)
 	public List<AlarmVo> getAllAlarms(String useremail);
-	//public Integer hasNewMessages(String useremail);
+	public List<String> hasNewMessages(String useremail);
 	
 	//알림 확인하면 상태 변경
 	public Integer checkAlarm(String alarm_id);
@@ -50,5 +49,5 @@ public interface AlarmDao {
 	//쪽지 삭제
 	public Integer deleteNotes(String table, List<String> noteid);
 	
-
+	
 }

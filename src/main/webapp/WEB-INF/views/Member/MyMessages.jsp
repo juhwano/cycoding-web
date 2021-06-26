@@ -46,7 +46,6 @@
 								</tr>
 
 							</thead>
-							<form method="post" action="" id="to_note_form">
 							<c:forEach var="tolist" items="${tolist}">
 								<c:choose>
 									<c:when test="${not empty tolist}">
@@ -83,8 +82,7 @@
 														</td>
 														<td class="date">${tolist.NOTE_DATE}</td>
 														<td class="del_check"><input type="checkbox"
-															class="del_received" name="NOTE_ID" value="${tolist.NOTE_ID}">
-															<%-- <label for="check_to_${tolist.NOTE_ID}"><i class="far fa-trash-alt"></label> --%></td>
+															class="del_received" name="NOTE_ID" value="${tolist.NOTE_ID}"></td>
 													</tr>
 												</tbody>
 											</c:when>
@@ -103,7 +101,6 @@
 
 								</c:choose>
 							</c:forEach>
-							</form>
 						</table>
 
 						<div class="info_text_sec">
@@ -130,7 +127,6 @@
 								</tr>
 
 							</thead>
-							<form method="post" action="" id="from_note_form">
 							<c:forEach var="fromlist" items="${fromlist}">
 								<c:choose>
 								
@@ -139,7 +135,7 @@
 										<tbody class="apply_table_sec">
 											<tr class="sended" id="from${fromlist.NOTE_ID}">
 												<td class="isread"><i class="fas fa-paper-plane"></i></td>
-												<td class="sender"><a
+												<td class="receiver"><a
 													href="/member/memberdetailpage?memberid=${fromlist.MEMBER_TO}">${fromlist.MEMBER_NICKNAME}</a></td>
 												<td class="content"><a href="#from_note_modal"
 													class="trigger-btn msg-trigger" data-toggle="modal">${fromlist.NOTE_CONTENT}</a>
@@ -165,7 +161,6 @@
 
 								</c:choose>
 							</c:forEach>
-							</form>
 						</table>
 						<div class="info_text_sec">
 							<p class="info_text">
@@ -281,7 +276,7 @@
 		</div>
 	</div>
 </body>
-<c:set var="email" value="${eamil}"/>
+<c:set var="email" value="${email}"/>
 <script>
 //쪽지 목록 불러오기(추가나 삭제 후 비동기)
 function getnotelist(table){
@@ -289,11 +284,99 @@ function getnotelist(table){
 	var data = {
 		
 		table : table,
-		useremail : ${email}
+		useremail : "${email}"
 		
 	}
 	
-	$.ajax({});
+	$.ajax({
+		
+		url:"/alarm/getnotelist",
+		data:JSON.stringify(data),
+		dataType:"json",
+		contentType: "application/json",
+		type:"post",
+		success:function(res){
+			console.log(res)
+			
+			$.each(res, function(index, item){
+				console.log("table")
+				
+				if(table == "TO_NOTE"){
+					
+					var isread;
+					var icon;
+					
+					
+					
+					$("#to").find("tbody").remove();
+					
+					$.each(res, function(index, res){
+						
+						if(res.note_OK == "0"){
+							isread = 'new';
+							icon = 'far fa-envelope';
+							
+						} else{
+							isread = 'read';
+							icon = 'fas fa-envelope-open-text';
+						}
+						
+						if(res.note_CONTENT.length > 10){
+							res.note_CONTENT = res.note_CONTENT.substring(0,10) + '...';
+						}
+						res.note_DATE = res.note_DATE.substring(0,10);
+						
+						$("#to").append(
+								'<tbody class="apply_table_sec '+isread+'">'
+								+'<tr id="to'+res.note_ID+'">'
+								+'<td class="isread"><i class="'+icon+'"></i></td>'
+								+'<td class="sender" id="from'+res.member_FROM+'">'
+								+'<a href="/member/memberdetailpage?memberid='+res.member_FROM+'">'+res.member_NICKNAME+'</a></td>'
+								+'<td class="content"><a href="#to_note_modal" class="trigger-btn msg-trigger" data-toggle="modal">'+res.note_CONTENT+'</a>'
+								+'<input type="hidden" value="'+res.note_CONTENT+'">'
+								+'</td>'
+								+'<td class="date">'+res.note_DATE+'</td>'
+								+'<td class="del_check"><input type="checkbox" class="del_received" name="NOTE_ID" value="'+res.note_ID+'"></td>'
+								+'</tr></tbody>'
+								
+						);
+					});
+	
+				} else if(table == "FROM_NOTE"){
+					
+					$("#from").find("tbody").remove();
+					
+					$.each(res, function(index, res){
+						
+						if(res.note_CONTENT.length > 10){
+							res.note_CONTENT = res.note_CONTENT.substring(0,10) + '...';
+						}
+						res.note_DATE = res.note_DATE.substring(0,10);
+						
+						$("#from").append(
+								'<tbody class="apply_table_sec">'
+								+'<tr id="from'+res.note_ID+'">'
+								+'<td class="isread"><i class="fas fa-paper-plane"></i></td>'
+								+'<td class="receiver" id="to'+res.member_TO+'">'
+								+'<a href="/member/memberdetailpage?memberid='+res.member_TO+'">'+res.member_NICKNAME+'</a></td>'
+								+'<td class="content"><a href="#from_note_modal" class="trigger-btn msg-trigger" data-toggle="modal">'+res.note_CONTENT+'</a>'
+								+'<input type="hidden" value="'+res.note_CONTENT+'">'
+								+'</td>'
+								+'<td class="date">'+res.note_DATE+'</td>'
+								+'<td class="del_check"><input type="checkbox" class="del_send" name="NOTE_ID" value="'+res.note_ID+'"></td>'
+								+'</tr></tbody>'
+								
+						);
+					});
+					
+				}
+			})
+		},
+		error:function(xhr){
+			console.log(xhr)
+		}
+	
+	});
 	
 }
 

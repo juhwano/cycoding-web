@@ -224,6 +224,7 @@ $(document).on("click","#msg_btn", function() {
 			success:function(res){
 				if(res == "true"){
 					swal("쪽지를 발송했습니다","","success")
+					$("#messagearea").empty();
 				} else{
 					swal("쪽지 발송하지 못했습니다","잠시 후 시도해주세요","error")
 				}

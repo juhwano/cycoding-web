@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.alarm.service.AlarmService;
-import com.cyco.alarm.vo.FromNoteVo;
-import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.alarm.vo.V_FromNote_Member_Vo;
 import com.cyco.alarm.vo.V_ToNote_Member_Vo;
 
@@ -29,7 +27,7 @@ public class AlarmController {
 	
 		List<V_ToNote_Member_Vo> tolist = alarmservice.getReceivedMessages(auth.getName());
 		List<V_FromNote_Member_Vo> fromlist = alarmservice.getSendMessages(auth.getName());
-		
+	
 		ModelMap mmp = new ModelMap();
 		mmp.put("email", auth.getName());
 		mmp.put("tolist", tolist);
@@ -38,5 +36,7 @@ public class AlarmController {
 		return new ModelAndView("Member/MyMessages",mmp);
 		
 	}
+	
+	
 
 }

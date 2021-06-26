@@ -3,7 +3,7 @@ $(document).ready(function() {
 	//메시지 제목 잘라서 보여주기
 	$.each($(".content"), function(index, item) {
 
-		if ($(this).children().text().trim().length > 15) {
+		if ($(this).children().text().trim().length > 10) {
 
 			//console.log($(this).text().trim());
 			let msg_content = $(this).children().text().trim().substring(0, 10);
@@ -160,7 +160,8 @@ $(document).on("click", "#msg_btn", function() {
 	console.log(data);
 	// 알림 테이블에 반영, 알림 보내기
 	insertAlarm(JSON.stringify(data));
-	swal("쪽지가 발송되었습니다", "", "success")
+	swal("쪽지가 발송되었습니다", "", "success");
+	$("#messagearea").empty();
 
 });
 
@@ -251,9 +252,11 @@ $(".trash").on("click",function(){
 				buttons: true,
 				dangerMode: true,
 				
-		}).then(function(){
+		}).then((willDelete) =>{
 			
-			$.ajax({
+			if(willDelete){
+				
+				$.ajax({
 				url:"/alarm/deletenotes",
 				data:JSON.stringify(data),
 				dataType:"json",
@@ -261,16 +264,22 @@ $(".trash").on("click",function(){
 				type:"post",
 				success:function(res){
 					console.log(res)
+					
+					if(res){
+						swal("쪽지가 삭제되었습니다","","success")
+						getnotelist(table);
+					}
 				},
 				error:function(xhr){
 					console.log(xhr)
 				}
 				
-			});
-		
-		});
-		
-		
+				});
+				
+			} else{
+				return false;
+			}		
+		});		
 })
 
 
