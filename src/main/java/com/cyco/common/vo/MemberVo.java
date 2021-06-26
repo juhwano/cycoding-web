@@ -12,7 +12,7 @@ import lombok.Data;
 public class MemberVo implements UserDetails{
 
 
-	private int MEMBER_ID;
+	private String MEMBER_ID;
 	private String MEMBER_EMAIL;
 	private String MEMBER_PWD;
 	private String MEMBER_NAME;
@@ -25,10 +25,9 @@ public class MemberVo implements UserDetails{
 	private int HAVE_POINT;
 	private int USE_POINT;
 	
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 

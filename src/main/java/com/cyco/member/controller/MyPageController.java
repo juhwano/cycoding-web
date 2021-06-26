@@ -6,8 +6,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.alarm.vo.V_ToNote_Member_Vo;
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.BookmarkVo;
@@ -179,18 +184,24 @@ public class MyPageController {
 		ModelMap mmp = new ModelMap();
 		
 		List<AlarmVo> list = alarmservice.getAllAlarms(useremail);
+		
 		List<AlarmVo> newlist = new ArrayList<AlarmVo>();
 		List<AlarmVo> oldlist = new ArrayList<AlarmVo>();
-		
+
 		for( int i = 0; i < list.size(); i++) {
 			
 			if(list.get(i).getALARM_OK().equals("0")) {
+				
 				newlist.add(list.get(i));
+				
 			} else {
+				
 				oldlist.add(list.get(i));
+			
 			}
 			
 		}
+
 		mmp.addAttribute("newalarmlist", newlist);
 		mmp.addAttribute("oldalarmlist", oldlist);
 

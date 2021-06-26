@@ -47,10 +47,10 @@ public class LoginController {
 		  memberservice.checkDeleteDate(String.valueOf(map.get("MEMBER_ID")));
 		  ModelMap mmp = new ModelMap();
 		  
-		  HashMap<String, String> project = memberservice.hasProject(String.valueOf(map.get("MEMBER_ID")));
+		  //HashMap<String, String> project = memberservice.hasProject(String.valueOf(map.get("MEMBER_ID")));
 		  
-		  session.setAttribute("project_id", project.get("project_id"));
-		  session.setAttribute("p_title", project.get("p_title"));
+		  //session.setAttribute("project_id", project.get("project_id"));
+		  //session.setAttribute("p_title", project.get("p_title"));
 		  session.setAttribute("nickname", map.get("MEMBER_NICKNAME"));
 		  session.setAttribute("member_id", map.get("MEMBER_ID"));		 
 		  
