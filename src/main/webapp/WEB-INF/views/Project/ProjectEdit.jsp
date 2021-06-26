@@ -26,7 +26,7 @@
 <c:set var="project" value="${Project}"></c:set>
 <c:set var="createSkillList" value="${CreateSkillList}"></c:set>
 <c:set var="createNotInSkillList" value="${CreateNotInSkillList}"></c:set>
-
+<c:set var="members" value="${Members}"></c:set>
 
 <body>
 		<section class="min-vh-100 d-flex align-items-center border-top" style="background-color: #fdfcfc"> 
@@ -77,7 +77,7 @@
                     				<p class="p_bold"><i class="fas fa-crown leaderIcon"></i> 리더 정보</p>
                     				<p class="Project_p"><b style="color:red;">*</b> 리더 정보는 마이페이지를 통해서 수정하시기 바랍니다.</p>
                     				<input type="text" value="${membervo.MEMBER_ID}" name="member_id" hidden>
-                    				<input type="text" value="${project.project_id}" name="project_id" hidden>
+                    				<input type="text" value="${project.project_id}" name="project_id" hidden id="project_id">
                     				<div class="Leader_DetailBox">
                     				<div class="LeaderImg_Box">
                     				<img src="${pageContext.request.contextPath}/resources/upload/${membervo.MEMBER_IMAGE}">
@@ -181,7 +181,8 @@
 				});
 			}
 			
-			
+	//js로 프로젝트 멤버들 보내기
+	var memberlist = ${Members}
 			
 	</script>
 	

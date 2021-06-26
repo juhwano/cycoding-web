@@ -222,7 +222,7 @@
    <select id="checkProjectBeforeInvite" resultType="com.cyco.project.vo.P_DetailVo">
    		select pd.p_title, pd.project_id from project p left join p_detail pd 
 		    on p.project_id=pd.project_id 
-		    where p.member_id=${memberid} and pd.p_state='모집중'
+		    where p.member_id=${memberid} and (pd.p_state='모집중' or pd.p_state='진행중')
    </select>
 
    <!-- 북마크/지원목록 페이지 -->

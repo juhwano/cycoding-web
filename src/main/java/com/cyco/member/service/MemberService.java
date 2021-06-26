@@ -78,13 +78,14 @@ public class MemberService {
 		HashMap<String, String> p_info = new HashMap<String, String>();
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
-		if(memberdao.isProjectManager(memberid) != null) {
-			p_info.put("project_id",(String)memberdao.isProjectManager(memberid).getProject_id());
-			p_info.put("p_title",(String)memberdao.isProjectManager(memberid).getP_title());
+		if(memberdao.isProjectManager(memberid).size() != 0) {
+			p_info.put("project_id",(String)memberdao.isProjectManager(memberid).get(0).getProject_id());
+			p_info.put("p_title",(String)memberdao.isProjectManager(memberid).get(0).getP_title());
 			
-		}else if(memberdao.isInProject(memberid) != null){
-			p_info.put("project_id", (String)memberdao.isInProject(memberid).get("project_id"));
-			p_info.put("p_title", (String)memberdao.isInProject(memberid).get("p_title"));
+		}else if(memberdao.isInProject(memberid).size() != 0){
+			p_info.put("project_id", String.valueOf(memberdao.isInProject(memberid).get(0).get("PROJECT_ID")));
+			p_info.put("p_title", String.valueOf(memberdao.isInProject(memberid).get(0).get("P_TITLE")));
+
 		} else {
 			p_info.put("project_id", "none");
 		}

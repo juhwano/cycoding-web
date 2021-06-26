@@ -5,15 +5,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.cyco.alarm.dao.AlarmDao">
 
-	<!-- 알림이벤트 발생시 알림테이블에 인서트 -->
+	<!-- 알림이벤트 발생시 알림테이블에 인서트(트랜잭션 처리) -->
 	<insert id="insertAlarm">
 
 		insert into alarm
-		(ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url,
-		ALARM_CONTENT,ALARM_OK )
+		(ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url,ALARM_CONTENT,ALARM_OK )
 		values(ALM_SEQ.nextval, ${MEMBER_ID}, #{ALARM_CODE},
 		sysdate,${URL},#{ALARM_CONTENT},0)
 	</insert>
+	
+	<!-- DB에 알림 테이블만 인서트하면 되는 알림 이벤트 -->
+	<insert id="makeAlarm">
+		<foreach collection="list" item="item" open="INSERT ALL" close="SELECT * FROM DUAL">
+         into alarm
+		(ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url,ALARM_CONTENT,ALARM_OK ) values 
+        ( 
+           alarm_seq,
+           ${item.MEMBER_ID},
+           #{item.ALARM_CODE}, 
+			sysdate,
+			${item.URL},
+			#{item.ALARM_CONTENT}, 
+			0      
+         ) 
+		</foreach>
+</insert>
 
 	<!-- 알림 이벤트 발생시 헤더 알림 리스트에 알림목록 갱신하기 -->
 	<select id="getNewAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
@@ -105,5 +121,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update to_note set note_ok='1' where
 		note_id=${noteid}
 	</update>
-
+	
+	<!-- 발신, 수신 쪽지 삭제 -->
+	<delete id="deleteNotes" parameterType="java.util.List">
+		delete ${param1} 
+			<where>
+				<foreach collection="param2" item="item" separator="or">
+				 	(note_id=${item})
+				</foreach>
+			</where>
+	</delete>
 </mapper>

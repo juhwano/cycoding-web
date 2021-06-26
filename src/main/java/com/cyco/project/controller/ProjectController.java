@@ -328,7 +328,7 @@ public class ProjectController {
 			List<SkillVo> CreateSkillList = service.getCreateProjectSkill(project_id);
 			List<SkillVo> CreateNotInSkillList = service.getCreateNotInProjectSkill(project_id);
 			List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
-			
+			List<String> members = service.getTeamMembers(project_id);
 			
 			model.addAttribute("AdrList", AdrList);
 			model.addAttribute("FieldList", FieldList);
@@ -339,11 +339,10 @@ public class ProjectController {
 			model.addAttribute("Pmcountlist",pmcountlist);
 			model.addAttribute("CreateSkillList",CreateSkillList);
 			model.addAttribute("CreateNotInSkillList",CreateNotInSkillList);
+			model.addAttribute("Members",members);
 			
 		}
-		
-
-		
+	
 		return "Project/ProjectEdit";
 	}
 	

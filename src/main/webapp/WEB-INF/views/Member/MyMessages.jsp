@@ -42,19 +42,17 @@
 									<th>FROM</th>
 									<th>MESSAGE</th>
 									<th>DATE</th>
-									<th><input type="checkbox" class="all"></th>
+									<th class="check_th"><input type="checkbox" class="all" id="all_to"></th>
 								</tr>
 
 							</thead>
+							<form method="post" action="" id="to_note_form">
 							<c:forEach var="tolist" items="${tolist}">
 								<c:choose>
 									<c:when test="${not empty tolist}">
-
-
 										<c:choose>
-
+										
 											<c:when test="${tolist.NOTE_OK eq '0'}">
-
 												<tbody class="apply_table_sec new">
 													<tr id="to${tolist.NOTE_ID}">
 														<td class="isread"><i class="far fa-envelope"></i></td>
@@ -66,7 +64,8 @@
 														</td>
 														<td class="date">${tolist.NOTE_DATE}</td>
 														<td class="del_check"><input type="checkbox"
-															class="del_received"></td>
+															class="del_received"  name="NOTE_ID" value="${tolist.NOTE_ID}">
+															<%-- <label for="check_to_${tolist.NOTE_ID}"><i class="far fa-trash-alt"></label> --%></td>
 													</tr>
 												</tbody>
 											</c:when>
@@ -84,11 +83,12 @@
 														</td>
 														<td class="date">${tolist.NOTE_DATE}</td>
 														<td class="del_check"><input type="checkbox"
-															class="del_received"></td>
+															class="del_received" name="NOTE_ID" value="${tolist.NOTE_ID}">
+															<%-- <label for="check_to_${tolist.NOTE_ID}"><i class="far fa-trash-alt"></label> --%></td>
 													</tr>
 												</tbody>
 											</c:when>
-
+										
 										</c:choose>
 									</c:when>
 									<c:otherwise>
@@ -103,11 +103,12 @@
 
 								</c:choose>
 							</c:forEach>
+							</form>
 						</table>
 
 						<div class="info_text_sec">
 							<p class="info_text">
-								<i class="fas fa-cut"></i> 클릭하면 해당 쪽지를 삭제할 수 있어요!
+								 삭제하고 싶은 쪽지를 선택하세요 <i class="far fa-trash-alt trash" id="to_trash"></i>
 							</p>
 						</div>
 						<div class="marginBox"></div>
@@ -117,6 +118,7 @@
 							<p class="table_name_text">보낸 쪽지</p>
 						</div>
 						<table class="table wish_table apply_table" id="from">
+						
 							<thead>
 
 								<tr class="table_head">
@@ -124,12 +126,14 @@
 									<th>TO</th>
 									<th>MESSAGE</th>
 									<th>DATE</th>
-									<th><input type="checkbox" class="all"></th>
+									<th><input type="checkbox" class="all" id="all_from"></th>
 								</tr>
 
 							</thead>
+							<form method="post" action="" id="from_note_form">
 							<c:forEach var="fromlist" items="${fromlist}">
 								<c:choose>
+								
 									<c:when test="${not empty fromlist}">
 
 										<tbody class="apply_table_sec">
@@ -143,10 +147,11 @@
 												</td>
 												<td class="date">${fromlist.NOTE_DATE}</td>
 												<td class="del_check"><input type="checkbox"
-													class="del_send"></td>
+													class="del_send" name="NOTE_ID" value="${fromlist.NOTE_ID}"></td>
 											</tr>
 										</tbody>
 									</c:when>
+									
 									<c:otherwise>
 
 										<tbody class="apply_table_sec">
@@ -160,11 +165,13 @@
 
 								</c:choose>
 							</c:forEach>
+							</form>
 						</table>
 						<div class="info_text_sec">
 							<p class="info_text">
-								<i class="fas fa-cut"></i> 클릭하면 해당 쪽지를 삭제할 수 있어요!
+								  삭제하고 싶은 쪽지를 선택하세요 <i class="far fa-trash-alt trash" id="from_trash"></i> 
 							</p>
+
 						</div>
 					</div>
 				</div>
@@ -274,6 +281,24 @@
 		</div>
 	</div>
 </body>
+<c:set var="email" value="${eamil}"/>
+<script>
+//쪽지 목록 불러오기(추가나 삭제 후 비동기)
+function getnotelist(table){
+	
+	var data = {
+		
+		table : table,
+		useremail : ${email}
+		
+	}
+	
+	$.ajax({});
+	
+}
+
+
+</script>
 <script src="${pageContext.request.contextPath}/assets/js/mymessages.js"></script>
 <jsp:include
 	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
