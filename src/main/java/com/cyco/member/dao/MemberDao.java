@@ -65,9 +65,9 @@ public interface MemberDao {
 	public Integer getOldAlarm(String memberid);
 	
 	//로그인시 참여중인(팀장으로) 프로젝트 있는지 체크
-	public P_DetailVo isProjectManager(String memberid);
+	public List<P_DetailVo> isProjectManager(String memberid);
 	//로그인시 참여중인(멤버로) 프로젝트 있는지 체크
-	public HashMap<String, String> isInProject(String memberid);
+	public List<HashMap<String, String>> isInProject(String memberid);
 	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
