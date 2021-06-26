@@ -41,7 +41,11 @@ const Sconfig = {
     plugins: {
       title: {
         display: true,
-        text: '프로젝트/회원 사용 기술 순위'
+        text: '프로젝트/회원 사용 기술 순위',
+		font:{
+			size:30,
+			weight:'bold',
+		}
       }
     },
     scales: {
@@ -75,7 +79,11 @@ const Pconfig = {
     plugins: {
       title: {
         display: true,
-        text: '프로젝트/회원 선호 포지션 순위'
+        text: '프로젝트/회원 선호 포지션 순위',
+		font:{
+			size:30,
+			weight:'bold',
+		}
       }
     },
     scales: {
@@ -109,7 +117,11 @@ const Fconfig = {
     plugins: {
       title: {
         display: true,
-        text: '프로젝트 참여 분야 순위'
+        text: '프로젝트 참여 분야 순위',
+		font:{
+			size:30,
+			weight:'bold',
+		}
       }
     },
     scales: {
@@ -135,7 +147,11 @@ const Stateconfig = {
       },
       title: {
         display: true,
-        text: '상태별 프로젝트 수'
+        text: '상태별 프로젝트 수',
+		font:{
+			size:30,
+			weight:'bold',
+		}
       }
     }
   },

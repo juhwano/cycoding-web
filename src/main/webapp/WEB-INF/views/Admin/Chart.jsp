@@ -29,30 +29,40 @@
 
 	<main>
 		<div class="section">
-			<div class="container">
-				<div class="mpcount" >
-					<div class="card mcount">
-						<div class="card-body ">활동중인 회원 수<div class="mcountdiv"></div></div>
-					</div>
+			<div class="container card">
+				<div class="mpcount mt-6 mb-5" >
 					<div class="card pcount">
-						<div class="card-body">지금까지 생성된 프로젝트 수<div class="pcountdiv"></div></div>
+						<div class="card-body">
+							<p>지금까지 생성된 프로젝트 수</p>
+							<div class="pcountdiv"></div>
+						</div>
+					</div>
+					<div class="card mcount ">
+						<div class="card-body ">
+							<p>활동중인 회원 수</p>
+							<div class="mcountdiv"></div>
+						</div>
 					</div>
 				</div>
-				<div class="card">
-					<div class="card-body"><canvas id="SkillChart"></canvas></div>
+				<div class=barchartWrap>
+					<div class="bar mx-sm-5">
+						<div class="card-body"><canvas id="SkillChart"></canvas></div>
+					</div>
+					
+					<div class="bar mx-sm-5">
+						<div class="card-body"><canvas id="PositionChart"></canvas></div>
+					</div>
+					
+					<div class="bar mx-sm-5">
+						<div class="card-body"><canvas id="FieldChart"></canvas></div>
+					</div>
+					<div class="pie">
+						<div class="card-body"><canvas id="StateChart"></canvas></div>
+					</div>
 				</div>
 				
-				<div class="card">
-					<div class="card-body"><canvas id="PositionChart"></canvas></div>
-				</div>
 				
-				<div class="card">
-					<div class="card-body"><canvas id="FieldChart"></canvas></div>
-				</div>
 				
-				<div class="card">
-					<div class="card-body"><canvas id="StateChart"></canvas></div>
-				</div>
 
 				
 			</div>
@@ -119,16 +129,16 @@ const Sdata = {
 	    {
       label: '프로젝트',
       data: PScountdata,
-      borderColor: 'blue',
-      backgroundColor: 'blue',
+      borderColor: '#CA8FAB',
+      backgroundColor: '#CA8FAB',
 		type:'bar',
 		 yAxisID: 'y1'
     },
     {
       label: '회원',
       data: MScountdata,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: '#c28aeede',
+      backgroundColor: '#c28aeede',
       type: 'bar',
  		yAxisID: 'y'
     }
@@ -142,16 +152,16 @@ const Pdata = {
 	    {
       label: '프로젝트',
       data: PPcountdata,
-      borderColor: 'blue',
-      backgroundColor: 'blue',
+      borderColor: '#CA8FAB',
+      backgroundColor: '#CA8FAB',
 		type:'bar',
 		 yAxisID: 'y1'
     },
     {
       label: '회원',
       data: MPcountdata,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: '#c28aee',
+      backgroundColor: '#c28aeede',
       type: 'bar',
  		yAxisID: 'y'
     }
@@ -165,8 +175,8 @@ const Fdata = {
 			    {
 		      label: '프로젝트',
 		      data: PFcountdata,
-		      borderColor: 'blue',
-		      backgroundColor: 'blue',
+		      borderColor: '#CA8FAB',
+		      backgroundColor: '#CA8FAB',
 				type:'bar',
 				 yAxisID: 'y1'
 		    }
@@ -179,7 +189,7 @@ const Statedata = {
 		    {
 		      label: '상태별 프로젝트 수',
 		      data: STcountdata,
-		      backgroundColor: ['red', 'blue', 'green'],
+		      backgroundColor: ['#ffb0b2', '#3eaf3a8a', '#0d6efd66'],
 		    }
 		  ]
 		};
