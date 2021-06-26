@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.NoteVo;
 import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.member.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -133,5 +134,30 @@ public class AlarmRestController {
 		Boolean bo = alarmservice.makeAlarm(list);
 		
 		return bo;
+	}
+	
+	//쪽지 삭제
+	@RequestMapping(value="deletenotes", method={RequestMethod.GET, RequestMethod.POST})
+	public Boolean deleteNotes(@RequestBody HashMap<String, Object> data) {
+		
+		String table = (String)data.get("table");
+		
+		ObjectMapper objectMapper = new ObjectMapper();		
+		List<String> noteid = objectMapper.convertValue(data.get("note_id"), List.class);
+
+		Boolean bo = alarmservice.deleteNotes(table, noteid);
+		
+		return bo;
+	}
+	
+	//비동기로 쪽지 리스트 불러오기
+	@RequestMapping(value="getnotelist", method=RequestMethod.POST)
+	public List<NoteVo> getNoteList(@RequestBody HashMap<String, Object> data) {
+		
+		String useremail = (String)data.get("useremail");
+		String table = (String)data.get("table");
+		List<NoteVo> notelist = alarmservice.getNoteList(useremail, table);
+		
+		return notelist;
 	}
 }

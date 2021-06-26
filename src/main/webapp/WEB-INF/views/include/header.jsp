@@ -386,21 +386,6 @@ $('#alram').click(function() {
 		ws.send(data);
 		resolve(res);
 		});
-/* 		$.ajax({
-			
-			url:"/alarm/insertalarm",
-			type:"post",
-			dataType:"json",
-			data:data,
-			dataType:"text",
-			contentType: "application/json; charset=utf-8;",
-			success:function(res){
-				console.log(res)
-			},
-			error:function(xhr){
-				console.log(xhr)
-			}			
-		}); */
 		
 	}
 	
@@ -442,10 +427,8 @@ $('#alram').click(function() {
 			
 			openSocket();
 			chekcBell(logineduser);
-			updatealarmlist(logineduser);
-		
+			updatealarmlist(logineduser);		
 		}
-		
 		
 		//드롭다운 메뉴
 		$("#my_sub").hide();
@@ -486,6 +469,30 @@ $('#alram').click(function() {
 				setTimeout(function(){_this.find(".sub").slideUp(600)},3000)
 			})
 		});
+		
+		//헤더에 있는 새 알림 클릭해서 이동하면 상태 확인으로 업데이트 하기
+		$(document).on("click", ".alarm_content", function() {
+		//$(".alarm_content").on("click",function(){
+			var id=  $(this).attr("id");
+			console.log(id, " 이벤트");
+			$.ajax({
+				url: "/alarm/checkalarm",
+				data: { alarm_id:id},
+				dataType: "text",
+				type: "post",
+				success: function(res) {
+					console.log("헤더 알림 리스트에서 상태 업데이트 ", res);
+				},
+				error: function(xhr) {
+					console.log(xhr);
+				}
+			});
+			
+			
+		});
+		
+		
+		$("main").off('click');
 	
 
 	});

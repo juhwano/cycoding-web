@@ -1,5 +1,6 @@
 package com.cyco.alarm.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cyco.alarm.dao.AlarmDao;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.NoteVo;
 import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.alarm.vo.V_FromNote_Member_Vo;
 import com.cyco.alarm.vo.V_ToNote_Member_Vo;
@@ -150,4 +152,54 @@ public class AlarmService {
 
 		return bo;
 	}
+	
+	// 수신, 발신 쪽지함 삭제
+	public Boolean deleteNotes(String table, List<String> noteid) {
+		
+		Boolean bo = false;
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		
+		int row = alarmdao.deleteNotes(table, noteid);
+
+		if (row > 0) {
+			bo = true;
+		}
+
+		return bo;
+		
+	}
+	
+	//비동기 쪽지 리스트 불러오기
+	
+	  public List<NoteVo> getNoteList(String useremail, String table) {
+	  
+	  AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+	  List<NoteVo> notelist = new ArrayList<NoteVo>();
+	  List<V_ToNote_Member_Vo> to_notelist = new ArrayList<V_ToNote_Member_Vo>();
+	  List<V_FromNote_Member_Vo> from_notelist = new ArrayList<V_FromNote_Member_Vo>();
+	  
+
+	  if(table.equals("TO_NOTE")) { 
+		  
+		  to_notelist = alarmdao.getReceivedMessages(useremail);
+		  
+		  for(int i = 0; i < to_notelist.size(); i++) {
+			  
+			  notelist.add(to_notelist.get(i));
+		  }
+		  
+	  }else if(table.equals("FROM_NOTE")) {
+		  
+		  from_notelist = alarmdao.getSendMessages(useremail);
+		  
+		  for(int i = 0; i < to_notelist.size(); i++) {
+			  
+			  notelist.add(from_notelist.get(i));
+		  }
+		  
+	  }
+	  
+	  	return notelist; 
+	  }
+	
 }

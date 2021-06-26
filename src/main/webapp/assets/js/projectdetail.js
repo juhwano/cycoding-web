@@ -19,6 +19,7 @@ $(document).ready(function() {
 	$('.Project_Detail_modal').hide();
 
 	if ("false" == "true") {
+
 		$('.Project_Apply_modal').empty();
 
 		var table = "<div class='ProjectApplyMemberListDiv'>";
@@ -1262,9 +1263,6 @@ $(document).ready(function() {
 							document.location.reload(true);
 						});
 					}
-
-
-
 
 				}
 			});

@@ -112,8 +112,8 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
-
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>후기가 작성됐습니다</p></a></li>"
+								//"<li class='header_alarm'><a href='#'><p id='" + data.alarm_ID + "' class='alarm_content'>후기가 작성됐습니다</p></a></li>"
 							);
 
 						} else if (data.alarm_CODE == "CHAT_O") {

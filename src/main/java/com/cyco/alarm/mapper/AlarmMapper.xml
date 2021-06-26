@@ -121,5 +121,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update to_note set note_ok='1' where
 		note_id=${noteid}
 	</update>
-
+	
+	<!-- 발신, 수신 쪽지 삭제 -->
+	<delete id="deleteNotes" parameterType="java.util.List">
+		delete ${param1} 
+			<where>
+				<foreach collection="param2" item="item" separator="or">
+				 	(note_id=${item})
+				</foreach>
+			</where>
+	</delete>
 </mapper>

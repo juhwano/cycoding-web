@@ -79,12 +79,12 @@ public class MemberService {
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
 		if(memberdao.isProjectManager(memberid) != null) {
-			p_info.put("project_id",(String)memberdao.isProjectManager(memberid).getProject_id());
-			p_info.put("p_title",(String)memberdao.isProjectManager(memberid).getP_title());
+			p_info.put("project_id",(String)memberdao.isProjectManager(memberid).get(0).getProject_id());
+			p_info.put("p_title",(String)memberdao.isProjectManager(memberid).get(0).getP_title());
 			
 		}else if(memberdao.isInProject(memberid) != null){
-			p_info.put("project_id", String.valueOf(memberdao.isInProject(memberid).get("PROJECT_ID")));
-			p_info.put("p_title", String.valueOf(memberdao.isInProject(memberid).get("P_TITLE")));
+			p_info.put("project_id", String.valueOf(memberdao.isInProject(memberid).get(0).get("PROJECT_ID")));
+			p_info.put("p_title", String.valueOf(memberdao.isInProject(memberid).get(0).get("P_TITLE")));
 
 		} else {
 			p_info.put("project_id", "none");
