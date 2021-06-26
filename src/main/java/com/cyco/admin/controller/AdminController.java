@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cyco.admin.dao.AdminDao;
 import com.cyco.admin.service.AdminService;
+import com.cyco.admin.vo.ChartCount;
 import com.cyco.admin.vo.MemberListVo;
+import com.cyco.admin.vo.StateCountVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
@@ -60,5 +63,39 @@ public class AdminController {
 		m.addAttribute("fieldList",fieldList);
 		
 		return "Admin/SiteManage";
+	}
+	
+	@RequestMapping(value="/chart", method=RequestMethod.GET)
+	public String showChart(Model m) {
+		//정상적으로 활동중인 회원 수
+		int mcount = service.getMemberCount();
+			
+		//지금까지 생성된 프로젝트 수
+		int pcount =  service.getProjectCount(); 
+			
+		//프로젝트가 가지는 기술, 포지션, 분야 랭크
+		List<ChartCount> PscountList =  service.getPSkillCount();
+		List<ChartCount> PpcountList = service.getPpositionCount();
+		List<ChartCount> PfcountList = service.getPFieldCount();
+		
+		//회원이 가지는 기술, 포지션
+		List<ChartCount> MscountList =  service.getMSkillCount();
+		List<ChartCount> MpcountList = service.getMpositionCount();
+		
+		
+		//프로젝트 상태 카운트 - 도넛예정
+		List<StateCountVo> stateList = service.getStateCount();
+		
+		m.addAttribute("mcount",mcount);
+		m.addAttribute("pcount",pcount);
+		m.addAttribute("PscountList",PscountList);
+		m.addAttribute("PpcountList",PpcountList);
+		m.addAttribute("PfcountList",PfcountList);
+		m.addAttribute("MscountList",MscountList);
+		m.addAttribute("MpcountList",MpcountList);
+		m.addAttribute("stateList",stateList);
+		
+		
+		return "Admin/Chart";
 	}
 }

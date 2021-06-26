@@ -1,0 +1,7 @@
+@charset "UTF-8";
+.mpcount{
+	display: flex;
+}
+.mcountdiv, .pcountdiv{
+	font-size: 90px;
+}

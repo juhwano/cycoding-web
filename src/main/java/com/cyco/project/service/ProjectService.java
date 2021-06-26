@@ -456,7 +456,7 @@ public class ProjectService {
 					else {
 						System.out.println("모집중이고 조회수 순으로 출력");
 						resultlist=getOrderedViewsList(null);
-						break;
+						return resultlist;
 					}
 					filtered_list = allFilteredList(map);
 					
@@ -489,7 +489,9 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 
 		List<V_PjAdrField_Join_V_PDetail> list = dao.getRecommList(filtered_list);
-		list = list.subList(0, 9);
+		if(list.size()>9) {
+			list = list.subList(0, 9);
+		}
 		return list;
 		
 	}

@@ -79,9 +79,5 @@
 <jsp:include
 	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 <script type="text/javascript" src="/assets/js/adminMember.js"></script>
-<script type="text/javascript">
-	function cos(){
-		console.log("클릭");
-	}
-</script>
+
 </html>
