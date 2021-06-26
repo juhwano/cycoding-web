@@ -10,7 +10,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class ChangeAuth {
-
+	
+	// role에 새로 부여할 권한의 풀네임을 적는다 ex) ROLE_MEMBER
 	public ChangeAuth(String role){
 		
 		//현재 로그인된 기존 계정의 정보를 가져옴

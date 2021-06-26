@@ -12,7 +12,7 @@ import lombok.Data;
 public class MemberVo implements UserDetails{
 
 
-	private String MEMBER_ID;
+	private int MEMBER_ID;
 	private String MEMBER_EMAIL;
 	private String MEMBER_PWD;
 	private String MEMBER_NAME;
