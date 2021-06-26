@@ -180,7 +180,7 @@
 	
 	<!-- 프로젝트 지원내역 -->
 	<insert id="setProjectApply" >
-		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID,APPLY_DATE) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id},sysdate)
+		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID,APPLY_DATE, APPLY_OK) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id},sysdate, 0)
 	</insert>
 	
 	<!-- 생성된 프로젝트 정보 다 가져오는 테이블 -->

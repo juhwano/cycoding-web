@@ -414,10 +414,6 @@ public class MyPageRestController {
 		String useremail = data.get("useremail");
 		String userPwd = data.get("userPwd");
 
-		System.out.println("비동기컨트롤러 mypageCheck 진입");
-		System.out.println("useremail: " + useremail);
-		System.out.println("userPwd: " + userPwd);
-
 		if (memberdetailservice.checkPwd(data)) {
 			return true;
 		}

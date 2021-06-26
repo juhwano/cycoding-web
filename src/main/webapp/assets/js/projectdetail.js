@@ -17,8 +17,8 @@ $(document).ready(function() {
 	// 모달 숨기기
 	$('.Project_Apply_modal').hide();
 	$('.Project_Detail_modal').hide();
-
-	if ("false" == "true") {
+	
+	if("true" == "false"){
 
 		$('.Project_Apply_modal').empty();
 
