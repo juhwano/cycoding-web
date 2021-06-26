@@ -257,3 +257,63 @@
     align-items: center;
     padding:20px;	
 }
+
+/* Locale 관련  */
+#STATICMENU { 
+	margin: 0pt; 
+	padding: 0pt;  
+	position: absolute; 
+	right: 0px; 
+	top: 0px;
+}
+
+#circle1 {
+background-color:#CA8FAB;
+width:25px;
+height:25px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+cursor: pointer;
+}
+#circle1:hover{
+background-color:#FFFFFF;
+}
+
+#circle2 {
+background-color:#C0A9BD;
+width:25px;
+height:25px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+cursor: pointer;
+}
+
+#circle2:hover{
+background-color:#FFFFFF;
+}
+
+#circle3 {
+background-color:#94A7AE;
+width:25px;
+height:25px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+cursor: pointer;
+}
+
+#circle3:hover{
+background-color:#FFFFFF;
+}
+

@@ -31,6 +31,7 @@ public class AlarmController {
 		List<V_FromNote_Member_Vo> fromlist = alarmservice.getSendMessages(auth.getName());
 		
 		ModelMap mmp = new ModelMap();
+		mmp.put("email", auth.getName());
 		mmp.put("tolist", tolist);
 		mmp.put("fromlist", fromlist);
 		

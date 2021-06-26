@@ -29,6 +29,65 @@
 			    
 	</select>
 	
+	<!-- ================== Chart ========================= -->
+	<select id="getMemberCount" resultType="int">
+		select count(*) as mcount from member
+		where member_id != 0 and member_email !='null' and enabled =1
+	</select>
+	
+	<select id="getProjectCount" resultType="int">
+		select count(*) as pcount from project
+	</select>
+	
+	<select id="getPSkillCount" resultType="com.cyco.admin.vo.PSkillCountVo">
+		select sk.skill_code as id ,sk.skill_name as name, count(decode(psk.project_id,(null),null,1)) as count  
+		from skill sk
+		left join p_skill psk
+		on sk.skill_code = psk.skill_code
+		group by sk.skill_code,sk.skill_name
+		order by count desc
+	</select>
+	<select id="getPpositionCount" resultType="com.cyco.admin.vo.PpositionCountVo">
+		select pos.position_id as id, pos.position_name as name,  count(decode(pm.project_id,null,null,1)) as count
+		from position pos
+		left join p_member pm
+		on pos.position_id = pm.position_id
+		group by pos.position_id, pos.position_name
+		order by count desc
+	</select>
+	<select id="getPFieldCount" resultType="com.cyco.admin.vo.PFieldCountVo">
+		select pf.field_code as id, pf.field_name as name, count(decode(p.project_id, null, null ,1)) as count
+		from p_field pf
+		left join project p
+		on p.field_code = pf.field_code
+		group by  pf.field_code, pf.field_name
+		order by count desc
+	</select>
+	
+	<select id="getMSkillCount" resultType="com.cyco.admin.vo.MSkillCountVo">
+		select sk.skill_code as id,sk.skill_name as name, count(decode(msk.member_id,(null),null,1)) as count 
+		from skill sk
+		left join m_skill msk
+		on sk.skill_code = msk.skill_code
+		group by sk.skill_code,sk.skill_name
+		order by count desc
+	</select>
+	<select id="getMpositionCount" resultType="com.cyco.admin.vo.MpositionCountVo">
+		select pos.position_id as id, pos.position_name as name,  count(decode(md.member_id,null,null,1)) as count
+		from position pos
+		left join m_detail md
+		on pos.position_id = md.position_id
+		group by pos.position_id, pos.position_name
+		order by count desc
+	</select>
+
+	
+	<select id="getStateCount" resultType="com.cyco.admin.vo.StateCountVo">
+		select p_state,count(*) as count from p_detail
+		group by p_state
+	</select>
+	
+	
 
 	<!-- =================        ajax        =============================     -->
 	

@@ -486,5 +486,10 @@
 		ORDER BY "REF" DESC, STEP asc
 	</select>
 	
+	<!-- 프로젝트 수정에서 상태 변경시 알림 보낼 프로젝트 멤버들 목록 -->
+	<select id="getTeamMembers" resultType="String">
 	
+		select member_id from p_member where project_id=${project_id} and member_id is not null
+	
+	</select>
 </mapper>
