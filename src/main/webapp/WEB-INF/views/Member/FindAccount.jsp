@@ -28,13 +28,43 @@
 		<div class="check-box">
 			<div class="check-text">
 				<div class="check-form">
+					<div class="findEmailBox">
 					<i class="fas fa-key checkIcon"></i>
 					<p> 비밀번호 찾기 </p>
-						<input class="check-input" id="userEmail" placeholder="이메일" name="userEmail" type="password">
+					</div>
+					<div class="findEmailBox">
+						<input class="check-input" id="userPwdName" placeholder="이름" name="userName" type="text">
+						<input class="check-input" id="userEmail" placeholder="이메일" name="userEmail" type="text">
+						<input class="check-input" id="userConfirm" placeholder="인증번호" name="userConfirm" type="text">
+					</div>
+					<button type="button" class="checkBtn" id="findPwdBtn">찾기</button>
+					<button type="button" class="checkBtn" id="userConfirmBtn">인증</button>
 				</div>
 			</div>
 		</div>
-	</div>
+		
+		<!-- 모달 -->
+       	<div id="emailModal" class="findEmailModal">
+	       	<div class="emailBox">
+				<div class="emailModalDiv">
+					<div class="modal_XBtn">
+						<i class="fas fa-times"></i>
+					</div>
+					<div class="emailIcon">
+						📨
+					</div>
+					<div class="emailInfo">
+						<p>고객님이 가입하신 이메일의 일부 정보입니다.</p>
+						<p class="userCutEmail"></p>
+						<div class="modalLinkSec">
+							<a href="login">로그인하러가기</a>
+						</div>
+					</div>
+				</div>		
+			</div>
+		</div>	
+		
+	</div><!-- container end -->
 	
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 </body>

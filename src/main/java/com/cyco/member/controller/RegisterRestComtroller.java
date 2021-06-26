@@ -196,11 +196,97 @@ public class RegisterRestComtroller {
 			StringBuffer sb = new StringBuffer(userEmail);
 			String cutEmail = sb.replace( 3 , indexOf, "*******" ).toString();
 			
-			System.out.println("이메일잘렸나여 " + cutEmail);
 			result = cutEmail;
 		}
 		
 		return result;
 	}
+	
+	@RequestMapping(value="ajax/findPwd")
+	public String beforeFindPwd(@RequestParam Map<String, String> data) {
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		String result = "";
+		
+		String userName = data.get("userName");
+		String userEmail = data.get("userEmail");
+		
+		int exist = memberdao.beforeFindPwd(userName, userEmail);
+		
+		if(exist == 0) {
+			result = "noExist";
+		}else {
+			result = "Exist";
+		}
+		return result;
+	}
+	
+	//비밀번호 찾기용 메일보내기 findPwdEmailSend
+	@RequestMapping(value="findPwdEmailSend.ajax", method=RequestMethod.POST)
+	public String findPwdEmailSend(HttpServletRequest request, String email, HttpServletResponse response_email) throws IOException {
+		 
+		System.out.println("인증메일 발송 컨트롤러");
+
+        Random r = new Random();
+        int dice = r.nextInt(4589362) + 49311; //이메일로 받는 인증코드 부분 (난수)
+        
+        String setfrom = "cycoding196@gmail.com";
+        String tomail = request.getParameter("userEmail"); // 받는 사람 이메일
+        String title = "[CYCODING]사이좋게 코딩하자 사이코딩 인증 메일입니다"; // 제목
+        String content =
+        
+        System.getProperty("line.separator")+ //한줄씩 줄간격을 두기위해 작성        
+        System.getProperty("line.separator")+
+                
+        "안녕하세요 회원님!" +
+        System.getProperty("line.separator")+ 
+        "비밀번호를 변경하기 위해 아래의 인증코드를 입력해주세요."
+        
+        +System.getProperty("line.separator")+        
+        System.getProperty("line.separator")+
+
+        "[ " +dice+ " ]"
+        
+        +System.getProperty("line.separator")+       
+        System.getProperty("line.separator")+
+        
+        "위의 인증번호를 인증번호 창에 입력하시면 다음 단계로 진행이 가능합니다." // 내용
+        
+        +System.getProperty("line.separator")+
+        System.getProperty("line.separator")+
+        
+        "감사합니다!";
+        
+        String result = "fail";
+        
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(message,
+                    true, "UTF-8");
+
+            messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+            messageHelper.setTo(tomail); // 받는사람 이메일
+            messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+            messageHelper.setText(content); // 메일 내용
+            
+            mailSender.send(message);
+            
+            String number = Integer.toString(dice);
+            
+            result = "success-" + number;
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        System.out.println(dice);
+        
+        ModelAndView mav = new ModelAndView();
+        
+        mav.addObject("dice", dice);
+        mav.addObject("result", result);
+        
+        return result;
+        
+    }
 
 }

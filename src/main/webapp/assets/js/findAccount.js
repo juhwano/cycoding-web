@@ -1,4 +1,4 @@
-//닉네임 중복체크
+//이메일찾기
     $('#findEmailBtn').click(function() {
         let userName = $('#userName').val();
         let userPhone = $('#userPhone').val();
@@ -26,20 +26,113 @@
 				console.log(data);
 				if (data == 'noExist') {
 					 swal("존재하지 않는 사용자입니다." , "이름과 핸드폰번호를 다시 확인해주세요" ,"error");
+				} else {
+					
+					$(".userCutEmail").text("[ " + data + "]");
+					$(".findEmailModal").css("display", "flex");
+					
+					$('#userName').val("");
+					$('#userPhone').val("");
+					
 				}
-                /*if (data == 'able') {
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    
+    $('.modal_XBtn').click(function() {
+		$(".findEmailModal").css("display", "none");
+	});
+	
+	
+   //비밀번호
+    $('#findPwdBtn').click(function() {
+        let userName = $('#userPwdName').val().trim();
+        let userEmail = $('#userEmail').val().trim();
 
-                    swal("사용 가능한 닉네임입니다." , "" ,"success");
-                    $('#nickNameCheckBtn').html('체크완료');
-                    $('#nickNameCheckBtn').attr('disabled', 'true');
-                    
-                    $("#nickNameCheck").css("color","green");
-                    $("#nickNameCheck").text("✔사용 가능한 닉네임입니다");
-                    
-                } else {
+        if (userName == '') {
+            swal("이름을 입력해주세요." , "" ,"error");
+            $("#userPwdName").focus();
+            return;
+        }else if (userEmail == '') {
+			swal("이메일을 입력해주세요." , "" ,"error");
+            $("#userEmail").focus();
+            return;
+		}
 
-                    swal("이미 존재하는 닉네임입니다." , "" ,"error");
-                }*/
+        $.ajax({
+            url: "register/ajax/findPwd",
+            data: {
+                userName: userName,
+                userEmail: userEmail
+            },
+            type: "get",
+            dataType: "text",
+            success: function(data) {
+				console.log(data);
+				if (data == 'noExist') {
+					 swal("존재하지 않는 사용자입니다." , "이름과 이메일주소를 다시 확인해주세요" ,"error");
+				} else {
+					
+					swal("📨" , "가입하신 이메일로 메일을 전송합니다.");
+					
+					$("#userPwdName").css("display", "none");
+					$("#userEmail").css("display", "none");
+					$("#findPwdBtn").css("display", "none");
+					
+					
+					$("#userConfirm").css("display", "block");
+					$("#userConfirmBtn").css("display", "inline-block");
+					
+					$.ajax({
+                        url: "register/findPwdEmailSend.ajax",
+                        data: {
+                            userEmail: userEmail
+                        },
+                        type: "post",
+                        dataType: "text",
+                        success: function(data) {
+                            console.log(data);
+                            
+                            let result = data.split("-");
+                            if (result[0] == 'fail') {
+
+                                swal("인증 메일 발송에 실패했습니다." , "" ,"error");
+                                
+                            } else {
+                               
+                                dice = result[1];
+                                console.log("랜덤 숫자 : ",dice);
+                                
+                                //이메일 인증번호 확인
+                                $("#userConfirmBtn").click(function(){
+                                    
+                                    $("#userConfirm").val();
+                                    console.log("인증확인 클릭");
+                                    console.log(dice);
+                                    
+                                    if(dice == $("#userConfirm").val()){
+                                        swal("인증이 완료되었습니다." , "" ,"success");
+                                        
+                                    } else if( $("#userConfirm").val() == ""){
+                                        swal("인증번호를 입력해주세요." , "" ,"error");
+                                    } else if(dice != $("#userConfirm").val()){
+                                        swal("다시 입력해주세요." , "" ,"error");
+                                    }
+                                    
+                                    
+                                });
+                                
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+					
+				}
             },
             error: function(error) {
                 console.log(error);

@@ -192,5 +192,8 @@ public interface MemberDao {
 	public int beforeFindEmail(String userName, String userPhone);
 	//이메일찾기
 	public String findEmail(String userName, String userPhone);
+	
+	//비밀번호찾기 전 해당 유저의 정보가 존재하는지 확인
+	public int beforeFindPwd(String userName, String userEmail);
 
 }

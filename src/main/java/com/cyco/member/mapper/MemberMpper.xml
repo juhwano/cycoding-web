@@ -74,5 +74,10 @@
 	<select id="findEmail" resultType="String">
 		select member_email from member where member_name = #{param1} and member_phone=#{param2}
 	</select>
+	
+	<!-- 비밀번호찾기 전 존재 확인 -->
+	<select id="beforeFindPwd" resultType="_int">
+		select count(*)from member where member_name = #{param1} and member_email=#{param2}
+	</select>
 
 </mapper>
