@@ -147,10 +147,40 @@
 	</choose>
 	</update> 
 	
+	<!--  ================   회원 영구정지  ================ -->
+	<select id="getMemberAuth" parameterType="string" resultType="string">
+		select authority_id
+		from m_auth
+		where member_id=${member_id} 
+	</select>
+	
 	<update id="updateMemberEnabled">
 		update member
 		set enabled=${data.enabled}
 		where member_id=${data.member_id}
 	</update>
+	<!-- 회원의 권한 가져오기 -->
+
+	
+	<!-- 일반 회원일때 -->
+	<select id="procedureBanMember" statementType="CALLABLE" parameterType="string">
+	<!-- //1. 진행중 or 모집중이던 p_member에서 null처리
+		 //2. 지원내역 null처리 -->
+		{CALL BanMember(
+			${member_id}
+		)
+		}
+	</select>
+	
+	
+	
+	
+	
+	<update id="updateBanAuth">
+		update m_auth
+		set authority_id=${data.auth}
+		where member_id=${data.member_id}
+	</update>
+	
 <!--                        ajax                                  -->
 </mapper>

@@ -52,5 +52,13 @@ public interface AdminDao {
 	
 	public List<V_MlistVo> getMemberSearch(String nickname);
 	
+	/* 회원 영구정지 */
+	
+	//회원 권한 가져오기
+	public String getMemberAuth(String member_id);
+	
+	void procedureBanMember(String member_id);
+	
 	public int updateMemberEnabled(@Param("data") Map<String, String> data);
+	public int updateBanAuth(@Param("data") Map<String, String> data);
 }
