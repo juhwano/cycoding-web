@@ -169,9 +169,9 @@
 								<se:authorize
 									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">
 
-									<!-- 로그인 -->
+									<!-- 로그인 id에 스타일 줬는데 id가 안 잡혀서 인라인으로 스타일 줌-->
 									<li class="nav-item dropdown panel-group" id="accordion"
-										role="tablist" aria-multiselectable="true" id="alarmbell_li">
+										role="tablist" aria-multiselectable="true" id="alarmbell_li" style="margin-right:30px;">
 										<div class="panel panel-default" id="alarm_panel">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
@@ -467,8 +467,10 @@ $('#alram').click(function() {
 			
 			openSocket();
 			chekcBell(logineduser);
-			updatealarmlist(logineduser);		
+			updatealarmlist(logineduser);
+			
 		}
+		
 		
 /* 		//드롭다운 메뉴
 		$("#my_sub").hide();
@@ -566,19 +568,7 @@ $('#alram').click(function() {
 		});
 	}	
 	
-	//영정회원일 경우
-	if($("#getout").val() == "1"){
-		
-		swal({
-			title: "BAN",
-			text: "더 이상 사이트를 이용하실 수 없습니다",
-			icon: "error",
-			button: true,
-			dangerMode: true,
-		})
-		.then(function(){location.href="logout"});
-		
-	}
+
 			
 	});
 ///////////////////////////////////////////

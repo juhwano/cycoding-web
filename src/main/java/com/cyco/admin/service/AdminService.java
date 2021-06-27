@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cyco.admin.dao.AdminDao;
 import com.cyco.admin.vo.ChartCount;
@@ -148,17 +149,74 @@ public class AdminService {
 	}
 	
 	// 회원의 영구정지 상태를 변경하는 기능
+	@Transactional
 	public String updateMemberEnabled(Map<String,String> data) {
 		AdminDao dao = sqlsession.getMapper(AdminDao.class);
+		String result="false";
+		/*
+		 	권한체크 먼저해주고
+			 	1 : 뭐 없는 멤버
+			 	2 : 기존멤버
+			 	3 : 팀장
+			 	4 : 패널티
+			 	5 : 밴
+			 	
+			* 팀장이라면 밴 먹이고 다른팀원에게 팀장 위임 -> 다시 일반멤버로
+			* 기존멤버이면 밴 먹이고 진행중 플젝(p_member) 빠지기-> 다시 일반멤버
+			* 
+		 	
+		 */
+		String member_id = data.get("member_id");
 		
-		int result = dao.updateMemberEnabled(data);
-		if(result>0) {
-			return "true";
-		}
-		else {
-			return "false";
+		String auth=dao.getMemberAuth(member_id);
+		
+		
+		// 일반 회원이라면
+
+		if(auth.equals("2")) {
+			//1. 진행중 or 모집중이던 p_member에서 null처리
+			//2. 지원내역 null처리
+			//3. 밴 되는 회원 -> 권한 바꿔주고, enabled
+			auth="5";
+			data.put("auth", auth);
+			dao.procedureBanMember(data);
+			
+			result = "true";
 		}
 		
+		//팀장이라면
+		else if(auth.equals("3")){
+			//팀장 위임 처리
+			//모집중, 진행중 프로젝트가 있는지 확인
+			//팀원 아무나 한명 지목해서
+			//	1. 팀장위임 해주고
+			//     1-1. 모집된 팀원이 없으면 플젝 삭제.
+			
+			//	2. 프로젝트 생성자로 바꿔주고 -> project, p_detail
+			//  3. 밴 되는 회원 -> 권한 바꿔주고, enabled
+			auth="5";
+			data.put("auth", auth);
+			dao.procedureBanLeader(data);
+			
+			result = "true";
+		}
+		//이미 밴당한 회원 해제
+		else if(auth.equals("5")){
+			auth="2";
+			data.put("auth", auth);
+			dao.procedureCancelBan(data);
+			
+			result = "true";
+		   //기본회원, 패널티당한 회원 처리 -> 그냥 아무처리없이 밴
+		} else {
+	          auth="5";
+	          data.put("auth", auth);
+	          dao.procedureCancelBan(data);
+	          
+	          result = "true";
+	       }
+	
+		return result;
 	}
 	// ---------------------------------------------------------
 }
