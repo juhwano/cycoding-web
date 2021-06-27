@@ -167,33 +167,46 @@ public class AdminService {
 		 	
 		 */
 		String member_id = data.get("member_id");
-		System.out.println("member_id : " + member_id);
+		
 		String auth=dao.getMemberAuth(member_id);
-		System.out.println("auth : "+auth);
+		
 		
 		// 일반 회원이라면
+
 		if(auth.equals("2")) {
 			//1. 진행중 or 모집중이던 p_member에서 null처리
 			//2. 지원내역 null처리
-			dao.procedureBanMember(member_id);
+			//3. 밴 되는 회원 -> 권한 바꿔주고, enabled
 			auth="5";
+			data.put("auth", auth);
+			dao.procedureBanMember(data);
+			
 			result = "true";
 		}
 		
 		//팀장이라면
 		else if(auth.equals("3")){
 			//팀장 위임 처리
+			//모집중, 진행중 프로젝트가 있는지 확인
 			//팀원 아무나 한명 지목해서
 			//	1. 팀장위임 해주고
 			//     1-1. 모집된 팀원이 없으면 플젝 삭제.
 			
 			//	2. 프로젝트 생성자로 바꿔주고 -> project, p_detail
 			//  3. 밴 되는 회원 -> 권한 바꿔주고, enabled
-			
 			auth="5";
-		}
-		else {
+			data.put("auth", auth);
+			dao.procedureBanLeader(data);
 			
+			result = "true";
+		}
+		//이미 밴당한 회원 해제
+		else if(auth.equals("5")){
+			auth="2";
+			data.put("auth", auth);
+			dao.procedureCancelBan(data);
+			
+			result = "true";
 		}
 	
 		return result;

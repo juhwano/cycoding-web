@@ -148,39 +148,41 @@
 	</update> 
 	
 	<!--  ================   회원 영구정지  ================ -->
+	
+	<!-- 회원 권한 가져오기 -->
 	<select id="getMemberAuth" parameterType="string" resultType="string">
 		select authority_id
 		from m_auth
 		where member_id=${member_id} 
 	</select>
-	
-	<update id="updateMemberEnabled">
-		update member
-		set enabled=${data.enabled}
-		where member_id=${data.member_id}
-	</update>
-	<!-- 회원의 권한 가져오기 -->
-
-	
 	<!-- 일반 회원일때 -->
-	<select id="procedureBanMember" statementType="CALLABLE" parameterType="string">
+	<select id="procedureBanMember" statementType="CALLABLE" parameterType="map">
 	<!-- //1. 진행중 or 모집중이던 p_member에서 null처리
 		 //2. 지원내역 null처리 -->
-		{CALL BanMember(
-			${member_id}
+		{CALL BANMEMBER(
+			${data.member_id},
+			${data.auth},
+			${data.enabled}
 		)
 		}
 	</select>
-	
-	
-	
-	
-	
-	<update id="updateBanAuth">
-		update m_auth
-		set authority_id=${data.auth}
-		where member_id=${data.member_id}
-	</update>
+	<!-- 팀장 회원일때 -->
+	<select id="procedureBanLeader" statementType="CALLABLE" parameterType="map">
+		{CALL BANLEADER(
+			${data.member_id},
+			${data.auth},
+			${data.enabled}
+		)}
+	</select>
+	<!-- 영구정지 해제 -->
+	<select id="procedureCancelBan" statementType="CALLABLE" parameterType="map">
+		{CALL Auth_Enabled_Update(
+			${data.member_id},
+			${data.auth},
+			${data.enabled}
+		)
+		}
+	</select>
 	
 <!--                        ajax                                  -->
 </mapper>
