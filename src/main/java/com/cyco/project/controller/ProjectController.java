@@ -21,11 +21,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.BookmarkVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.security.ChangeAuth;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.V_MlistVo;
 import com.cyco.project.service.ProjectService;
@@ -230,6 +232,14 @@ public class ProjectController {
 			PointVo point = new PointVo(memberID, have_Point -= 50, use_Point += 50);
 			
 			memberService.updatePoint(point);
+			
+			//이제 팀장으로 권한 변경(디비)
+			String member_id = Integer.toString(member.getMEMBER_ID());
+			M_AuthVo mauth = new M_AuthVo("3",member_id);
+			memberService.UpdateAuth(mauth);
+			  
+			//시큐리티 권한 변경
+			ChangeAuth chau = new ChangeAuth("ROLE_TEAMMANGER");
 			
 			model.addAttribute("msg", "true");
 			model.addAttribute("projectId",ProjectId);
