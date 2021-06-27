@@ -146,7 +146,8 @@
 #my_sub_member{
 	position: absolute;
     top: 50px;
-    right: 80px;
+    left:1230px;
+
     width: 220px;
     z-index: 997;
     background-color: white;
