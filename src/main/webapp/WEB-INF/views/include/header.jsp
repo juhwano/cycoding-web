@@ -125,16 +125,17 @@
 
 								<!-- 로그인 안하면 -->
 								<se:authorize
-									access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+									access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY', 'ROLE_BAN')">
 									<li class="nav-item dropdown"><a
 										href="${pageContext.request.contextPath}/login"
 										class="nav-link"> 로그인 </a></li>
 								</se:authorize>
-
+								<!-- 영정 회원 -->
+								
 								<!-- 어드민  -->
 								<se:authorize access="hasRole('ROLE_ADMIN')">
 
-									<li class="nav-item dropdown mydropdow"  id="my_dropdown">
+									<li class="nav-item dropdown mydropdow"  id="my_dropdown">									
 										<div>관리자 페이지 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
 										<div class="sub" id="my_sub">
 											<ul>
@@ -202,7 +203,13 @@
 										</div>
 									</li>
 								</se:authorize>
-
+								<!-- 영정회원 -->
+								<se:authorize access="hasRole('ROLE_BAN')">
+									<input type="hidden" id="getout" value="1">
+								</se:authorize>
+								<se:authorize access="!hasRole('ROLE_BAN')">
+									<input type="hidden" id="getout" value="0">
+								</se:authorize>
 							</ul>
 						</div>
 					</div>
@@ -278,7 +285,7 @@
 	<!-- header.js -->
 	<script
 		src="${pageContext.request.contextPath}/assets/js/header.js?ver=2"></script>
-	<script type="text/javascript">
+	<script type="text/javascript">	
 /* ==============================================
 Loader -->
 =============================================== */
@@ -516,7 +523,21 @@ $('#alram').click(function() {
 				
 			}
 		});
-	} 
+	}	
+	
+	//영정회원일 경우
+	if($("#getout").val() == "1"){
+		
+		swal({
+			title: "BAN",
+			text: "더 이상 사이트를 이용하실 수 없습니다",
+			icon: "error",
+			button: true,
+			dangerMode: true,
+		})
+		.then(function(){location.href="logout"});
+		
+	}
 			
 	});
 ///////////////////////////////////////////
