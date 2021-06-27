@@ -136,7 +136,7 @@ function updatealarmlist(id) {
 
 				$("#alarmsub").append(
 
-					"<li class='last'><a href='/mypage/myalarm'><p class='alarm_content'>알림 더보기</p></a></li>"
+					"<li class='last'><a href='/mypage/myalarm'><p>알림 더보기</p></a></li>"
 
 				);
 

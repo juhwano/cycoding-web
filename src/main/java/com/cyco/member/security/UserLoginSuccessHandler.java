@@ -32,27 +32,23 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		System.out.println("로그인 성공");
 		
-		
-		// TODO Auto-generated method stub
-		//MemberVo member = (MemberVo) auth.getPrincipal();
 		User user = (User)auth.getPrincipal();
 
 
 		System.out.println("현재 유저 정보 : " + auth.getPrincipal().toString());
-		//String nickname = member.getMEMBER_NICKNAME();
-		//System.out.println("닉네임 : " + nickname);
+		
 		
 		
 		for(GrantedAuthority a : auth.getAuthorities()){
 			logger.info(a.getAuthority());
+
 		}
 		logger.info(String.valueOf(user.isAccountNonExpired()));
 		logger.info(String.valueOf(user.isAccountNonLocked()));
 		logger.info(String.valueOf(user.isCredentialsNonExpired()));
 		logger.info(String.valueOf(user.isEnabled()));
 		req.setAttribute("username", auth.getName());
-		
-		//res.sendRedirect(req.getContextPath()+"/main.cy");
+
 		req.getRequestDispatcher("checkLogin").forward(req, res);
 	}
 

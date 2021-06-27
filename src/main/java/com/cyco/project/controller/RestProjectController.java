@@ -10,6 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +27,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.BookmarkVo;
 import com.cyco.common.vo.PositionVo;
+import com.cyco.member.security.ChangeAuth;
+import com.cyco.member.service.MemberService;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
@@ -41,7 +47,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping("ajaxproject")
 public class RestProjectController {
-
+	
+	@Autowired
+	SessionRegistry sessionRegistry;
+	MemberService memberservice;
+	
 	@Autowired
 	private ProjectService service;
 	
@@ -225,6 +235,7 @@ public class RestProjectController {
 		// 프로젝트 지원 승인시 프로젝트 맴버 같이 업데이트
 		int result = service.ApplyMember_Ok(apply, alarm);
 		
+		
 		if(result == -1) {
 			returnUrl = "checkd";
 		}else if(result > 0){
@@ -387,7 +398,6 @@ public class RestProjectController {
 		String member_id = String.valueOf(session.getAttribute("member_id"));
 		
 		
-		
 		String returnURL = service.ProjectWithdrawal(member_id, project_id, state);
 				
 				
@@ -490,8 +500,19 @@ public class RestProjectController {
 		return returnURL;
 	}
 	
-	
-	
+	// 플젝 완료
+	@RequestMapping(value = "projectcomplete", method=RequestMethod.GET)
+	public String projectComplete(HttpSession session, P_DetailVo p_detail) {
+		String returnURL = "false";
+		
+		
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		returnURL = service.projectComplete(member_id, p_detail);
+		
+		
+		return returnURL;
+	}
 	
 	
 }

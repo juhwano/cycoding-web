@@ -69,6 +69,15 @@ public class RegisterController {
 		return new ModelAndView("Member/Login", mmp);
         
     }
+	
+	@RequestMapping(value = "findAccount", method = RequestMethod.GET)
+	public String findAccount() {
+
+		System.out.println("This is findAccount by get");
+
+		return "Member/FindAccount";
+
+	}
 	  
 
 }

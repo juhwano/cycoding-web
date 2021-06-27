@@ -1,6 +1,7 @@
 package com.cyco.alarm.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -74,33 +75,30 @@ public class AlarmService {
 
 		return alarms;
 	}
-
+/*
 	// 알림페이지 초기 진입시 전체 알림 뿌려주기
 	public List<AlarmVo> getAllAlarms(String useremail) {
 
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);
-		/*
-		 * List<AlarmVo> list = alarmdao.getAllAlarms(useremail); List<AlarmVo> alarms =
-		 * new ArrayList<AlarmVo>(); int count = 0; for(int i = 0; i < list.size(); i++)
-		 * { if(!list.get(i).getALARM_CODE().equals("CAHT_O")) {
-		 * alarms.add(list.get(i));
-		 * 
-		 * } else { count++;
-		 * 
-		 * if(count == 1) { //회원의 알림테이블에 쪽지 알림이 있을 경우, 쪽지 테이블에서 안 읽은 쪽지 있는지 체크 int
-		 * messages = alarmdao.hasNewMessages(useremail);
-		 * 
-		 * if(messages > 0) { System.out.println("여길 타나"); alarms.add(list.get(i)); }
-		 * 
-		 * }
-		 * 
-		 * } }
-		 */
+		
+		return alarms;
+	}
+	
+	
+	*/
+	
+	//알림페이지 초기 진입시 전체 알림(쪽지 제외) 뿌리기
+	public List<AlarmVo> getAllAlarms(String useremail) {
+
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		
+		//쪽지 제외 알림
+		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);
 
 		return alarms;
 	}
-
+	
 	// 알림 확인시 상태 업데이트
 	public Integer checkAlarm(String alarm_id) {
 
@@ -170,7 +168,6 @@ public class AlarmService {
 	}
 	
 	//비동기 쪽지 리스트 불러오기
-	
 	  public List<NoteVo> getNoteList(String useremail, String table) {
 	  
 	  AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
@@ -192,10 +189,11 @@ public class AlarmService {
 		  
 		  from_notelist = alarmdao.getSendMessages(useremail);
 		  
-		  for(int i = 0; i < to_notelist.size(); i++) {
+		  for(int i = 0; i < from_notelist.size(); i++) {
 			  
 			  notelist.add(from_notelist.get(i));
-		  }
+			  
+		  }	  
 		  
 	  }
 	  

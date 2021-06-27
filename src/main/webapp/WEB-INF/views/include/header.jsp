@@ -125,16 +125,17 @@
 
 								<!-- 로그인 안하면 -->
 								<se:authorize
-									access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
+									access="!hasAnyRole('ROLE_PREMEMBER','ROLE_MEMBER','ROLE_ADMIN', 'ROLE_TEAMMANGER', 'ROLE_PENALTY', 'ROLE_BAN')">
 									<li class="nav-item dropdown"><a
 										href="${pageContext.request.contextPath}/login"
 										class="nav-link"> 로그인 </a></li>
 								</se:authorize>
-
+								<!-- 영정 회원 -->
+								
 								<!-- 어드민  -->
 								<se:authorize access="hasRole('ROLE_ADMIN')">
 
-									<li class="nav-item dropdown mydropdow"  id="my_dropdown">
+									<li class="nav-item dropdown mydropdow"  id="my_dropdown">									
 										<div>관리자 페이지 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
 										<div class="sub" id="my_sub">
 											<ul>
@@ -153,7 +154,7 @@
 
 								<se:authorize
 
-									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
+									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
 
 									<!-- 로그인 -->
 									<li class="nav-item dropdown" id="alarmbell_li"><img
@@ -184,25 +185,16 @@
 													href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
 
 												<li class="subdrop"><a href="#">프로젝트</a>
+												
+												<se:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+													<input type="hidden" id="ismember" value="1" />
+												</se:authorize>
+												<se:authorize access="!hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+													<input type="hidden" id="ismember" value="0" />
+												</se:authorize>
 													<ul class="susub" id="project_sub">
-													
 													<!-- 현재 참여중인 프로젝트 있는지 확인 -->
-														<c:choose>
-															<c:when test="${sessionScope.project_id eq 'none'}">
-															
-															<li id="myproject_title"><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>
-															
-															</c:when>															
-															<c:otherwise>
-															<li id="myproject_title">
-															<a href="${pageContext.request.contextPath}/project/detail?project_id=${sessionScope.project_id}">
-																진행중 프로젝트</a>
-															</li>
-															</c:otherwise>
-														</c:choose>
-														<li><a
-															href="${pageContext.request.contextPath}/mypage/myProject">나의
-																프로젝트/후기</a></li>
+																											
 													</ul></li>
 
 												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
@@ -211,7 +203,13 @@
 										</div>
 									</li>
 								</se:authorize>
-
+								<!-- 영정회원 -->
+								<se:authorize access="hasRole('ROLE_BAN')">
+									<input type="hidden" id="getout" value="1">
+								</se:authorize>
+								<se:authorize access="!hasRole('ROLE_BAN')">
+									<input type="hidden" id="getout" value="0">
+								</se:authorize>
 							</ul>
 						</div>
 					</div>
@@ -287,7 +285,7 @@
 	<!-- header.js -->
 	<script
 		src="${pageContext.request.contextPath}/assets/js/header.js?ver=2"></script>
-	<script type="text/javascript">
+	<script type="text/javascript">	
 /* ==============================================
 Loader -->
 =============================================== */
@@ -490,11 +488,57 @@ $('#alram').click(function() {
 			
 			
 		});
-		
-		
-		$("main").off('click');
-	
+				
+			$("main").off('click');
 
+		
+	//ROLE_MEMBER이거나 TEAMMANAGER일 경우 프로젝트 참여 여부 페이지 이동시마다 반영되게 처리
+	if($("#ismember").val() == '1'){
+		console.log("들어오나?")
+		
+		$.ajax({
+			
+			url:"/mypage/ajax/checkhasproject",
+			data:{id : logineduser},
+			dataType:"text",
+			success:function(res){
+				console.log(res)
+				
+				$("#project_sub").empty();
+				
+				if(res == "none"){
+					$("#project_sub").append(
+							'<li id="myproject_title"><a href="/project/create">프로젝트 생성하기</a></li>'
+							+'<li><a href="/mypage/myProject">나의 프로젝트/후기</a></li>');
+					
+				} else{
+					$("#project_sub").append(
+							'<li id="myproject_title"><a href="/project/detail?project_id='+res+'">진행중 프로젝트</a></li>'
+							+'<li><a href="/mypage/myProject">나의 프로젝트/후기</a></li>');
+				}
+				
+			},
+			error:function(xhr){
+				console.log(xhr)
+				
+			}
+		});
+	}	
+	
+	//영정회원일 경우
+	if($("#getout").val() == "1"){
+		
+		swal({
+			title: "BAN",
+			text: "더 이상 사이트를 이용하실 수 없습니다",
+			icon: "error",
+			button: true,
+			dangerMode: true,
+		})
+		.then(function(){location.href="logout"});
+		
+	}
+			
 	});
 ///////////////////////////////////////////
 

@@ -156,7 +156,11 @@ public class AlarmRestController {
 		
 		String useremail = (String)data.get("useremail");
 		String table = (String)data.get("table");
+		
+		System.out.println(table);
 		List<NoteVo> notelist = alarmservice.getNoteList(useremail, table);
+		
+		System.out.println(notelist.toString());
 		
 		return notelist;
 	}

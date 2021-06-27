@@ -41,7 +41,7 @@ public class EmailService{
             MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
             model.put("random", random + "");
             model.put("content",vo.getMessage());
-            String text = VelocityEngineUtils.mergeTemplateIntoString(velocityengine, "com/cyco/member/vo/template.vm", "UTF-8", model);
+            String text = VelocityEngineUtils.mergeTemplateIntoString(velocityengine, "com/cyco/member/vo/emailtemplate.vm", "UTF-8", model);
             
             // 이메일 수신자
             helper.setTo(new InternetAddress(vo.getReceiveMail()));
@@ -54,6 +54,8 @@ public class EmailService{
             
             // 이메일 본문
             helper.setText(text, true);
+            
+            msg.setContent(text, "text/html; charset=UTF-8");
     
             // 이메일 보내기
             mailSender.send(msg);

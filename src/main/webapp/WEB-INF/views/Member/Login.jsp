@@ -65,7 +65,7 @@
                                         </div>
                                         
                                         <div>
-                                        <p id="find">이메일 찾기/비밀번호 찾기</p>
+                                        <p id="find"><a href="findAccount" style="color:#C0A9BD">이메일 찾기/비밀번호 찾기</a></p>
                                         </div>
                                 
                                 <!--  
@@ -222,8 +222,10 @@ $(document).ready(function(){
 
 	console.log(msg);
 
-	if(alarm != ""){
+	if(msg == "success"){
 		swal("회원가입이 완료되었습니다","","success");
+	} else if(msg == "fail"){
+		swal("회원가입에 실패했습니다","","error");
 	}
 	
 });

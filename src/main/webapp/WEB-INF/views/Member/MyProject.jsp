@@ -27,7 +27,7 @@
 					<!-- 프로젝트목록 -->
 					<!-- 지원목록 영역 -->
 					<div class="info_text_sec">
-						<p class="table_name_text">회원 목록</p>
+						<p class="table_name_text">진행중인 프로젝트</p>
 					</div>
 					<table class="table wish_table apply_table">
 						<thead>
@@ -76,9 +76,11 @@
 								</c:if>
 							</c:forEach>
 						</tbody>
-						<!-- 테스트 못함 (회원가입안됨) -->
+						<!-- 진행중인 프로젝트 없는 경우 목록 출력 -->
 						<c:if test="${ing_project_nothing eq true}">
-							<tr><td><p>현재 진행중인 프로젝트가 없어요!</p></td></tr>
+							<tr><td colspan="4">
+								<p class="not_project">현재 진행중인 프로젝트가 없습니다.</p>
+							</td></tr>
 							<c:set var="ing_project_nothing" value="false"/>
 						</c:if>
 					</table>
@@ -97,6 +99,10 @@
 								<th>후기</th>
 							</tr>
 						</thead>
+						
+						<!-- 완료한 프로젝트가 한개도 없는 경우 문구 출력용 -->
+						<c:set var="end_project_nothing" value="true"/>
+						
 						<tbody>
 						<c:forEach var="L_project" items="${teamLeaderList}">
 							<!-- 작성완료 버튼 노출 for each문 break용 -->
@@ -131,6 +137,7 @@
 										</c:if>
 									  </c:forEach>
 									</tr>
+								<c:set var="end_project_nothing" value="false"/>
 								</c:if>
 							</c:forEach>
 							<c:forEach var="M_project" items="${teamMemberList}">
@@ -166,9 +173,17 @@
 											</c:if>
 										  </c:forEach>
 									</tr>
+								<c:set var="end_project_nothing" value="false"/>
 								</c:if>
 							</c:forEach>
 						</tbody>
+						<!-- 완료한 프로젝트 없는 경우 목록 출력 -->
+						<c:if test="${end_project_nothing eq true}">
+							<tr><td colspan="4">
+								<p class="not_project">아직 완료된 프로젝트가 없습니다.</p>
+							</td></tr>
+							<c:set var="ing_project_nothing" value="false"/>
+						</c:if>
 					</table>
 					<div class="info_text_sec">
 						<p class="info_text_point">

@@ -119,10 +119,10 @@ $(document).ready(function() {
 				if (res.p_title == undefined) {
 
 					$("#contentarea").empty();
-					$("#contentarea").append("<p>현재 초대할 수 있는 프로젝트가 없습니다</br>" + $("#cycoder p").text() + "님과 함께 할 프로젝트를 만들어보세요!</p>");
+					$("#contentarea").append("<p>현재 초대할 수 있는 프로젝트가 없습니다</br>" + "</p>");
 
 					$("#inv_buttonarea").empty();
-					$("#inv_buttonarea").append("<a href='/project/create'><button class='inv_btn' id='create_p'>프로젝트 생성하러 가기</button></a>");
+					$("#inv_buttonarea").append("<a href='/mypage/myProject'><button class='inv_btn' id='create_p'>나의 프로젝트 확인하기</button></a>");
 
 				} else {
 					$("#contentarea").empty();
@@ -224,6 +224,7 @@ $(document).on("click","#msg_btn", function() {
 			success:function(res){
 				if(res == "true"){
 					swal("쪽지를 발송했습니다","","success")
+					$("#messagearea").empty();
 				} else{
 					swal("쪽지 발송하지 못했습니다","잠시 후 시도해주세요","error")
 				}

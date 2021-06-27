@@ -67,10 +67,6 @@
 														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="#${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
 													</c:when>
 													
-													<c:when test="${newlist.ALARM_CODE eq 'CHAT_O'}">
-														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/messages/">${newlist.ALARM_CONTENT}</a></td>
-													</c:when>
-													
 												</c:choose>
 
 											</tr>

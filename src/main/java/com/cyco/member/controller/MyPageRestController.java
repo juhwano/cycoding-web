@@ -1,7 +1,10 @@
 package com.cyco.member.controller;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
+import com.cyco.member.security.ChangeAuth;
+import com.cyco.member.security.UserAuthenticationService;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.M_ExperienceVo;
@@ -31,7 +42,8 @@ import com.cyco.member.vo.V_Duration;
 @RequestMapping("mypage/ajax/")
 @RestController
 public class MyPageRestController {
-
+	
+	@Autowired
 	MemberService memberservice;
 	MemberDetailService memberdetailservice;
 	// MemberVo member;
@@ -141,30 +153,6 @@ public class MyPageRestController {
 		return result;
 	}
 	
-
-	/*
-	 * //회원 프로필 이미지 바꾸기
-	 * 
-	 * @RequestMapping(value="editprofile",method =
-	 * {RequestMethod.POST,RequestMethod.GET}) public String
-	 * changeProfile(@RequestParam(value="id",required=false)String
-	 * id, @RequestParam(value="uploadFile",required=false) MultipartFile
-	 * uploadFile, MultipartHttpServletRequest request) { //public String
-	 * changeProfile(String id, MultipartFile uploadFile,
-	 * MultipartHttpServletRequest request) { System.out.println("프로필 이미지 변경");
-	 * 
-	 * // 파일 유틸 생성 UtilFile utilFile = new UtilFile();
-	 * 
-	 * // 받아오는 파일 받아오기 String UploadFile = utilFile.FileUpload(request, uploadFile);
-	 * String UploadFilename = utilFile.getFilename();
-	 * 
-	 * 
-	 * int row = memberdetailservice.editProfile(id, UploadFilename); String result
-	 * = "fail"; if(row > 0) { result = "success"; }
-	 * 
-	 * return result; }
-	 * 
-	 */
 	// 모달창에 기술 태그 뿌리기
 	@RequestMapping(value = "getskills")
 	public List<SkillVo> getSkills() {
@@ -329,9 +317,7 @@ public class MyPageRestController {
 	@RequestMapping(value="updateexperiences", method= {RequestMethod.GET, RequestMethod.POST})
 	public String updateExperiences(@RequestParam String member_id_input, @RequestParam String ex_count_input ,@RequestParam String exp_title_input,
 			@RequestParam String ex_position_input, @RequestParam String ex_skill_input, @RequestParam String ex_content_input,@RequestParam String ex_duration_input) {
-	//public String editExperiences(String ex_count_input , String EXP_TITLE_input, String EX_POSITION_input,
-	//		String EX_SKILL_input, String EX_CONTENT_input, String EX_DURATION_input) {
-	//public String updateExperiences(@RequestParam String member_id_input, @RequestParam String ex_count_input, ) {
+
 		 System.out.println("프로젝트 경험 수정하기");
 		 M_ExperienceVo mex = new M_ExperienceVo();
 
@@ -414,10 +400,6 @@ public class MyPageRestController {
 		String useremail = data.get("useremail");
 		String userPwd = data.get("userPwd");
 
-		System.out.println("비동기컨트롤러 mypageCheck 진입");
-		System.out.println("useremail: " + useremail);
-		System.out.println("userPwd: " + userPwd);
-
 		if (memberdetailservice.checkPwd(data)) {
 			return true;
 		}
@@ -499,6 +481,20 @@ public class MyPageRestController {
 	  return myprojectReview;
   }
   
+  //모든 정보 작성했을 때 준회원에서 회원으로 권한 업데이트
+  @RequestMapping(value="makememberauth", method = RequestMethod.GET)
+  public Boolean makeMemberAuth(@RequestParam String member_id, @RequestParam String authority_id) {
+
+	  M_AuthVo mauth = new M_AuthVo(authority_id,member_id);
+	  Boolean bo = memberservice.UpdateAuth(mauth);
+	  
+	  //시큐리티 권한 변경
+	  ChangeAuth chau = new ChangeAuth("ROLE_MEMBER");
+	  
+	  System.out.println("newAuth " + chau.toString());
+	  
+	  return bo;
+  }
   
   	//후기작성시 포인트 지급
 	@RequestMapping(value="giveReviewpoint",method=RequestMethod.POST)
@@ -507,6 +503,16 @@ public class MyPageRestController {
 		memberdetailservice.giveReviewPoint(String.valueOf(session.getAttribute("member_id")));
 		
 		return "givePoint";
+	}
+	
+	//페이지 이동시마다 프로젝트 있는지 확인
+	@RequestMapping(value="checkhasproject", method = RequestMethod.GET)
+	public String checkHasProject(@RequestParam String id) {
+		
+		HashMap<String, String> project = memberservice.hasProject(id);
+		
+		return project.get("project_id");
+		
 	}
 
 }

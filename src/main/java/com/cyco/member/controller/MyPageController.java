@@ -6,8 +6,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cyco.alarm.service.AlarmService;
 import com.cyco.alarm.vo.AlarmVo;
+import com.cyco.alarm.vo.V_ToNote_Member_Vo;
 import com.cyco.common.vo.Apply_Join_P_datailVo;
 import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.BookmarkVo;
@@ -60,33 +65,6 @@ public class MyPageController {
 		return "/Member/MypageCheck";
 	}
 	
-	/*
-	@RequestMapping(value = "mypageCheck", method = RequestMethod.POST)
-    public void MypageCheck(String useremail, String userPwd, Model model, HttpServletResponse response) {
-		System.out.println("컨트롤러 오니..?");
-		System.out.println("useremail " + useremail);
-		System.out.println("userPwd " + userPwd);
-		
-		if(memberdetailservice.checkPwd(useremail, userPwd)) {
-			try {
-				response.sendRedirect("mypage?useremail="+useremail);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('비밀번호를 잘못 입력하셨습니다.'); history.go(-1);</script>");
-				out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-	*/
 	
 	//마이페이지 정보 불러오기
 	@RequestMapping(value="mypage")
@@ -179,18 +157,27 @@ public class MyPageController {
 		ModelMap mmp = new ModelMap();
 		
 		List<AlarmVo> list = alarmservice.getAllAlarms(useremail);
+		
 		List<AlarmVo> newlist = new ArrayList<AlarmVo>();
 		List<AlarmVo> oldlist = new ArrayList<AlarmVo>();
-		
+
 		for( int i = 0; i < list.size(); i++) {
 			
 			if(list.get(i).getALARM_OK().equals("0")) {
+				
+				list.get(i).setALARM_DATE(list.get(i).getALARM_DATE().substring(0, 10));
+				
 				newlist.add(list.get(i));
+				
 			} else {
+				list.get(i).setALARM_DATE(list.get(i).getALARM_DATE().substring(0, 10));
+				
 				oldlist.add(list.get(i));
+			
 			}
 			
 		}
+		
 		mmp.addAttribute("newalarmlist", newlist);
 		mmp.addAttribute("oldalarmlist", oldlist);
 
@@ -283,7 +270,8 @@ public class MyPageController {
 			  review.setProject_id(project_id[i]);
 			  
 			  review.setReview_id(0);
-			  review.setReview_date(now);
+			  //review.setReview_date(now);
+			  review.setReview_date("0");
 			  review.setMember_nickname("a");
 			  System.out.println(review.toString());
 			  writeReviewList.add(review);

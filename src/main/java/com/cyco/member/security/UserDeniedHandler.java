@@ -27,9 +27,9 @@ public class UserDeniedHandler implements AccessDeniedHandler{
 		logger.info("LocalizedMessage : {}",ade.getLocalizedMessage());
 		logger.info("Message : {}",ade.getMessage());
 		logger.info("StackTrace : {}",ade.getStackTrace());
-		
+
 		req.setAttribute("errMsg",ade.getMessage());
-		req.getRequestDispatcher("/WEB-INF/views/Main/CycoMain.jsp").forward(req, res);
+		req.getRequestDispatcher("/WEB-INF/views/Main/Forbidden.jsp").forward(req, res);
 	}
 
 }
