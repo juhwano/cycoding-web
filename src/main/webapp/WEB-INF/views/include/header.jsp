@@ -16,11 +16,14 @@
 <!-- 반응형 토글 -->
 <script
 	src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Fontawesome -->
 <link type="text/css"
@@ -45,7 +48,7 @@
 <script
 	src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<!-- JQuesy -->
+<!-- JQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -131,75 +134,118 @@
 										class="nav-link"> 로그인 </a></li>
 								</se:authorize>
 								<!-- 영정 회원 -->
-								
+
 								<!-- 어드민  -->
 								<se:authorize access="hasRole('ROLE_ADMIN')">
 
-									<li class="nav-item dropdown mydropdow"  id="my_dropdown">									
-										<div>관리자 페이지 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
-										<div class="sub" id="my_sub">
-											<ul>
-												<li><a href="${pageContext.request.contextPath}/admin/chart">통계</a></li>
-												<li><a
-													href="${pageContext.request.contextPath}/admin/member">회원관리</a></li>
-												<li><a
-													href="${pageContext.request.contextPath}/admin/site">사이트관리</a></li>
-												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-											</ul>
+									<li class="nav-item dropdown mydropdow 
+										panel-group" id="accordion" role="tablist"
+										aria-multiselectable="true">
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab">
+												<a role="button" data-toggle="collapse"
+													data-parent="#accordion" href="#my_sub"
+													aria-expanded="false">관리자 페이지 <i
+													class="fas fa-caret-down"></i></a>
+											</div>
+											<!-- 1차 메뉴 -->
+											<div class="sub panel-collapse collapse" role="tabpanel"
+												id="my_sub">
+												<ul class="panel-body">
+													<li><a
+														href="${pageContext.request.contextPath}/admin/chart">통계</a></li>
+													<li><a
+														href="${pageContext.request.contextPath}/admin/member">회원관리</a></li>
+													<li><a
+														href="${pageContext.request.contextPath}/admin/site">사이트관리</a></li>
+													<li><a
+														href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+												</ul>
+											</div>
 										</div>
+									</li>
 								</se:authorize>
 
 								<!-- 기본 회원들 헤더 -->
 								<se:authentication property="name" var="LoginUser" />
 
 								<se:authorize
-
-									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
+									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">
 
 									<!-- 로그인 -->
-									<li class="nav-item dropdown" id="alarmbell_li"><img
-										class="alarmbell"
-										src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg">
+									<li class="nav-item dropdown panel-group" id="accordion"
+										role="tablist" aria-multiselectable="true" id="alarmbell_li">
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab">
+												<a role="button" data-toggle="collapse"
+													data-parent="#accordion" href="#a_sub"
+													aria-expanded="false"><img class="alarmbell"
+													src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg"></a>
+											</div>
+											<!-- 1차 메뉴 알림 -->
+											<div class="sub panel-collapse collapse" role="tabpanel"
+												id="a_sub">
+												<ul class="panel-body">
+													<li><a
+														href="${pageContext.request.contextPath}/messages/">내
+															쪽지</a></li>
 
-										<!-- 1차 메뉴 알림 -->
-										<div class="sub" id="a_sub" >
-											<ul>
-												<li><a
-													href="${pageContext.request.contextPath}/messages/">내
-														쪽지</a></li>
-												<li class="subdrop"><a href="#">알림</a>
-													<ul class="susub" id="alarmsub">
+													<li class="subdrop"><a role="button"
+														data-toggle="collapse" data-parent="#accordion"
+														href="#a_sub_down" aria-expanded="false">알림</a>
+														<div id="a_sub_down" class="panel-collapse collapse"
+															role="tabpanel">
+															<ul class="susub panel-body" id="alarmsub">
 
-													</ul></li>
-											</ul>
-										</div></li>
-										
-										<!-- 1차 메뉴 개인-->
-									<li class="nav-item dropdown mydropdow" id="my_dropdown">
-										<div>${sessionScope.nickname}님 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
-										<div class="sub" id="my_sub">
-											<ul>
-												<li><a
-													href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a></li>
-												<li><a
-													href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
+															</ul>
+														</div></li>
+												</ul>
+											</div>
+										</div>
+									</li>
 
-												<li class="subdrop"><a href="#">프로젝트</a>
-												
-												<se:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
-													<input type="hidden" id="ismember" value="1" />
-												</se:authorize>
-												<se:authorize access="!hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
-													<input type="hidden" id="ismember" value="0" />
-												</se:authorize>
-													<ul class="susub" id="project_sub">
-													<!-- 현재 참여중인 프로젝트 있는지 확인 -->
-																											
-													</ul></li>
+									<!-- 1차 메뉴 개인-->
+									<!-- 그룹 태그로 role과 aria-multiselectable를 설정한다. -->
+									<li class="panel-group" id="accordion" role="tablist"
+										aria-multiselectable="true">
+										<!-- 하나의 item입니다. data-parent 설청과 href 설정만 제대로 하면 문제없이 작동합니다. -->
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab">
+												<a role="button" data-toggle="collapse"
+													data-parent="#accordion" href="#my_sub"
+													aria-expanded="false"> ${sessionScope.nickname}님 <i
+													class="fas fa-caret-down"></i>
+												</a>
+											</div>
+											<div class="panel-collapse collapse sub" id="my_sub"
+												role="tabpanel">
+												<ul class="panel-body">
+													<li><a
+														href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a></li>
+													<li><a
+														href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
 
-												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+													<li class="subdrop"><a role="button"
+														data-toggle="collapse" data-parent="#accordion"
+														href="#p_coll_sub" aria-expanded="false">프로젝트</a> <se:authorize
+															access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+															<input type="hidden" id="ismember" value="1" />
+														</se:authorize> <se:authorize
+															access="!hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+															<input type="hidden" id="ismember" value="0" />
+														</se:authorize>
+														<div id="p_coll_sub" class="panel-collapse collapse"
+															role="tabpanel">
+															<ul class="susub panel-body" id="project_sub">
+																<!-- 현재 참여중인 프로젝트 있는지 확인 -->
 
-											</ul>
+															</ul>
+														</div></li>
+
+													<li><a
+														href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+												</ul>
+											</div>
 										</div>
 									</li>
 								</se:authorize>
@@ -279,9 +325,8 @@
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+	<!-- 	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
 	<!-- header.js -->
 	<script
 		src="${pageContext.request.contextPath}/assets/js/header.js?ver=2"></script>
@@ -350,10 +395,8 @@ $('#alram').click(function() {
 	ws.onmessage = function(event) {
 		
 		let data = event.data;
-
 		console.log("서버에서 받은 메시지 ",JSON.parse(data));
 		updatealarmlist(logineduser).then(function(){
-
 			//알림페이지에 알림 하나 추가하는 함수
 			addNewAlarm(JSON.parse(data));
 			
@@ -428,7 +471,7 @@ $('#alram').click(function() {
 			updatealarmlist(logineduser);		
 		}
 		
-		//드롭다운 메뉴
+/* 		//드롭다운 메뉴
 		$("#my_sub").hide();
 		$("#my_dropdown").click(function(){
 			
@@ -467,7 +510,7 @@ $('#alram').click(function() {
 				setTimeout(function(){_this.find(".sub").slideUp(600)},3000)
 			})
 		});
-		
+		 */
 		//헤더에 있는 새 알림 클릭해서 이동하면 상태 확인으로 업데이트 하기
 		$(document).on("click", ".alarm_content", function() {
 		//$(".alarm_content").on("click",function(){
@@ -490,7 +533,6 @@ $('#alram').click(function() {
 		});
 				
 			$("main").off('click');
-
 		
 	//ROLE_MEMBER이거나 TEAMMANAGER일 경우 프로젝트 참여 여부 페이지 이동시마다 반영되게 처리
 	if($("#ismember").val() == '1'){
@@ -541,7 +583,6 @@ $('#alram').click(function() {
 			
 	});
 ///////////////////////////////////////////
-
 </script>
 
 </body>
