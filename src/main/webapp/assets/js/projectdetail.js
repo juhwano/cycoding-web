@@ -1,4 +1,3 @@
-
 if (login_memberid == "") {
 	swal("로그인을 하여야 확인 가능합니다.", "", "error").then((willDelete) => {
 		location.href = "../login";
@@ -12,7 +11,6 @@ if (project_id == "") {
 }
 
 $(document).ready(function() {
-
 
 	// 모달 숨기기
 	$('.Project_Apply_modal').hide();
@@ -64,8 +62,7 @@ $(document).ready(function() {
 		    	 $('#project_info').trigger('click');
 		    	 
 		     });
-
-
+	}
 
 
 	if ($('.member_list').children().length < 1) {
@@ -1183,17 +1180,18 @@ $(document).ready(function() {
 		     						    					});
 		     						    		 		
 		     							   		  	    });
+		     							   		  	    // ----------
 		     						     		}
 		     						     	});  
 		     					     });
+		     					     // -------------------
 		     						
 		     					})
+		     					// -----------------
 		     					
 		     		}
 		     	});
-			
-
-		}
+			}
 		// -----------------------------------------------------------------------------
 
 		$(this).attr('class', 'menuliClick');
@@ -1333,7 +1331,5 @@ $(document).ready(function() {
 	     	});  
 	     });
 	})
-	
-	
-
+		
 })

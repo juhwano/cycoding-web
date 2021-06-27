@@ -285,8 +285,6 @@ public class ProjectController {
 		
 		int BookMark = service.checkBookMark(project_id, String.valueOf(session.getAttribute("member_id")));
 	
-	
-		int reader = service.ProjectReaderCheck(project_id, String.valueOf(session.getAttribute("member_id")));
 		
 		if(reader > 0 && project.getP_state() == "모집중") {
 			Check = service.MemberFullCheck(project_id);
