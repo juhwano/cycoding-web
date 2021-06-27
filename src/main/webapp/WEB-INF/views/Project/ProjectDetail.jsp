@@ -54,6 +54,11 @@
 						<a class="ProjectEditBtn" href="${pageContext.request.contextPath}/project/edit?project_id=${project.project_id}">프로젝트 수정</a>
 					</div>
 				</c:when>		
+				<c:when test="${sessionScope.member_id eq project.member_id && project.p_state eq '진행중'}">
+			  		<div class="m_Edit_top">
+						<input type="button" class="ProjectCompleteBtn" value="프로젝트 완료">
+					</div>
+				</c:when>		
 			<c:otherwise>
 		   			<div class="m_img_top">
 		   				<c:if test="${bookmark > 0}">

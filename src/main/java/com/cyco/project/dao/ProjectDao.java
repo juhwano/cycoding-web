@@ -185,6 +185,9 @@ public interface ProjectDao {
 	// 해당프로젝트에 멤버 없는지 확인
 	public int isNullMember(String project_id);
 	
+	// 해당프로젝트에 총 멤버수 구하기
+	public int isAllMemberCount(String project_id);
+	
 	// 해당프로젝트 리더인지 확인
 	public int ProjectReaderCheck(String project_id,String member_id);
 	
@@ -215,6 +218,8 @@ public interface ProjectDao {
 	//프로젝트 qna 댓글 숫자 
 	public int QnaReplyCount(P_QnaVo qnavo);
 	
+	//프로젝트 완료 전환
+	public int projectComplete(P_DetailVo p_detail);
 	//프로젝트 수정시 상태 알림 보내줄 회원 목록 가져오기
 	public List<String> getTeamMembers(String project_id);
 	
