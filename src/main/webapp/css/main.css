@@ -257,3 +257,65 @@
     align-items: center;
     padding:20px;	
 }
+
+/* Locale 관련  */
+#STATICMENU { 
+	margin: 0pt; 
+	padding: 0pt;  
+	position: absolute; 
+	right: 10px !important;
+    top: 45% !important;
+}
+#STATICMENU div{
+	margin-bottom:7px;
+}
+#circle1 {
+background-color:#CA8FAB;
+width:20px;
+height:20px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+cursor: pointer;
+}
+#circle1:hover{
+background-color:#FFFFFF;
+}
+
+#circle2 {
+background-color:#C0A9BD;
+width:20px;
+height:20px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+cursor: pointer;
+}
+
+#circle2:hover{
+background-color:#FFFFFF;
+}
+
+#circle3 {
+background-color:#94A7AE;
+width:20px;
+height:20px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+cursor: pointer;
+}
+
+#circle3:hover{
+background-color:#FFFFFF;
+}
+

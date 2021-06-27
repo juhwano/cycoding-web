@@ -7,6 +7,17 @@ public class EmailVo {
 	private String subject; // 제목
 	private String message; // 본문
 
+
+	private String templateName; // 템플릿
+	
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+	
 	// getter,setter,toString
 	public String getSenderName() {
 		return senderName;
@@ -50,8 +61,8 @@ public class EmailVo {
 
 	@Override
 	public String toString() {
-		return "EmailDTO [senderName=" + senderName + ", senderMail=" + senderMail + ", receiveMail=" + receiveMail
-				+ ", subject=" + subject + ", message=" + message + "]";
+		return "EmailVo [senderName=" + senderName + ", senderMail=" + senderMail + ", receiveMail=" + receiveMail
+				+ ", subject=" + subject + ", message=" + message + ", templateName=" + templateName + "]";
 	}
 
 }

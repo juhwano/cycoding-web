@@ -11,7 +11,9 @@ $(document).ready(function() {
 		console.log(insert_btn);
 		if(insert_btn.length==0){
 			$(".sub_title").empty();
-			givePoint();
+			
+			makeMemberAuth();
+			
 		} else{
 			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
 		}
@@ -516,7 +518,9 @@ $("#edit-btn").on("click",function(){
 		console.log(insert_btn);
 		if(insert_btn.length==0){
 			$(".sub_title").empty();
-			givePoint();
+			
+			//권한 업데이트
+			makeMemberAuth();
 		} else{
 			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
 		}
@@ -1047,7 +1051,6 @@ $('#file').change(function(event) {
 
    $("#img_form").submit();
 
-    console.log("리다이렉트");
 });
 
 //회원 탈퇴
@@ -1080,9 +1083,7 @@ $("#quit").on("click",function(){
 //추가 정보 모두 기입시 포인트 지급
 function givePoint(){
 	
-	//디비에서 이중 체크를 해야 하나?
-	//회원상세(포지션, 경험), 회원기간, 회원기술 테이블을 조회해서 값이 있는지 중복체크를 해야 할까ㅓ??
-	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 확인
+	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 서버에서 확인
 	$.ajax({
 		
 		url:"ajax/givepoint",
@@ -1105,6 +1106,34 @@ function givePoint(){
 		
 	});
 	
+}
+
+//추가 정보 모두 입력시 권한 업데이트
+function makeMemberAuth(){
+	console.log("makeMemberAuth 실행")
+
+	$.ajax({
+		
+		url:"ajax/makememberauth",
+		data:{
+			member_id : $("#m_id").val(),
+			authority_id : "2"
+		},
+		dataType:"text",
+		type:"get",
+		success:function(res){
+			console.log(res)
+			
+			if(res){
+				swal("정회원이 되셨습니다","이제 프로젝트에 참여할 수 있어요!","success")
+				givePoint();
+			}
+		},
+		error:function(xhr){
+			console.log(xhr)
+		}
+		
+	});
 }
 
 $("#charge-btn").on("click",function(){

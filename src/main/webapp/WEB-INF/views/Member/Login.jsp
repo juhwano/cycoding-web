@@ -65,7 +65,7 @@
                                         </div>
                                         
                                         <div>
-                                        <p id="find">이메일 찾기/비밀번호 찾기</p>
+                                        <p id="find"><a href="findAccount" style="color:#C0A9BD">이메일 찾기/비밀번호 찾기</a></p>
                                         </div>
                                 
                                 <!--  

@@ -2,21 +2,22 @@
 if (login_memberid == "") {
 	swal("로그인을 하여야 확인 가능합니다.", "", "error").then((willDelete) => {
 		location.href = "../login";
-		})
-	}
-	
-	if(project_id == ""){
-		swal("잘못된 접근입니다.","", "error").then((willDelete) => {
+	})
+}
+
+if (project_id == "") {
+	swal("잘못된 접근입니다.", "", "error").then((willDelete) => {
 		location.href = "../main";
-		})
-	}
-	
-$(document).ready(function(){
-	
+	})
+}
+
+$(document).ready(function() {
+
+
 	// 모달 숨기기
 	$('.Project_Apply_modal').hide();
 	$('.Project_Detail_modal').hide();
-	
+
 	if(check == "true"){
 		$('.Project_Apply_modal').empty();
 		    
@@ -63,11 +64,11 @@ $(document).ready(function(){
 		    	 $('#project_info').trigger('click');
 		    	 
 		     });
-	}
-	
-	
-	
-	if($('.member_list').children().length < 1){
+
+
+
+
+	if ($('.member_list').children().length < 1) {
 		$('.member_list').append("<tr><td class='ProjectDetail_p'>아직 프로젝트 멤버가 없습니다.</td></tr>");
 	}
 
@@ -83,72 +84,74 @@ $(document).ready(function(){
 
 			$.ajax({
 
-	     		url:"/ajaxproject/projectinfo",
-	     		dataType:"html",
-	     		data: {project_id:project_id},
-	     		success: function(responsedata){   
-	     			
-	     			responsedata = JSON.parse(responsedata);
-	     			
-	     			var pmcountlist = responsedata.pmcountlist;
-	     			var project = responsedata.project;
-	     			
-	     			
-	     			var project_info = "<div class='Project_info'>"
-	     			    project_info +=	"<div class='ProjectMember'>"
-	     			    project_info += "<p>모집현황</p>"
-	     			    project_info += "<p class='Project_p'><b style='color: red;'>*</b> 원하는 분야에 지원해보세요!</p>"
-	     			    project_info += "<hr>"
-	     			project_info +=  "<div id='PositionBox'>"
-	     			project_info +=  "<table class='project_boxdiv'>"
-	     			for(var i = 0; i < pmcountlist.length; i ++){
-	     				project_info +=	 "<tr class='Project_memberList'>"
-		     			project_info +=	 "<td width='50%'>" + pmcountlist[i].position_name + "</td>"
-		     			if(pmcountlist[i].curr == pmcountlist[i].max){
-		     				project_info +=	"<td class='memberListcurrFull' width='15%'>" +pmcountlist[i].curr +" / " + pmcountlist[i].max + "</td>"
-			     			project_info +=	"<td width='30%' class='FullBtnWarp'>"
-			     			project_info +=	"<input type='button' value='마감'>"
-			     			project_info +=	"</td>"
-		     			}else{
-			     			project_info +=	"<td class='memberListcurr' width='15%'>" +pmcountlist[i].curr +" / " + pmcountlist[i].max + "</td>"
-			     			project_info +=	"<td width='30%' class='BtnWarp'>"
-			     			if( login_memberid != project.member_id){
-				     			project_info +=	"<input class='ProjectApplyBtn' type='button' value='지원'>"
-				     			project_info +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id + "</label>"
-				     			project_info +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_name + "</label>"
-			     			}
-			     			project_info +=	"</td>"
-		     			}
-		     		
-		     			project_info +=	"</tr>"
-	     			}
-	     			
-	     			project_info +=	"</table>"
-	     			project_info +=	"</div>"
-	     			project_info += "</div>"
-					
-	     			project_info += "<div class='ProjectContent'>"
-	     			project_info +=	"<p>프로젝트 소개</p>"
-	     			project_info +=	"<hr>"
-	     			project_info +=	"<p class='Project_content'>" + project.p_content + "</p>"
-	     			project_info += "</div>"
-	     			project_info += "</div>"	
-	     			
-     				$('.ChangeContentBox').append(project_info);
-	     			
-	   		  		// 모달 
-	     			$('.ProjectApplyBtn').unbind("click").bind("click", function(){
-	     				var Applycode = this.nextElementSibling.textContent;
-	     				var Applyname = this.nextElementSibling.nextElementSibling.textContent;
-	     				var checkdata = {"member_id":login_memberid,
-	     								"project_id":project_id};
-	     				
-	     				$.ajax({
+				url: "/ajaxproject/projectinfo",
+				dataType: "html",
+				data: { project_id: project_id },
+				success: function(responsedata) {
+
+					responsedata = JSON.parse(responsedata);
+
+					var pmcountlist = responsedata.pmcountlist;
+					var project = responsedata.project;
+
+
+					var project_info = "<div class='Project_info'>"
+					project_info += "<div class='ProjectMember'>"
+					project_info += "<p>모집현황</p>"
+					project_info += "<p class='Project_p'><b style='color: red;'>*</b> 원하는 분야에 지원해보세요!</p>"
+					project_info += "<hr>"
+					project_info += "<div id='PositionBox'>"
+					project_info += "<table class='project_boxdiv'>"
+					for (var i = 0; i < pmcountlist.length; i++) {
+						project_info += "<tr class='Project_memberList'>"
+						project_info += "<td width='50%'>" + pmcountlist[i].position_name + "</td>"
+						if (pmcountlist[i].curr == pmcountlist[i].max) {
+							project_info += "<td class='memberListcurrFull' width='15%'>" + pmcountlist[i].curr + " / " + pmcountlist[i].max + "</td>"
+							project_info += "<td width='30%' class='FullBtnWarp'>"
+							project_info += "<input type='button' value='마감'>"
+							project_info += "</td>"
+						} else {
+							project_info += "<td class='memberListcurr' width='15%'>" + pmcountlist[i].curr + " / " + pmcountlist[i].max + "</td>"
+							project_info += "<td width='30%' class='BtnWarp'>"
+							if (login_memberid != project.member_id) {
+								project_info += "<input class='ProjectApplyBtn' type='button' value='지원'>"
+								project_info += "<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id + "</label>"
+								project_info += "<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_name + "</label>"
+							}
+							project_info += "</td>"
+						}
+
+						project_info += "</tr>"
+					}
+
+					project_info += "</table>"
+					project_info += "</div>"
+					project_info += "</div>"
+
+					project_info += "<div class='ProjectContent'>"
+					project_info += "<p>프로젝트 소개</p>"
+					project_info += "<hr>"
+					project_info += "<p class='Project_content'>" + project.p_content + "</p>"
+					project_info += "</div>"
+					project_info += "</div>"
+
+					$('.ChangeContentBox').append(project_info);
+
+					// 모달 
+					$('.ProjectApplyBtn').unbind("click").bind("click", function() {
+						var Applycode = this.nextElementSibling.textContent;
+						var Applyname = this.nextElementSibling.nextElementSibling.textContent;
+						var checkdata = {
+							"member_id": login_memberid,
+							"project_id": project_id
+						};
+
+						$.ajax({
 							url: "/ajaxproject/projectCheckApply",
 							dataType: "html",
 							data: checkdata,
 							success: function(responsedata) {
-								
+
 								if (responsedata == "is_project") {
 									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
 									return false;
@@ -157,16 +160,16 @@ $(document).ready(function(){
 									return false;
 
 								} else {
-									
-						  				var alarm = {
-											"alarm_CODE": "PR_A",
-											"url": logineduser,
-											"member_ID": $("#leader_id").val(),
-											"alarm_CONTENT": loginednickname + "님이 회원님의 프로젝트에 지원하셨습니다"
-										}
+
+									var alarm = {
+										"alarm_CODE": "PR_A",
+										"url": logineduser,
+										"member_ID": $("#leader_id").val(),
+										"alarm_CONTENT": loginednickname + "님이 회원님의 프로젝트에 지원하셨습니다"
+									}
 
 									var Applydata = {
-										apply:{
+										apply: {
 											"project_id": project_id,
 											"position_id": Applycode,
 											"member_id": login_memberid,
@@ -188,7 +191,7 @@ $(document).ready(function(){
 										$.ajax({
 											url: "/ajaxproject/projectapply",
 											dataType: "html",
-											type:"post",
+											type: "post",
 											contentType: "application/json",
 											data: JSON.stringify(Applydata),
 											success: function(responsedata) {
@@ -196,7 +199,7 @@ $(document).ready(function(){
 													swal("지원 되었습니다.", "", "success");
 
 													//프로젝트 지원 알림 보내기
-													insertAlarm(JSON.stringify(alarm)).then(function(){
+													insertAlarm(JSON.stringify(alarm)).then(function() {
 														setTimeout(function() {
 															document.location.reload(true);
 														}, 1000)
@@ -205,379 +208,388 @@ $(document).ready(function(){
 															document.location.reload(true);
 														}, 1000);*/
 
-												}else{
-	     		     			     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-	     		     			     				setTimeout(function() {
-	     		     		     						document.location.reload(true);
-	     		     		     					}, 1000);
-	     		     			     			}
-	     		     			     			
-	     		     			     		}
-	     		     			     	});
-	     		     			     });
-	     		     			}
-	     		     		}
-	     		     	});
-	     			});
-	     		}
-	     		
-	     		
-		    })	
-		// --------------------------------------------------------------------------------------------	
-		// Qna 게시판    
-		}else if($(this).attr('id') == "Qna"){
-			$('html').scrollTop(0);
-			$('.ChangeContentBox').empty();		
-			
-			var qnaData = {"project_id":project_id}
-			
-			$.ajax({
-	     		url:"/ajaxproject/getprojectqna",
-	     		dataType:"html",
-	     		data: qnaData,
-	     		success: function(responsedata){    		
-	     			
-	     			responsedata = JSON.parse(responsedata);
-	     			
-	     			
-	     			
-	     			var QnaBox =  "<div class='QnABox'>"
-	     				QnaBox += "<p>Q&A</p>"
-	     				QnaBox += "<p class='Project_p'><b style='color: red;'>*</b> 프로젝트에 대한 질문을 남겨보세요!</p>"
-		     			QnaBox += "<hr>"
-						QnaBox += "<textarea placeholder='프로젝트에 대한 질문을 남겨보세요.' class='QnaContents' maxlength='2000'></textarea>"
-						QnaBox += "<div class='QnaBtnBox'>"
-						QnaBox += "<input type='button' class='QnaBtn' value='등록'>"				
-						
-						QnaBox += "</div>"
-						QnaBox += "</div>"
-						
-						
-						
-						if(responsedata.length > 0 ){
-							QnaBox += "<div class='QnaList'>"
-							for(var i = 0; i < responsedata.length; i++){
-									
-										
-									QnaBox += "<div class='QnaBox_'>"
-									QnaBox += "<div class='QnaBoxTitle'>"
-									QnaBox += "<div class='QnaImgBox'>"
-				     				QnaBox += "<img src='/resources/upload/" + responsedata[i].member_image + "'>"
-				     				QnaBox += "</div>"
-				     				QnaBox += "<div class='QnaMember_nickname'>" + responsedata[i].member_nickname + "</div>"
-				     				QnaBox += "</div>"
-				     				QnaBox += "<div class='QnaDate'>"
-				     				QnaBox += "<p>" + responsedata[i].qna_date.substring(0, 16) + "</p>"
-				     				QnaBox += "</div>"
-	 								QnaBox += "<div class='QnaContent'>"
-	 								QnaBox += "<textarea class='EditQnaContent disabled' maxlength='2000'>"
-	 								QnaBox +=  responsedata[i].qna_content
-	 								QnaBox += "</textarea>"
-	 								QnaBox += "</div>"
-	 								QnaBox += "<div class='QnaBtnLeftBox'>"
-	 								QnaBox += "<p class='showReply'>댓글보기</p>"
-	 								QnaBox += "<input type='text' value='"+ responsedata[i].ref +"' hidden>"
-	 								QnaBox += "</div>"
-	 								QnaBox += "<div class='QnaBtnRightBox'>"
-	 								if(responsedata[i].member_id == login_memberid){
-										if(responsedata[i].enabled == 1 ){
-										QnaBox += "<input type='button' class='EditQnaBtn' value='수정'><p>|</p>"
-	 									QnaBox += "<input type='button' class='DeleteQnaBtn' value='삭제'>"
-	 										
-										}
-									}
-	 								QnaBox += "</div>"
-	 								QnaBox += "</div>"
-									
-									
-									QnaBox += "<div id='ReplyBox"+ responsedata[i].ref +"' style='display:none'>"
-									QnaBox += "</div>"
-									
-							
- 								
+												} else {
+													swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+													setTimeout(function() {
+														document.location.reload(true);
+													}, 1000);
+												}
+
+											}
+										});
+									});
+								}
 							}
-								
+						});
+					});
+				}
+
+
+			})
+			// --------------------------------------------------------------------------------------------	
+			// Qna 게시판    
+		} else if ($(this).attr('id') == "Qna") {
+			$('html').scrollTop(0);
+			$('.ChangeContentBox').empty();
+
+			var qnaData = { "project_id": project_id }
+
+			$.ajax({
+				url: "/ajaxproject/getprojectqna",
+				dataType: "html",
+				data: qnaData,
+				success: function(responsedata) {
+
+					responsedata = JSON.parse(responsedata);
+
+
+
+					var QnaBox = "<div class='QnABox'>"
+					QnaBox += "<p>Q&A</p>"
+					QnaBox += "<p class='Project_p'><b style='color: red;'>*</b> 프로젝트에 대한 질문을 남겨보세요!</p>"
+					QnaBox += "<hr>"
+					QnaBox += "<textarea placeholder='프로젝트에 대한 질문을 남겨보세요.' class='QnaContents' maxlength='2000'></textarea>"
+					QnaBox += "<div class='QnaBtnBox'>"
+					QnaBox += "<input type='button' class='QnaBtn' value='등록'>"
+
+					QnaBox += "</div>"
+					QnaBox += "</div>"
+
+
+
+					if (responsedata.length > 0) {
+						QnaBox += "<div class='QnaList'>"
+						for (var i = 0; i < responsedata.length; i++) {
+
+
+							QnaBox += "<div class='QnaBox_'>"
+							QnaBox += "<div class='QnaBoxTitle'>"
+							QnaBox += "<div class='QnaImgBox'>"
+							QnaBox += "<img src='/resources/upload/" + responsedata[i].member_image + "'>"
 							QnaBox += "</div>"
+							QnaBox += "<div class='QnaMember_nickname'>" + responsedata[i].member_nickname + "</div>"
+							QnaBox += "</div>"
+							QnaBox += "<div class='QnaDate'>"
+							QnaBox += "<p>" + responsedata[i].qna_date.substring(0, 16) + "</p>"
+							QnaBox += "</div>"
+							QnaBox += "<div class='QnaContent'>"
+							QnaBox += "<textarea class='EditQnaContent disabled' maxlength='2000'>"
+							QnaBox += responsedata[i].qna_content
+							QnaBox += "</textarea>"
+							QnaBox += "</div>"
+							QnaBox += "<div class='QnaBtnLeftBox'>"
+							QnaBox += "<p class='showReply'>댓글보기</p>"
+							QnaBox += "<input type='text' value='" + responsedata[i].ref + "' hidden>"
+							QnaBox += "</div>"
+							QnaBox += "<div class='QnaBtnRightBox'>"
+							if (responsedata[i].member_id == login_memberid) {
+								if (responsedata[i].enabled == 1) {
+									QnaBox += "<input type='button' class='EditQnaBtn' value='수정'><p>|</p>"
+									QnaBox += "<input type='button' class='DeleteQnaBtn' value='삭제'>"
+
+								}
+							}
+							QnaBox += "</div>"
+							QnaBox += "</div>"
+
+
+							QnaBox += "<div id='ReplyBox" + responsedata[i].ref + "' style='display:none'>"
+							QnaBox += "</div>"
+
+
+
 						}
-						
-						
-						$('.ChangeContentBox').append(QnaBox);
-	     				
-	     				// Qna 등록버튼
-	     				$('.QnaBtn').unbind("click").bind("click", function(){
-							var content = $('.QnaContents').val();
-							
-							if(content != ""){
-									$.ajax({
-						     		url:"/ajaxproject/writeQna",
-						     		dataType:"html",
-						     		data: {"project_id":project_id,
-						     				"member_id":login_memberid,
-						     				"qna_content":content},
-						     		success: function(responsedata){  
-							
-										if(responsedata == "true"){
-											$('#Qna').trigger('click');	
-										}
-										
+
+						QnaBox += "</div>"
+					}
+
+
+					$('.ChangeContentBox').append(QnaBox);
+
+					// Qna 등록버튼
+					$('.QnaBtn').unbind("click").bind("click", function() {
+						var content = $('.QnaContents').val();
+
+						if (content != "") {
+							$.ajax({
+								url: "/ajaxproject/writeQna",
+								dataType: "html",
+								data: {
+									"project_id": project_id,
+									"member_id": login_memberid,
+									"qna_content": content
+								},
+								success: function(responsedata) {
+
+									if (responsedata == "true") {
+										$('#Qna').trigger('click');
 									}
-									
+
+								}
+
+							})
+						}
+
+					})
+
+
+					// Qna 수정버튼
+					$('.EditQnaBtn').unbind("click").bind("click", function() {
+
+						var Editcontent = $(this).parent().parent().children()[2].children;
+						var attr = $(this).parent().parent().children()[2].children[0];
+						var Editref = $(this).parent().parent().children()[3].children[1].value;
+						var at = $(attr).attr('class').indexOf('disabled');
+
+
+						if (at > 0) {
+							$(Editcontent).removeClass('disabled');
+						} else {
+
+							if ($(Editcontent).val() == "") {
+								swal('값을 입력해주세요.', '', 'error');
+								return false;
+							} else {
+
+								$.ajax({
+									url: "/ajaxproject/editQna",
+									dataType: "html",
+									data: {
+										"project_id": project_id,
+										"member_id": login_memberid,
+										"qna_content": $(Editcontent).val(),
+										"ref": Editref
+									},
+									success: function(responsedata) {
+
+										if (responsedata != "true") {
+											swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+											setTimeout(function() {
+												document.location.reload(true);
+											}, 1000);
+										}
+
+									}
+
 								})
 							}
-							
+							$(Editcontent).addClass('disabled');
+						}
+
+
+
+
+					})
+
+					// Qna 삭제
+					$('.DeleteQnaBtn').unbind("click").bind("click", function() {
+
+						var attr = $(this).parent().parent().children()[2].children[0];
+						var Deleteref = $(this).parent().parent().children()[3].children[1].value;
+
+
+						swal({
+							title: "작성하신 글을 삭제하시겠습니까?",
+							text: "",
+							icon: "warning",
+							buttons: true,
+							dangerMode: true,
 						})
-	     				
-	     				
-	     				// Qna 수정버튼
-	     				$('.EditQnaBtn').unbind("click").bind("click", function(){
-							
-							var Editcontent = $(this).parent().parent().children()[2].children;
-							var attr = $(this).parent().parent().children()[2].children[0];
-							var Editref = $(this).parent().parent().children()[3].children[1].value;
-							var at = $(attr).attr('class').indexOf('disabled');
-							
-							
-							if(at > 0){
-								$(Editcontent).removeClass( 'disabled' );
-							}else{
-								
-									if($(Editcontent).val() == ""){
-										swal('값을 입력해주세요.','','error');
-										return false;
-									}else{
-										
-										$.ajax({
-							     		url:"/ajaxproject/editQna",
-							     		dataType:"html",
-							     		data: {"project_id":project_id,
-							     				"member_id":login_memberid,
-							     				"qna_content":$(Editcontent).val(),
-							     				"ref":Editref},
-							     		success: function(responsedata){  
-								
-											if(responsedata != "true"){
-												swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-			      			     				setTimeout(function() {
-			      		     						document.location.reload(true);
-			      		     					}, 1000);
+							.then((willDelete) => {
+								if (willDelete) {
+
+									$.ajax({
+										url: "/ajaxproject/DeleteQna",
+										dataType: "html",
+										data: {
+											"project_id": project_id,
+											"member_id": login_memberid,
+											"ref": Deleteref
+										},
+										success: function(responsedata) {
+
+											if (responsedata != "true") {
+												swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+												setTimeout(function() {
+													document.location.reload(true);
+												}, 1000);
+											} else {
+												$('#Qna').trigger('click');
 											}
-											
+
 										}
-										
-										})
-									}
-									$(Editcontent).addClass( 'disabled' );
-							}
-							
-							
-							
-							
-						})
-	     				
-	     				// Qna 삭제
-	     				$('.DeleteQnaBtn').unbind("click").bind("click", function(){
-							
-							var attr = $(this).parent().parent().children()[2].children[0];
-							var Deleteref = $(this).parent().parent().children()[3].children[1].value;
-								
-								
-								swal({
-		     							  title:"작성하신 글을 삭제하시겠습니까?",
-		     							  text: "",
-		     							  icon: "warning",
-		     							  buttons: true,
-		     							  dangerMode: true,
-		     							})
-		     							.then((willDelete) => {
-		     							  if (willDelete) {
-		     								  
-		     								 $.ajax({
-									     		url:"/ajaxproject/DeleteQna",
-									     		dataType:"html",
-									     		data: {"project_id":project_id,
-									     				"member_id":login_memberid,
-									     				"ref":Deleteref},
-									     		success: function(responsedata){  
-													
-													if(responsedata != "true"){
-														swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-					      			     				setTimeout(function() {
-					      		     						document.location.reload(true);
-					      		     					}, 1000);
-													}else{
-														$('#Qna').trigger('click');	
-													}
-													
-												}
-												
-												})
-		     								  
-		     							  } else {
-		     								  return false;
-		     							  }
-		     							});
-							
-								
-						})
-	     				
-	     				
-	     				// 댓글보기 
-	     				$('.showReply').unbind("click").bind("click", function(){
-							var ref = this.nextSibling.value
-							var attr = $("#ReplyBox" + ref).attr('style');
-							
-							
-							if(attr == "display:none"){
-								
-							
-							
+
+									})
+
+								} else {
+									return false;
+								}
+							});
+
+
+					})
+
+
+					// 댓글보기 
+					$('.showReply').unbind("click").bind("click", function() {
+						var ref = this.nextSibling.value
+						var attr = $("#ReplyBox" + ref).attr('style');
+
+
+						if (attr == "display:none") {
+
+
+
 							$("#ReplyBox" + ref).empty();
-							
+
 							$.ajax({
-					     		url:"/ajaxproject/getProjectQnaReply",
-					     		dataType:"html",
-					     		data: {"project_id":project_id,
-					     				"REF":ref,
-					     				"member_id":login_memberid},
-					     		success: function(responsedata){  
-									
-									
+								url: "/ajaxproject/getProjectQnaReply",
+								dataType: "html",
+								data: {
+									"project_id": project_id,
+									"REF": ref,
+									"member_id": login_memberid
+								},
+								success: function(responsedata) {
+
+
 									responsedata = JSON.parse(responsedata);
-									
+
 									var ReplyBox = "<div class='colorBox'>"
-									
-									if(responsedata.qna.length == 0){
-											var ischeck = 0;
-											for(var i = 0; i < responsedata.pmlist.length; i++){
-												if(responsedata.pmlist[i].member_id == login_memberid){
-													ischeck ++;	
-												}
+
+									if (responsedata.qna.length == 0) {
+										var ischeck = 0;
+										for (var i = 0; i < responsedata.pmlist.length; i++) {
+											if (responsedata.pmlist[i].member_id == login_memberid) {
+												ischeck++;
 											}
-											
-											if(ischeck > 0 || responsedata.Reader > 0){
-													ReplyBox += "<div class='QnaReplyInput'>"
-													ReplyBox += "<input type='text' class='ReplyWrite' placeholder='댓글을 남겨주세요.'>"
-													ReplyBox += "<input type='text' value='"+ ref +"' hidden>"
-													ReplyBox += "<div class='ReplyWriteBtnBox'>"
-													ReplyBox += "<input type='button' class='ReplyWriteBtn'  value='등록'>"			
-													ReplyBox += "</div>"
-													ReplyBox += "</div>"
-													
-												}else{
-													ReplyBox += "<div class='QnaReplyInput'>"
-													ReplyBox += "<input type='text' class='ReplyWrite Replydisabled' placeholder='프로젝트 멤버만 댓글 작성이 가능합니다.'>"
-													ReplyBox += "<input type='text' value='"+ ref +"' hidden>"
-													ReplyBox += "<div class='ReplyWriteBtnBox Replydisabled'>"
-													ReplyBox += "</div>"
-													ReplyBox += "</div>"
-													
-												}
-												
-									}else{
-										for(var i = 0; i < responsedata.qna.length; i++){
-											
+										}
+
+										if (ischeck > 0 || responsedata.Reader > 0) {
+											ReplyBox += "<div class='QnaReplyInput'>"
+											ReplyBox += "<input type='text' class='ReplyWrite' placeholder='댓글을 남겨주세요.'>"
+											ReplyBox += "<input type='text' value='" + ref + "' hidden>"
+											ReplyBox += "<div class='ReplyWriteBtnBox'>"
+											ReplyBox += "<input type='button' class='ReplyWriteBtn'  value='등록'>"
+											ReplyBox += "</div>"
+											ReplyBox += "</div>"
+
+										} else {
+											ReplyBox += "<div class='QnaReplyInput'>"
+											ReplyBox += "<input type='text' class='ReplyWrite Replydisabled' placeholder='프로젝트 멤버만 댓글 작성이 가능합니다.'>"
+											ReplyBox += "<input type='text' value='" + ref + "' hidden>"
+											ReplyBox += "<div class='ReplyWriteBtnBox Replydisabled'>"
+											ReplyBox += "</div>"
+											ReplyBox += "</div>"
+
+										}
+
+									} else {
+										for (var i = 0; i < responsedata.qna.length; i++) {
+
 											ReplyBox += "<div class='QnaReplyBox'>"
 											ReplyBox += "<div class='QnaBoxTitle'>"
 											ReplyBox += "<div class='QnaImgBox'>"
-						     				ReplyBox += "<img src='/resources/upload/" + responsedata.qna[i].member_image + "'>"
-						     				ReplyBox += "</div>"
-						     				ReplyBox += "<div class='QnaMember_nickname'>" + responsedata.qna[i].member_nickname + "</div>"
-						     				ReplyBox += "</div>"
-						     				ReplyBox += "<div class='QnaDate'>"
-						     				ReplyBox += "<p>" + responsedata.qna[i].qna_date.substring(0, 16) + "</p>"
-						     				ReplyBox += "</div>"
-			 								ReplyBox += "<div class='QnaContent'>"
-			 								ReplyBox += "<p>"
-			 								ReplyBox +=  responsedata.qna[i].qna_content
-			 								ReplyBox += "</p>"
-			 								ReplyBox += "</div>"
-			 								ReplyBox += "<hr>"
-			 								ReplyBox += "</div>"
-			 								
-			 							}
-		 								var ischeck = 0;
-											for(var i = 0; i < responsedata.pmlist.length; i++){
-												if(responsedata.pmlist[i].member_id == login_memberid){
-													ischeck ++;	
-												}
+											ReplyBox += "<img src='/resources/upload/" + responsedata.qna[i].member_image + "'>"
+											ReplyBox += "</div>"
+											ReplyBox += "<div class='QnaMember_nickname'>" + responsedata.qna[i].member_nickname + "</div>"
+											ReplyBox += "</div>"
+											ReplyBox += "<div class='QnaDate'>"
+											ReplyBox += "<p>" + responsedata.qna[i].qna_date.substring(0, 16) + "</p>"
+											ReplyBox += "</div>"
+											ReplyBox += "<div class='QnaContent'>"
+											ReplyBox += "<p>"
+											ReplyBox += responsedata.qna[i].qna_content
+											ReplyBox += "</p>"
+											ReplyBox += "</div>"
+											ReplyBox += "<hr>"
+											ReplyBox += "</div>"
+
+										}
+										var ischeck = 0;
+										for (var i = 0; i < responsedata.pmlist.length; i++) {
+											if (responsedata.pmlist[i].member_id == login_memberid) {
+												ischeck++;
 											}
-											
-											if(ischeck > 0 || responsedata.Reader > 0){
-													ReplyBox += "<div class='QnaReplyInput'>"
-													ReplyBox += "<input type='text' class='ReplyWrite' placeholder='댓글을 남겨주세요.'>"
-													ReplyBox += "<input type='text' value='"+ ref +"' hidden>"
-													ReplyBox += "<div class='ReplyWriteBtnBox'>"
-													ReplyBox += "<input type='button' class='ReplyWriteBtn'  value='등록'>"			
-													ReplyBox += "</div>"
-													ReplyBox += "</div>"
-													
-												}else{
-													ReplyBox += "<div class='QnaReplyInput'>"
-													ReplyBox += "<input type='text' class='ReplyWrite Replydisabled' placeholder='프로젝트 멤버만 댓글 작성이 가능합니다.'>"
-													ReplyBox += "<input type='text' value='"+ ref +"' hidden>"
-													ReplyBox += "<div class='ReplyWriteBtnBox Replydisabled'>"
-													ReplyBox += "</div>"
-													ReplyBox += "</div>"
-													
-												}
+										}
+
+										if (ischeck > 0 || responsedata.Reader > 0) {
+											ReplyBox += "<div class='QnaReplyInput'>"
+											ReplyBox += "<input type='text' class='ReplyWrite' placeholder='댓글을 남겨주세요.'>"
+											ReplyBox += "<input type='text' value='" + ref + "' hidden>"
+											ReplyBox += "<div class='ReplyWriteBtnBox'>"
+											ReplyBox += "<input type='button' class='ReplyWriteBtn'  value='등록'>"
+											ReplyBox += "</div>"
+											ReplyBox += "</div>"
+
+										} else {
+											ReplyBox += "<div class='QnaReplyInput'>"
+											ReplyBox += "<input type='text' class='ReplyWrite Replydisabled' placeholder='프로젝트 멤버만 댓글 작성이 가능합니다.'>"
+											ReplyBox += "<input type='text' value='" + ref + "' hidden>"
+											ReplyBox += "<div class='ReplyWriteBtnBox Replydisabled'>"
+											ReplyBox += "</div>"
+											ReplyBox += "</div>"
+
+										}
 									}
-									
+
 									ReplyBox += "</div>";
-									
+
 									$("#ReplyBox" + ref).append(ReplyBox);
 									$("#ReplyBox" + ref).show();
-									
-									$('.ReplyWriteBtn').unbind("click").bind("click", function(){
+
+									$('.ReplyWriteBtn').unbind("click").bind("click", function() {
 										var contents = $(this).parent().parent()[0].children[0].value;
 										var replyREF = $(this).parent().parent()[0].children[1].value;
 										var Btn = $(this).parent().parent().parent().parent().prev().children()[3].children[0];
-	
-										if(contents != ""){
+
+										if (contents != "") {
 											$.ajax({
-									     		url:"/ajaxproject/writeQnaReply",
-									     		dataType:"html",
-									     		data: {"project_id":project_id,
-									     				"member_id":login_memberid,
-									     				"qna_content":contents,
-									     				"ref":replyREF},
-									     				
-									     		success: function(responsedata){  
-										
-													if(responsedata == "true"){
+												url: "/ajaxproject/writeQnaReply",
+												dataType: "html",
+												data: {
+													"project_id": project_id,
+													"member_id": login_memberid,
+													"qna_content": contents,
+													"ref": replyREF
+												},
+
+												success: function(responsedata) {
+
+													if (responsedata == "true") {
 														$(Btn).trigger('click');
-														$(Btn).trigger('click');													
+														$(Btn).trigger('click');
 													}
 												}
-												
-											})	
+
+											})
 										}
-										
+
 									})
-									
-								}  		
-								
-							
-							})	
-							
-							}else{
-								$("#ReplyBox" + ref).attr('style','display:none');	
-							}
-						})
-	     				
-	     		}
-	     	});
-	     	
-			
-				
-		// --------------------------------------------------------------------------------------------
-		// 멤버관리 클릭	
-		}else if($(this).attr('id') == "memberEdit"){
-			
+
+								}
+
+
+							})
+
+						} else {
+							$("#ReplyBox" + ref).attr('style', 'display:none');
+						}
+					})
+
+				}
+			});
+
+
+
+			// --------------------------------------------------------------------------------------------
+			// 멤버관리 클릭	
+		} else if ($(this).attr('id') == "memberEdit") {
+
 			$('html').scrollTop(0);
 			$('.ChangeContentBox').empty();
 
 			// 멤버관리 리스트 뿌려주는 ajax
-
 			 $.ajax({
 		     		url:"/ajaxproject/getMemberEditBox",
 		     		dataType:"html",
@@ -1180,6 +1192,7 @@ $(document).ready(function(){
 		     		}
 		     	});
 			
+
 		}
 		// -----------------------------------------------------------------------------
 
@@ -1191,44 +1204,43 @@ $(document).ready(function(){
 	$('#project_info').trigger('click');
 
 	// 프로젝트 탈퇴
-	$('.ProjectDeleteBtn').unbind('click').bind('click',function(){
-		
-		if(project_state == '완료'){
+	$('.ProjectDeleteBtn').unbind('click').bind('click', function() {
+
+		if (project_state == '완료') {
 			return false;
 		}
-		
+
 		$('.Project_Apply_modal').empty();
-	     						
+
 		var table = "<form class='ProjectApply'><div class='ProjectApplyMemberListDiv'>";
 
 		table += "<p class='ApplyMemberListTitle centerImpo'>프로젝트를 탈퇴 하시겠습니까?</p>"
-		
+
 		table += "<div class='ApplyBtn_Box'>"
 		table += "<input type='button' value='예' class='Withdrawal_Ok'><input type='button' value='아니요' class='Withdrawal_No'>"
 		table += "</div>"
 		table += "<p class=''Project_p Apply_p'><b style='color: red;'>*</b> 예를 누를 시 유의사항에 동의한 것으로 간주됩니다.</p>"
 		table += "<div class='ApplyPbox'>"
-		table += "<p class='Apply_p'><b>유의사항</b></p>"	
+		table += "<p class='Apply_p'><b>유의사항</b></p>"
 		table += "<p class='Project_p Apply_p'>- 프로젝트 리더가 프로젝트를 탈퇴할 시 프로젝트가 삭제가 됩니다.</p>"
 		table += "<p class='Project_p Apply_p'>- 프로젝트 리더는 프로젝트에 멤버가 존재 할 경우 프로젝트를 탈퇴할 수 없습니다.</p>"
 		table += "<p class='Project_p Apply_p'>- 진행중인 프로젝트를 탈퇴 시 패널티가 발생하오니 신중히 선택하시기 바랍니다.</p>"
-		table += "<p class='Project_p Apply_p'>- 프로젝트를 탈퇴 시 해당 프로젝트에 지원 및 참여가 불가능합니다.</p>"	
-		table += "<p class='Project_p Apply_p'><b style='color: red;'>*</b> 패널티 : 30일 간 프로젝트 참여 및 지원이 불가능합니다.</p>"	
+		table += "<p class='Project_p Apply_p'>- 프로젝트를 탈퇴 시 해당 프로젝트에 지원 및 참여가 불가능합니다.</p>"
+		table += "<p class='Project_p Apply_p'><b style='color: red;'>*</b> 패널티 : 30일 간 프로젝트 참여 및 지원이 불가능합니다.</p>"
 		table += "</div>";
-		
+
 		table += "</div></form>";
-		
+
 		$('.Project_Apply_modal').append(table);
 		$('.Project_Apply_modal').show();
-		
+
 		// 모달닫기
 		$('.Withdrawal_No').unbind('click').bind('click',function(){
 	    	 $('.Project_Apply_modal').empty();
 	    	 $('.Project_Apply_modal').hide();
 	     					     			    	 
         });
-		
-		
+			
 		$('.Withdrawal_Ok').unbind('click').bind('click',function(){
 	    	
 	    	 $.ajax({
@@ -1239,25 +1251,24 @@ $(document).ready(function(){
 	     		success: function(responsedata){    
 	     			
 	     			
-	     			if(responsedata == "isMember"){
-	     				swal("현재 프로젝트에 멤버가 존재합니다.","","error").then((value) => {
+            if(responsedata == "isMember"){
+            swal("현재 프로젝트에 멤버가 존재합니다.","","error").then((value) => {
 	     					document.location.reload(true);
 						});
-	     				
-	     			}else if(responsedata == "DeleteProjecet"){
-						swal("프로젝트가 삭제되었습니다","","success").then((value) => {
-	     					location.href = "../main";
+
+					} else if (responsedata == "DeleteProjecet") {
+						swal("프로젝트가 삭제되었습니다", "", "success").then((value) => {
+							location.href = "../main";
 						});
-					}else if(responsedata == "OutProjecet"){
-						swal("프로젝트에서 탈퇴하였습니다","","success").then((value) => {
-	     					location.href = "/project/list";
+					} else if (responsedata == "OutProjecet") {
+						swal("프로젝트에서 탈퇴하였습니다", "", "success").then((value) => {
+							location.href = "/project/list";
 						});
-					}else{
-						swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error").then((value) => {
-	     					document.location.reload(true);
+					} else {
+						swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error").then((value) => {
+							document.location.reload(true);
 						});
-					}
-	     			
+					}	     			
 	     			
 	     		}
 	     	});  
@@ -1267,7 +1278,7 @@ $(document).ready(function(){
 		
 	})
 	
-	// 프로젝트 완료버튼
+// 프로젝트 완료버튼
 	$('.ProjectCompleteBtn').unbind('click').bind('click',function(){
 		
 		$('.Project_Apply_modal').empty();

@@ -180,7 +180,7 @@
 	
 	<!-- 프로젝트 지원내역 -->
 	<insert id="setProjectApply" >
-		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID,APPLY_DATE) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id},sysdate)
+		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID,APPLY_DATE, APPLY_OK) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id},sysdate, 0)
 	</insert>
 	
 	<!-- 생성된 프로젝트 정보 다 가져오는 테이블 -->
@@ -493,8 +493,21 @@
 		ORDER BY "REF" DESC, STEP asc
 	</select>
 	
+
 	<update id="projectComplete">
 		UPDATE P_DETAIL SET P_STATE = '완료' WHERE PROJECT_ID = #{project_id} AND P_STATE = '진행중'
+  </update>
+
+	<!-- 프로젝트 수정에서 상태 변경시 알림 보낼 프로젝트 멤버들 목록 -->
+	<select id="getTeamMembers" resultType="String">
+	
+		select member_id from p_member where project_id=${project_id} and member_id is not null
+	
+	</select>
+	
+	<!-- 프로젝트 진입시 조회수 증가 addViews -->
+	<update id="addViews">
+		UPDATE p_detail SET p_views = p_views+1 WHERE project_id = ${project_id}
 	</update>
 	
 </mapper>

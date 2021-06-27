@@ -1,5 +1,7 @@
 package com.cyco.alarm.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cyco.alarm.dao.AlarmDao;
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.alarm.vo.FromNoteVo;
+import com.cyco.alarm.vo.NoteVo;
 import com.cyco.alarm.vo.ToNoteVo;
 import com.cyco.alarm.vo.V_FromNote_Member_Vo;
 import com.cyco.alarm.vo.V_ToNote_Member_Vo;
@@ -23,6 +26,23 @@ public class AlarmService {
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
+	
+	//프로젝트 초대, 프로젝트 상태 변경
+	public boolean makeAlarm(List<AlarmVo> alarms) {
+		
+		Boolean bo = false;
+		System.out.println("makeAlarm Service");
+		System.out.println(alarms.toString());
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+        int row = alarmdao.makeAlarm(alarms);	
+	
+		if(row > 0){
+			bo = true;
+		}
+
+		return bo;
+		
+	}
 
 	//쪽지 보내고 알림 테이블에도 인서트
 	@Transactional
@@ -31,10 +51,7 @@ public class AlarmService {
 		Boolean bo = false;
 		
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
-		/*
-		 * AlarmVo alarm = (AlarmVo)data.get("alarm"); FromNoteVo frn =
-		 * (FromNoteVo)data.get("note"); ToNoteVo tn = (ToNoteVo)data.get("note");
-		 */
+
 		System.out.println("frn" + frn);
 		System.out.println("alarm" + alarm);
 		alarmdao.insertFromNote(frn);
@@ -49,36 +66,7 @@ public class AlarmService {
 		return bo;
 
 	}
-
-	// 쪽지일 경우 위 서비스와 함께 발신, 수신함에도 인서트
-	/*
-	 * public boolean insertNote(HashMap<String, String> data) {
-	 * 
-	 * Boolean bo = false;
-	 * 
-	 * AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class); FromNoteVo frn =
-	 * new FromNoteVo(); ToNoteVo tn = new ToNoteVo();
-	 * frn.setMEMBER_TO(data.get("member_id"));
-	 * frn.setMEMBER_FROM(data.get("sender"));
-	 * frn.setNOTE_CONTENT(data.get("message"));
-	 * 
-	 * System.out.println("발신 : " + frn.toString());
-	 * 
-	 * tn.setMEMBER_TO(data.get("member_id"));
-	 * tn.setMEMBER_FROM(data.get("sender"));
-	 * tn.setNOTE_CONTENT(data.get("message")); System.out.println("수신 : " +
-	 * frn.toString());
-	 * 
-	 * int frow = alarmdao.insertFromNote(frn); int nrow =
-	 * alarmdao.insertToNote(tn);
-	 * 
-	 * if(frow > 0 && nrow > 0) { bo = true; }
-	 * 
-	 * return bo;
-	 * 
-	 * }
-	 */
-
+	
 	// 헤더 알림 메뉴에 최신 알림만 뿌려주기
 	public List<AlarmVo> getNewAlarms(String memberid) {
 
@@ -87,33 +75,30 @@ public class AlarmService {
 
 		return alarms;
 	}
-
+/*
 	// 알림페이지 초기 진입시 전체 알림 뿌려주기
 	public List<AlarmVo> getAllAlarms(String useremail) {
 
 		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);
-		/*
-		 * List<AlarmVo> list = alarmdao.getAllAlarms(useremail); List<AlarmVo> alarms =
-		 * new ArrayList<AlarmVo>(); int count = 0; for(int i = 0; i < list.size(); i++)
-		 * { if(!list.get(i).getALARM_CODE().equals("CAHT_O")) {
-		 * alarms.add(list.get(i));
-		 * 
-		 * } else { count++;
-		 * 
-		 * if(count == 1) { //회원의 알림테이블에 쪽지 알림이 있을 경우, 쪽지 테이블에서 안 읽은 쪽지 있는지 체크 int
-		 * messages = alarmdao.hasNewMessages(useremail);
-		 * 
-		 * if(messages > 0) { System.out.println("여길 타나"); alarms.add(list.get(i)); }
-		 * 
-		 * }
-		 * 
-		 * } }
-		 */
+		
+		return alarms;
+	}
+	
+	
+	*/
+	
+	//알림페이지 초기 진입시 전체 알림(쪽지 제외) 뿌리기
+	public List<AlarmVo> getAllAlarms(String useremail) {
+
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		
+		//쪽지 제외 알림
+		List<AlarmVo> alarms = alarmdao.getAllAlarms(useremail);
 
 		return alarms;
 	}
-
+	
 	// 알림 확인시 상태 업데이트
 	public Integer checkAlarm(String alarm_id) {
 
@@ -165,4 +150,54 @@ public class AlarmService {
 
 		return bo;
 	}
+	
+	// 수신, 발신 쪽지함 삭제
+	public Boolean deleteNotes(String table, List<String> noteid) {
+		
+		Boolean bo = false;
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		
+		int row = alarmdao.deleteNotes(table, noteid);
+
+		if (row > 0) {
+			bo = true;
+		}
+
+		return bo;
+		
+	}
+	
+	//비동기 쪽지 리스트 불러오기
+	  public List<NoteVo> getNoteList(String useremail, String table) {
+	  
+	  AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+	  List<NoteVo> notelist = new ArrayList<NoteVo>();
+	  List<V_ToNote_Member_Vo> to_notelist = new ArrayList<V_ToNote_Member_Vo>();
+	  List<V_FromNote_Member_Vo> from_notelist = new ArrayList<V_FromNote_Member_Vo>();
+	  
+
+	  if(table.equals("TO_NOTE")) { 
+		  
+		  to_notelist = alarmdao.getReceivedMessages(useremail);
+		  
+		  for(int i = 0; i < to_notelist.size(); i++) {
+			  
+			  notelist.add(to_notelist.get(i));
+		  }
+		  
+	  }else if(table.equals("FROM_NOTE")) {
+		  
+		  from_notelist = alarmdao.getSendMessages(useremail);
+		  
+		  for(int i = 0; i < from_notelist.size(); i++) {
+			  
+			  notelist.add(from_notelist.get(i));
+			  
+		  }	  
+		  
+	  }
+	  
+	  	return notelist; 
+	  }
+	
 }

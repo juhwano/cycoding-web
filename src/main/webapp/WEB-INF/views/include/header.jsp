@@ -138,7 +138,7 @@
 										<div>관리자 페이지 <i class="fas fa-caret-down"></i></div> <!-- 1차 메뉴 -->
 										<div class="sub" id="my_sub">
 											<ul>
-												<li><a href="#">통계</a></li>
+												<li><a href="${pageContext.request.contextPath}/admin/chart">통계</a></li>
 												<li><a
 													href="${pageContext.request.contextPath}/admin/member">회원관리</a></li>
 												<li><a
@@ -153,7 +153,7 @@
 
 								<se:authorize
 
-									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
+									access="hasAnyRole('ROLE_MEMBER','ROLE_PREMEMBER','ROLE_TEAMMANGER','ROLE_PENALTY','ROLE_BAN')">									
 
 									<!-- 로그인 -->
 									<li class="nav-item dropdown" id="alarmbell_li"><img
@@ -166,7 +166,7 @@
 												<li><a
 													href="${pageContext.request.contextPath}/messages/">내
 														쪽지</a></li>
-												<li class="subdrop"><a href="">알림</a>
+												<li class="subdrop"><a href="#">알림</a>
 													<ul class="susub" id="alarmsub">
 
 													</ul></li>
@@ -184,25 +184,16 @@
 													href="${pageContext.request.contextPath}/mypage/wishProject">북마크/지원내역</a></li>
 
 												<li class="subdrop"><a href="#">프로젝트</a>
+												
+												<se:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+													<input type="hidden" id="ismember" value="1" />
+												</se:authorize>
+												<se:authorize access="!hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+													<input type="hidden" id="ismember" value="0" />
+												</se:authorize>
 													<ul class="susub" id="project_sub">
-													
 													<!-- 현재 참여중인 프로젝트 있는지 확인 -->
-														<c:choose>
-															<c:when test="${sessionScope.project_id eq 'none'}">
-															
-															<li id="myproject_title"><a href="${pageContext.request.contextPath}/project/create">프로젝트 생성하기</a></li>
-															
-															</c:when>															
-															<c:otherwise>
-															<li id="myproject_title">
-															<a href="${pageContext.request.contextPath}/project/detail?project_id=${sessionScope.project_id}">
-																${sessionScope.p_title}</a>
-															</li>
-															</c:otherwise>
-														</c:choose>
-														<li><a
-															href="${pageContext.request.contextPath}/mypage/myProject">나의
-																프로젝트/후기</a></li>
+																											
 													</ul></li>
 
 												<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
@@ -379,16 +370,25 @@ $('#alram').click(function() {
 			sender: logineduser,
 			content: 알림 띄울 내용
 		} */
-	//보낸 알림 디비에 반영하는 함수
+	//알림 보내기(트랜잭션)
 	function insertAlarm(data){
 		return new Promise(function(resolve, reject) {
 		//서버로 알림 보내기(웹소켓)
 		ws.send(data);
 		resolve(res);
 		});
-/* 		$.ajax({
+		
+	}
+	
+	//알림 보내고 알림 테이블에 인서트(다른 동작과 트랜잭션X)
+	//프로젝트 초대, 상태 변경
+	function makeAlarm(data){
+		
+		return new Promise(function(resolve, reject) {
+		
+			$.ajax({
 			
-			url:"/alarm/insertalarm",
+			url:"/alarm/makealarm",
 			type:"post",
 			dataType:"json",
 			data:data,
@@ -396,11 +396,18 @@ $('#alram').click(function() {
 			contentType: "application/json; charset=utf-8;",
 			success:function(res){
 				console.log(res)
+				//서버로 알림 보내기(웹소켓)
+				console.log(data);
+				ws.send(data);
+				
 			},
 			error:function(xhr){
 				console.log(xhr)
 			}			
-		}); */
+		});
+			
+			resolve(response);
+		});
 		
 	}
 	
@@ -411,10 +418,8 @@ $('#alram').click(function() {
 			
 			openSocket();
 			chekcBell(logineduser);
-			updatealarmlist(logineduser);
-		
+			updatealarmlist(logineduser);		
 		}
-		
 		
 		//드롭다운 메뉴
 		$("#my_sub").hide();
@@ -455,8 +460,64 @@ $('#alram').click(function() {
 				setTimeout(function(){_this.find(".sub").slideUp(600)},3000)
 			})
 		});
-	
+		
+		//헤더에 있는 새 알림 클릭해서 이동하면 상태 확인으로 업데이트 하기
+		$(document).on("click", ".alarm_content", function() {
+		//$(".alarm_content").on("click",function(){
+			var id=  $(this).attr("id");
+			console.log(id, " 이벤트");
+			$.ajax({
+				url: "/alarm/checkalarm",
+				data: { alarm_id:id},
+				dataType: "text",
+				type: "post",
+				success: function(res) {
+					console.log("헤더 알림 리스트에서 상태 업데이트 ", res);
+				},
+				error: function(xhr) {
+					console.log(xhr);
+				}
+			});
+			
+			
+		});
+				
+			$("main").off('click');
 
+		
+	//ROLE_MEMBER이거나 TEAMMANAGER일 경우 프로젝트 참여 여부 페이지 이동시마다 반영되게 처리
+	if($("#ismember").val() == '1'){
+		console.log("들어오나?")
+		
+		$.ajax({
+			
+			url:"/mypage/ajax/checkhasproject",
+			data:{id : logineduser},
+			dataType:"text",
+			success:function(res){
+				console.log(res)
+				
+				$("#project_sub").empty();
+				
+				if(res == "none"){
+					$("#project_sub").append(
+							'<li id="myproject_title"><a href="/project/create">프로젝트 생성하기</a></li>'
+							+'<li><a href="/mypage/myProject">나의 프로젝트/후기</a></li>');
+					
+				} else{
+					$("#project_sub").append(
+							'<li id="myproject_title"><a href="/project/detail?project_id='+res+'">진행중 프로젝트</a></li>'
+							+'<li><a href="/mypage/myProject">나의 프로젝트/후기</a></li>');
+				}
+				
+			},
+			error:function(xhr){
+				console.log(xhr)
+				
+			}
+		});
+	} 
+			
 	});
 ///////////////////////////////////////////
 

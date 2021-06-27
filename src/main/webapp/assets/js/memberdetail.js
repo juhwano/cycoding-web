@@ -119,7 +119,7 @@ $(document).ready(function() {
 				if (res.p_title == undefined) {
 
 					$("#contentarea").empty();
-					$("#contentarea").append("<p>아직 초대하실 프로젝트가 없습니다</br>" + $("#cycoder p").text() + "님과 함께 할 프로젝트를 만들어보세요!</p>");
+					$("#contentarea").append("<p>현재 초대할 수 있는 프로젝트가 없습니다</br>" + $("#cycoder p").text() + "님과 함께 할 프로젝트를 만들어보세요!</p>");
 
 					$("#inv_buttonarea").empty();
 					$("#inv_buttonarea").append("<a href='/project/create'><button class='inv_btn' id='create_p'>프로젝트 생성하러 가기</button></a>");
@@ -139,12 +139,12 @@ $(document).ready(function() {
 					$("#confirm_inv").on("click", function() {
 
 						var data = {
-							code: "PR_IN",
+							alarm_CODE: "PR_IN",
 							url: res.project_id,
 							//p_title:res.project_title,
-							member_id: $("#m_id").val(),
+							member_ID: $("#m_id").val(),
 							sender: logineduser,
-							content: loginednickname + "님이 회원님을 " + res.p_title + " 프로젝트에 초대하셨습니다"
+							alarm_CONTENT: loginednickname + "님이 회원님을 " + res.p_title + " 프로젝트에 초대하셨습니다"
 						}
 
 						console.log(data);
@@ -153,7 +153,7 @@ $(document).ready(function() {
 						
 
 						//디비에 반영
-						insertAlarm(JSON.stringify(data));
+						makeAlarm(JSON.stringify(data));
 						swal($("#cycoder p").text() + "님을 초대했습니다","","success");
 
 					});
@@ -224,6 +224,7 @@ $(document).on("click","#msg_btn", function() {
 			success:function(res){
 				if(res == "true"){
 					swal("쪽지를 발송했습니다","","success")
+					$("#messagearea").empty();
 				} else{
 					swal("쪽지 발송하지 못했습니다","잠시 후 시도해주세요","error")
 				}

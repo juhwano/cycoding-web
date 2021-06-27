@@ -9,7 +9,7 @@ public class ReviewVo {
 
 	private int review_id;
 	private String review_content;
-	private Date review_date;
+	private String review_date;
 	private int review_grade;
 	private String writer_id;
 	private String review_member;

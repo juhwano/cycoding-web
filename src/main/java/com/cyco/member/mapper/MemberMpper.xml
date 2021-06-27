@@ -54,14 +54,35 @@
 	<select id="isProjectManager" resultType="com.cyco.project.vo.P_DetailVo">
 		select pd.p_title, pd.project_id from p_detail pd left join project p
 		on pd.project_id=p.project_id
-		where p.member_id=${memberid}
+		where p.member_id=${memberid} and (pd.p_state='진행중' or pd.p_state='모집중')
 	</select>
 	
 	<select id="isInProject" resultType="java.util.HashMap">
 		select pm.project_id, pd.p_title from p_member pm left join p_detail pd
 		on pm.project_id=pd.project_id
-		where pm.member_id=${memberid}
+		where pm.member_id=${memberid} and (pd.p_state='진행중' or pd.p_state='모집중')
 	</select>
 	
+	<!-- 이메일,비밀번호찾기 -->
+	
+	<!-- 이메일찾기 전 존재하는지 확인 -->
+	<select id="beforeFindEmail" resultType="_int">
+		select count(*)from member where member_name = #{param1} and member_phone=#{param2}
+	</select>
+	
+	<!-- 이메일찾기 -->
+	<select id="findEmail" resultType="String">
+		select member_email from member where member_name = #{param1} and member_phone=#{param2}
+	</select>
+	
+	<!-- 비밀번호찾기 전 존재 확인 -->
+	<select id="beforeFindPwd" resultType="_int">
+		select count(*) from member where member_name = #{param1} and member_email=#{param2}
+	</select>
+	
+	<!-- 비밀번호 변경 findPwdEdit -->
+	<update id="findPwdEdit">
+		update member set MEMBER_PWD=#{param2} where MEMBER_EMAIL=#{param1}
+	</update>
 
 </mapper>

@@ -65,9 +65,9 @@ public interface MemberDao {
 	public Integer getOldAlarm(String memberid);
 	
 	//로그인시 참여중인(팀장으로) 프로젝트 있는지 체크
-	public P_DetailVo isProjectManager(String memberid);
+	public List<P_DetailVo> isProjectManager(String memberid);
 	//로그인시 참여중인(멤버로) 프로젝트 있는지 체크
-	public HashMap<String, String> isInProject(String memberid);
+	public List<HashMap<String, String>> isInProject(String memberid);
 	
 	//마이페이지 개인정보 가져오기
 	public MemberVo getMyDetail(String useremail);
@@ -187,5 +187,16 @@ public interface MemberDao {
 	//로그인한 회원이 해당 프로젝트에 남긴 리뷰 조회
 	public List<MyReviewVo> getMyProjectReview(String projectid, String memberid);
 	
+	//이메일, 비밀번호 찾기
+	//이메일찾기 전 해당 유저의 정보가 존재하는지 확인
+	public int beforeFindEmail(String userName, String userPhone);
+	//이메일찾기
+	public String findEmail(String userName, String userPhone);
+	
+	//비밀번호찾기 전 해당 유저의 정보가 존재하는지 확인
+	public int beforeFindPwd(String userName, String userEmail);
+	
+	//비밀번호찾기 인증 완료 후 비밀번호 변경
+	public void findPwdEdit(String userEmail, String userPwd);
 
 }

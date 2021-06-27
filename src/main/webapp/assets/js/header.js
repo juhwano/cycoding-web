@@ -76,16 +76,16 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트에 지원자가 있습니다</p></a></li>"
 
 							);
 
 							// 내가 지원 내역이 승인됨
 						} else if (data.alarm_CODE == "PR_S") {
 
-							$(".susub").append(
+							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 승인되었습니다</p></a></li>"
 
 							);
 
@@ -94,7 +94,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 거절되었습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 지원내역이 거절되었습니다</p></a></li>"
 
 							);
 
@@ -103,7 +103,7 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/project/detail?project_id='" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트의 상태가 바뀌었습니다</p></a></li>"
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>내 프로젝트의 상태가 바뀌었습니다</p></a></li>"
 
 							);
 
@@ -112,17 +112,8 @@ function updatealarmlist(id) {
 
 							$("#alarmsub").append(
 
-								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>다른 회원이 내게 후기를 남겼습니다</p></a></li>"
-
-							);
-
-
-						} else if (data.alarm_CODE == "QNAR") {
-
-							$("#alarmsub").append(
-
-								"<li class='header_alarm'><a href=''" + data.url + "><p id='" + data.alarm_ID + "' class='alarm_content'>내 질문에 답변이 달렸습니다</p></a></li>"
-
+								"<li class='header_alarm'><a href='/member/memberdetailpage?memberid=" + data.url + "'><p id='" + data.alarm_ID + "' class='alarm_content'>후기가 작성됐습니다</p></a></li>"
+								//"<li class='header_alarm'><a href='#'><p id='" + data.alarm_ID + "' class='alarm_content'>후기가 작성됐습니다</p></a></li>"
 							);
 
 						} else if (data.alarm_CODE == "CHAT_O") {
@@ -145,7 +136,7 @@ function updatealarmlist(id) {
 
 				$("#alarmsub").append(
 
-					"<li class='last'><a href='/mypage/myalarm'><p class='alarm_content'>알림 더보기</p></a></li>"
+					"<li class='last'><a href='/mypage/myalarm'><p>알림 더보기</p></a></li>"
 
 				);
 

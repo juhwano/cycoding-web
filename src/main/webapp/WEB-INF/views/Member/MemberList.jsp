@@ -51,11 +51,19 @@
 				</div>
 			</div>
 
-
+			<!-- last_flag : forEach문이 project_list의 끝까지 돌았는지 검사해준다. -->
+			<!-- last_flage >>  true : project_list 끝까지 반복문 완료. -->
+			<c:set var="last_flag" value="false"/>
 
 			<div class="row mb-5" id="card_section">
 				<!-- 카드-->
-				<c:forEach var="member" items="${memberList}">
+				<c:forEach var="member" items="${memberList}"  varStatus="status" begin="0" end="7">
+				
+				<!-- if문을 통해 현재 index가 project_list의 끝인지 검사 -->
+				<c:if test="${status.count eq list_size}">
+					<c:set var="last_flag" value="true"/>
+				</c:if>
+				
 					<c:if test="${member.rownum <= 8}">
 						<div class="cardNum">
 							<div class="card shadow">
@@ -85,13 +93,21 @@
 				</div>
 			</div>
 			<!-- 더보기버튼 -->
+			<!-- 더보기버튼 -->
+			<!-- last_flag가  true면 버튼은 감춘다.-->
 			<div class="more_sec">
-				<button class="moreBtn" type="button">더보기</button>
+				<c:if test="${not last_flag}">
+					<button class="moreBtn" id="moreBtn" type="button">더보기</button>
+				</c:if>
 			</div>
 		</div>
 	</div>
 </body>
 <jsp:include page="../include/footer.jsp"></jsp:include>
+
+<script type="text/javascript">
+ 	var memberList = ${memberList};
+</script>
 <!-- MemberList Javascript -->
 <script
 	src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=2"></script>

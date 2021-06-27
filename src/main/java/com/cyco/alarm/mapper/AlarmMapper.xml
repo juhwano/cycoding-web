@@ -5,15 +5,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.cyco.alarm.dao.AlarmDao">
 
-	<!-- 알림이벤트 발생시 알림테이블에 인서트 -->
+	<!-- 알림이벤트 발생시 알림테이블에 인서트(트랜잭션 처리) -->
 	<insert id="insertAlarm">
 
 		insert into alarm
-		(ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url,
-		ALARM_CONTENT,ALARM_OK )
+		(ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url,ALARM_CONTENT,ALARM_OK )
 		values(ALM_SEQ.nextval, ${MEMBER_ID}, #{ALARM_CODE},
 		sysdate,${URL},#{ALARM_CONTENT},0)
 	</insert>
+	
+	<!-- DB에 알림 테이블만 인서트하면 되는 알림 이벤트 -->
+	<insert id="makeAlarm">
+		<foreach collection="list" item="item" open="INSERT ALL" close="SELECT * FROM DUAL">
+         into alarm
+		(ALARM_ID,MEMBER_ID,ALARM_CODE,ALARM_DATE,url,ALARM_CONTENT,ALARM_OK ) values 
+        ( 
+           alarm_seq,
+           ${item.MEMBER_ID},
+           #{item.ALARM_CODE}, 
+			sysdate,
+			${item.URL},
+			#{item.ALARM_CONTENT}, 
+			0      
+         ) 
+		</foreach>
+</insert>
 
 	<!-- 알림 이벤트 발생시 헤더 알림 리스트에 알림목록 갱신하기 -->
 	<select id="getNewAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
@@ -29,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 	<!-- 알림 페이지 진입시 알림 전체 불러오기 -->
-	<select id="getAllAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
+<!-- 	<select id="getAllAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
 
 		select a.ALARM_ID,
 		a.MEMBER_ID, a.ALARM_CODE, a.ALARM_DATE, a.URL,
@@ -39,15 +55,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		on a.MEMBER_ID=m.MEMBER_ID
 		where m.member_email=#{useremail} order by ALARM_ID DESC
 
-	</select>
-	<!-- 알림 페이지 진입시 새 쪽지 있는지 체크하기 -->
-	<select id="hasNewMessages">
+	</select> -->
+	<!-- 쪽지 빼고 알림 가져오기 -->
+	<select id="getAllAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
 
-		select count(*) from to_note t left join member m
+		select a.ALARM_ID,
+		a.MEMBER_ID, a.ALARM_CODE, a.ALARM_DATE, a.URL,
+		a.ALARM_CONTENT,
+		a.Alarm_OK
+		from ALARM a left join Member m
+		on a.MEMBER_ID=m.MEMBER_ID
+		where m.member_email=#{useremail} and alarm_code !='CHAT_O' order by ALARM_ID DESC
+
+	</select>
+
+	<!-- 알림 페이지 진입시 새 쪽지 있는지 체크하기 
+	<select id="hasNewMessages" resultType="String">
+
+		select substr(note_date,0,8) from to_note t left join member m
 		on t.member_to=m.member_id
-		where m.member_email=${useremail} and t.note_ok=0
+		where m.member_email=#{useremail} and t.note_ok=0 group by substr(note_date,0,8)
 
-	</select>
+	</select>-->
 
 	<!-- 알림 읽으면(클릭하면) 상태 확인으로 변경 -->
 	<update id="checkAlarm">
@@ -105,5 +134,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update to_note set note_ok='1' where
 		note_id=${noteid}
 	</update>
-
+	
+	<!-- 발신, 수신 쪽지 삭제 -->
+	<delete id="deleteNotes" parameterType="java.util.List">
+		delete ${param1} 
+			<where>
+				<foreach collection="param2" item="item" separator="or">
+				 	(note_id=${item})
+				</foreach>
+			</where>
+	</delete>
 </mapper>
