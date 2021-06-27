@@ -16,14 +16,11 @@
 <!-- 반응형 토글 -->
 <script
 	src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Fontawesome -->
 <link type="text/css"
@@ -48,7 +45,7 @@
 <script
 	src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<!-- JQuery -->
+<!-- JQuesy -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -175,7 +172,7 @@
 									<!-- 로그인 -->
 									<li class="nav-item dropdown panel-group" id="accordion"
 										role="tablist" aria-multiselectable="true" id="alarmbell_li">
-										<div class="panel panel-default">
+										<div class="panel panel-default" id="alarm_panel">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
 													data-parent="#accordion" href="#a_sub"
@@ -209,7 +206,7 @@
 									<li class="panel-group" id="accordion" role="tablist"
 										aria-multiselectable="true">
 										<!-- 하나의 item입니다. data-parent 설청과 href 설정만 제대로 하면 문제없이 작동합니다. -->
-										<div class="panel panel-default">
+										<div class="panel panel-default" id="member_panel">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
 													data-parent="#accordion" href="#my_sub_member"
@@ -248,6 +245,8 @@
 											</div>
 										</div>
 									</li>
+									<!-- 이 빈 li가 있어야 마이페이지 메뉴 위치를 잡을 수 있음 -->
+									<li></li>
 								</se:authorize>
 								<!-- 영정회원 -->
 								<se:authorize access="hasRole('ROLE_BAN')">

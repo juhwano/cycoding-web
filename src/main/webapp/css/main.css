@@ -146,8 +146,7 @@
 #my_sub_member{
 	position: absolute;
     top: 50px;
-    left:1230px;
-
+	left:1300px;
     width: 220px;
     z-index: 997;
     background-color: white;
@@ -155,7 +154,7 @@
 }
 #a_sub{
 	position: absolute;
-    top: 38px;
+    top: 32px;
 	right: -132px;
     width: 220px;
     z-index: 997;
