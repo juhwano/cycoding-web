@@ -783,7 +783,7 @@ public class ProjectService {
 	// 프로젝트 완료 전환
 	public String projectComplete(String member_id,  P_DetailVo p_detail) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		String returnURl = "false";
 		
 		// 프로젝트 리더 인지 확인
@@ -793,6 +793,7 @@ public class ProjectService {
 		// 프로젝트 상태가 진행중이고 로그인 상태가 리더인지 확인
 		if(p_detail.getP_state().equals("진행중") && projectReader > 0) {
 			int result = dao.projectComplete(p_detail);
+
 			System.out.println(result);
 			if(result > 0) {
 				returnURl = "true";

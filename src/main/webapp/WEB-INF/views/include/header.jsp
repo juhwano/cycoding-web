@@ -377,15 +377,15 @@ $('#alram').click(function() {
 			sender: logineduser,
 			content: 알림 띄울 내용
 		} */
-	//알림 보내기(트랜잭션)
-	function insertAlarm(data){
-		return new Promise(function(resolve, reject) {
-		//서버로 알림 보내기(웹소켓)
-		ws.send(data);
-		resolve(res);
-		});
-		
-	}
+		//알림 보내기(트랜잭션)
+		function insertAlarm(data){
+			return new Promise(function(resolve, reject) {
+			//서버로 알림 보내기(웹소켓)
+			ws.send(data);
+			resolve(data);
+			});
+			
+		}
 	
 	//알림 보내고 알림 테이블에 인서트(다른 동작과 트랜잭션X)
 	//프로젝트 초대, 상태 변경
@@ -413,7 +413,7 @@ $('#alram').click(function() {
 			}			
 		});
 			
-			resolve(response);
+			resolve(data);
 		});
 		
 	}

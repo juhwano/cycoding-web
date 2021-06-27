@@ -50,8 +50,8 @@
 
 		console.log(alarm);
 
-		if(alarm == "success"){
-			swal(alarm,"마이페이지에서 정보를 입력하셔야 프로젝트 참여가 가능합니다","info");
+		if(alarm != ""){
+			swal("NEWS",alarm,"info");
 		}
 		
 	});

@@ -145,7 +145,13 @@ $(document).on("click", "#msg_btn", function() {
 	console.log("받는 사람 : ", $("#reply_to").val())
 	//우선 div의 텍스트를 다루기 용이하도록 input태그의 값으로 만든다
 	$("#text").val($("#messagearea").text());
-
+	
+	if($("#text").val() == ""){
+		swal("보낼 내용을 입력해주세요","","warning");
+		
+	}else{
+		
+		
 	console.log("쪽지 보내기")
 	console.log($("#text").val());
 	var data = {
@@ -162,6 +168,9 @@ $(document).on("click", "#msg_btn", function() {
 	insertAlarm(JSON.stringify(data));
 	swal("쪽지가 발송되었습니다", "", "success");
 	$("#messagearea").empty();
+		
+	}
+
 
 });
 
