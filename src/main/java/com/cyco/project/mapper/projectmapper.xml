@@ -425,6 +425,13 @@
 		WHERE pm.MEMBER_ID IS NULL AND pm.PROJECT_ID = #{project_id}
 	</select>
 	
+	<!-- 해당프로젝트 총 멤버 수  -->
+	<select id="isAllMemberCount" resultType="int">
+		SELECT count(*) FROM PROJECT p 
+		INNER JOIN P_MEMBER pm 
+		ON p.PROJECT_ID = pm.PROJECT_ID 
+		WHERE pm.PROJECT_ID = #{project_id}
+	</select>
 	
 	<!-- 프로젝트 리더인지 체크 -->
 	<select id="ProjectReaderCheck" resultType="int">
@@ -486,5 +493,8 @@
 		ORDER BY "REF" DESC, STEP asc
 	</select>
 	
+	<update id="projectComplete">
+		UPDATE P_DETAIL SET P_STATE = '완료' WHERE PROJECT_ID = #{project_id} AND P_STATE = '진행중'
+	</update>
 	
 </mapper>

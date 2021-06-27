@@ -99,7 +99,7 @@ $(function() {
 							
 							swal({
 							  title: "안내",
-							  text: "프로젝트 상태를 진행 중으로 변경 시 더 이상 수정이 불가능합니다.",
+							  text: "프로젝트 상태를 진행 중으로 변경 시 더 이상 수정 및 멤버모집이 불가능합니다.",
 							  icon: "warning",
 							  buttons: true,
 							  dangerMode: true,

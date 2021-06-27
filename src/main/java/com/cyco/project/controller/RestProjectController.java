@@ -379,7 +379,6 @@ public class RestProjectController {
 		String member_id = String.valueOf(session.getAttribute("member_id"));
 		
 		
-		
 		String returnURL = service.ProjectWithdrawal(member_id, project_id, state);
 				
 				
@@ -482,8 +481,19 @@ public class RestProjectController {
 		return returnURL;
 	}
 	
-	
-	
+	// 플젝 완료
+	@RequestMapping(value = "projectcomplete", method=RequestMethod.GET)
+	public String projectComplete(HttpSession session, P_DetailVo p_detail) {
+		String returnURL = "false";
+		
+		
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		returnURL = service.projectComplete(member_id, p_detail);
+		
+		
+		return returnURL;
+	}
 	
 	
 }

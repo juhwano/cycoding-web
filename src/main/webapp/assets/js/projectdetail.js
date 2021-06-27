@@ -17,7 +17,7 @@ $(document).ready(function(){
 	$('.Project_Apply_modal').hide();
 	$('.Project_Detail_modal').hide();
 	
-	if("true" == "true"){
+	if(check == "true"){
 		$('.Project_Apply_modal').empty();
 		    
 			var table = "<div class='ProjectApplyMemberListDiv'>";
@@ -36,15 +36,33 @@ $(document).ready(function(){
 			table += "<div class='ApplyPbox'>"
 			table += "<p class='Apply_p'><b>유의사항</b></p>"	
 			table += "<p class='Project_p Apply_p'>- 프로젝트를 진행 중으로 변경시 더는 프로젝트 수정이 불가능합니다.</p>"
-			table += "<p class='Project_p Apply_p'>- 프로젝트를 진행 중이더라도 멤버 모집이 필요하면 추가 모집이 가능합니다.</p>"	
+			table += "<p class='Project_p Apply_p'>- 프로젝트를 진행 중으로 변경시 더는 멤버모집이 불가능합니다.</p>"	
 			table += "</div>";
 			table += "</div>";
 			
 			$('.Project_Apply_modal').append(table);
-			$('.Project_Apply_modal').show(); 
+			$('.Project_Apply_modal').show();
 			
+			// 추가 모집가기
+			$('.Withdrawal_Ok').unbind("click").bind("click", function() {
+					$('.Project_Apply_modal').empty();
+					$('.Project_Apply_modal').hide();
+					$('#memberEdit').trigger('click');	
+			})
 			
-			
+			// 진행중 변경하기
+			$('.Withdrawal_No').unbind("click").bind("click", function() {
+					$('.Project_Apply_modal').empty();
+					$('.Project_Apply_modal').hide();
+					location.href = "/project/edit?project_id=" + project_id;
+			})
+			// 모달 창 닫기
+		     $('.ApplyMemberListCancleBtn').unbind('click').bind('click',function(){
+		    	 $('.Project_Apply_modal').empty();
+		    	 $('.Project_Apply_modal').hide();
+		    	 $('#project_info').trigger('click');
+		    	 
+		     });
 	}
 	
 	
@@ -571,10 +589,13 @@ $(document).ready(function(){
 		     			var pmcountlist = responsedata.pmcountlist;
 		     			var pmlist = responsedata.pmlist;
 		     			var memberCount = 0;
-		     						
-		     		var Div  =  "<div class='MemberEditBox'>"
+		     			
+		     		
+			
+		     		 	var Div =  "<div class='MemberEditBox'>"
 		     			Div +=	"<div class='ProjectMember'>"
 		     			Div +=	"<p>지원내역</p>"
+		     			if(project_state == '모집중'){
 		     			Div +=	"<p class='Project_p'><b style='color: red;'>*</b> 나의 프로젝트에 지원한 멤버 목록입니다.</p>"
 		     			Div +=	"<hr>"
 		     			Div +=	"<div id='PositionBox'>"
@@ -600,7 +621,28 @@ $(document).ready(function(){
 		     			Div +=	"</div>"
 		     			Div +=	"</div>"
 		     			Div +=  "</div>"
-		     			
+		     			}else{
+							Div +=	"<p class='Project_p'><b style='color: red;'>*</b> 프로젝트 상태가 진행중으로 인해 모집이 마감되었습니다.</p>"
+			     			Div +=	"<hr>"
+			     			Div +=	"<div id='PositionBox'>"
+			     			Div +=	"<table class='project_boxdiv'>"
+		     				for(var i = 0; i < pmcountlist.length; i++){
+		     				
+				     			Div +=	"<tr class='Project_memberList'>"
+				     			Div +=	"<td width='50%'>" + pmcountlist[i].position_name +"</td>"
+				     			Div +=	"<td class='memberListcurr' width='15%'>" + pmcountlist[i].curr + " / " + pmcountlist[i].max + "</td>"
+				     			Div +=	"<td width='30%' class='BtnWarp'>"
+				     			Div +=	"<input class='ProjectApplyMember_List' type='button' value='마감'>"
+				     			Div +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id +"</label>"
+				    			Div +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_name + "</label>"
+				    			Div +=	"</td>"
+				    			Div +=	"</tr>"
+		     				}
+				     			Div +=	"</table>"
+				     			Div +=	"</div>"
+				     			Div +=	"</div>"
+				     			Div +=  "</div>"
+						}				
 			     				Div += "<div class='MemberSuperintend'>"
 			     				Div += "<p>멤버목록</p>"
 			     				Div += "<p class='Project_p'><b style='color: red;'>*</b> 멤버들을 관리해보세요. </p>"
@@ -830,11 +872,16 @@ $(document).ready(function(){
 		     						     					table += "</td>";
 		     						     					table += "<td>";
 		     					     						table += "<div class='ApplyMemberListBtn_Box'>";
+		     					     							
 		     						     						if(elt.apply_ok == "0"){
-		     						     							table += "<input type='button' value='수락' class='ApplyMemberListBtn_Ok'><input type='button' value='거절' class='ApplyMemberListBtn_No'>"; 
-		     						     							table += "<input type='text' value='" + elt.member_id +"' hidden>";
-		     						     							table += "<input type='text' value='" + elt.apply_position_id +"' hidden>";
-		     						     								
+																	if(project_state == "모집중"){
+																		table += "<input type='button' value='수락' class='ApplyMemberListBtn_Ok'><input type='button' value='거절' class='ApplyMemberListBtn_No'>"; 
+			     						     							table += "<input type='text' value='" + elt.member_id +"' hidden>";
+			     						     							table += "<input type='text' value='" + elt.apply_position_id +"' hidden>";
+																	}else{
+																		table += "<input type='button' value='모집마감' class='successBtn'>"
+																	}
+			
 		     							     					}else{
 		     						  	     						table += "<input type='button' value='처리완료' class='successBtn'>";
 		     							     					}
@@ -1006,7 +1053,8 @@ $(document).ready(function(){
 		     					// 멤버 위임버튼
 		     					$('.handoverAuthority_Btn').unbind('click').bind('click', function(){
 		     						var HandOverMember_id = $(this).children()[1].value;
-		     						var HandOverMember_NickName = $(this).children()[2].value;
+		     						var HandOverMember_NickName = $(this).parent().parent().children()[0].children[1].children[0].innerHTML;
+		     						
 		     						
 		     						$('.Project_Apply_modal').empty();
 		     						
@@ -1158,7 +1206,7 @@ $(document).ready(function(){
 		table += "<div class='ApplyBtn_Box'>"
 		table += "<input type='button' value='예' class='Withdrawal_Ok'><input type='button' value='아니요' class='Withdrawal_No'>"
 		table += "</div>"
-		table += "<p class=''Project_p Apply_p'><b style='color: red;'>*</b> 예를 누를시 유의사항에 동의한 것으로 간주됩니다.</p>"
+		table += "<p class=''Project_p Apply_p'><b style='color: red;'>*</b> 예를 누를 시 유의사항에 동의한 것으로 간주됩니다.</p>"
 		table += "<div class='ApplyPbox'>"
 		table += "<p class='Apply_p'><b>유의사항</b></p>"	
 		table += "<p class='Project_p Apply_p'>- 프로젝트 리더가 프로젝트를 탈퇴할 시 프로젝트가 삭제가 됩니다.</p>"
@@ -1182,7 +1230,6 @@ $(document).ready(function(){
 		
 		
 		$('.Withdrawal_Ok').unbind('click').bind('click',function(){
-	    	
 	    	
 	    	 $.ajax({
 	     		url:"/ajaxproject/projectWithdrawal",
@@ -1212,16 +1259,70 @@ $(document).ready(function(){
 					}
 	     			
 	     			
-	     			
-	     			
 	     		}
 	     	});  
 	     					     			    	 
         });
 			
 		
-		
 	})
+	
+	// 프로젝트 완료버튼
+	$('.ProjectCompleteBtn').unbind('click').bind('click',function(){
+		
+		$('.Project_Apply_modal').empty();
+	     						
+		var table = "<form class='ProjectApply'><div class='ProjectApplyMemberListDiv'>";
+
+		table += "<p class='ApplyMemberListTitle centerImpo'>프로젝트가 종료되었나요?</p>"
+		
+		table += "<div class='ApplyBtn_Box'>"
+		table += "<input type='button' value='예' class='complete_Ok'><input type='button' value='아니요' class='complete_No'>"
+		table += "</div>"
+		table += "<p class=''Project_p Apply_p'><b style='color: red;'>*</b> 예를 누를 시 프로젝트가 완료됨으로 변경됩니다.</p>"
+		table += "<div class='ApplyPbox'>"
+		table += "<p class='Apply_p'><b>참고 사항</b></p>"	
+		table += "<p class='Project_p Apply_p'>- 프로젝트가 종료 후 함께 진행한 동료들에게 후기를 남겨주세요!</p>"
+		table += "<p class='Project_p Apply_p'>- 후기를 작성시 10포인트가 적립됩니다.</p>"
+		table += "</div>";
+		
+		table += "</div></form>";
+		
+		$('.Project_Apply_modal').append(table);
+		$('.Project_Apply_modal').show();
+		
+		// 모달닫기
+		$('.complete_No').unbind('click').bind('click',function(){
+	    	 $('.Project_Apply_modal').empty();
+	    	 $('.Project_Apply_modal').hide();
+	     					     			    	 
+        });
+		
+		// 완료	
+		$('.complete_Ok').unbind('click').bind('click',function(){	
+			
+			 $.ajax({
+	     		url:"/ajaxproject/projectcomplete",
+	     		dataType:"html",
+	     		data: {"project_id":project_id,
+	     				"p_state":project_state},
+	     		success: function(responsedata){    
+	     			if(responsedata == "true"){
+	     				swal("프로젝트가 종료되었습니다.","수고하셨습니다.","success").then((value) => {
+	     					document.location.reload(true);
+						});
+						
+					}else{
+						swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error").then((value) => {
+	     					document.location.reload(true);
+						});
+					}
+	     			
+	     		}
+	     	});  
+	     });
+	})
+	
 	
 
 })

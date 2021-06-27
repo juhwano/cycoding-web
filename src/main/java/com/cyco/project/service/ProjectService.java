@@ -646,10 +646,6 @@ public class ProjectService {
 	public String ProjectWithdrawal(String member_id, String project_id, String state) {
 		String returnURL = "Error";
 		
-		System.out.println(member_id);
-		System.out.println(project_id);
-		System.out.println(state);
-		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
@@ -685,7 +681,7 @@ public class ProjectService {
 			int OutMember = dao.getOutMember(p_member);
 			
 			
-			if(state != "모집중") {
+			if(!state.equals("모집중")) {
 				M_AuthVo m_Ayth = new M_AuthVo("4", member_id);
 				// 멤버 권한 4로 변경 ( 페널티 게정 )
 				memberdao.UpdateAuth(m_Ayth);
@@ -764,15 +760,39 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		String returnURL = "false";
 		
-		int isnull = dao.isNullMember(project_id);
 		int isNotnull = dao.isNotNullMember(project_id);
+		int IsAllmember = dao.isAllMemberCount(project_id);
 		
-		if(isnull == isNotnull) {
+		
+		if(isNotnull == IsAllmember) {
 			returnURL = "true";
 		}
 		
 		return returnURL;
 		
+	}
+	
+	// 프로젝트 완료 전환
+	public String projectComplete(String member_id,  P_DetailVo p_detail) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		String returnURl = "false";
+		
+		// 프로젝트 리더 인지 확인
+		int projectReader = dao.ProjectReaderCheck(p_detail.getProject_id(), member_id);
+		
+		System.out.println(projectReader);
+		// 프로젝트 상태가 진행중이고 로그인 상태가 리더인지 확인
+		if(p_detail.getP_state().equals("진행중") && projectReader > 0) {
+			int result = dao.projectComplete(p_detail);
+			System.out.println(result);
+			if(result > 0) {
+				returnURl = "true";
+			}
+			
+		}
+		
+		return returnURl;
 	}
 }
 
