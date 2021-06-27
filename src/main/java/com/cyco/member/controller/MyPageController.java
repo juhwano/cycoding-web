@@ -165,16 +165,19 @@ public class MyPageController {
 			
 			if(list.get(i).getALARM_OK().equals("0")) {
 				
+				list.get(i).setALARM_DATE(list.get(i).getALARM_DATE().substring(0, 10));
+				
 				newlist.add(list.get(i));
 				
 			} else {
+				list.get(i).setALARM_DATE(list.get(i).getALARM_DATE().substring(0, 10));
 				
 				oldlist.add(list.get(i));
 			
 			}
 			
 		}
-
+		
 		mmp.addAttribute("newalarmlist", newlist);
 		mmp.addAttribute("oldalarmlist", oldlist);
 

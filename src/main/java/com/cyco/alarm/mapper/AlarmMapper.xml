@@ -46,7 +46,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 알림 페이지 진입시 알림 전체 불러오기 -->
 <!-- 	<select id="getAllAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
-
 		select a.ALARM_ID,
 		a.MEMBER_ID, a.ALARM_CODE, a.ALARM_DATE, a.URL,
 		a.ALARM_CONTENT,
@@ -54,13 +53,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from ALARM a left join Member m
 		on a.MEMBER_ID=m.MEMBER_ID
 		where m.member_email=#{useremail} order by ALARM_ID DESC
-
 	</select> -->
 	<!-- 쪽지 빼고 알림 가져오기 -->
 	<select id="getAllAlarms" resultType="com.cyco.alarm.vo.AlarmVo">
 
-		select a.ALARM_ID,
-		a.MEMBER_ID, a.ALARM_CODE, a.ALARM_DATE, a.URL,
+ 	select a.ALARM_ID,
+		a.MEMBER_ID, a.ALARM_CODE, ALARM_DATE,0,8, a.URL,
 		a.ALARM_CONTENT,
 		a.Alarm_OK
 		from ALARM a left join Member m
@@ -71,11 +69,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 알림 페이지 진입시 새 쪽지 있는지 체크하기 
 	<select id="hasNewMessages" resultType="String">
-
 		select substr(note_date,0,8) from to_note t left join member m
 		on t.member_to=m.member_id
 		where m.member_email=#{useremail} and t.note_ok=0 group by substr(note_date,0,8)
-
 	</select>-->
 
 	<!-- 알림 읽으면(클릭하면) 상태 확인으로 변경 -->

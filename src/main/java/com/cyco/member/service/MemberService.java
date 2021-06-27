@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.cyco.common.vo.M_AuthVo;
@@ -18,6 +21,8 @@ import com.cyco.member.vo.V_MlistVo;
 @Service
 public class MemberService {
 	private SqlSession sqlsession;
+	
+	
 	
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
@@ -50,6 +55,7 @@ public class MemberService {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		HashMap<String, String> member = memberdao.getLoginedName(useremail);
+
 		
 		return member;
 	}

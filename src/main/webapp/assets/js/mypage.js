@@ -12,7 +12,7 @@ $(document).ready(function() {
 		if(insert_btn.length==0){
 			$(".sub_title").empty();
 			
-			makeMemberAuth();
+			givePoint();
 			
 		} else{
 			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
@@ -520,7 +520,7 @@ $("#edit-btn").on("click",function(){
 			$(".sub_title").empty();
 			
 			//권한 업데이트
-			makeMemberAuth();
+			givePoint();
 		} else{
 			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
 		}
@@ -1096,7 +1096,8 @@ function givePoint(){
 			
 			if(res == "success"){
 				swal("🎉🎉모든 정보를 입력한 기념으로\n보너스 포인트가 지급되었습니다🎉🎉","","success");	
-				$("#point").val("50점");		
+				$("#point").val("50점");
+				makeMemberAuth();
 			}
 			
 		},

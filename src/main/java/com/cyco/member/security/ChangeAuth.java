@@ -22,7 +22,7 @@ public class ChangeAuth {
 		//새로 추가할 권한을 입력한다
 		updatedAuthorities.add(new SimpleGrantedAuthority(role));
 		
-		//추가한 정보로 다시 시큐리티가 관리할 수 잇는 객체를 생성해준다
+		//추가한 정보로 다시 시큐리티가 관리할 수 있는 객체를 생성해준다
 		Authentication newAuth = 
 				  new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
 		
