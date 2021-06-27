@@ -144,13 +144,13 @@
 										<div class="panel panel-default">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
-													data-parent="#accordion" href="#my_sub"
+													data-parent="#accordion" href="#my_sub_admin"
 													aria-expanded="false">관리자 페이지 <i
 													class="fas fa-caret-down"></i></a>
 											</div>
 											<!-- 1차 메뉴 -->
 											<div class="sub panel-collapse collapse" role="tabpanel"
-												id="my_sub">
+												id="my_sub_admin">
 												<ul class="panel-body">
 													<li><a
 														href="${pageContext.request.contextPath}/admin/chart">통계</a></li>
@@ -212,12 +212,12 @@
 										<div class="panel panel-default">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
-													data-parent="#accordion" href="#my_sub"
+													data-parent="#accordion" href="#my_sub_member"
 													aria-expanded="false"> ${sessionScope.nickname}님 <i
 													class="fas fa-caret-down"></i>
 												</a>
 											</div>
-											<div class="panel-collapse collapse sub" id="my_sub"
+											<div class="panel-collapse collapse sub" id="my_sub_member"
 												role="tabpanel">
 												<ul class="panel-body">
 													<li><a
