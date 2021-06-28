@@ -149,16 +149,20 @@ tbody{
     font-weight: normal;
 }
 
-
-checkbox:checked{
-	background-color: #94A7AE;
-}
-
 .read{
 	color:#94A7AE;
 }
 .read a{
 	color:#94A7AE;
+}
+
+/*선택된 쪽지*/
+.selected_note{
+	background-color: #cdd7db;
+	color:white;
+}
+.selected_note a{
+	color:white;
 }
 
 /*모달창*/

@@ -45,14 +45,32 @@
 <script>
 
 	$(document).ready(function(){
+		
+		//영정회원일 경우
+		if($("#getout").val() == "1"){
+			
+			swal({
+				title: "BAN",
+				text: "더 이상 사이트를 이용하실 수 없습니다",
+				icon: "error",
+				button: true,
+				dangerMode: true,
+			})
+			.then(function(){location.href="logout"});
+			
+		} else{
+			
+			var alarm = "<c:out value="${alarm}" />";
 
-		var alarm = "<c:out value="${alarm}" />";
+			console.log(alarm);
 
-		console.log(alarm);
-
-		if(alarm == "success"){
-			swal(alarm,"마이페이지에서 정보를 입력하셔야 프로젝트 참여가 가능합니다","info");
+			if(alarm != ""){
+				swal("NEWS",alarm,"info");
+			}
+			
 		}
+
+		
 		
 	});
 	
