@@ -112,7 +112,7 @@ $(document).ready(function() {
 							project_info += "<td width='30%' class='BtnWarp'>"
 							if (login_memberid != project.member_id) {
 								if(checkapply > 0){
-									project_info += "<input type='button' value='지원완료'>"
+									project_info += "<input type='button' class='ApplyComple' value='지원완료'>"
 								}else{
 								project_info += "<input class='ProjectApplyBtn' type='button' value='지원'>"
 								project_info += "<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id + "</label>"
@@ -625,7 +625,7 @@ $(document).ready(function() {
 							MemberFeedBox += responsedata.F_list[i].feed_content
 							MemberFeedBox += "</textarea>"
 							MemberFeedBox += "</div>"
-							if (responsedata.F_list[i].member_id == login_memberid) {
+							if (responsedata.F_list[i].member_id == login_memberid || responsedata.Reader > 0) {
 								MemberFeedBox += "<div class='FeedBtnBox'>"
 								MemberFeedBox += "<input type='button' class='FeedEditBtn' value='수정'><p>|</p>"
 								MemberFeedBox += "<input type='button' class='FeedDeleteBtn' value='삭제'>"
@@ -1179,6 +1179,10 @@ $(document).ready(function() {
 							                                 if (responsedata == "checkd") {
 							                                    swal("요구하는 멤버수가 가득찼습니다.", "추가로 모집 할 경우 멤버수를 늘려주세요.", "warning");
 							                                    return false;
+							                                    
+							                                 } else if (responsedata == "isProject"){
+																 swal("해당 멤버가 이미 다른 프로젝트에 가입되었습니다.", "", "error");
+							                                     return false;
 							                                 } else if (responsedata == "true") {
 							
 							                                    divBox.empty();

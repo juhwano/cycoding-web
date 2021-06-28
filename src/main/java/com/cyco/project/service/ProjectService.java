@@ -555,6 +555,15 @@ public class ProjectService {
 		return member;
 		
 	}
+	// 프로젝트 멤버로 있는지 확인
+	public int Ismember(String member_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int member = dao.Ismember(member_id);
+		
+		return member;
+	}
+	
 	
 	// 프로젝트 승인시 처리 서비스
 	@Transactional

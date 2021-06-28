@@ -239,4 +239,6 @@ public interface ProjectDao {
 	//프로젝트 피드 삭제
 	public int DeleteProjectFeed(P_FeedVo feedvo);
 	
+	//프로젝트 멤버로 등록 되어있는지 확인
+	public int Ismember(String member_id);
 }

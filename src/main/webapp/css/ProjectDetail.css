@@ -484,7 +484,20 @@ p{
     padding: 0;
     width: 130px;
 }
-
+.ApplyComple{
+	color: #C0A9BD;
+    background-color: white;
+    border: 0.0625rem solid #C0A9BD;
+    padding: 0;
+    width: 130px;
+    cursor: not-allowed !important;
+}
+.ApplyComple:hover{
+	color: #C0A9BD !important;
+    background-color: white !important;
+    border: 0.0625rem solid #C0A9BD !important;
+    cursor: not-allowed !important;
+}
 
 
 .BtnWarp >input:hover{
