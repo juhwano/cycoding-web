@@ -138,13 +138,13 @@ function updatealarmlist(id) {
 				} else {
 
 					$("#alarmsub").append(
-						"<li><p class='alarm_content'>새 알림이 없습니다</p></li>"
+						"<li><p class='none_alarm_content'>새 알림이 없습니다</p></li>"
 					);
 				}
 
 				$("#alarmsub").append(
 
-					"<li class='last'><a href='/mypage/myalarm'><p>알림 더보기</p></a></li>"
+					"<li class='last'><a href='/mypage/myalarm'><p class='none_alarm_content'>알림 더보기</p></a></li>"
 
 				);
 

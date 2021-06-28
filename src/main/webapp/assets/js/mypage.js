@@ -115,10 +115,10 @@ $(document).ready(function() {
 					swal("숫자만 입력하세요", "", "warning")
 					$("#m_phone").val("");
 
-				} else if ($("#m_phone").val().length > 9) {
+				} else if ($("#m_phone").val().length > 11) {
 
-					swal("9자리를 초과해 입력할 수 없습니다", "", "warning");
-					$("#m_phone").val($("#m_phone").val().substring(0, 9));
+					swal("11자리를 초과해 입력할 수 없습니다", "", "warning");
+					$("#m_phone").val($("#m_phone").val().substring(0, 11));
 				} else {
 					//위의 검사 통과한 경우
 					//휴대폰 번호도 중복체크
