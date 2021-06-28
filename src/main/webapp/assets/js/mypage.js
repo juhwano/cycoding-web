@@ -4,7 +4,6 @@ $(document).ready(function() {
 	//추가항목 기입 여부에 따라 문구 노출
 	$("#ex_toggle").on("click", function() {
 
-		console.log("프로젝트 경험 클릭");
 		//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
 		let insert_btn = $(".detail_section").children().children().children(".insert");
 
@@ -47,7 +46,6 @@ $(document).ready(function() {
 	//확인 버튼 누르면 수정 내용 확정
 	$(document).on("click", ".c-btn", function() {
 
-		console.log("확인");
 
 		atfer = $(this).prev().val();
 
@@ -199,7 +197,6 @@ $(document).ready(function() {
 					if (code == "닉네임") {
 						$("#cycoder").children().text("");
 						$("#cycoder").children().text($("#nick").val());
-						console.log($("#cycoder").children().text());
 					}
 
 				} else if (data == "success" && code == "비밀번호") {
@@ -306,8 +303,6 @@ $(document).ready(function() {
 
 //모달창에 스탯 리스트 뿌리기
 function edit_modal(code) {
-
-	console.log("모달 실행");
 	console.log(code);
 
 	$("#stat").val(code);
@@ -450,15 +445,12 @@ $("#cancel").on("click", function() {
 //모달에서 선택한 태그 DB와 뷰단에 반영하기(기술, 포지션, 기간)
 //스탯 비동기 반영
 $("#edit-btn").on("click", function() {
-	console.log("수정버튼 클릭");
 
 	let first = $("#selectedarea :nth-child(1)").attr("id");
 	let second = $("#selectedarea :nth-child(2)").attr("id");
 	let third = $("#selectedarea :nth-child(3)").attr("id");
 
-	console.log("1", first);
-	console.log("2", second);
-	console.log("3", third);
+	console.log(first, second, third);
 
 	let arr = [];
 
@@ -472,9 +464,6 @@ $("#edit-btn").on("click", function() {
 			del($("#stat").val());
 
 			if (third == undefined && second == undefined && first != undefined) {
-
-				console.log("하나 선택했을 때");
-
 				edit(first);
 
 
@@ -483,15 +472,11 @@ $("#edit-btn").on("click", function() {
 				arr.push(first);
 				arr.push(second);
 
-				console.log("두 개 선택했을 때");
-
 				$.each(arr, function(index, item) {
 					edit(item);
 				});
 
 			} else if (third != undefined) {
-
-				console.log("세 개 선택했을 때");
 
 				arr.push(first);
 				arr.push(second);
@@ -509,7 +494,6 @@ $("#edit-btn").on("click", function() {
 
 		}
 
-		console.log("마지막에 실행될 구간");
 		modifyStatView($("#stat").val());
 
 		//수정 버튼 눌렀을 때 아직 미입력 스탯 있는지 체크해서 문구 보여주기
@@ -533,8 +517,6 @@ $("#edit-btn").on("click", function() {
 function del(type) {
 
 	let url = "";
-	console.log("1번 시작");
-
 	$.ajax({
 
 		//url:url,
@@ -548,7 +530,6 @@ function del(type) {
 		async: false,
 		success: function(data) {
 			console.log("1. 삭제 결과 : ", data);
-			console.log("1번 끝");
 		},
 		error: function(xhr) {
 			console.log(xhr);
@@ -563,8 +544,6 @@ function edit(stats) {
 
 	let url = "";
 	let keyword = $("#stat").val();
-
-	console.log("2번 시작");
 
 	if (keyword == 'skill') {
 
@@ -592,7 +571,6 @@ function edit(stats) {
 		async: false,
 		success: function(data) {
 
-			console.log("2번 끝");
 		},
 		error: function(xhr) {
 			console.log(xhr);
@@ -603,8 +581,6 @@ function edit(stats) {
 
 //스탯 변경사항 뷰단에 반영하는 함수
 function modifyStatView(type) {
-
-	console.log("3번 시작")
 
 	$.ajax({
 
@@ -683,7 +659,6 @@ function modifyStatView(type) {
 			}
 
 			swal("수정되었습니다", "", "success");
-			console.log("3번 끝");
 
 			$("#tagarea").empty();
 			$("#selectedarea").empty();
@@ -815,8 +790,6 @@ $(document).on("input", ".exinput", function() {
 //수정 버튼 누르면 폼에 입력한 프로젝트 경험들 인서트
 $("#insert_ex").on("click", function() {
 
-	console.log(check);
-
 	let mex = [];
 	$.each($("div[class=exarea]"), function(index, item) {
 
@@ -945,7 +918,6 @@ $(document).on("click", ".del_exbox", function() {
 function deleteExperience(del_btn) {
 
 	let boxid = del_btn.parent().parent().parent().attr("id");
-	console.log(boxid);
 
 	$.ajax({
 
@@ -996,9 +968,6 @@ $(document).on("click", ".confirm_edit", function() {
 		ex_content_input: exbox.children(".ex_content_input").val()
 	}
 
-	console.log(newEx);
-	console.log(exbox.parent().parent().attr("action"));
-
 	$.ajax({
 
 		//url:"ajax/updateexperiences",
@@ -1023,7 +992,6 @@ $(document).on("click", ".confirm_edit", function() {
 
 	});
 
-
 	$(this).removeClass("confirm_edit");
 	$(this).addClass("edit_exbox");
 	$(this).css("color", "#CA8FAB");
@@ -1035,7 +1003,6 @@ $(document).on("click", ".confirm_edit", function() {
 // 프로필 이미지 파일 업로드
 $('#target_img').click(function(e) {
 
-	console.log("프로필 이미지 클릭");
 	$('#file').click();
 });
 
@@ -1043,7 +1010,6 @@ $('#file').change(function(event) {
 
 	var reader = new FileReader();
 
-	console.log("프로필 이미지 업로드");
 
 	reader.onload = function(event) {
 		$('#target_img').attr("src", event.target.result);
@@ -1150,10 +1116,18 @@ function makeMemberAuth() {
 	});
 }
 
+//권한 1인 경우 포인트 충전 막기
+$("#cannot_cahrge").on("click",function(){
+	console.log("충전 막기");
+	swal("PLEASE FILL YOUR PROFILE","추가 정보를 먼저 채워주세요","error");
+	
+});
+
 $("#charge-btn").on("click", function() {
-	console.log("클릭");
 	payment();
 });
+
+
 //포인트 충전	
 function payment() {
 	var IMP = window.IMP; // 생략가능

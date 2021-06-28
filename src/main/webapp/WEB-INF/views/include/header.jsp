@@ -225,10 +225,10 @@
 													<li class="subdrop"><a role="button"
 														data-toggle="collapse" data-parent="#accordion"
 														href="#p_coll_sub" aria-expanded="false">프로젝트</a> <se:authorize
-															access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+															access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 															<input type="hidden" id="ismember" value="1" />
 														</se:authorize> <se:authorize
-															access="!hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER')">
+															access="hasRole('ROLE_PREMEMBER')">
 															<input type="hidden" id="ismember" value="0" />
 														</se:authorize>
 														<div id="p_coll_sub" class="panel-collapse collapse"
@@ -567,6 +567,29 @@ $('#alram').click(function() {
 			}
 		});
 	}	
+	
+	//추가 정보 미입력 회원이 프로젝트 상세나 회원상세 누르면 경고창 띄우고 마이페이지로 보내기
+	$(".deny_premember").on("click", function() {
+
+		swal({
+			title: "PLEASE FILL YOUR PROFILE",
+			text: "추가정보를 입력하셔야 상세보기가 가능합니다",
+			icon: "info",
+			buttons: true,
+			dangerMode: true,
+		})
+			.then((willDelete) => {
+				if (willDelete) {
+
+					location.href="/mypage/mypageCheck";
+					
+				} else {
+					return false;
+				}
+			});
+
+	})
+
 	
 
 			

@@ -124,6 +124,14 @@ function updatealarmlist(id) {
 								//"<li class='header_alarm'><p id='" + data.alarm_ID + "' class='alarm_content'>새로운 쪽지가 도착했습니다</p></li>"
 							);
 
+						} else if (data.alarm_CODE == "TM_BAN") {
+
+							$("#alarmsub").append(
+
+								"<li class='header_alarm'><a href='/mypage/myProject'><p id='" + data.alarm_ID + "' class='alarm_content'>프로젝트의 팀장이 변경되었습니다</p></a></li>"
+
+							);
+
 						}
 					});
 
@@ -150,6 +158,5 @@ function updatealarmlist(id) {
 	})
 
 }
-
 
 
