@@ -86,7 +86,7 @@ public class ProjectController {
 		
 		if(raw_bookmark_list.isEmpty()) {
 			raw_bookmark_list.add(new BookmarkVo(0, "0", "0"));
-			System.out.println("비어있나요 " + raw_bookmark_list);
+			//System.out.println("비어있나요 " + raw_bookmark_list);
 		}
 		JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
 		m.addAttribute("bookmark_list",bookmark_list);
@@ -124,8 +124,8 @@ public class ProjectController {
 	@RequestMapping(value="create",method = RequestMethod.GET)
 	public String ProjectAdd(Model model, Authentication auth) {
 		
-		System.out.println("멤버 : " + auth.getName());
-		System.out.println(memberService.getMember(auth.getName()));
+		//System.out.println("멤버 : " + auth.getName());
+		//System.out.println(memberService.getMember(auth.getName()));
 		
 		MemberVo member = memberService.getMember(auth.getName());
 	
@@ -285,7 +285,7 @@ public class ProjectController {
 		
 		int BookMark = service.checkBookMark(project_id, String.valueOf(session.getAttribute("member_id")));
 	
-	
+
 		if(reader > 0 && project.getP_state() == "모집중") {
 			Check = service.MemberFullCheck(project_id);
 		}

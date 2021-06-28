@@ -109,6 +109,5 @@
  	var memberList = ${memberList};
 </script>
 <!-- MemberList Javascript -->
-<script
-	src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=2"></script>
+<script src="${pageContext.request.contextPath}/assets/js/memberList.js?ver=2"></script>
 </html>

@@ -1,4 +1,3 @@
-
 if (login_memberid == "") {
 	swal("로그인을 하여야 확인 가능합니다.", "", "error").then((willDelete) => {
 		location.href = "../login";
