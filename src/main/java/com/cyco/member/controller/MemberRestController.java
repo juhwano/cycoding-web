@@ -55,7 +55,7 @@ public class MemberRestController {
 	//더보기
 	@RequestMapping(value = "memberMore", method = RequestMethod.GET)
 	public List<V_MlistVo> moreBtn() {
-		System.out.println("더보기버튼 restcontroller");
+		//System.out.println("더보기버튼 restcontroller");
 		List<V_MlistVo> memberList = memberservice.memberList();
 		return memberList;
 	}
@@ -65,13 +65,13 @@ public class MemberRestController {
 	public HashMap<String, String> checkProjectBeforeInvite(String member_id) {
 		
 		
-		System.out.println("현재 멤버 아이디" + member_id);
+		//System.out.println("현재 멤버 아이디" + member_id);
 		
 		List<P_DetailVo> p_detail =memberdetailservice.checkProjectBeforeInvite(member_id);
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		if(p_detail.size() != 0) {
-			System.out.println(p_detail.toString());
+			//System.out.println(p_detail.toString());
 			map.put("p_title",p_detail.get(0).getP_title());
 			map.put("project_id", p_detail.get(0).getProject_id());
 		}	
