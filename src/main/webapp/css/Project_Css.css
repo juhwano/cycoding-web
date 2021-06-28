@@ -537,16 +537,30 @@ top:-5px;
 }
 
 .card-tags{
-	text-align: left;
-    color: #94A7AE;
+	text-align: center;
     width: 125px;
-    font-size: 16px;
+    font-size: 14px;
+    color: #CA8FAB;
     padding: 4px;
-    margin: 0;
+    margin: 0 auto;
 }
+
+
+.card_link {
+    color: #cccccc;
+    text-align: center;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+    width: 150px;
+    font-size: 14px;
+    padding: 5px;
+    margin: 0 auto;
+}
+
 .Project_card-body{
 	flex: 1 1 auto !important;
     padding: 0.7rem 1rem 1rem 1rem !important;
+    text-align: center;
 }
 
 

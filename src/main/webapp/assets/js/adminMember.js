@@ -63,8 +63,7 @@ $(function() {
 
 
 
-			}
-							else if  result == "false") {
+			}else if  result == "false") {
 			swal("오류가 발생했습니다.", {
 				icon: "error",
 			});

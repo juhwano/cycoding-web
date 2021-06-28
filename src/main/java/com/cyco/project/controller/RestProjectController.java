@@ -336,13 +336,24 @@ public class RestProjectController {
 	}
 	
 	@RequestMapping(value = "projectinfo", method=RequestMethod.GET)
-	public Map<String,Object> getProject_info(String project_id){
+	public Map<String,Object> getProject_info(String project_id,HttpSession session){
 		
 		//프로젝트 상세 내용을 담은 객체
 		V_PjAdrField_Join_V_PDetail project = service.getOneProject(project_id);
 		
 		//프로젝트 상세의 포지션별 자리수
 		List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
+		
+		// 로그인 아이디 가져오기 
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		ApplyVo apply = new ApplyVo();
+		apply.setMember_id(member_id);
+		apply.setProject_id(project_id);
+		
+		//프로젝트에 지원 했는지 확인
+		int checkProjectApply = service.CheckProjectApply(apply);
+		
 		
 		// 줄 바꿈 처리
 		project.setP_content(project.getP_content().replace("\r\n", "<br>"));
@@ -352,6 +363,7 @@ public class RestProjectController {
 		
 		project_info.put("project", project);
 		project_info.put("pmcountlist", pmcountlist);
+		project_info.put("checkapply", checkProjectApply);
 		
 		
 		return project_info;
@@ -423,6 +435,7 @@ public class RestProjectController {
 		return qna;
 	}
 	
+
 	// 프로젝트 qna 댓글 가져오기
 	@RequestMapping(value = "getProjectQnaReply", method=RequestMethod.GET)
 	public Map<String, Object> getProjectQna(String project_id, String REF, String member_id){
@@ -530,4 +543,12 @@ public class RestProjectController {
 	}
 	
 	
+	// 프로젝트 피드 가져오기
+	@RequestMapping(value = "getprojectfeed", method=RequestMethod.GET)
+	public String getprojectpeed(HttpSession session) {
+		String returnURL = "false";
+		
+		
+		return returnURL;
+	}
 }
