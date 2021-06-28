@@ -65,7 +65,7 @@ $(document).ready(function() {
 	
 			memberList = JSON.parse(searchMemberList);
             /* 카드모은 div 비우고 moreBtn함수를 이용해 카드 달기 */
-            $('.form-select').val('').prop('selected', true);
+            //$('.form-select').val('').prop('selected', true);
             $('#card_section').empty();
             start=0;
             moreBtn(memberList, start);
