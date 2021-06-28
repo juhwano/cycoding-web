@@ -29,14 +29,14 @@
 				            data:JSON.stringify(data),
 				            success:function(result){
 							console.log(result);
-								if(result=="true"){
+								if(result.result=="true"){
 									$('#'+m_id).removeClass("applyBan");
 									$('#'+m_id).addClass("cancelBan");
 									 swal("회원이 영구정지 되었습니다.", {
 								      icon: "success",
 								    });
 								}
-								else if(result=="false"){
+								else if(result.result=="false"){
 									swal("오류가 발생했습니다.", {
 								      icon: "error",
 								    });

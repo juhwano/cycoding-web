@@ -1,5 +1,6 @@
 package com.cyco.admin.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,9 +151,11 @@ public class AdminService {
 	
 	// 회원의 영구정지 상태를 변경하는 기능
 	@Transactional
-	public String updateMemberEnabled(Map<String,String> data) {
+	public Map<String,Object> updateMemberEnabled(Map<String,String> data) {
 		AdminDao dao = sqlsession.getMapper(AdminDao.class);
-		String result="false";
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("result", "false");
+		
 		/*
 		 	권한체크 먼저해주고
 			 	1 : 뭐 없는 멤버
@@ -181,7 +184,7 @@ public class AdminService {
 			data.put("auth", auth);
 			dao.procedureBanMember(data);
 			
-			result = "true";
+			result.put("result", "true");
 		}
 		
 		//팀장이라면
@@ -194,21 +197,41 @@ public class AdminService {
 			
 			//	2. 프로젝트 생성자로 바꿔주고 -> project, p_detail
 			//  3. 밴 되는 회원 -> 권한 바꿔주고, enabled
+			
 			auth="5";
 			data.put("auth", auth);
-			dao.procedureBanLeader(data);
 			
-			result = "true";
+			Map <String, Object> map = new HashMap<String, Object>();
+			map.putAll(data);
+			map.put("output", 0);
+			
+			dao.procedureBanLeader(map);
+			List<String> list = dao.getPMemberList((int) map.get("output"));
+			
+			result.put("list", list);
+			
+			
+			
+			
+			result.put("result", "true");
 		}
 		//이미 밴당한 회원 해제
 		else if(auth.equals("5")){
 			auth="2";
 			data.put("auth", auth);
+			
 			dao.procedureCancelBan(data);
 			
-			result = "true";
+			result.put("result", "true");
 		}
-	
+		//기본회원, 패널티당한 회원 처리 -> 그냥 아무처리없이 밴
+		else {
+			auth="5";
+			data.put("auth", auth);
+			dao.procedureCancelBan(data);
+			
+			result.put("result", "true");
+		}
 		return result;
 	}
 	// ---------------------------------------------------------
