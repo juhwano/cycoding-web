@@ -1,26 +1,5 @@
 $(document).ready(function() {
 
-
-	//추가항목 기입 여부에 따라 문구 노출
-	/*	$("#ex_toggle").on("click", function() {
-	
-			//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
-			let insert_btn = $(".detail_section").children().children().children(".insert");
-	
-			console.log(insert_btn.length);
-	
-			console.log(insert_btn);
-			if (insert_btn.length == 0) {
-				$(".sub_title").empty();
-	
-				givePoint();
-	
-			} else {
-				$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
-			}
-	
-		});*/
-
 	//About Cycoder 부분의 정보 각각 비동기로 변경하기
 	// 개인정보 담을 변수
 	let before;
@@ -42,6 +21,18 @@ $(document).ready(function() {
 		$(this).text("확인");
 		$(this).removeClass("m-btn");
 		$(this).addClass("c-btn");
+		
+		//이때 비밀번호라면 확인창 추가할것!
+		let code = $(this).prev().prev().text();
+		if(code == "비밀번호"){
+			
+			//확인창 하나 추가하고
+			$(this).parent().after(
+				 '<li class="itemlist" id="passwordC_li"><span class="item">비밀번호 확인</span>'
+				 +'<input type="password" id="passwordC" name="password" class="info info-mdf" value="password"></li>'
+			);
+			
+		}
 
 	});
 
@@ -50,7 +41,11 @@ $(document).ready(function() {
 
 
 		atfer = $(this).prev().val();
-
+		//도대체 무슨 생각이었는지 모르겠는데 이렇게 하면 안되는 거 같다
+		//아이디값 주거나 하면 되지 이게 무슨 번거로운 짓이란 말임...
+		let code = $(this).prev().prev().text();
+		console.log(code);
+		
 		//수정 눌렀는데 값이 변한게 없을 때
 		if (before == $(this).prev().val()) {
 			swal("수정할 내용이 없습니다", "", "warning");
@@ -62,13 +57,16 @@ $(document).ready(function() {
 			$(this).text("수정");
 			$(this).removeClass("c-btn");
 			$(this).addClass("m-btn");
+			
+			//비밀번호라면 확인창 없애기
+			if(code == "비밀번호"){
+				$("#passwordC_li").remove();
+			}
 
 
 			//값이 변했을 때
-		} else {
-
-			let code = $(this).prev().prev().text();
-			console.log(code);
+		} else {			
+			
 			let button = $(this);
 
 
@@ -115,10 +113,10 @@ $(document).ready(function() {
 					swal("숫자만 입력하세요", "", "warning")
 					$("#m_phone").val("");
 
-				} else if ($("#m_phone").val().length > 9) {
+				} else if ($("#m_phone").val().length > 11) {
 
-					swal("9자리를 초과해 입력할 수 없습니다", "", "warning");
-					$("#m_phone").val($("#m_phone").val().substring(0, 9));
+					swal("11자리를 초과해 입력할 수 없습니다", "", "warning");
+					$("#m_phone").val($("#m_phone").val().substring(0, 11));
 				} else {
 					//위의 검사 통과한 경우
 					//휴대폰 번호도 중복체크
@@ -150,6 +148,7 @@ $(document).ready(function() {
 
 				let checking = true;
 				let password = $("#password").val();
+				let passwordC = $("#passwordC").val();
 				let num = password.search(/[0-9]/g);
 				let eng = password.search(/[a-z]/ig);
 
@@ -176,11 +175,18 @@ $(document).ready(function() {
 					checking = false;
 
 
+				} else if(password != passwordC){
+					
+					swal("비밀번호가 일치하지 않습니다","","error");
+					passwordC.val("");
+					
+					
 				}
-
 
 				if (checking) {
 					editMyDetail(code, button);
+					//비밀번호 확인창 없애기
+					$("#passwordC_li").remove();
 				}
 
 
