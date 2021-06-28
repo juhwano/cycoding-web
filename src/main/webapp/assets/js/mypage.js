@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 		//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
 		let insert_btn = $(".detail_section").children().children().children(".insert");
-
+		console.log(insert_btn.length);
 		console.log(insert_btn);
 		if (insert_btn.length == 0) {
 			$(".sub_title").empty();
@@ -72,52 +72,78 @@ $(document).ready(function() {
 
 			//닉네임은 중복체크 먼저
 			if (code == "닉네임") {
-				$.ajax({
-					url: "ajax/nicknamecheck",
-					data: {
-						nickName: $("#nick").val()
-					},
-					type: "get",
-					dataType: "text",
-					success: function(data) {
-						if (data == 'able') {
 
-							editMyDetail(code, button);
+				//닉네임 글자 수 제한
+				if ($("#nick").val().length > 10) {
 
-						} else {
+					swal("닉네임은 10자를 초과할 수 없습니다", "", "warning");
+					$("#nick").val($("#nick").val().substring(0, 10));
 
-							swal("이미 존재하는 닉네임입니다.", "", "error");
+				} else {
+
+					$.ajax({
+						url: "ajax/nicknamecheck",
+						data: {
+							nickName: $("#nick").val()
+						},
+						type: "get",
+						dataType: "text",
+						success: function(data) {
+							if (data == 'able') {
+
+								editMyDetail(code, button);
+
+							} else {
+
+								swal("이미 존재하는 닉네임입니다.", "", "error");
+							}
+						},
+						error: function(error) {
+							console.log(error);
 						}
-					},
-					error: function(error) {
-						console.log(error);
-					}
-				});
+					});
 
-				//휴대폰 번호도 중복체크 먼저
+				}
+
 			} else if (code == "휴대폰") {
 
-				$.ajax({
-					url: "ajax/phonecheck",
-					data: {
-						phone: $("#m_phone").val()
-					},
-					type: "get",
-					dataType: "text",
-					success: function(data) {
-						if (data == 'able') {
+				//휴대폰번호 유효성, 글자수 제한
+				var numberReg = /^[0-9]*$/;
+				if (!numberReg.test($("#m_phone").val())) {
 
-							editMyDetail(code, button);
+					swal("숫자만 입력하세요", "", "warning")
+					$("#m_phone").val("");
 
-						} else {
+				} else if ($("#m_phone").val().length > 9) {
 
-							swal("사용할 수 없는 번호입니다.", "", "error");
+					swal("9자리를 초과해 입력할 수 없습니다", "", "warning");
+					$("#m_phone").val($("#m_phone").val().substring(0, 9));
+				} else {
+					//위의 검사 통과한 경우
+					//휴대폰 번호도 중복체크
+					$.ajax({
+						url: "ajax/phonecheck",
+						data: {
+							phone: $("#m_phone").val()
+						},
+						type: "get",
+						dataType: "text",
+						success: function(data) {
+							if (data == 'able') {
+
+								editMyDetail(code, button);
+
+							} else {
+
+								swal("사용할 수 없는 번호입니다.", "", "error");
+							}
+						},
+						error: function(error) {
+							console.log(error);
 						}
-					},
-					error: function(error) {
-						console.log(error);
-					}
-				});
+					});
+				}
+
 				//비밀번호는 유효성 검사도 해야 한다
 			} else if (code == "비밀번호") {
 
@@ -1037,12 +1063,12 @@ $("#quit").on("click", function() {
 		success: function(response) {
 			console.log(response);
 			if (response == "success") {
-				swal("탈퇴 신청이 완료되었습니다", "7일 이내 로그인시 철회 가능합니다", "success").then((value)=>{
-					setTimeout(location.href="logout",5000);
+				swal("탈퇴 신청이 완료되었습니다", "7일 이내 로그인시 철회 가능합니다", "success").then((value) => {
+					setTimeout(location.href = "logout", 5000);
 				})
-				
+
 			} else if (response == "teammanager") {
-				
+
 				swal("YOUR A LEADER", "프로젝트 팀장을 위임해야 탈퇴가 가능합니다", "error");
 
 			} else {
@@ -1117,10 +1143,10 @@ function makeMemberAuth() {
 }
 
 //권한 1인 경우 포인트 충전 막기
-$("#cannot_cahrge").on("click",function(){
+$("#cannot_cahrge").on("click", function() {
 	console.log("충전 막기");
-	swal("PLEASE FILL YOUR PROFILE","추가 정보를 먼저 채워주세요","error");
-	
+	swal("PLEASE FILL YOUR PROFILE", "추가 정보를 먼저 채워주세요", "error");
+
 });
 
 $("#charge-btn").on("click", function() {
