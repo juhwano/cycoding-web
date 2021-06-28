@@ -222,6 +222,41 @@ $(".del_received").on("click", function() {
 	}
 });
 
+//모두 체크하면 전체선택 박스도 체크/하나라도 체크 해제되면 전체선택 박스도 체크 해제
+$(".del_send").on("click", function() {
+	
+	let check = true;
+	let _this = $(this);
+
+	if (_this.prop("checked")) {
+
+		$.each($(".del_send:visible"), function(index, item) {
+
+			if(!$(this).prop("checked")){
+				check = false;
+			}
+		});
+
+	} else{
+		check = false;
+	}
+
+	if (check) {
+		$("#all_from").prop("checked", true)
+	} else {
+		$("#all_from").prop("checked", false)
+	}
+});
+
+
+//선택하면 색깔 바꾸기~
+$("input[name=NOTE_ID]").on("click",function(){
+	console.log("야호")
+	var tablebody = $(this).parent().parent().parent();
+	tablebody.toggleClass("selected_note");
+	
+});
+
 //쪽지 삭제
 $(".trash").on("click",function(){
 	
