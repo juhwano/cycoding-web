@@ -2,24 +2,24 @@ $(document).ready(function() {
 
 
 	//추가항목 기입 여부에 따라 문구 노출
-	$("#ex_toggle").on("click", function() {
-
-		//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
-		let insert_btn = $(".detail_section").children().children().children(".insert");
-
-		console.log(insert_btn.length);
-
-		console.log(insert_btn);
-		if (insert_btn.length == 0) {
-			$(".sub_title").empty();
-
-			givePoint();
-
-		} else {
-			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
-		}
-
-	});
+	/*	$("#ex_toggle").on("click", function() {
+	
+			//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
+			let insert_btn = $(".detail_section").children().children().children(".insert");
+	
+			console.log(insert_btn.length);
+	
+			console.log(insert_btn);
+			if (insert_btn.length == 0) {
+				$(".sub_title").empty();
+	
+				givePoint();
+	
+			} else {
+				$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
+			}
+	
+		});*/
 
 	//About Cycoder 부분의 정보 각각 비동기로 변경하기
 	// 개인정보 담을 변수
@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 		//수정 눌렀는데 값이 변한게 없을 때
 		if (before == $(this).prev().val()) {
-			//swal("수정할 내용이 없습니다");
+			swal("수정할 내용이 없습니다", "", "warning");
 
 			$(this).prev().empty();
 			$(this).prev().val(atfer);
@@ -269,7 +269,6 @@ $(document).ready(function() {
 	//기술/기간 클릭하면 태그 선택
 	$(document).on("click", ".tags", function() {
 
-		// let name = $(this).text();
 		//선택된 태그를 담을 배열
 		selected = $(".clicked");
 		newStats.push($(".clicked").attr("id"));
@@ -474,6 +473,7 @@ $("#cancel").on("click", function() {
 
 //모달에서 선택한 태그 DB와 뷰단에 반영하기(기술, 포지션, 기간)
 //스탯 비동기 반영
+//동적 쿼리 쓰는 거로 바꾸자
 $("#edit-btn").on("click", function() {
 
 	let first = $("#selectedarea :nth-child(1)").attr("id");
@@ -715,11 +715,29 @@ $("#never").on("click", function() {
 
 	if ($("#have").length != 0) {
 
+		$(this).parent().attr("id", "ex_toggle");
+
 		$("#have").remove();
 		$("#ex_btn").find("a").remove();
 
 		// 회원 상세 테이블에 프로젝트 경험컬럼 null에서 0으로 업데이트
 		haveExperience("never");
+
+		//모달창, 모달이 아닌 페이지에서 정보 입력했을 때 매번 이게 마지막 정보인지 확인해야 한다
+		//프로젝트 경험 없음으로 선택했으니(모달이 아니니) 여기서도 한 번 체크
+		let insert_btn = $(".detail_section").children().children().children(".insert");
+
+		console.log(insert_btn.length);
+
+		console.log(insert_btn);
+		if (insert_btn.length == 0) {
+			$(".sub_title").empty();
+
+			givePoint();
+
+		} else {
+			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
+		}
 
 	} else {
 
@@ -811,9 +829,10 @@ $(document).on("input", ".exinput", function() {
 	});
 
 	if (check) {
-		console.log("모든 항목 입력");
-		$("#insert_ex").text("수정");
+
+		$("#insert_ex").text("추가");
 		$("#insert_ex").attr("disabled", false);
+
 	}
 
 })
@@ -852,7 +871,27 @@ function insertExperiences(ex_data) {
 		success: function(res) {
 			console.log(res);
 
-			getNewExperiences();
+			getNewExperiences().then((value) => {
+				//기술, 기간, 포지션은 같은 모달을 사용하지만 프로젝트 경험은 따로기 때문에
+				//이 모달에서도 정보 추가가 일어날 경우 이게 최초로 폼을 다 채우는 것인지 확인해야 한다
+				//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인(이때는 입력하기가 하나여야한다)
+				// + 프로젝트 경험의 경우, 추가할 때 입력하기 버튼이 생성되므로 이번이 최초 입력인지 확인하기 위해
+				//입력해야 프로젝트 지원할 수 있다는 문구도 표시되어있는지 확인
+				let insert_btn = $(".detail_section").children().children().children(".insert");
+
+				console.log(insert_btn.length);
+
+				if (insert_btn.length == 1 && $(".sub_title").text() != "") {
+					$(".sub_title").empty();
+
+					givePoint();
+
+				} else {
+					$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
+				}
+			})
+
+
 
 		},
 		error: function(xhr) {
@@ -865,27 +904,24 @@ function insertExperiences(ex_data) {
 
 //서버에서 비동기로 새로 추가된 경험 불러오기
 function getNewExperiences() {
+	return new Promise(function(resolve, reject) {
 
-	$.ajax({
+		$.ajax({
 
-		url: "ajax/getnewexperiences",
-		type: "post",
-		dataType: "json",
-		data: { useremail: $("#m_email").val() },
-		success: function(res) {
+			url: "ajax/getnewexperiences",
+			type: "post",
+			dataType: "json",
+			data: { useremail: $("#m_email").val() },
+			success: function(res) {
 
-			console.log(res);
+				console.log(res);
 
-			$("#exlistarea").empty();
-			$("#exlistarea").append(
-				`<div id="exlist"></div>`
-			);
+				$("#exlistarea").empty();
+				$.each(res, function(index, obj) {
 
-			$.each(res, function(index, obj) {
+					$("#exlistarea").append(
 
-				$("#exlistarea").append(
-
-					`<form action="ajax/updateexperiences" class="ex_edit_form">
+						`<form action="ajax/updateexperiences" class="ex_edit_form">
                     <div class="ex_box" id="`+ obj.ex_count + `">										
                         <div class="ex ex_titlebox">
                             <div id="exicons">
@@ -905,21 +941,24 @@ function getNewExperiences() {
                             <input type="text"  name="ex_content"  class="ex_content_input" name="ex_content_input" value="`+ obj.ex_CONTENT + `" readonly/></div>               
                     </div></form>`
 
+					);
+
+				});
+
+				$("#exlistarea").append(
+					`<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+                <div class="add experience" id="have">추가</div></a>`
 				);
 
-			});
+				console.log("어펜드 끝")
+			},
+			error: function(xhr) {
+				console.log(xhr);
+			}
 
-			$("#exlistarea").append(
-				`<a href="#m_experience" class="trigger-btn" data-toggle="modal">
-                <div class="add experience" id="have">추가</div></a>`
-			);
-		},
-		error: function(xhr) {
-			console.log(xhr);
-		}
-
+		});
+		resolve();
 	});
-
 }
 
 //클릭하면 경험 수 체크하고 삭제 모든 경험 삭제는 안되게 막기(뷰단처리)
@@ -945,6 +984,7 @@ $(document).on("click", ".del_exbox", function() {
 	}
 
 });
+
 //프로젝트 경험 삭제 디비 반영
 function deleteExperience(del_btn) {
 
@@ -1088,31 +1128,35 @@ $("#quit").on("click", function() {
 //추가 정보 모두 기입시 포인트 지급
 function givePoint() {
 
-	console.log("포인트 지급")
-	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 서버에서 확인
-	$.ajax({
+	//우선 premember인지부터 확인
+	if ($("#ismember").val() == "0") {
 
-		url: "ajax/givepoint",
-		type: "post",
-		data: {
-			member_id: $("#m_id").val()
-		},
-		success: function(res) {
-			console.log("포인트 지급 여부" + res);
+		//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 서버에서 확인
+		$.ajax({
 
-			if (res == "success") {
+			url: "ajax/givepoint",
+			type: "post",
+			data: {
+				member_id: $("#m_id").val()
+			},
+			success: function(res) {
 
-				swal("🎉congratulation🎉", "이제 프로젝트에 참여할 수 있어요!", "success");
-				$("#point").val("50점");
-				makeMemberAuth();
+				if (res == "success") {
+
+					$("#point").val("50점");
+					makeMemberAuth();
+				}
+
+			},
+			error: function(xhr) {
+				console.log(xhr);
 			}
 
-		},
-		error: function(xhr) {
-			console.log(xhr);
-		}
+		});
 
-	});
+	} else {
+		return false;
+	}
 
 }
 
@@ -1133,8 +1177,17 @@ function makeMemberAuth() {
 			console.log(res)
 
 			if (res) {
-
-				givePoint();
+				$("#ismember").val("1");
+				
+				//새로고침 없이 프로젝트 메뉴도 접근 가능하게 해주기
+				$("#project_sub").empty();
+		
+				$("#project_sub").append(
+					'<li id="myproject_title"><a href="/project/create">프로젝트 생성하기</a></li>'
+					+'<li><a href="/mypage/myProject">나의 프로젝트/후기</a></li>');
+				
+				swal("🎉congratulation🎉", "이제 프로젝트에 참여할 수 있어요!", "success");
+				
 			}
 		},
 		error: function(xhr) {

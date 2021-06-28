@@ -136,8 +136,8 @@
 								<se:authorize access="hasRole('ROLE_ADMIN')">
 
 									<li class="nav-item dropdown mydropdow 
-										panel-group" id="accordion" role="tablist"
-										aria-multiselectable="true">
+										panel-group"
+										id="accordion" role="tablist" aria-multiselectable="true">
 										<div class="panel panel-default">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
@@ -171,7 +171,8 @@
 
 									<!-- 로그인 id에 스타일 줬는데 id가 안 잡혀서 인라인으로 스타일 줌-->
 									<li class="nav-item dropdown panel-group" id="accordion"
-										role="tablist" aria-multiselectable="true" id="alarmbell_li" style="margin-right:30px;">
+										role="tablist" aria-multiselectable="true" id="alarmbell_li"
+										style="margin-right: 30px;">
 										<div class="panel panel-default" id="alarm_panel">
 											<div class="panel-heading" role="tab">
 												<a role="button" data-toggle="collapse"
@@ -227,8 +228,7 @@
 														href="#p_coll_sub" aria-expanded="false">프로젝트</a> <se:authorize
 															access="hasAnyRole('ROLE_MEMBER', 'ROLE_TEAMMANGER', 'ROLE_PENALTY')">
 															<input type="hidden" id="ismember" value="1" />
-														</se:authorize> <se:authorize
-															access="hasRole('ROLE_PREMEMBER')">
+														</se:authorize> <se:authorize access="hasRole('ROLE_PREMEMBER')">
 															<input type="hidden" id="ismember" value="0" />
 														</se:authorize>
 														<div id="p_coll_sub" class="panel-collapse collapse"
@@ -537,7 +537,6 @@ $('#alram').click(function() {
 		
 	//ROLE_MEMBER이거나 TEAMMANAGER일 경우 프로젝트 참여 여부 페이지 이동시마다 반영되게 처리
 	if($("#ismember").val() == '1'){
-		console.log("들어오나?")
 		
 		$.ajax({
 			
@@ -545,8 +544,7 @@ $('#alram').click(function() {
 			data:{id : logineduser},
 			dataType:"text",
 			success:function(res){
-				console.log(res)
-				
+
 				$("#project_sub").empty();
 				
 				if(res == "none"){
@@ -589,10 +587,7 @@ $('#alram').click(function() {
 			});
 
 	})
-
-	
-
-			
+		
 	});
 ///////////////////////////////////////////
 </script>

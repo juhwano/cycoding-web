@@ -119,7 +119,7 @@
 						
 						<!-- 추가정보 미입력 회원이면 상세 보기 경고 -->
 						<se:authorize access="hasRole('ROLE_PREMEMBER')">
-							<a href=""><h3 class="h5 card-title deny_premember">${rcm.p_title}</h3></a>
+							<a href="#"><h3 class="h5 card-title deny_premember">${rcm.p_title}</h3></a>
 						</se:authorize>
 						<se:authorize access="!hasRole('ROLE_PREMEMBER')">
 							<a href="/project/detail?project_id=${rcm.project_id}"><h3 class="h5 card-title">${rcm.p_title}</h3></a>
