@@ -29,6 +29,8 @@ public class ChangeAuth {
 		//시큐리티가 관리하는 객체를 새로 만든 newAuth로 변경해준다
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
 		
+		System.out.println(role + "로 권한 변경 완료");
+		
 		//사용법 참고 https://taesan94.tistory.com/135
 		//시큐리티 인증 관련 처리에 대한 설명 https://flyburi.com/584
 

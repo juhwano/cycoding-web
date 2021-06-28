@@ -133,18 +133,39 @@
 	height:20px;
 	opacity: .8 !important;
 }
-#alarmbell_li{
+/* #alarmbell_li{
 	margin-right:30px;
-}
+} */
 /* .mydropdow{
 	position: absolute;
 	top:16px;
 	height:100px;
 } */
-.sub{
+
+/*아래와 동일한 회원메뉴*/
+#my_sub_member{
+	position: absolute;
+    top: 50px;
+	left:1300px;
+    width: 220px;
+    z-index: 997;
+    background-color: white;
+    padding:0;
+}
+#a_sub{
+	position: absolute;
+    top: 32px;
+	right: -132px;
+    width: 220px;
+    z-index: 997;
+    background-color: white;
+    padding:0;
+}
+/*.sub와 동일한 관리자 메뉴*/
+#my_sub_admin{
 	position: absolute;
     top: 38px;
-    left: -115px;
+    left: -90px;
     width: 220px;
     z-index: 997;
     background-color: white;

@@ -1308,7 +1308,22 @@ $(document).ready(function() {
         });
 		
 		// 완료	
-		$('.complete_Ok').unbind('click').bind('click',function(){	
+		$('.complete_Ok').unbind('click').bind('click',function(){
+			
+			var pmlist = [];
+			
+			$.each($(".pmid"), function(index, item){
+				
+				pmlist.push($(this).val());
+			});
+			
+			console.log(pmlist);
+			var alarm = {
+				"alarm_CODE": "PR_UP",
+				"url": project_id,
+				"members": pmlist,
+				"alarm_CONTENT": "지원하신 프로젝트의 상태가 변경되었습니다"
+			}	
 			
 			 $.ajax({
 	     		url:"/ajaxproject/projectcomplete",
@@ -1317,9 +1332,15 @@ $(document).ready(function() {
 	     				"p_state":project_state},
 	     		success: function(responsedata){    
 	     			if(responsedata == "true"){
-	     				swal("프로젝트가 종료되었습니다.","수고하셨습니다.","success").then((value) => {
-	     					document.location.reload(true);
+		
+						makeAlarm(JSON.stringify(alarm)).then((value) => {
+							swal("프로젝트가 종료되었습니다.","수고하셨습니다.","success").then((value) => {
+								
+								document.location.reload(true);
+	     					
+							});
 						});
+	     				
 						
 					}else{
 						swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error").then((value) => {
