@@ -2,6 +2,54 @@
  * 
  */
 $(function() {
+	
+	//영정 회원, 정지 회원 필터링, 전헤체회원
+$(".m_status").on("click", function() {
+	
+	var members = $(".members");
+	//테이블에 display:block을 썼다간 다 깨진다
+	
+	//정상 회원 보기
+	if($(this).attr("id") == "able"){
+		
+		$.each(members,function(index, item){
+			
+			if($(this).find(".isBan").children().hasClass("cancelBan")){
+				
+				$(this).css("display","none");
+				
+			} else{
+				$(this).css("display","");
+			}
+			
+		})
+	
+	// 정지 회원 보기	
+	}else if($(this).attr("id") == "disable"){
+		
+		$.each(members,function(index, item){
+			
+			if(!$(this).find(".isBan").children().hasClass("cancelBan")){
+				
+				$(this).css("display","none");
+				
+			} else{
+				$(this).css("display","");
+			}
+			
+		})
+	//전체 회원 보기	
+	} else{
+		
+		$.each(members,function(index, item){
+			
+				$(this).css("display","");
+
+		})
+		
+	}
+
+});
 
 	/*.applyBan인 클래스가 클릭되었을때 : 영구정지 적용*/
 	$(document).on("click", ".applyBan", function() {
@@ -35,7 +83,7 @@ $(function() {
 								console.log(result.list);
 								//응답이 정상적으로 왔고
 								//밴 당한 회웡이 팀장이라 응답으로 리스트가 넘어왔을 경우
-								if (result.list != null) {
+								if (result.list.length > 0) {
 									console.log("result is not null")
 									var alarm = {
 										"alarm_CODE": "PM_BAN",

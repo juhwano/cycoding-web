@@ -25,8 +25,9 @@
 					<div class="table_sec">
 					<!-- 프로젝트목록 -->
 					<!-- 지원목록 영역 -->
+					<p class="mem_info_text"><b style="color:red;">* </b>회원 영구정지를 원하면 <i class="fas fa-ban" style="color:red;"></i> 버튼을 누르세요.</p>
 					<div class="mem_info_text_sec">
-						<p class="mem_info_text"><b style="color:red;">* </b>회원 영구정지를 원하면 <i class="fas fa-ban" style="color:red;"></i> 버튼을 누르세요.</p>
+					<p><span class="m_status">전체 회원</span><span class="m_status" id="able">정상 회원</span> <span class="m_status" id="disable">정지 회원</span></p>
 						<div class="input-group m_search">
 							<input type="text" class="form-control" id="MemberNameSearch" placeholder="회원 닉네임" name="projectname" aria-label="Search" aria-describedby="basic-addon2">
 							<span class="input-group-text" id="searchIcon">
@@ -47,8 +48,8 @@
 						<tbody class="apply_table_sec">
 							<c:forEach var="member" items="${memberList}">
 							<c:set var="check" value="0"/>
-									<tr>
-										<td>
+									<tr class="members">
+										<td class="isBan">
 										<i 
 										<c:if test='${member.enabled == "1"}'>
 											class="fas fa-ban applyBan"

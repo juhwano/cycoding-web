@@ -65,9 +65,14 @@
 	
 	
 	<!-- 먀이페이지 모달에 기간 선택지 태그 뿌리기 -->
-	<select id="getDurations" resultType="com.cyco.member.vo.V_Duration">
+<!-- 	<select id="getDurations" resultType="com.cyco.member.vo.V_Duration">
 		
 		select du_date from v_duration group by du_date
+		
+	</select> -->
+	<select id="getDurations" resultType="com.cyco.project.vo.P_DurationVO">
+		
+		select duration_date, duration_id from p_duration
 		
 	</select>
 	
@@ -129,7 +134,7 @@
 	
 	</delete>
 	
-	<!-- 마이페이지 회원 선호 기간 변경 -->
+	<!-- 마이페이지 회원 선호 포지션 변경 -->
 	<update id="updatePosition">
 	
 		update m_detail set position_id=#{param2} where member_id=${param1}
