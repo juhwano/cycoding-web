@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.BookmarkVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.member.security.ChangeAuth;
 import com.cyco.member.service.MemberService;
@@ -51,6 +52,8 @@ public class RestProjectController {
 	
 	@Autowired
 	SessionRegistry sessionRegistry;
+	
+	@Autowired
 	MemberService memberservice;
 	
 	@Autowired
@@ -412,7 +415,12 @@ public class RestProjectController {
 		
 		
 		String returnURL = service.ProjectWithdrawal(member_id, project_id, state);
-				
+		//팀장 권한에서 팀원으로 보내기
+	    M_AuthVo mauth = new M_AuthVo("2",member_id);
+		memberservice.UpdateAuth(mauth);
+		  
+		//시큐리티 권한 변경
+		ChangeAuth chau = new ChangeAuth("ROLE_MEMBER");		
 				
 		
 		return returnURL;
@@ -523,6 +531,13 @@ public class RestProjectController {
 		String member_id = String.valueOf(session.getAttribute("member_id"));
 		
 		returnURL = service.projectComplete(member_id, p_detail);
+		
+		//팀장 권한에서 팀원으로 보내기
+	    M_AuthVo mauth = new M_AuthVo("2",member_id);
+		Boolean bo = memberservice.UpdateAuth(mauth);
+		  
+		//시큐리티 권한 변경
+		ChangeAuth chau = new ChangeAuth("ROLE_MEMBER");
 		
 		
 		return returnURL;

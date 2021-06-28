@@ -38,6 +38,7 @@ import com.cyco.member.vo.MyProject_Join_Member;
 import com.cyco.member.vo.MyReviewVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.project.vo.P_DurationVO;
 
 @RequestMapping("mypage/ajax/")
 @RestController
@@ -183,9 +184,9 @@ public class MyPageRestController {
 
 	// 모달창에 선호 기간 태그 뿌리기
 	@RequestMapping(value = "getdurations")
-	public List<V_Duration> getDurations() {
+	public List<P_DurationVO> getDurations() {
 
-		List<V_Duration> list = new ArrayList<V_Duration>();
+		List<P_DurationVO> list = new ArrayList<P_DurationVO>();
 
 		System.out.println(memberdetailservice.getDurations().toString());
 

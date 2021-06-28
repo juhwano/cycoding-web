@@ -167,13 +167,21 @@
 		}
 	</select>
 	<!-- 팀장 회원일때 -->
+	<resultMap id="idMap" type="hashmap" />
 	<select id="procedureBanLeader" statementType="CALLABLE" parameterType="map">
 		{CALL BANLEADER(
 			${data.member_id},
 			${data.auth},
-			${data.enabled}
+			${data.enabled},
+			#{data.output, mode=OUT, jdbcType=INTEGER, javaType=int}
 		)}
 	</select>
+	
+	<select id="getPMemberList" parameterType="int" resultType="string">
+		select member_id from p_member
+		where project_id=${project_id} and member_id is not null
+	</select>
+	
 	<!-- 영구정지 해제 -->
 	<select id="procedureCancelBan" statementType="CALLABLE" parameterType="map">
 		{CALL Auth_Enabled_Update(
@@ -182,6 +190,7 @@
 			${data.enabled}
 		)
 		}
+		
 	</select>
 	
 <!--                        ajax                                  -->

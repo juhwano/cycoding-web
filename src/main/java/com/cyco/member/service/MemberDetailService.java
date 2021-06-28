@@ -27,6 +27,7 @@ import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.dao.ProjectDao;
 
 
@@ -183,10 +184,10 @@ public class MemberDetailService {
 	}
 	
 	//모달 안에 기간 리스트 뽑기
-	public List<V_Duration> getDurations(){
+	public List<P_DurationVO> getDurations(){
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		List<V_Duration> list = new ArrayList<V_Duration>();
+		List<P_DurationVO> list = new ArrayList<P_DurationVO>();
 		
 		list = memberdao.getDurations();
 		
