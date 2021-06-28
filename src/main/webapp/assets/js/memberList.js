@@ -3,21 +3,18 @@ let step=8;
 let start = 8;
 let count;
 
-
 $(document).ready(function() {
+	
    /* 회원카드 공간 */
    var card_section = $('#card_section');
 
    /* 포지션select */
    $(".m_sel").change(function() {
-      console.log('셀렉트')
-
+      //console.log('셀렉트')
 
       card_section.empty();
 
       var position = $(".m_sel").val()
-
-      console.log(position)
 
       $.ajax({
          url: "memberPosition/" + position,
@@ -46,10 +43,10 @@ $(document).ready(function() {
 
    /* 닉네임검색 */
    $("#memberSearch").click(function() {
-      console.log('닉네임검색')
+      //console.log('닉네임검색')
 
       var memberNickname = $("#memberNickname").val()
-      console.log("검색할닉네임: " + memberNickname);
+      //console.log("검색할닉네임: " + memberNickname);
 
       if (memberNickname == "") {
          alert('검색어를 입력해주세요 😥')
@@ -97,12 +94,14 @@ $(document).ready(function() {
          return false;
       });
    });
-   
-   //더보기 클릭
-   $(".moreBtn").click(function() {
-      moreBtn(memberList,start)
-   })
 
+	
+	//더보기 클릭
+   $(".moreBtn").click(function() {
+	
+	moreBtn(memberList,start);
+      
+   });
 
    /* 더보기 memberMore.cy 
    //더보기 인덱스
