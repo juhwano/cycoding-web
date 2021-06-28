@@ -59,6 +59,9 @@ public interface AdminDao {
 	
 	//일반회원 밴 먹이기 (리턴값 없음)
 	void procedureBanMember(@Param("data") Map<String, String> data);
-	void procedureBanLeader(@Param("data") Map<String, String> data);
+	
+	//팀장회원 밴 먹이기
+	void procedureBanLeader(@Param("data") Map<String, Object> data);
+	public List<String> getPMemberList(int project_id);
 	void procedureCancelBan(@Param("data") Map<String, String> data);
 }

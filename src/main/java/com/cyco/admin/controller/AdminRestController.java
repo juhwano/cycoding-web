@@ -39,7 +39,7 @@ public class AdminRestController {
 	
 	//회원 영구정지 상태 업데이트
 	@RequestMapping(value="/member", method=RequestMethod.PUT)
-	public String updateMemberEnabled(@RequestBody Map<String, String> data) {
+	public Map<String,Object> updateMemberEnabled(@RequestBody Map<String, String> data) {
 		
 		return service.updateMemberEnabled(data);
 	}

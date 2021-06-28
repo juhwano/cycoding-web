@@ -13,6 +13,9 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!-- 스프링 시큐리티 설정 -->
+<%@ taglib prefix="se"
+	uri="http://www.springframework.org/security/tags"%>
 
 
 <c:set var="project" value="${project}" />
@@ -48,6 +51,13 @@
 				</table>
 
 			</div>
+			<se:authorize access="hasRole('ROLE_ADMIN')">
+			
+			<div class="m_Edit_top">
+						<a class="ProjectEditBtn" href="${pageContext.request.contextPath}/project/edit?project_id=${project.project_id}">프로젝트 중단</a>
+					</div>
+			</se:authorize>
+			<se:authorize access="!hasRole('ROLE_ADMIN')">
 			<c:choose>
 				<c:when test="${sessionScope.member_id eq project.member_id && project.p_state eq '모집중'}">
 			  		<div class="m_Edit_top">
@@ -70,6 +80,7 @@
 			  		</div>
 		   </c:otherwise>
 		   </c:choose>
+		   </se:authorize>
 		</div>
 		
 		<div class="NavBox">
@@ -121,7 +132,9 @@
 								<td width="15%" class="memberImg_Box">
 									<img src="${pageContext.request.contextPath}/resources/upload/${pmlist.member_image}">
 								</td>
-								<td width="35%" class="member_nickname">${pmlist.member_nickname}</td>
+								<td width="35%" class="member_nickname">${pmlist.member_nickname}
+									<input type="hidden" class="pmid" value="${pmlist.member_id}"/>
+								</td>
 								<td width="50%" class="member_skills">_${pmlist.position_name}</td>
 								</tr>
 							</c:if>	

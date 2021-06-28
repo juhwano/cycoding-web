@@ -420,7 +420,7 @@ $(document).ready(function() {
                         
                             $("#tagarea").append(
         
-                                "<div class='tags' id='D"+(index+1)+"'>"+obj.du_date+"</div>"
+                                "<div class='tags' id='"+obj.duration_id+"'>"+obj.duration_date+"</div>"
                             );
     
                    });
@@ -891,10 +891,14 @@ function getNewExperiences(){
                             <span class="ex_count">#`+obj.ex_count+`</span>
                             <input type="text" class="ex_title exp_title_input" name="exp_title_input" value="`+obj.exp_TITLE+`" readonly/>
                             </div>
-                            <div class="ex"><input type="text"  name="ex_position" class="ex_position_input" name="ex_position_input" value="`+obj.ex_POSITION+`" readonly/></div>
-                            <div class="ex"><input type="text"  name="ex_skill" class="ex_skill_input" name="ex_skill_input" value="`+obj.ex_SKILL+`" readonly/></div>
-                            <div class="ex"><input type="text"  name="ex_duration" class="ex_duration_input" name="ex_duration_input" value="`+obj.ex_DURATION+`" readonly/></div>
-                            <div class="ex"><input type="text"  name="ex_content"  class="ex_content_input" name="ex_content_input" value="`+obj.ex_CONTENT+`" readonly/></div>               
+                            <div class="ex"><span class="name">담당 업무</span>
+                            <input type="text"  name="ex_position" class="ex_position_input" name="ex_position_input" value="`+obj.ex_POSITION+`" readonly/></div>
+                            <div class="ex"><span class="name">사용 기술</span>
+                            <input type="text"  name="ex_skill" class="ex_skill_input" name="ex_skill_input" value="`+obj.ex_SKILL+`" readonly/></div>
+                            <div class="ex"><span class="name">소요 기간</span>
+                            <input type="text"  name="ex_duration" class="ex_duration_input" name="ex_duration_input" value="`+obj.ex_DURATION+`" readonly/></div>
+                            <div class="ex"><span class="name">설명</span>
+                            <input type="text"  name="ex_content"  class="ex_content_input" name="ex_content_input" value="`+obj.ex_CONTENT+`" readonly/></div>               
                     </div></form>`
 
                 );
@@ -1083,6 +1087,7 @@ $("#quit").on("click",function(){
 //추가 정보 모두 기입시 포인트 지급
 function givePoint(){
 	
+	console.log("포인트 지급")
 	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 서버에서 확인
 	$.ajax({
 		
@@ -1092,10 +1097,11 @@ function givePoint(){
 			member_id:$("#m_id").val()
 		},
 		success:function(res){
-			console.log(res);
+			console.log("포인트 지급 여부" + res);
 			
 			if(res == "success"){
-				swal("🎉🎉모든 정보를 입력한 기념으로\n보너스 포인트가 지급되었습니다🎉🎉","","success");	
+				
+				swal("🎉congratulation🎉","이제 프로젝트에 참여할 수 있어요!","success");	
 				$("#point").val("50점");
 				makeMemberAuth();
 			}
@@ -1126,7 +1132,7 @@ function makeMemberAuth(){
 			console.log(res)
 			
 			if(res){
-				swal("정회원이 되셨습니다","이제 프로젝트에 참여할 수 있어요!","success")
+				
 				givePoint();
 			}
 		},
