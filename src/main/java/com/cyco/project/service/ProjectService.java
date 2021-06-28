@@ -24,6 +24,7 @@ import com.cyco.project.dao.ProjectDao;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_FeedVo;
 import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
@@ -815,6 +816,38 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		dao.addViews(project_id);
 
+	}
+	
+	//프로젝트 피드 가져오기
+	public List<P_FeedVo> getFeedList(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<P_FeedVo> feedList = dao.getFeedList(project_id);
+		
+		return feedList;
+	}
+	
+	//프로젝트 피드 작성하기
+	public int WriteProjectFeed(P_FeedVo feed) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		int result = dao.WriteProjectFeed(feed);
+		
+		return result;
+	}
+	
+	// 프로젝트 피드 수정
+	public int EditProjectFeed(P_FeedVo feed) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		int result = dao.EditProjectFeed(feed);
+		
+		return result;
+	}
+	
+	// 프로젝트 피드 삭제
+	public int DeleteProjectFeed(P_FeedVo feed) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		int result = dao.DeleteProjectFeed(feed);
+		
+		return result;
 	}
 }
 

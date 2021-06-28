@@ -496,7 +496,7 @@
 
 	<update id="projectComplete">
 		UPDATE P_DETAIL SET P_STATE = '완료' WHERE PROJECT_ID = #{project_id} AND P_STATE = '진행중'
-  </update>
+  	</update>
 
 	<!-- 프로젝트 수정에서 상태 변경시 알림 보낼 프로젝트 멤버들 목록 -->
 	<select id="getTeamMembers" resultType="String">
@@ -509,5 +509,26 @@
 	<update id="addViews">
 		UPDATE p_detail SET p_views = p_views+1 WHERE project_id = ${project_id}
 	</update>
+	
+	<!-- 프로젝트 피드 가져오기 -->
+	<select id="getFeedList" resultType="com.cyco.project.vo.P_FeedVo">
+		SELECT FEED_ID, PROJECT_ID, MEMBER_ID, MEMBER_NICKNAME, FEED_TITLE, FEED_CONTENT FROM V_P_FEED WHERE PROJECT_ID = #{project_id} ORDER BY FEED_ID desc
+	</select>
+	
+	<!-- 프로젝트 피드 작성 -->
+	<insert id="WriteProjectFeed">
+		INSERT INTO P_FEED (FEED_ID, PROJECT_ID, MEMBER_ID, FEED_TITLE, FEED_CONTENT)
+		values (PFEED_SEQ.nextval, #{project_id}, #{member_id}, #{feed_title}, #{feed_content})
+	</insert>
+	
+	<!-- 프로젝트 피드 수정 -->
+	<update id="EditProjectFeed">
+		UPDATE P_FEED SET FEED_TITLE = #{feed_title}, FEED_CONTENT = #{feed_content} WHERE PROJECT_ID = #{project_id} AND FEED_ID = #{feed_id}
+	</update>
+	
+	<!-- 프로젝트 피드 삭제 -->
+	<delete id="DeleteProjectFeed">
+		DELETE FROM P_FEED WHERE PROJECT_ID = #{project_id} AND FEED_ID = #{feed_id}
+	</delete>
 	
 </mapper>

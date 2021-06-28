@@ -32,6 +32,7 @@ import com.cyco.member.service.MemberService;
 import com.cyco.project.service.ProjectService;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_FeedVo;
 import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
@@ -530,10 +531,61 @@ public class RestProjectController {
 	
 	// 프로젝트 피드 가져오기
 	@RequestMapping(value = "getprojectfeed", method=RequestMethod.GET)
-	public String getprojectpeed(HttpSession session) {
-		String returnURL = "false";
+	public Map<String, Object> getprojectpeed(String project_id, String member_id) {
+		
+		Map<String, Object> returnURL = new HashMap<String, Object>();
+		
+		int Reader = service.ProjectReaderCheck(project_id,member_id);
+		
+		List<P_FeedVo> F_list = service.getFeedList(project_id);
+		
+		returnURL.put("Reader", Reader);
+		returnURL.put("F_list", F_list);
 		
 		
 		return returnURL;
+		
 	}
+	
+	// 프로젝트 피드 작성하기
+	@RequestMapping(value = "writeprojectfeed", method=RequestMethod.GET)
+	public String WriteProjectFeed(P_FeedVo feed) {
+		String returnURL = "false";
+		
+		int result = service.WriteProjectFeed(feed);
+		if(result > 0) {
+			returnURL = "true";
+		}
+		
+		return returnURL;
+	}
+	
+	// 프로젝트 피드 수정하기
+	@RequestMapping(value = "EditProjectFeed", method=RequestMethod.GET)
+	public String EditProjectFeed(P_FeedVo feed) {
+		String returnURL = "false";
+		
+		int result = service.EditProjectFeed(feed);
+		if(result > 0) {
+			returnURL = "true";
+		}
+		
+		return returnURL;
+	}
+	
+	
+	// 프로젝트 피드 삭제하기
+	@RequestMapping(value = "DeleteProjectFeed", method=RequestMethod.GET)
+	public String DeleteProjectFeed(P_FeedVo feed) {
+		String returnURL = "false";
+		
+		int result = service.DeleteProjectFeed(feed);
+		if(result > 0) {
+			returnURL = "true";
+		}
+		
+		return returnURL;
+	}
+	
+	
 }
