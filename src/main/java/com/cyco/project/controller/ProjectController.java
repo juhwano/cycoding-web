@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +21,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.BookmarkVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.security.ChangeAuth;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.V_MlistVo;
 import com.cyco.project.service.ProjectService;
@@ -37,8 +41,10 @@ import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
+import com.cyco.project.vo.V_p_pd_Join_NameVo;
 import com.cyco.utils.UtilFile;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 
 @Controller
@@ -77,14 +83,19 @@ public class ProjectController {
 		
 		//북마크 리스트
 		//유저가 로그인되어있으면 북마크 리스트 보내주기
-		if(session.getAttribute("member_id")!=null) {
-			List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
-			JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
-			m.addAttribute("bookmark_list",bookmark_list);
-		}else {
-			List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
-			m.addAttribute("bookmark_list",x_bookmark_list);
+		/*if(session.getAttribute("member_id")!=null) {*/
+		List<BookmarkVo> raw_bookmark_list = service.getBookmarkList(String.valueOf(session.getAttribute("member_id")));
+		
+		if(raw_bookmark_list.isEmpty()) {
+			raw_bookmark_list.add(new BookmarkVo(0, "0", "0"));
+			//System.out.println("비어있나요 " + raw_bookmark_list);
 		}
+		JSONArray bookmark_list = JSONArray.fromObject(raw_bookmark_list);
+		m.addAttribute("bookmark_list",bookmark_list);
+		/*
+		 * }else { List<BookmarkVo> x_bookmark_list = new ArrayList<BookmarkVo>();
+		 * m.addAttribute("bookmark_list",x_bookmark_list); }
+		 */
 		
 		List<V_PjAdrField_Join_V_PDetail> rcm_list;
 		if(session.getAttribute("member_id")!=null) {
@@ -115,28 +126,40 @@ public class ProjectController {
 	@RequestMapping(value="create",method = RequestMethod.GET)
 	public String ProjectAdd(Model model, Authentication auth) {
 		
-		MemberVo member = memberService.getMember(auth.getName());
+		//System.out.println("멤버 : " + auth.getName());
+		//System.out.println(memberService.getMember(auth.getName()));
 		
-		if(member.getHAVE_POINT() < 50) {
-			model.addAttribute("errorMsg", "포인트부족");
+		MemberVo member = memberService.getMember(auth.getName());
+	
+		
+		int ProjectCount = service.CheckProject(""+member.getMEMBER_ID());
+		
+		if(ProjectCount > 0) {
+			model.addAttribute("count", ProjectCount);
 			
 		}else {
-			
-			List<AdrVo> AdrList = service.getAdrList();
-			List<P_FieldVo> FieldList = service.getFieldList();
-			List<SkillVo> SkillList = service.getSkillList();
-			List<PositionVo> PositionList = service.getPositionList();
-			List<P_DurationVO> DurationList = service.getDurationList();
-			
-			model.addAttribute("AdrList", AdrList);
-			model.addAttribute("FieldList", FieldList);
-			model.addAttribute("SkillList", SkillList);
-			model.addAttribute("PositionList", PositionList);
-			model.addAttribute("DurationList", DurationList);
-			
-			
-		}
 		
+		
+			if(member.getHAVE_POINT() < 50) {
+				model.addAttribute("errorMsg", "포인트부족");
+				
+			}else {
+				
+				List<AdrVo> AdrList = service.getAdrList();
+				List<P_FieldVo> FieldList = service.getFieldList();
+				List<SkillVo> SkillList = service.getSkillList();
+				List<PositionVo> PositionList = service.getPositionList();
+				List<P_DurationVO> DurationList = service.getDurationList();
+				
+				model.addAttribute("AdrList", AdrList);
+				model.addAttribute("FieldList", FieldList);
+				model.addAttribute("SkillList", SkillList);
+				model.addAttribute("PositionList", PositionList);
+				model.addAttribute("DurationList", DurationList);
+				
+				
+			}
+		}
 		model.addAttribute("MemberVo", member);
 		return "Project/ProjectCreate";
 	}
@@ -151,12 +174,15 @@ public class ProjectController {
 			@RequestParam("uploadFile") MultipartFile uploadFile, 
 			MultipartHttpServletRequest request,
 			Authentication auth,
-			Model model) {
+			Model model, HttpSession session) {
 		
 		MemberVo member = memberService.getMember(auth.getName());
+		int ProjectCount = service.CheckProject(""+member.getMEMBER_ID());
 		
-		if(member.getHAVE_POINT() < 50) {
+		
+		if(member.getHAVE_POINT() < 50 || ProjectCount > 0) {
 			model.addAttribute("msg", "false");
+			
 		}else {
 			// 파일 유틸 생성
 			UtilFile utilFile = new UtilFile();
@@ -207,10 +233,21 @@ public class ProjectController {
 			
 			memberService.updatePoint(point);
 			
+			//이제 팀장으로 권한 변경(디비)
+			String member_id = Integer.toString(member.getMEMBER_ID());
+			M_AuthVo mauth = new M_AuthVo("3",member_id);
+			memberService.UpdateAuth(mauth);
+			  
+			//시큐리티 권한 변경
+			ChangeAuth chau = new ChangeAuth("ROLE_TEAMMANGER");
+			
 			model.addAttribute("msg", "true");
 			model.addAttribute("projectId",ProjectId);
+			
+			session.setAttribute("project_id", ProjectId);
+			session.setAttribute("p_title", detail.getP_title());
 		}
-		
+	
 		
 		return "redirect:/project/projectCreateok";
 	}
@@ -233,32 +270,22 @@ public class ProjectController {
 	}
 	
 	
-	//해당 프로젝트로 링크 변경해야됨
+	//프로젝트 상세 페이지
 	@RequestMapping(value="detail",method = RequestMethod.GET)
-	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m) {
-	/*
-	 	필요한 데이터
-	 	1. 모집현황 - 모집 포지션 , 구인 인원, 현재 확정인원 --> 포지션별로 group.
-	 		--> select count(member_id) as curr,count(*) as max,position_name ,position_id 
-				from v_pm_position
-				where project_id=1
-				group by position_name,position_id
-				;
-	 	
-	 	7. 확정된 팀원 목록 - 프로필사진, member_id, 닉네임
-	 		--> getPmemberCountLIst(project_id)
-	 	
-	 	밑에는 V_PjAdrField_Join_V_PDetail에서 가져오면 될듯.
-	 	2. 프로젝트 모집분야 - PROJECT테이블 : field_code
-	 	3. 프로젝트 모집상태 - P_DETAILE 테이블 : p_state
-	 	4. 프로젝트 제목 --> P_DETAILE 테이블 : p_title
-	 	5. 프로젝트 본문 --> p_content
-	 	6. 프로젝트 기간 - P_DETAILE 테이블 : duration_id
-	 	7. 프로젝트 생성자 정보 - 프로필사진, member_id, 닉네임
-	 	
-	 */
+	public String ProjectDetail(@RequestParam("project_id") String project_id, Model m, HttpSession session) {
+
+		//조회수증가
+		service.addViews(project_id);
+
+		int reader = service.ProjectReaderCheck(project_id, String.valueOf(session.getAttribute("member_id")));
+		
+		String Check = "false";
+		
 		//프로젝트 멤버 검색
-		 List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
+		List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
+		
+		//프로젝트 기술 
+		List<V_PjSk> pjsk = service.getIfPjSkList(project_id);
 		
 		//프로젝트 상세의 포지션별 자리수
 		List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
@@ -266,16 +293,72 @@ public class ProjectController {
 		//프로젝트 상세 내용을 담은 객체
 		V_PjAdrField_Join_V_PDetail project = service.getOneProject(project_id);
 		
+		int BookMark = service.checkBookMark(project_id, String.valueOf(session.getAttribute("member_id")));
+
+
+		if(reader > 0 && project.getP_state() == "모집중") {
+			Check = service.MemberFullCheck(project_id);
+		}
 		
+		
+		m.addAttribute("Check",Check);
 		m.addAttribute("project",project);
 		m.addAttribute("pmcountlist",pmcountlist);
 		m.addAttribute("pmlist",pmlist);
-		System.out.println(project);
-		System.out.println(pmcountlist);
-		System.out.println(pmlist);
+		m.addAttribute("pjsk",pjsk);
+		m.addAttribute("bookMark",BookMark);
+		
 		
 		return "Project/ProjectDetail";
 	}
-
 	
+	@RequestMapping(value="edit",method = RequestMethod.GET)
+	public String ProjectEdit(String project_id ,Model model, HttpSession session, Authentication auth) {
+		
+		
+		String member_id = String.valueOf(session.getAttribute("member_id"));
+		
+		// 생성 된 프로젝트 정보들 가져오기
+		V_p_pd_Join_NameVo project = new V_p_pd_Join_NameVo();
+		project.setProject_id(project_id);
+		project.setMember_id(member_id);
+		project = service.getProjectJoinName(project);
+		
+		if(project == null) {
+			model.addAttribute("error", "false");
+			
+		}else {
+			
+			if(project.getP_state().equals("진행중")) {
+				model.addAttribute("state", "진행중");
+				return "Project/ProjectEdit";
+			}
+			
+			List<AdrVo> AdrList = service.getAdrList();
+			List<P_FieldVo> FieldList = service.getFieldList();
+			List<SkillVo> SkillList = service.getSkillList();
+			List<P_DurationVO> DurationList = service.getDurationList();
+			MemberVo member = memberService.getMember(auth.getName());
+			List<SkillVo> CreateSkillList = service.getCreateProjectSkill(project_id);
+			List<SkillVo> CreateNotInSkillList = service.getCreateNotInProjectSkill(project_id);
+			List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
+			List<String> members = service.getTeamMembers(project_id);
+			
+			model.addAttribute("AdrList", AdrList);
+			model.addAttribute("FieldList", FieldList);
+			model.addAttribute("SkillList", SkillList);
+			model.addAttribute("DurationList", DurationList);
+			model.addAttribute("Project", project);
+			model.addAttribute("MemberVo", member);
+			model.addAttribute("Pmcountlist",pmcountlist);
+			model.addAttribute("CreateSkillList",CreateSkillList);
+			model.addAttribute("CreateNotInSkillList",CreateNotInSkillList);
+			model.addAttribute("Members",members);
+			
+		}
+	
+		return "Project/ProjectEdit";
+	}
+	
+
 }

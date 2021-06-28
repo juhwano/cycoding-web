@@ -8,6 +8,7 @@ public class V_PjAdrField_Join_V_PDetail {
 	private String project_id; // 프로젝트 번호
 	private String member_id; // 프로젝트 생성자 번호
 	private String member_nickname; //프로젝트 생성자 닉네임
+	private String member_image; // 프로젝트 생성자 프로필 사진
 	private String adr_name; // 지역이름
 	private String field_name; // 분야이름
 	private String p_title; // 프로젝트 제목

@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <c:set var="member" value="${aboutmember}" />
 <c:set var="skills" value="${skills}" />
 <c:set var="position" value="${position}" />
 <c:set var="durations" value="${durations}" />
 <c:set var="experiences" value="${experiences}" />
 <c:set var="reviewList" value="${reviewList}" />
+
+<c:set var="gradeAvg" value="${gradeAvg}" />
 
 
 <!DOCTYPE html>
@@ -27,15 +26,22 @@
 
 <body>
 	<main>
+	
+	<!-- 로그인한 유저 -->
+	<input type="hidden" id="current_id" value="${sessionScope.Member_id}">
+	<!-- 이 페이지의 회원 -->
+	<input type="hidden" id="m_id" name="m_id" value="${param.memberid}">
 
 		<div id="wrap">
 			<div id="profile_img">
 				<!-- <img src="assets/img/member_detail/cycoding_img.png"> -->
 				<img
-					src="${pageContext.request.contextPath}/resources/${member.MEMBER_IMAGE}">
+					src="${pageContext.request.contextPath}/resources/upload/${member.MEMBER_IMAGE}">
 			</div>
 			<div id="cycoder">
 				<p>${member.MEMBER_NICKNAME}</p>
+				<a href="#invitation_modal" class="trigger-btn" data-toggle="modal"><button type="button" id="invitation">초대하기</button></a>
+				<a href="#message_modal" class="trigger-btn" data-toggle="modal"><button type="button" id="send">쪽지보내기</button></a>
 			</div>
 
 			<!-- 			<div id="modals">
@@ -50,6 +56,7 @@
 				<div id="info" class="details">
 					<p class="cycoder_title">
 						ABOUT<br>CYCODER
+						
 					<p class="sub_title"></p>
 
 					<div class="infolist">
@@ -86,58 +93,7 @@
 								</c:choose>
 							</div>
 						</div>
-
-						<div class="detail_section itmelist">
-							<div class="detail_title">
-
-								<span class="item">프로젝트 경험</span>
-
-							</div>
-							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails experience"
-								onclick="edit_modal('experience')">
-								<c:choose>
-									<c:when test="${empty experiences}">
-
-										<div id="ex_btn"
-											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
-											<div class="none experience" id="never">없음</div>
-
-										</div>
-									</c:when>
-									<c:otherwise>
-
-									<div id="exlist">
-									
-									<c:forEach var="experiences" items="${experiences}" varStatus="status">
-									<form action="ajax/updateexperiences" class="ex_edit_form">
-									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
-										<div class="ex_box" id="${experiences.ex_count}">
-										<div class="ex ex_titlebox">
-											<div id="exicons">
-												<i class="fas fa-edit edit_exbox"></i>
-												<i class="fas fa-eraser del_exbox"></i>
-											</div>
-										
-											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
-										</div>
-										<div class="ex"><input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
-										<div class="ex"><input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
-										<div class="ex"><input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
-										<div class="ex"><input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
-										
-										</div>
-										</form>
-										</c:forEach>
-
-									</div>
-
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
-
-						<div class="detail_section">
+					<div class="detail_section">
 							<div class="detail_title">
 								<span class="item">선호 포지션</span>
 							</div>
@@ -191,12 +147,66 @@
 								</c:choose>
 							</div>
 						</div>
+						
+						<div class="detail_section itmelist">
+							<div class="detail_title">
+
+								<span class="item">프로젝트 경험</span>
+
+							</div>
+							<!-- 스탯 입력 안 했으면 -->
+							<div class="moerdetails experience"
+								onclick="edit_modal('experience')">
+								<c:choose>
+									<c:when test="${empty experiences}">
+
+										<div id="ex_btn"
+											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
+											<div class="none experience" id="never">없음</div>
+
+										</div>
+									</c:when>
+									<c:otherwise>
+
+									<div id="exlist">
+									
+									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+									<form action="ajax/updateexperiences" class="ex_edit_form">
+									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
+										<div class="ex_box" id="${experiences.ex_count}">
+										<div class="ex ex_titlebox">
+											<div id="exicons">
+												<i class="fas fa-edit edit_exbox"></i>
+												<i class="fas fa-eraser del_exbox"></i>
+											</div>
+										
+											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
+										</div>
+										<div class="ex"><span class="name"> 담당 업무</span>
+											<input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
+										<div class="ex"><span class="name">사용 기술</span>
+											<input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
+										<div class="ex"><span class="name">소요 기간</span>
+											<input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
+										<div class="ex"><span class="name">설명</span>
+											<input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
+										
+										</div>
+										</form>
+										</c:forEach>
+
+									</div>
+
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
 					</div>
 				</div>
 
 				<!-- 리뷰 div -->
 				<div id="review" class="details">
-					<p class="cycoder_title">REVIEW
+					<p class="cycoder_title">REVIEW</p>
 					<div class="reviewBox">
 					
 					<c:set var="last_flag" value="true"/>
@@ -204,10 +214,20 @@
 					<c:set var="list_size" value="${fn:length(reviewList)}"/>
 					
 					<!-- 리뷰가 1개도 없는 경우 문구 출력 -->
-					<c:if test="${list_size == 0}">
+					<c:if test="${list_size eq 0}">
 						<div class="review_nothing">
 							<p> 아직 남겨진 리뷰가 없습니다. </p>
 						</div>
+					</c:if>
+					
+					<c:if test="${list_size ne 0}">
+						<div class="review_avg">
+							<p>${member.MEMBER_NICKNAME} 님의 평점</p>
+							<div class="gradeAvg">
+								${gradeAvg}
+							</div>
+						</div>
+						<hr class="reviewAvgHr">
 					</c:if>
 					
 					<!-- 리뷰 리스트 뿌리기 -->
@@ -233,7 +253,6 @@
 						<!-- 리뷰 end -->
 						
 					</div>
-					
 						<div class="moreSec">
 						<!-- 리뷰 끝나면 더보기 버튼 안보이게하기 -->
 							<c:if test="${not last_flag}">
@@ -252,6 +271,58 @@
 			</div>
 		</div>
 	</main>
+	
+	
+	<div id="invitation_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">INVITATION</p>
+				</div>
+				<div id="modal-body">
+					<div id="inv_img"></div>
+					<div id="contentarea">
+						<%-- <p>${member.MEMBER_NICKNAME}님을 프로젝트에 초대하시겠습니까?</p> --%>
+					</div>
+					<div id="inv_buttonarea">
+						
+						<!-- <a href="#invitation_modal" class="trigger-btn" data-toggle="modal">
+							<button class="inv_btn" id="confirm_inv">초대</button>		
+						</a> -->
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	
+	<div id="message_modal" class="modal fade">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p id="modal-title">SEND</p>
+				</div>
+				<div id="modal-body">
+					<!-- <div id="msg_img"></div> -->
+					<div id="messagearea">
+						<span>메시지를 입력하세요</span>					
+					</div>
+					<input type="hidden" name="text" id="text">
+					<div id="textcount"></div>
+					<div id="msg_buttonarea">
+						
+						<a href="#message_modal" class="trigger-btn" data-toggle="modal">
+							<button class="send_btn" id="msg_btn"><i class="far fa-paper-plane"></i></button>		
+						</a> 
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </body>
 <jsp:include page="../include/footer.jsp"></jsp:include>
 <script type="text/javascript">
@@ -259,6 +330,7 @@
 	var reviewList = ${reviewList};
 	
 	console.log(${fn:length(reviewList)});
+
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/memberdetail.js?ver=1"></script>
 </html>

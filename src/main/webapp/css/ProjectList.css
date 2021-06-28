@@ -192,14 +192,46 @@ body{
 	text-align: center;
 }
 
+/* 추천리스트 */
 /* Swiper Css */
+ 
+ .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+	        background-image: none !important;
+} 
+
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+	background-image: none !important;
+}
+
+#wouldyoulike{
+	color: #C0A9BD;
+    font-weight: 900;
+    font-size: 21px;
+    margin: 0 !important;
+	
+}
+#slidewrapper{
+	max-width: 1200px;
+    height: 280px;
+    border: solid 2px #C0A9BD;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+	
+}
+
 .swiper-container {
-  max-width: 1200px;
-  height: 280px;
-  margin-top:50px;
-  border: solid 2px;
-  border-radius: 26px;
-  border-color: #80808042;
+  max-width: 1100px;
+  height: 240px;
+  /* border-radius: 26px; */
+  margin-top:12px;
+  
 }
 
 .swiper-slide {
@@ -240,8 +272,23 @@ body{
 	background: black;
 }
 .swiper-pagination-bullet-active{
-	background: white!important;
+	background: #C0A9BD !important;
 }
+
+.swiper-pagination{
+    left: 45%;
+    bottom: -13px;
+    align-items: center;
+    height: 30px;
+    width: 10%;
+}
+
+.swiper-pagination> span{
+	margin: 0 3px;
+	width: 11px;
+	height: 11px;
+}
+
 /* Swiper Css */
 #rcmcard {
 	width:100%!important;
@@ -272,6 +319,7 @@ body{
     font-size: 1.25rem;
     font-weight: 600;
     position: relative;
+        letter-spacing: 3px;
 }
 #backimg p{
 	color: white;
@@ -280,4 +328,39 @@ body{
     font-weight: 300;
     line-height: 1.6;
     position: relative;
+
+}
+/* 추천리스트 */
+
+.zerocontainer{
+	display:none;
+}
+.zerowrapper{
+	margin:auto;
+}
+#zerolist{
+	background: white;
+	height: 200px;
+    width: 100%;
+    border: solid #c0a9bd 2px;
+	
+}
+#zerolist > p{
+	font-size:25px;
+	font-family: var(--bs-font-sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    position:relative;
+    top:36%;
+}
+
+
+
+.card-body a{
+	position:relative;
+	top:45%;
+}
+.recommend_skill{
+	position:relative;
+	top:40%;
 }

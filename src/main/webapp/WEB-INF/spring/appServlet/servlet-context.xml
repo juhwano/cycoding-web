@@ -4,10 +4,12 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -22,10 +24,20 @@
 
 	<context:component-scan base-package="com.cyco.main" />
 	<context:component-scan base-package="com.cyco.admin" />
+	<context:component-scan base-package="com.cyco.alarm" />
 	<context:component-scan base-package="com.cyco.member" />
 	<context:component-scan base-package="com.cyco.project" />
 	<context:component-scan base-package="com.cyco.board" />
 	<context:component-scan base-package="com.cyco.utils" />
 	<context:component-scan base-package="com.cyco.common" />
 	
+	<!-- Locale -->
+	<interceptors>  
+            <beans:bean  id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+                <beans:property name="paramName" value="lang" />
+            </beans:bean>
+    </interceptors>
+    
+<!--     <beans:bean id="localeResolver"  class="org.springframework.web.servlet.i18n.CookieLocaleResolver" /> -->
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
 </beans:beans>

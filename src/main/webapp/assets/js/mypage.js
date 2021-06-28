@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 
 	//추가항목 기입 여부에 따라 문구 노출
 	$("#ex_toggle").on("click",function(){
@@ -10,7 +11,9 @@ $(document).ready(function() {
 		console.log(insert_btn);
 		if(insert_btn.length==0){
 			$(".sub_title").empty();
+			
 			givePoint();
+			
 		} else{
 			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
 		}
@@ -99,7 +102,7 @@ $(document).ready(function() {
 			$.ajax({
             url: "ajax/phonecheck",
             data: {
-                phone: $("#phone").val()
+                phone: $("#m_phone").val()
             },
             type: "get",
             dataType: "text",
@@ -417,7 +420,7 @@ $(document).ready(function() {
                         
                             $("#tagarea").append(
         
-                                "<div class='tags' id='D"+(index+1)+"'>"+obj.du_date+"</div>"
+                                "<div class='tags' id='"+obj.duration_id+"'>"+obj.duration_date+"</div>"
                             );
     
                    });
@@ -515,6 +518,8 @@ $("#edit-btn").on("click",function(){
 		console.log(insert_btn);
 		if(insert_btn.length==0){
 			$(".sub_title").empty();
+			
+			//권한 업데이트
 			givePoint();
 		} else{
 			$(".sub_title").text("모든 항목을 입력해야 프로젝트에 지원할 수 있어요!");
@@ -886,10 +891,14 @@ function getNewExperiences(){
                             <span class="ex_count">#`+obj.ex_count+`</span>
                             <input type="text" class="ex_title exp_title_input" name="exp_title_input" value="`+obj.exp_TITLE+`" readonly/>
                             </div>
-                            <div class="ex"><input type="text"  name="ex_position" class="ex_position_input" name="ex_position_input" value="`+obj.ex_POSITION+`" readonly/></div>
-                            <div class="ex"><input type="text"  name="ex_skill" class="ex_skill_input" name="ex_skill_input" value="`+obj.ex_SKILL+`" readonly/></div>
-                            <div class="ex"><input type="text"  name="ex_duration" class="ex_duration_input" name="ex_duration_input" value="`+obj.ex_DURATION+`" readonly/></div>
-                            <div class="ex"><input type="text"  name="ex_content"  class="ex_content_input" name="ex_content_input" value="`+obj.ex_CONTENT+`" readonly/></div>               
+                            <div class="ex"><span class="name">담당 업무</span>
+                            <input type="text"  name="ex_position" class="ex_position_input" name="ex_position_input" value="`+obj.ex_POSITION+`" readonly/></div>
+                            <div class="ex"><span class="name">사용 기술</span>
+                            <input type="text"  name="ex_skill" class="ex_skill_input" name="ex_skill_input" value="`+obj.ex_SKILL+`" readonly/></div>
+                            <div class="ex"><span class="name">소요 기간</span>
+                            <input type="text"  name="ex_duration" class="ex_duration_input" name="ex_duration_input" value="`+obj.ex_DURATION+`" readonly/></div>
+                            <div class="ex"><span class="name">설명</span>
+                            <input type="text"  name="ex_content"  class="ex_content_input" name="ex_content_input" value="`+obj.ex_CONTENT+`" readonly/></div>               
                     </div></form>`
 
                 );
@@ -959,7 +968,6 @@ function deleteExperience(del_btn){
 //프로젝트 경험 수정!!!!!!!!!!!!
 $(document).on("click",".edit_exbox",function(){
 
-    console.log("무야호");
     let exbox = $(this).parent().parent().parent().children();
 
 	//클릭한 버튼이 속한 박스의 인풋태그들을 활성화시킨다
@@ -1047,7 +1055,6 @@ $('#file').change(function(event) {
 
    $("#img_form").submit();
 
-    console.log("리다이렉트");
 });
 
 //회원 탈퇴
@@ -1080,9 +1087,8 @@ $("#quit").on("click",function(){
 //추가 정보 모두 기입시 포인트 지급
 function givePoint(){
 	
-	//디비에서 이중 체크를 해야 하나?
-	//회원상세(포지션, 경험), 회원기간, 회원기술 테이블을 조회해서 값이 있는지 중복체크를 해야 할까ㅓ??
-	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 확인
+	console.log("포인트 지급")
+	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 서버에서 확인
 	$.ajax({
 		
 		url:"ajax/givepoint",
@@ -1091,11 +1097,13 @@ function givePoint(){
 			member_id:$("#m_id").val()
 		},
 		success:function(res){
-			console.log(res);
+			console.log("포인트 지급 여부" + res);
 			
 			if(res == "success"){
-				swal("🎉🎉모든 정보를 입력한 기념으로\n보너스 포인트가 지급되었습니다🎉🎉","","success");	
-				$("#point").val("50점");		
+				
+				swal("🎉congratulation🎉","이제 프로젝트에 참여할 수 있어요!","success");	
+				$("#point").val("50점");
+				makeMemberAuth();
 			}
 			
 		},
@@ -1105,6 +1113,34 @@ function givePoint(){
 		
 	});
 	
+}
+
+//추가 정보 모두 입력시 권한 업데이트
+function makeMemberAuth(){
+	console.log("makeMemberAuth 실행")
+
+	$.ajax({
+		
+		url:"ajax/makememberauth",
+		data:{
+			member_id : $("#m_id").val(),
+			authority_id : "2"
+		},
+		dataType:"text",
+		type:"get",
+		success:function(res){
+			console.log(res)
+			
+			if(res){
+				
+				givePoint();
+			}
+		},
+		error:function(xhr){
+			console.log(xhr)
+		}
+		
+	});
 }
 
 $("#charge-btn").on("click",function(){
@@ -1121,11 +1157,21 @@ function payment() {
    var name = $('input[id="m_name"]').val();
    var phone = $('input[id="m_phone"]').val();
    
+  if(money == 100){
+  	money = '5000';
+  } 
+  if(money == 300){
+  	money = '10000';
+  }
+  if(money == 450){
+  	money = '15000';
+  }
    
-   console.log(money);
-   console.log(email);
-   console.log(name);
-   console.log(phone);
+   
+   console.log('value값 : ' + money);
+   console.log('회원메일 : ' + email);
+   console.log('회원이름 : ' + name);
+   console.log('회원폰 : ' + phone); 
    
    let originalpoint = $("#point").val().replace("점","");
    let plus = $("input[name=cp_item]:checked").val();
@@ -1183,8 +1229,13 @@ function payment() {
    } else {
       var msg = '결제에 실패하였습니다.';
       msg += '에러내용 : ' + response.error_msg;
+      console.log(msg);
+      swal("실패", "결제에 실패하였습니다.", "error")
    }
 //    console.log("실행완료");
 });
 }
+
+
+
 

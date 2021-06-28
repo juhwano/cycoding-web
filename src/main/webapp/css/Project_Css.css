@@ -1,16 +1,38 @@
 
 .ProjectPage{
-    padding: 4rem;
+    padding: 1rem 4rem 4rem 4rem;
     margin: 3rem;
-    background-color: white;
-    border: 1px solid #f7e8d7;
+    background-color: #fdfcfc;
+    /* border: 1px solid #f7e8d7; */
     /* box-shadow: 5px 5px 5px 5px #efeced; */
 }
 
+.pd_20{
+	padding: 20px 20px 0 20px !important;
+}
+
+.p_bold{
+	font-weight: 400;
+}
+
+.pd_rl_20{
+	padding: 0 20px !important;
+}
+
+.margin_delete{
+	margin: 0 !important;
+}
+
+.border-top{
+    border-top: 0.0625rem solid #D1D5DB;
+}
 
 .project_area {
     width: 100%;
     height: 300px;
+}
+.leaderIcon{
+   color: #ffcc00;
 }
 
 .area-img{
@@ -49,31 +71,46 @@
 }
 
 .ProjectHeader_Left{
-	width: 70%;
+    width: 70%;
+    padding: 2rem 2rem 1rem 2rem;
     float: left;
     font-size: 1rem;
-    margin-top: 20px;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 .ProjectHeader_Right{
 	text-align: left;
     width: 25%;
-    height: 300px;
     float: right;
-    margin: 0 0 0 30px;
+    margin: 0 0 20px 20px;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: #4B5563;
-    padding-top: 1rem;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 20px;
 }
 
 #target_img{
-	width: 100%;
-	height: 200px;
-    border: 0.0625rem solid #D1D5DB;
+  	width: 100%;
+    height: 100%;
+   /* border-top: 0.0625rem solid #D1D5DB;
+    border-bottom: 0.0625rem solid #D1D5DB; */
     background-color: #F9FAFB;
     cursor: pointer;
+    object-fit: cover;
+    padding-bottom: 10px;
+}
+
+.Project_Create_img_box{
+	width: 100%;
+	height: 150px;
 }
 
 .Project_title_p{
@@ -85,7 +122,7 @@
 
 .Project_p{
 	margin: 0;
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 }
 
 .project_boxdiv{
@@ -126,7 +163,7 @@
     text-align: center;
     border: none !important;
     width: 20px !important;
-	
+	pointer-events: none; 
 }
 
 .number:hover{
@@ -149,10 +186,11 @@
 
 
 .ProjectTitle{
-	width: 100%;
-	margin: auto;
-	padding: 6px;
-	text-align: center;
+    width: 100%;
+    margin: auto;
+    padding: 6px;
+    text-align: center;
+    background: white;
 }
 
 .ProjectMember{
@@ -170,7 +208,7 @@
 
 .NavBox{
     width: 25%;
-    height: 1300px;
+    height: 1223px;
     float: right;
 }
 
@@ -181,7 +219,7 @@
     position: sticky;
     top: 4px;
     margin: 0;
-    height: 560px;
+    /* height: 560px; */
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -203,8 +241,7 @@
 }
 
 .LeaderImg_Box{
-	width: 15%;
-	height: 15%;
+	width: 30px;
 	border-radius: 15px;
 	border: 0.0625rem solid #D1D5DB;
 	display: inline-block;
@@ -242,12 +279,16 @@
     background-color: #F9FAFB;
     outline-style: none;
     word-break: break-all;
+    resize: none;
 }
 
 .PositionBtn{
-	display: inline-block;
+    display: inline-block;
     width: 100%;
     text-align: end;
+    position: relative;
+    transform: translateY(-60px);
+
 }
 
 
@@ -302,23 +343,25 @@
 }
 
 .tags{
-	text-align:center;
-	border: 3px solid #94A7AE;
-	box-sizing: border-box;
-	color:#94A7AE;	
-	width:150px;
-	font-size:16px;
-	padding:10px;
-	margin:10px;
+    text-align: center;
+    border: 2px solid #94A7AE;
+    box-sizing: border-box;
+    color: #94A7AE;
+    width: 150px;
+    font-size: 16px;
+    padding: 8px;
+    margin: 10px;
     border-radius: 25px;
 }
 
 .tags > input{
 	text-align: center;
-	border: none;
-	width: 100%;
-	cursor: pointer;
-	background-color: #F9FAFB;
+    border: none;
+    color: #94A7AE;
+    width: 100%;
+    cursor: pointer;
+    background-color: #F9FAFB;
+    font-weight: 500;
 }
 
 .tags:hover, .clicked:hover{
@@ -328,21 +371,23 @@ top:-5px;
 }
 
 .clicked{
-	border: 3px solid #CA8FAB;
+	border: 2px solid #CA8FAB;
 	color:#CA8FAB;
 	width:150px;
 	font-size:16px;
-	padding:10px;
+	padding:8px;
 	margin:10px;
 	text-align:center;
     border-radius: 25px;
 }
 .clicked >input{
 	text-align: center;
-	border: none;
-	width: 100%;
-	cursor: pointer;
-	background-color: #F9FAFB;
+    border: none;
+    color: #CA8FAB;
+    width: 100%;
+    cursor: pointer;
+    background-color: #F9FAFB;
+    font-weight: 500;
 }
 
 #buttonarea{
@@ -360,7 +405,8 @@ top:-5px;
 
 
 .CreateBtn_box{
-	width: 100%;
+    margin-top: 30px;
+    width: 100%;
     float: left;
     text-align: center;
 }
@@ -432,21 +478,27 @@ top:-5px;
 }
 
 .m_container{
-	max-width: 1200px;
+	max-width: 1000px;
     margin: auto;
     margin-top: 60px;
     margin-bottom: 10px;
 }
 
 .m_img{
-	height: 120px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 10 auto;
+    border-bottom: 1px solid #dcdce1;
+    margin: 10px auto;
 }
 
 .m_img >img {
 	height: 100%;
-	width: 100%;
-	filter: brightness(70%);
-	opacity: 0.5;
+    width: 100%;
+    /* filter: brightness(70%); */
+    opacity: 0.5;
+    border-radius: 50%;
 }
 
 
@@ -456,8 +508,16 @@ top:-5px;
     justify-content: space-between;
 }
 
+@media (max-width: 590px) {
+    #card_section{
+    flex-wrap: wrap;
+    justify-content: center;
+}
+}
+
+
 .cardNum {
-    width: 300px;
+    width: 250px;
     position: relative;
     border: .0625rem solid #e1e1e1;
     border-radius: .25rem;
@@ -477,14 +537,165 @@ top:-5px;
 }
 
 .card-tags{
-	text-align: left;
-    color: #94A7AE;
+	text-align: center;
     width: 125px;
-    font-size: 16px;
+    font-size: 14px;
+    color: #CA8FAB;
     padding: 4px;
-    margin: 0;
+    margin: 0 auto;
 }
+
+
+.card_link {
+    color: #cccccc;
+    text-align: center;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+    width: 150px;
+    font-size: 14px;
+    padding: 5px;
+    margin: 0 auto;
+}
+
 .Project_card-body{
 	flex: 1 1 auto !important;
     padding: 0.7rem 1rem 1rem 1rem !important;
+    text-align: center;
+}
+
+
+/* 프로젝트 수정 */
+
+.projectEditPageHeaderWrap{
+	width: 100%;
+	text-align: center;
+	padding: 20px 0 20px;
+	
+}
+
+.projectPurposeWrap{
+	font-size: 21px;
+}
+
+.statusTagWrap{
+	text-align: center;
+    /* margin: auto; */
+    padding: 0;
+    width: 100%;
+    margin: 10px;
+	
+}
+
+.statusTagBox{
+	text-align: right;
+}
+
+.statusOpenTag{
+	display: inline-block;
+    border: 1px solid;
+    color: white;
+    background-color: #77b300;
+    border-radius: 50px;
+    padding: 3px 8px;
+    margin-right: 10px;
+    outline: none;
+}
+
+.statusGoingTag{
+    display: inline-block;
+    border: 1px solid;
+    color: white;
+    background-color: #e71837;
+    border-radius: 50px;
+    padding: 3px 8px;
+    margin-right: 10px;
+   	outline: none;
+}
+
+.statusCompletionTag{
+	display: inline-block;
+    border: 1px solid;
+    color: white;
+    background-color: #94A7AE;
+    border-radius: 8px;
+    padding: 3px;
+    margin-right: 10px;
+}
+
+.projectTit{
+	width: 100%;
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.projectTit >input{
+  	font-size: 2rem;
+    font-weight: bold;
+}
+
+.userIdWrap{
+	width: 100%;
+	
+}
+
+.ProjectEdit_imgBox{
+	text-align: left;
+    height: 300px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4B5563;
+    margin: 0 0 20px 0;
+    position: relative;
+    background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    padding: 20px;
+}
+
+.project_EditBoxdiv{
+	width: 100%;
+}
+
+#EditPositiondNum{
+	background-color: #F9FAFB;
+	border: none;
+	width: 5%;
+	text-align: center;
+	outline: none;
+	pointer-events: none;
+	
+}
+
+#EditPositiondBtn{
+	background-color: #F9FAFB;
+    background-clip: padding-box;
+    border: 0.0625rem solid #D1D5DB;
+    margin: 5px;
+    padding: 0;
+    width: 43px;
+    height: 28px;
+	
+}
+
+#EditPositiondBtn:hover{
+	background-color: #bdc8d3;
+}
+
+.EditBtnBox{
+	text-align: right;
+	
+}
+.EditBtn{
+	border: none;
+    background-color: #CA8FAB;
+    color: #F4F2F3;
+    width: 70px;
+    padding: 5px;
+}
+
+.EditBtn:hover{
+	background-color: #b46088;
 }

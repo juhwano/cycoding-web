@@ -76,6 +76,13 @@
 		from v_psk_sk
 	</select>
 	
+	<select id="getIfPjSkList" resultType="com.cyco.project.vo.V_PjSk">
+		select project_id, skill_name 
+		from v_psk_sk 
+		where project_id = #{project_id}
+	</select>
+	
+	
 	<!-- 전체프로젝트의 전체 구인중인 자리 수와 확정된 자리 수 -->
 	<select id="getPmemberCountList" parameterType="string" resultType="com.cyco.project.vo.PmemberCountVo">
 		select count(member_id)as m_count, count(*) as total_count, project_id
@@ -99,7 +106,7 @@
 
 	<!-- 프로젝트 상세 하나만 가져오기 -->
 	<select id="getOneProject" resultType="com.cyco.project.vo.V_PjAdrField_Join_V_PDetail" parameterType="hashmap">
-		select p.project_id, p.member_id, m.member_nickname, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
+		select p.project_id, p.member_id, m.member_nickname, m.member_image, p.adr_name, p.field_name,vpd.p_title, vpd.p_image, vpd.duration_date, vpd.p_content, vpd.p_state, vpd.p_views, vpd.p_date
 		from v_pj_adr_field p 
 		inner join v_p_detail vpd
 		on p.project_id = vpd.project_id
@@ -108,6 +115,7 @@
 		where p.project_id = ${project_id}
 		order by vpd.p_state asc, vpd.p_date desc
 	</select>
+	
 	
 		<!-- //프로젝트 상세에서 포지션 별 전체 자리수와 남은 자리수를 가져옴 -->
 	<select id="getPmemberCount" parameterType="string" resultType="com.cyco.project.vo.V_PmPostion_Count">
@@ -119,7 +127,7 @@
 	
 		<!-- 프로젝트 멤버 검색. project_id를 통한 조건검색 가능 -->
 	<select id="getProjectMemberList" parameterType="string" resultType="com.cyco.project.vo.V_PmPosition">
-		select project_id, member_id, position_name,position_id
+		select project_id, member_id, position_name, position_id, member_nickname, member_image
 		from v_pm_position
 		<if test='project_id !=""'>
 			where project_id='${project_id}'
@@ -127,7 +135,11 @@
 
 	</select>
 	
-
+	<!-- 프로젝트 생성 체크 -->
+	<select id="CheckProject" resultType="int">
+		SELECT count(*) FROM v_p_pd_m WHERE MEMBER_ID = #{member_id} AND P_STATE != '완료'
+	</select>
+	
 	<!-- 프로젝트 생성  -->
 	<insert id="setProjectInsert">
 		 <selectKey keyProperty="project_id" resultType="String" order="BEFORE">
@@ -154,7 +166,74 @@
 			values (#{skill.project_id}, #{skill.skill_code})
 		</foreach>
 	</insert>
-	<!-- 프로젝트 생성 -->
+ 
+	
+	<!-- 완료가 아닌 프로젝트가 있는지 확인  -->
+	<select id="CheckProjectState" resultType="int">
+		SELECT count(*) FROM V_P_PD WHERE MEMBER_ID = #{member_id} AND P_STATE != '완료'
+	</select>
+	
+	<!-- 프로젝트 지원내역체크 -->
+	<select id="CheckProjectApply" resultType="int">
+		SELECT count(*) FROM APPLY WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</select>
+	
+	<!-- 프로젝트 지원내역 -->
+	<insert id="setProjectApply" >
+		insert into APPLY (APPLY_ID, PROJECT_ID, POSITION_ID, MEMBER_ID,APPLY_DATE, APPLY_OK) values (APP_SEQ.nextval,#{project_id}, #{position_id}, #{member_id},sysdate, 0)
+	</insert>
+	
+	<!-- 생성된 프로젝트 정보 다 가져오는 테이블 -->
+	<select id="getProjectJoinName" resultType="com.cyco.project.vo.V_p_pd_Join_NameVo">
+		SELECT v.PROJECT_ID, v.MEMBER_ID, pf.FIELD_NAME, pf.FIELD_CODE, a.ADR_NAME, a.ADR_CODE , v.P_TITLE , v.P_CONTENT , v.P_IMAGE ,v.P_STATE ,pd.DURATION_ID , pd.DURATION_DATE 
+		FROM v_p_pd v
+		INNER JOIN P_FIELD pf 
+		ON v.FIELD_CODE = pf.FIELD_CODE 
+		INNER JOIN ADR a 
+		ON v.ADR_CODE = a.ADR_CODE 
+		INNER JOIN P_DURATION pd 
+		ON v.DURATION_ID = pd.DURATION_ID 
+		WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND P_STATE != '완료'
+	</select>
+	
+	<!-- 생성된 프로젝트 기술 스텍 가져오기 -->
+	<select id="getCreateProjectSkill" resultType="com.cyco.common.vo.SkillVo">
+		SELECT ps.PROJECT_ID, ps.SKILL_CODE, sk.SKILL_NAME FROM P_SKILL ps
+		INNER JOIN SKILL sk
+		ON sk.SKILL_CODE = ps.SKILL_CODE
+		WHERE PROJECT_ID = #{project_id}
+	</select>
+	
+	<!-- 생성된 프로젝트에서 없는 기술 스텍 가져오기 -->
+	<select id="getCreateNotInProjectSkill" resultType="com.cyco.common.vo.SkillVo">
+		SELECT s.SKILL_NAME, s.SKILL_CODE, s.SKILL_ENABLED  FROM SKILL s
+		WHERE s.SKILL_CODE NOT IN(SELECT SKILL_CODE FROM P_SKILL WHERE PROJECT_ID = #{project_id})
+	</select>
+	
+	<!-- 프로젝트 update -->
+	<update id="updateProject">
+		UPDATE PROJECT SET FIELD_CODE = #{field_code}, ADR_CODE = #{adr_code} WHERE PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 프로젝트 상제정보 update -->
+	<update id="updateP_detail">
+		<choose>
+			<when test='p_image == ""'>
+			UPDATE P_DETAIL SET P_TITLE = #{p_title}, DURATION_ID = #{duration_id}, P_CONTENT = #{p_content}, P_STATE = #{p_state} 
+			</when>
+			<otherwise>
+			UPDATE P_DETAIL SET P_TITLE = #{p_title}, P_IMAGE = #{p_image}, DURATION_ID = #{duration_id}, P_CONTENT = #{p_content}, P_STATE = #{p_state} 
+			</otherwise>
+		</choose>
+			WHERE PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 프로젝트 스킬 삭제 -->
+	<delete id="deleteP_skill">
+		DELETE FROM P_SKILL WHERE PROJECT_ID = #{project_id}
+	</delete>
+	
+
 	
 	<!-- 북마크목록 -->
 	<select id="getBookmarkList" resultType="com.cyco.common.vo.BookmarkVo">
@@ -263,6 +342,172 @@
 		</if>
 		order by vpd.p_views desc
 	</select>
-	<!-- 추천리스트 -->
+	
+	<!-- 프로젝트 지원한 멤버 아이디 -->
+	<select id="getApplyMemberList" resultType="com.cyco.project.vo.V_ApplyMemberList">
+		SELECT MEMBER_NICKNAME,MEMBER_ID,MEMBER_IMAGE, GRADE, POSITION_NAME, PROJECT_ID, APPLYPOSITIONNAME, APPLY_POSITION_ID, APPLY_OK
+		FROM V_APPLYMEMBER_LIST 
+		WHERE DELETE_COUNT IS NULL AND PROJECT_ID = #{project_id} AND APPLY_POSITION_ID = #{apply_position_id}
+	</select>
+	
+	<!-- 지원 멤버 승인 -->
+	<update id="ApplyMember_Ok" >
+		UPDATE  APPLY SET APPLY_OK = 1 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 지원 멤버 거절 -->
+	<update id="ApplyMember_No">
+		UPDATE  APPLY SET APPLY_OK = 2 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 지원 멤버 추방시 지원내역 변경쿼리 -->
+	<update id="ApplyMember_GetOut">
+		UPDATE  APPLY SET APPLY_OK = 3 WHERE MEMBER_ID = #{member_id} AND PROJECT_ID = #{project_id}
+	</update>
+	
+	<select id="getPositionConut" resultType="int">
+		SELECT count(*) FROM P_MEMBER WHERE PROJECT_ID = #{project_id} AND POSITION_ID = #{position_id}
+	</select>
+	
+	<!-- 지원 멤버 승인시 맴버 필드 업데이트 -->
+	<update id="ApplyMemberUpdate">
+		UPDATE P_MEMBER p
+		SET MEMBER_ID = #{member_id}
+		WHERE PROJECT_ID = #{project_id} AND MEMBER_ID IS NULL AND POSITION_ID = #{position_id} AND rownum = 1
+	</update>
+	
+	<!-- 프로젝트 맴버 null 값 있는지 확인 -->
+	<select id="getIsMemberApplyount" resultType="int">
+		SELECT count(*) FROM P_MEMBER WHERE POSITION_ID = #{position_id} AND PROJECT_ID = #{project_id} AND MEMBER_ID IS NOT NULL
+	</select>
+	
+	<!-- 멤버 강퇴 -->
+	<update id="getOutMember">
+		UPDATE P_MEMBER SET MEMBER_ID = NULL WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND POSITION_ID = #{position_id}
+	</update>
+	
+	<!-- 리더 권한 주기 -->
+	<update id="ToHandOverAuth" >
+		UPDATE PROJECT SET MEMBER_ID = #{member_id} WHERE PROJECT_ID = #{project_id}
+	</update>
+	
+	<!-- 권한 준 리더 멤버로 교체 -->
+	<insert id="ReaderMemberChange">
+		INSERT INTO P_MEMBER (PROJECT_ID,POSITION_ID,MEMBER_ID) VALUES(#{project_id}, #{position_id}, #{member_id})
+	</insert>
+	
+	<!-- 권한 받은 멤버 삭제 -->
+	<delete id="getAuthMemberDel">
+		DELETE FROM P_MEMBER WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id}
+	</delete>
+	
+	
+	<!-- 카운터 수 대로 멤버 삭제 -->
+	<delete id="CountMemberDel" >
+		<![CDATA[
+		DELETE FROM P_MEMBER WHERE PROJECT_ID = #{param1} AND POSITION_ID = #{param2} AND MEMBER_ID IS NULL AND rownum <= #{param3}
+		 ]]>
+	</delete>
+	
+	<!--  해당프로젝트에 멤버 있는지 확인 -->
+	<select id="isNotNullMember" resultType="int">
+		SELECT count(*) FROM PROJECT p 
+		INNER JOIN P_MEMBER pm 
+		ON p.PROJECT_ID = pm.PROJECT_ID 
+		WHERE pm.MEMBER_ID IS NOT NULL AND pm.PROJECT_ID = #{project_id}
+	</select>
+	
+	<!--  해당프로젝트에 멤버 있는지 확인 -->
+	<select id="isNullMember" resultType="int">
+		SELECT count(*) FROM PROJECT p 
+		INNER JOIN P_MEMBER pm 
+		ON p.PROJECT_ID = pm.PROJECT_ID 
+		WHERE pm.MEMBER_ID IS NULL AND pm.PROJECT_ID = #{project_id}
+	</select>
+	
+	<!-- 해당프로젝트 총 멤버 수  -->
+	<select id="isAllMemberCount" resultType="int">
+		SELECT count(*) FROM PROJECT p 
+		INNER JOIN P_MEMBER pm 
+		ON p.PROJECT_ID = pm.PROJECT_ID 
+		WHERE pm.PROJECT_ID = #{project_id}
+	</select>
+	
+	<!-- 프로젝트 리더인지 체크 -->
+	<select id="ProjectReaderCheck" resultType="int">
+		SELECT count(*) FROM PROJECT WHERE PROJECT_ID = #{param1} AND MEMBER_ID = #{param2}
+	</select>
+	
+	<!-- 프로젝트 삭제 -->
+	<delete id="DeleteProject">
+		DELETE FROM PROJECT WHERE PROJECT_ID = #{param1} AND MEMBER_ID = #{param2} 
+	</delete>
+	
+
+	<!-- 해당멤버 포지션 가져오기 -->
+	<select id="getmemberPosition" resultType="com.cyco.project.vo.P_MemberVo">
+		SELECT MEMBER_ID, PROJECT_ID, POSITION_ID FROM P_MEMBER WHERE MEMBER_ID = #{param1} AND PROJECT_ID = #{param2}
+	</select>
+	
+	<!-- Qna 게사판 가져오기 -->
+	<select id="getProjectQna" resultType="com.cyco.project.vo.P_QnaVo">
+		SELECT QNA_ID, PROJECT_ID, QNA_CONTENT, QNA_DATE, ENABLED, STEP, REF, MEMBER_ID, MEMBER_NICKNAME, MEMBER_IMAGE 
+		FROM V_P_QNA 
+		WHERE project_id = #{project_id} AND STEP = 0
+		ORDER BY REF DESC, STEP asc
+	</select>
+	
+	<select id="getProjectQnaReply" resultType="com.cyco.project.vo.P_QnaVo">
+		SELECT QNA_ID, PROJECT_ID, QNA_CONTENT, QNA_DATE, ENABLED, STEP, REF, MEMBER_ID, MEMBER_NICKNAME, MEMBER_IMAGE 
+		FROM V_P_QNA 
+		WHERE project_id = #{param1} AND STEP > 0 AND REF = #{param2}
+		ORDER BY REF DESC, STEP ASC
+	</select>
+	
+	<insert id="writeQna">
+		insert into P_QNA (QNA_ID,PROJECT_ID,MEMBER_ID, QNA_CONTENT,QNA_DATE,ENABLED,STEP,REF ) 
+		values 
+		(PQ_SEQ.nextval,#{project_id},#{member_id},#{qna_content},sysdate,1,0,PQ_SEQ.nextval)
+	</insert>
+	
+	<insert id="writeQnaReply">
+		 <selectKey keyProperty="step" resultType="String" order="BEFORE">
+		    SELECT NVL(MAX(step),0)+1 AS step FROM P_QNA WHERE PROJECT_ID = #{project_id} AND REF = #{ref}
+		  </selectKey>
+			insert into P_QNA (QNA_ID,PROJECT_ID,MEMBER_ID, QNA_CONTENT,QNA_DATE,ENABLED,STEP,REF )
+			values (PQ_SEQ.nextval,#{project_id},#{member_id},#{qna_content},sysdate, 1, #{step}, #{ref})
+	</insert>
+	
+	<update id="EditQna">
+		UPDATE P_QNA SET QNA_CONTENT = #{qna_content} WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND REF = #{ref}
+	</update>
+	
+	<update id="DeleteQna">
+		UPDATE P_QNA SET QNA_CONTENT = '삭제된 글입니다.', ENABLED = 0 WHERE PROJECT_ID = #{project_id} AND MEMBER_ID = #{member_id} AND REF = #{ref}
+	</update>
+	
+	<select id="QnaReplyCount">
+		SELECT count(*) 
+		FROM V_P_QNA 
+		WHERE project_id = 128 AND STEP > 0 AND REF = 34
+		ORDER BY "REF" DESC, STEP asc
+	</select>
+	
+
+	<update id="projectComplete">
+		UPDATE P_DETAIL SET P_STATE = '완료' WHERE PROJECT_ID = #{project_id} AND P_STATE = '진행중'
+  </update>
+
+	<!-- 프로젝트 수정에서 상태 변경시 알림 보낼 프로젝트 멤버들 목록 -->
+	<select id="getTeamMembers" resultType="String">
+	
+		select member_id from p_member where project_id=${project_id} and member_id is not null
+	
+	</select>
+	
+	<!-- 프로젝트 진입시 조회수 증가 addViews -->
+	<update id="addViews">
+		UPDATE p_detail SET p_views = p_views+1 WHERE project_id = ${project_id}
+	</update>
 	
 </mapper>

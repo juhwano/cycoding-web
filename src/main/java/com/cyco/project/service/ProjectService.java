@@ -8,24 +8,33 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+import com.cyco.alarm.dao.AlarmDao;
+import com.cyco.alarm.vo.AlarmVo;
 import com.cyco.common.vo.AdrVo;
 import com.cyco.common.vo.BookmarkVo;
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
+import com.cyco.member.dao.MemberDao;
+import com.cyco.member.service.MemberService;
 import com.cyco.project.dao.ProjectDao;
+import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVo;
+import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
 import com.cyco.project.vo.PmemberCountVo;
 import com.cyco.project.vo.ProjectVo;
+import com.cyco.project.vo.V_ApplyMemberList;
 import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 import com.cyco.project.vo.V_PjSk;
 import com.cyco.project.vo.V_PmPosition;
 import com.cyco.project.vo.V_PmPostion_Count;
+import com.cyco.project.vo.V_p_pd_Join_NameVo;
 
 @Service
 public class ProjectService {
@@ -33,6 +42,8 @@ public class ProjectService {
 	@Autowired
 	private SqlSession sqlsession;
 	
+	@Autowired
+	private MemberService memberService;
 	
 //	public List<ProjectVO> getProjectList(String adr_code, String field_name, String p_state, String skill_code){
 //	첫 프로젝트 리스트 화면 출력.
@@ -175,6 +186,13 @@ public class ProjectService {
 		return pjsk_list;
 	}
 	
+	public List<V_PjSk> getIfPjSkList(String projectID){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<V_PjSk> pjsk_list = dao.getIfPjSkList(projectID);
+		
+		return pjsk_list;
+	}
+	
 	public List<PositionVo> getPositionList(){
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		List<PositionVo> position_list = dao.getPositionList();
@@ -271,7 +289,17 @@ public class ProjectService {
 		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
 		return pmlist;
 	}
-
+	
+	//프로젝트 체크
+	public int CheckProject(String member_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CheckProject(member_id);
+		
+		return result;
+	}
+	
+	
 	// ----------------------------------------------------------
 	// 프로젝트 생성
 	public String setProjectInsert(ProjectVo p) {
@@ -307,6 +335,84 @@ public class ProjectService {
 			
 		}
 	// ---------------------------------------------------------
+
+  
+			
+	// 프로젝트 지원내역
+	public int CheckProjectApply(ApplyVo apply) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CheckProjectApply(apply);
+		
+		return result;
+	}
+	
+	// 프로젝트 지원하고 알림테이블에도 인서트
+	@Transactional
+	public int setProjectApply(ApplyVo apply, AlarmVo alarm) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		System.out.println("apply" + apply.toString());
+		System.out.println("alarm" + alarm.toString());
+		
+		 dao.setProjectApply(apply);
+		 int result = alarmdao.insertAlarm(alarm);
+		
+		return result;
+	}
+	
+	// 만들어진 프로젝트 정보 가져오기
+	public V_p_pd_Join_NameVo getProjectJoinName(V_p_pd_Join_NameVo project) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		
+		V_p_pd_Join_NameVo result = dao.getProjectJoinName(project);
+		
+		return result;
+	}
+	
+	// 생성된 프로젝트 기술 스텍 가져오기
+	public List<SkillVo> getCreateProjectSkill(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<SkillVo> skill = dao.getCreateProjectSkill(project_id);
+		
+		return skill;
+	}
+	
+	// 생성된 프로젝트에서 없는 기술 스텍 가져오기
+	public List<SkillVo> getCreateNotInProjectSkill(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<SkillVo> skill = dao.getCreateNotInProjectSkill(project_id);
+		
+		return skill;
+	}
+	
+	
+	
+	// 프로젝트 업데이트
+	@Transactional
+	public int updateProject(ProjectVo project,P_DetailVo p_detail,List<P_SkillVo> skill) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		
+		// 프로젝트 업데이트
+		int result = dao.updateProject(project);
+		
+		// 프로젝트 상세정보 업데이트
+		dao.updateP_detail(p_detail);
+		
+		// 프로젝트 스킬도 여기서 같이 삭제
+		dao.deleteP_skill(project.getProject_id());
+		
+		// 프로젝트 스킬 insert
+		dao.setProjectSkillList(skill);
+		
+		return result;
+	}
+	
+
 	
 	//프로젝트 추천리스트
 	public List<V_PjAdrField_Join_V_PDetail> getRcmProjectList(String member_id) {
@@ -329,7 +435,7 @@ public class ProjectService {
 		 	2. 비회원, 추가기입x 회원일경우 조회수 높은순으로 출력
 		 	3. 
 		*/
-		System.out.println("member_id : "+member_id);
+		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		
@@ -363,7 +469,7 @@ public class ProjectService {
 					else {
 						System.out.println("모집중이고 조회수 순으로 출력");
 						resultlist=getOrderedViewsList(null);
-						break;
+						return resultlist;
 					}
 					filtered_list = allFilteredList(map);
 					
@@ -396,7 +502,9 @@ public class ProjectService {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 
 		List<V_PjAdrField_Join_V_PDetail> list = dao.getRecommList(filtered_list);
-		list = list.subList(0, 9);
+		if(list.size()>9) {
+			list = list.subList(0, 9);
+		}
 		return list;
 		
 	}
@@ -434,4 +542,280 @@ public class ProjectService {
 		}
 		return result;
 	}
+	
+	
+	
+	// 프로젝트 지원한 멤버 아이디
+	public List<V_ApplyMemberList> getApplyMemberList(V_ApplyMemberList memberlist){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<V_ApplyMemberList> member = dao.getApplyMemberList(memberlist);
+		
+		return member;
+		
+	}
+	
+	// 프로젝트 승인시 처리 서비스
+	@Transactional
+	public int ApplyMember_Ok(ApplyVo apply, AlarmVo alarm) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class); 
+		int result = 0;
+		
+		int check = dao.getIsMemberApplyount(apply);
+		int maxPostionCount = dao.getPositionConut(apply);
+		
+		
+		if (check == maxPostionCount) {
+			result = -1;
+		    return result;	
+		}else {
+			dao.ApplyMember_Ok(apply);
+			
+			
+			P_MemberVo membervo = new P_MemberVo(apply.getMember_id(), apply.getProject_id(), apply.getPosition_id());
+			
+			result = dao.ApplyMemberUpdate(membervo);
+			System.out.println("찍히나");
+			alarmdao.insertAlarm(alarm);
+		}
+		
+		
+		return result;
+	}
+	
+	// 프로젝트 거절
+	@Transactional
+	public int ApplyMember_No(ApplyVo apply, AlarmVo alarm) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		int result = dao.ApplyMember_No(apply);
+		alarmdao.insertAlarm(alarm);
+		
+		return result;
+	}
+	
+	// 프로젝트 추방
+	@Transactional
+	public int getOutMember(P_MemberVo p_member) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		ApplyVo apply = new ApplyVo();
+		apply.setMember_id(p_member.getMember_id());
+		apply.setProject_id(p_member.getProject_id());
+		
+		
+		int result = dao.getOutMember(p_member);
+		
+		dao.ApplyMember_GetOut(apply);
+		
+		return result;
+	}
+	
+	// 프로젝트 위임
+	@Transactional
+	public int ToHandOverAuth(ApplyVo apply, P_MemberVo member) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		// 리더 변경
+		int result = dao.ToHandOverAuth(apply);
+		// 리더 -> 멤버로 변경
+		dao.ReaderMemberChange(member);
+		
+		// 권한 받은 멤버 삭제
+		dao.getAuthMemberDel(apply);
+		
+		return result;
+	}
+	
+	// 리터 체크
+	public int ProjectReaderCheck(String project_id, String member_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		// 리더 변경
+		int result = dao.ProjectReaderCheck(project_id,member_id);
+	
+		
+		return result;
+	}
+	
+	// 프로젝트 삭제
+	public int CountMemberDel(String project_id, String postiion_id, String count) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.CountMemberDel(project_id, postiion_id, count);
+		
+		return result;
+	}
+	
+	// 프로젝트 탈퇴
+	@Transactional
+	public String ProjectWithdrawal(String member_id, String project_id, String state) {
+		String returnURL = "Error";
+		
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		// 프로젝트 리더 인지 확인
+		int projectReader = dao.ProjectReaderCheck(project_id, member_id);
+		
+		// 리더이면
+		if(projectReader > 0) {
+				// 멤버 있는지 확인
+				int isMember = dao.isNotNullMember(project_id);
+			
+				if(isMember > 0) {
+					returnURL = "isMember";
+					return returnURL;
+				}
+			
+				// 프로젝트 삭제
+				int delete = dao.DeleteProject(project_id, member_id);
+				
+					if(delete > 0) {
+						returnURL = "DeleteProjecet";
+						return returnURL;
+					}else {
+						returnURL = "Error";
+						return returnURL;
+					}
+					
+		// 리더가 아니면	
+		}else {
+			
+			P_MemberVo p_member = dao.getmemberPosition(member_id, project_id);
+			// 프로젝트 상태가 모집중이 아니면
+			int OutMember = dao.getOutMember(p_member);
+			
+			
+			if(!state.equals("모집중")) {
+				M_AuthVo m_Ayth = new M_AuthVo("4", member_id);
+				// 멤버 권한 4로 변경 ( 페널티 게정 )
+				memberdao.UpdateAuth(m_Ayth);
+				
+			}
+			
+			if(OutMember > 0) {
+				returnURL = "OutProjecet";
+				return returnURL;
+			}else {
+				returnURL = "Error";
+				return returnURL;
+			}
+			
+		}
+	}
+	
+	// qna 리스트 가져오기
+	public List<P_QnaVo> getProjectQna(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<P_QnaVo> p_qna = dao.getProjectQna(project_id);
+		
+		return p_qna;
+		
+	}
+	
+	// qna댓글 가져오기
+	public List<P_QnaVo> getProjectQnaReply(String project_id, String REF){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		List<P_QnaVo> p_qna = dao.getProjectQnaReply(project_id,REF);
+		
+		return p_qna;
+		
+	}
+	
+	// qna 글쓰기
+	public int writeQna(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.writeQna(qnavo);
+		
+		return result;
+	}
+	
+	// qna 댓글 쓰기
+	public int writeQnaReply(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.writeQnaReply(qnavo);
+		
+		return result;
+	}
+	
+	// qna 수정
+	public int EditQna(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.EditQna(qnavo);
+		
+		return result;
+	}
+	
+	// qna 삭제
+	public int DeleteQna(P_QnaVo qnavo) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int result = dao.DeleteQna(qnavo);
+		
+		return result;
+	}
+	
+	// 멤버가 가득 찼는지 확인
+	public String MemberFullCheck(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		String returnURL = "false";
+		
+		int isNotnull = dao.isNotNullMember(project_id);
+		int IsAllmember = dao.isAllMemberCount(project_id);
+		
+		
+		if(isNotnull == IsAllmember) {
+			returnURL = "true";
+		}
+		
+		return returnURL;
+		
+	}
+	
+
+	// 프로젝트 완료 전환
+	public String projectComplete(String member_id,  P_DetailVo p_detail) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
+		String returnURl = "false";
+		
+		// 프로젝트 리더 인지 확인
+		int projectReader = dao.ProjectReaderCheck(p_detail.getProject_id(), member_id);
+		
+		System.out.println(projectReader);
+		// 프로젝트 상태가 진행중이고 로그인 상태가 리더인지 확인
+		if(p_detail.getP_state().equals("진행중") && projectReader > 0) {
+			int result = dao.projectComplete(p_detail);
+
+			System.out.println(result);
+			if(result > 0) {
+				returnURl = "true";
+			}
+			
+		}
+		
+		return returnURl;
 }
+	//프로젝트 상태 변경시 알림 보낼 멤버 목록
+	public List<String> getTeamMembers(String project_id){
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		List<String> members = dao.getTeamMembers(project_id);
+		
+		return members;
+	}
+	
+	//프로젝트 상세 진입시 조회수 증가
+	public void addViews(String project_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		dao.addViews(project_id);
+
+	}
+}
+

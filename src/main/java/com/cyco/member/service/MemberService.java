@@ -5,8 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.M_AuthVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PointVo;
 import com.cyco.common.vo.PositionVo;
@@ -18,6 +22,8 @@ import com.cyco.member.vo.V_MlistVo;
 public class MemberService {
 	private SqlSession sqlsession;
 	
+	
+	
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
@@ -28,14 +34,10 @@ public class MemberService {
 	public MemberVo getMember(String email) {
 	      
 	      MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-	      MemberVo m = memberdao.getMember(email);
-	      
-	      
-	      return m;
-	      
+	      MemberVo m = memberdao.getMember(email);	      
+	      return m;	      
 	}
-	
-	
+		
 	//회원가입
 	public int regist(MemberVo member) {
 	      
@@ -53,6 +55,7 @@ public class MemberService {
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		HashMap<String, String> member = memberdao.getLoginedName(useremail);
+
 		
 		return member;
 	}
@@ -65,6 +68,38 @@ public class MemberService {
 		
 	}
 	
+	//로그인시 알림
+	public int getOldAlarm(String memeberid) {
+		int row = 0;
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		if(memberdao.getOldAlarm(memeberid) != null) {
+			row = memberdao.getOldAlarm(memeberid);
+		}
+		
+		return row;
+	}
+	
+	//로그인시 참여중인 프로젝트 있는지 체크
+	public HashMap<String, String> hasProject(String memberid){
+		
+		HashMap<String, String> p_info = new HashMap<String, String>();
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		
+		if(memberdao.isProjectManager(memberid).size() != 0) {
+			p_info.put("project_id",(String)memberdao.isProjectManager(memberid).get(0).getProject_id());
+			//p_info.put("p_title",(String)memberdao.isProjectManager(memberid).get(0).getP_title());
+			
+		}else if(memberdao.isInProject(memberid).size() != 0){
+			p_info.put("project_id", String.valueOf(memberdao.isInProject(memberid).get(0).get("PROJECT_ID")));
+			//p_info.put("p_title", String.valueOf(memberdao.isInProject(memberid).get(0).get("P_TITLE")));
+
+		} else {
+			p_info.put("project_id", "none");
+		}
+		
+		System.out.println("p_info " + p_info.toString());
+		return p_info;
+	}
 
 	//기본 회원리스트 호출
 	public List<V_MlistVo> memberList() {
@@ -110,6 +145,17 @@ public class MemberService {
 		int result = memberdao.updatePoint(point);
 		
 		return result;
+	}
+	
+	public Boolean UpdateAuth(M_AuthVo auth) {
+		
+		Boolean bo = false;		 
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int row = memberdao.UpdateAuth(auth);
+		if(row > 0) {
+			bo = true;
+		}
+		return bo;
 	}
 	
 }

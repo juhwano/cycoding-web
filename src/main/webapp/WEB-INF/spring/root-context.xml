@@ -54,7 +54,7 @@
 
 	<bean id="bCryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-		<constructor-arg name="strength" value="20"></constructor-arg>
+		<!-- <constructor-arg name="strength" value="20"></constructor-arg> -->
 	</bean>	  
 	
 
@@ -136,6 +136,12 @@
       <property name="defaultEncoding" value="UTF-8"></property>
    </bean>
 	
-
+	<!-- Locale -->
+	<bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="WEB-INF/messages/messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="cacheSeconds" value="180" />
+    </bean>
 <!-- 	<bean name="jsonview" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/> -->
 </beans>

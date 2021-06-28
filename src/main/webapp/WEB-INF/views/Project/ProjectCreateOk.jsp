@@ -28,7 +28,7 @@
 	<c:if test="${msg eq true }">
 	  <div class="projectok_area_icon"><img src="${pageContext.request.contextPath}/assets/img/project/ProjectCreateOk.png"></div>
 	  	 <p class="projectok_area_title">프로젝트가 생성되었습니다.</p>
-      	 <p>프로젝트를 함께 할 맴버를 모집하여 프로젝트를 진행해보세요!</p>
+      	 <p>프로젝트를 함께 할 멤버를 모집하여 프로젝트를 진행해보세요!</p>
       	 
       	 <div class="MyProjectPage"><a href="${pageContext.request.contextPath}/project/detail?project_id=${id}">내 프로젝트로 이동하기</a></div>
      </c:if> 	
@@ -41,7 +41,7 @@
 		<div class="m_container">
 			<div class="row mb-7" id="card_section">
 				<div class="member_chois">
-				<p class="member_chois_title">프로젝트를 함께할 맴버를 찾아보세요!</p>
+				<p class="member_chois_title">프로젝트를 함께할 멤버를 찾아보세요!</p>
 				<div class="member_allList">
 					<a href="${pageContext.request.contextPath}/member/list">전체보기 ></a>
 				</div>
@@ -52,13 +52,15 @@
 						<div class="cardNum">
 								<div class="m_img">
 									<img class="m_img_size"
-										src="${pageContext.request.contextPath}/assets/img/ain_test/${member.m_image}">
+										src="${pageContext.request.contextPath}/resources/upload/${member.m_image}">
 								</div>
 								<div class="Project_card-body">
 									<h3 class="card-title">${member.m_nick}</h3>
 									<p class="card-text">${member.position}</p>
 									<p class="card-tags"># ${member.skill}</p>
-									<a href="" class="card_link">VIEW MORE</a>
+									<a href="${pageContext.request.contextPath}/member/memberdetailpage?memberid=${member.m_id}" class="card_link" target="_blank">
+									VIEW MORE</a>
+			
 								</div>
 						</div>
 					</c:if>
@@ -82,9 +84,6 @@
 			});
 	}
 	
-	if("${authSession}" != "${session}"){
-		location.href = "/main";
-	}
 	
 </script>
 <jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>

@@ -7,6 +7,8 @@ public class P_MemberVo {
 	String member_id;
 	String project_id;
 	String position_id;
+	
+	
 	public P_MemberVo(String member_id, String project_id, String position_id) {
 		super();
 		this.member_id = member_id;

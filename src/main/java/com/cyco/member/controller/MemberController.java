@@ -15,6 +15,7 @@ import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_MlistVo;
+import com.cyco.project.vo.V_PjAdrField_Join_V_PDetail;
 
 import net.sf.json.JSONArray;
 
@@ -34,13 +35,21 @@ public class MemberController {
 	public String memberList(Model m) {
 		//기본회원목록넘기기
 		List<V_MlistVo> memberList = memberservice.memberList();
+		JSONArray json_memberList = JSONArray.fromObject(memberList);
+		
+		/*
+		 * // 모든 프로젝트 리스트 바로 뿌려주기.
+		List<V_PjAdrField_Join_V_PDetail> project_list = service.getProjectList("");
+		JSONArray json_project_list = JSONArray.fromObject(project_list);
+		 */
+		
 		//포지션목록 넘기기
 		List<PositionVo> positionList = memberservice.positionList();
 		
-		System.out.println("기본회원리스트 controller");
-		System.out.println("memberlist"+memberList);
+		//System.out.println("기본회원리스트 controller");
+		//System.out.println("memberlist"+memberList);
 		
-		m.addAttribute("memberList", memberList);
+		m.addAttribute("memberList", json_memberList);
 		m.addAttribute("positionList", positionList);
 		
 		return "Member/MemberList"; 
@@ -57,25 +66,46 @@ public class MemberController {
 		@RequestMapping(value="memberdetailpage")
 		public ModelAndView getMemberDetail(@RequestParam("memberid") String memberid){
 			
-			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
+			//System.out.println("member_id" + memberid);
 			
+			String useremail = memberdetailservice.getMemberDetail(memberid).getMEMBER_EMAIL();
+			//System.out.println("useremail" + useremail);
 			ModelMap mmp = new ModelMap();
 			
 			mmp.addAttribute("aboutmember",memberdetailservice.getMemberDetail(memberid));
 			
+			
+			//System.out.println("상세 페이지 회원 " +memberdetailservice.getMemberDetail(memberid).toString());
 			//리뷰목록
 			List<ReviewVo> row_reviewList = memberdetailservice.getReviewList(memberid);
+			int answer = 0;
+			if(row_reviewList.size() != 0) {
+				for (int i = 0; i < row_reviewList.size() ; i++) {
+					answer = answer + row_reviewList.get(i).getReview_grade() ;
+				}
+				double gradeAvg = 0;
+				gradeAvg = (double)answer/row_reviewList.size();
+				//System.out.println("반올림하기 전 gradeAvg: " + gradeAvg);
+				gradeAvg = Math.round(gradeAvg * 100) / 100.0;
+				
+				//System.out.println("row_reviewList.size(): " + row_reviewList.size());
+				//System.out.println("answer: " + answer + "/gradeAvg: " + gradeAvg);
+				
+				mmp.addAttribute("gradeAvg", gradeAvg);
+			}
 			
-			System.out.println("리뷰목록: " + memberdetailservice.getReviewList(memberid));
+		    
+			
 			
 			JSONArray reviewList = JSONArray.fromObject(row_reviewList);
-			System.out.println("리뷰목록JSON: " + reviewList);
+			//System.out.println("리뷰목록JSON: " + reviewList);
 			mmp.addAttribute("reviewList", reviewList);
 			
 			mmp.addAttribute("skills",memberdetailservice.getPreferSkills(useremail));
 			mmp.addAttribute("position",memberdetailservice.getPreferPosition(useremail));
 			mmp.addAttribute("durations",memberdetailservice.getPreferDurations(useremail));
 			mmp.addAttribute("experiences", memberdetailservice.getExperiences(useremail));
+			mmp.addAttribute("member_id",memberid);
 			
 			return new ModelAndView("/Member/MemberDetail",mmp) ;
 

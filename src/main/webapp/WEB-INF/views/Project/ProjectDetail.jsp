@@ -1,284 +1,228 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<c:set var="project" value="${project}"/>
-<c:set var="pmcountlist" value="${pmcountlist}"/>
-<c:set var="pmlist" value="${pmlist}"/>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>사이좋게 코딩하자</title>
-
 <link type="text/css"
 	href="${pageContext.request.contextPath}/css/ProjectDetail.css"
-	rel="stylesheet"> 
-	<%-- <link type="text/css" href="${pageContext.request.contextPath}/css/ProjectDetail.css" rel="sytlesheet"> --%>
+	rel="stylesheet">
 </head>
-<jsp:include
-	page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/header.jsp"></jsp:include>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!-- 스프링 시큐리티 설정 -->
+<%@ taglib prefix="se"
+	uri="http://www.springframework.org/security/tags"%>
+
+
+<c:set var="project" value="${project}" />
+<c:set var="pmcountlist" value="${pmcountlist}" />
+<c:set var="pmlist" value="${pmlist}" />
+<c:set var="pjsk" value="${pjsk}" />
+<c:set var="bookmark" value="${bookMark}" />
+
 <body>
-
-
-	<div class="projectPageHeaderWrap">
-		<div class="projectPurposeWrap">
-			<div>
-				<span class="rightTxt">${project.field_name}</span>
+	<div class="projectDetail">
+	<div class="container">
+		<div class="projectPageHeaderWrap">
+			<div class="projectPurposeWrap">
+				<div class="rightTxt">${project.field_name} 개발</div>
 			</div>
-		</div>
-		<div class="ProjectPageHeaderContent">
-			<h3 class="projectTit">${project.p_title }</h3>
-			<li class="projectLeaderWrap">
-			<a href="#"><%-- "/memberdetailpage?memberid=${project.member_id }"> --%>
-				<div class="userIdWrap">
-					<div class="leaderImg">
-						<img width="20px" height="20px"
-							src="${pageContext.request.contextPath}/assets/img/ain_test/${project.p_image}">
+
+			<div class="ProjectPageHeaderContent">
+				<table class="statusTagWrap">
+					<tr>
+					<c:choose>
+						<c:when test="${project.p_state eq '모집중'}">
+							<td class="statusOpenTag">${project.p_state}</td>
+						</c:when>
+						<c:when test="${project.p_state eq '진행중'}">
+							<td class="statusGoingTag">${project.p_state}</td>
+						</c:when>
+						<c:when test="${project.p_state eq '완료'}">
+							<td class="statusCompletionTag">${project.p_state}</td>
+						</c:when>
+					</c:choose>
+					<td class="projectTit">${project.p_title}</td>
+					</tr>
+				</table>
+
+			</div>
+			<se:authorize access="hasRole('ROLE_ADMIN')">
+			
+			<div class="m_Edit_top">
+						<a class="ProjectEditBtn" href="${pageContext.request.contextPath}/project/edit?project_id=${project.project_id}">프로젝트 중단</a>
 					</div>
-					<span class="userIdTxt">${project.member_nickname }</span>
+			</se:authorize>
+			<se:authorize access="!hasRole('ROLE_ADMIN')">
+			<c:choose>
+				<c:when test="${sessionScope.member_id eq project.member_id && project.p_state eq '모집중'}">
+			  		<div class="m_Edit_top">
+						<a class="ProjectEditBtn" href="${pageContext.request.contextPath}/project/edit?project_id=${project.project_id}">프로젝트 수정</a>
+					</div>
+				</c:when>		
+				<c:when test="${sessionScope.member_id eq project.member_id && project.p_state eq '진행중'}">
+			  		<div class="m_Edit_top">
+						<input type="button" class="ProjectCompleteBtn" value="프로젝트 완료">
+					</div>
+				</c:when>		
+			<c:otherwise>
+		   			<div class="m_img_top">
+		   				<c:if test="${bookmark > 0}">
+				  		 <i class="far fa-heart bookmark marking" id="${project.project_id}" onclick="BookMarking(${project.project_id})"> 찜</i>
+				  		</c:if>
+				  		<c:if test="${bookmark eq 0}">
+				  		 <i class="far fa-heart bookmark" id="${project.project_id}" onclick="BookMarking(${project.project_id})"> 찜</i>
+				  		</c:if>
+			  		</div>
+		   </c:otherwise>
+		   </c:choose>
+		   </se:authorize>
+		</div>
+		
+		<div class="NavBox">
+			<div class="ProjectNav">
+				<div class="Leader_Detail">
+					<p><i class="fas fa-crown leaderIcon"></i> 리더 정보</p>
+					<p class="Project_p"><b style="color: red;">*</b> 현재 프로젝트의 리더입니다.</p>
+					<div class="Leader_DetailBox">
+						<div class="LeaderImg_Box">
+							<img src="${pageContext.request.contextPath}/resources/upload/${project.member_image}">
+						</div>
+						<p>
+							<a href="${pageContext.request.contextPath}/member/memberdetailpage?memberid=${project.member_id}" target="_blank">
+							<b>${project.member_nickname}</b>
+							</a>
+						</p>
+					</div>
+					<p class="Project_p small_p">클릭하여 리더의 정보를 확인해보세요.</p>
 					
 				</div>
-			</a>
-			</li>
-			<div class="statusTagWrap">
-				<span class="statusTag">${project.p_state }</span>
-			</div>
-		</div>
-	</div>
-
-	<!--  -->
-	
-	<div class="rootcontainer">
-	 <div class="containe">
-
-		<ul class="tabs">
-			<li class="tab-link current" data-tab="tab-1">정보</li>
-			<li class="tab-link" data-tab="tab-2">Q&A</li>
-		</ul>
-
-		<div id="tab-1" class="tab-content current">
-			<div class="projectDatailWrap">
-				<div class="projectTab projectInfoTabContents active">
-					<div class="section statusSection">
-						<h3 class="tabTit">모집 현황</h3>
-						<ul>
-						<c:forEach var="position" items="${pmcountlist}">
-							<li><span class="positionTxt">${position.position_name}</span>
-							<span class="positionNum">
-							${position.curr}/${position.max}</span>
-								<button value="지원" class="positionApplyBtn">지원</button></li>
+				<div class="Nav_Detail">
+					<hr>
+					<p>프로젝트 분야</p>
+						<p class="Project_p"><b style="color: red;">*</b> 현재 프로젝트의 분야입니다.</p>
+						<p class="ProjectDetail_p">${project.field_name} 개발</p>
+					<hr>
+					<p>프로젝트 지역</p>
+						<p class="Project_p"><b style="color: red;">*</b> 현재 프로젝트는 해당 지역에서 진행합니다.</p>
+						<p class="ProjectDetail_p">${project.adr_name}</p>
+					<hr>
+					<p>프로젝트 기간</p>
+						<p class="Project_p"><b style="color: red;">*</b> 현재 프로젝트의 예상 기간입니다.</p>
+						<p class="ProjectDetail_p">${project.duration_date}</p>
+					<hr>
+					<p>기술 스텍</p>
+					 	<p class="Project_p"><b style="color: red;">*</b> 현재 프로젝트가 요구하는 기술 스텍입니다.</p>
+						<ul class="Project_SkillBox">
+						<c:forEach items="${pjsk}" var="pjsk">
+								<li># ${pjsk.skill_name}</li>
 						</c:forEach>
 						</ul>
-						
-					</div>
-					<div class="section statusSection">
-						<h3 class="tabTit">프로젝트 소개</h3>
-						<span>${project.p_content}</span>
-					</div>
+					<hr>
+					<p>멤버</p>
+						<div class="member_DetailBox">
+							<table class="member_list">
+						<c:forEach items="${pmlist}" var="pmlist">
+							<c:if test="${pmlist.member_id != null}">
+								<tr>
+								<td width="15%" class="memberImg_Box">
+									<img src="${pageContext.request.contextPath}/resources/upload/${pmlist.member_image}">
+								</td>
+								<td width="35%" class="member_nickname">${pmlist.member_nickname}
+									<input type="hidden" class="pmid" value="${pmlist.member_id}"/>
+								</td>
+								<td width="50%" class="member_skills">_${pmlist.position_name}</td>
+								</tr>
+							</c:if>	
+						</c:forEach>
+							</table>
+						</div>	
+					<c:if test="${sessionScope.member_id eq project.member_id && project.p_state != '완료'}">		
+					 <div class="ProjectEditBox">
+						 <button class="ProjectDeleteBtn">프로젝트 탈퇴</button>
+					 </div>
+					</c:if> 
+						<c:forEach items="${pmlist}" var="pmlist">
+								<c:if test="${pmlist.member_id eq sessionScope.member_id && project.p_state != '완료'}">
+									 <div class="ProjectEditBox">
+										 <button class="ProjectDeleteBtn">프로젝트 탈퇴</button>
+									 </div>
+								</c:if>	
+						</c:forEach>
 				</div>
-				
-				
 			</div>
 			
 		</div>
-
-		<div id="tab-2" class="tab-content">---- ---- ★------ ---- ----
-			---- ---- ---- ---- -------- ---- ---- ---- ---- ---- ---- --------
-			---- ---- ---- ★-- ---- ---- ------★ ---- ---- ---- ---- ---- ----
-			-------- ---- ---- ---- ---- ---- ---- ★------ ---- ---- ---- ----
+		
+	<!-- 텝  -->	
+	<div class="mainBox">
+		<div class="m_menubarBox">
+				<ul class="Project_menuBar">
+					<li class="menuliClick" id="project_info"><p>정보</p></li>
+					<li class="menuli" id="Qna"><p>질문</p></li>
+					<c:forEach items="${pmlist}" var="pmlist">
+							<c:if test="${pmlist.member_id eq sessionScope.member_id}">
+								<c:set var="member" value="1" />
+							</c:if>	
+					</c:forEach>
+					<c:if test="${member > 0 || sessionScope.member_id eq project.member_id}">
+					<li class="menuli" id="memberfeed"><p>피드</p></li>
+					</c:if>
+					<c:if test="${sessionScope.member_id eq project.member_id}">
+					<li class="menuli" id="memberEdit"><p>멤버관리</p></li>
+					</c:if>
+				</ul>
 		</div>
-	</div> 
-
-	<div class="projectRightInfoContetns">
-			<div class="projectRightInfoWrap">
-				<div class="basicInfoWrap infoWrap">
-					<p class="checkBoxTit"> ✔ 리더 정보 </p>
-					<div class="leaderInfo">
-						<div class="leaderImg">
-							<img width="20px" height="20px"
-							src="${pageContext.request.contextPath}/assets/img/ain_test/1.jpg">
-						</div>
-						<div class="rightBox">
-							<span class="userIdTxt">${project.member_nickname}</span>
-						</div>
-					</div>
-				</div>
-				<div class="projectDate infoWrap">
-					<h3 class="tabTit">프로젝트 기간</h3>
-					<p class="tabTxt">${project.duration_date }</p>
-				</div>
-				<div class="projectDate infoWrap">
-					<h3 class="tabTit">분야</h3>
-					<p class="rightTxt tabTxt">${project.field_name }</p>
-				</div>
-			</div>
-		</div>
+	<!-- -->
+		
+	<!-- 안에 정보들만 바꾸기 -->	
+	<!-- 본문 -->
+	<div class="ChangeContentBox">	
 	</div>
 
+	</div>
+		<!-- 모달 -->
+       	<div class="Project_Detail_modal">
+	       <form action="ProjectApply" method = "POST">
+	       	<div class="ProjectApplyDiv">
+				<div class="ProjectApplyBox">
+				
+				<p class="ApplyTitle">${project.p_title}에 [<b class="ApplyName"></b>](으)로 지원하시겠습니까?</p>
+				<div class="ApplyBtn_Box">
+				<input type="button" value="예" class="ApplyBtn_Ok"><input type="button" value="아니요" class="ApplyBtn_No"> 
+				</div>
+				<p class="Project_p Apply_p"><b style="color: red;">*</b> 예를 누를시 정보제공 및 유의사항에 동의한 것으로 간주됩니다.</p>	
+				<p class="Apply_p"><b>유의사항</b></p>	
+				<p class="Project_p Apply_p">- 귀하의 프로필 정보가 프로젝트 리더에게 제공됩니다.</p>	
+				<p class="Project_p Apply_p">- 프로젝트내의 분쟁사항은 저희 사이코딩에서 절대 책임지지 않습니다.</p>	
+				<p class="Project_p Apply_p">- 프로젝트의 리더의 선택으로 지원이 거절 될 수 있습니다.</p>	
+				<p class="Project_p Apply_p">- 지원이 거절 될 시 본 프로젝트에 더이상 지원이 불가능합니다.</p>				
+				</div>		
+				</div>
+			</form>	
+		</div>		
+		<div class="Project_Apply_modal">	
+		</div>
+			
+       </div> 
 
-
-	<!--  -->
-	<%-- 
-	<div class="container">
-                <div class="row justify-content-center">
-                    	<div class="ProjectPage">
-                    	
-            			<form action="" method="post" enctype="multipart/form-data" class="Project_createForm">
-                    		<div class="ProjectHeader">
-                    			<div class="ProjectHeader_Left">
-                    				<p></p>
-									<p class="Project_title_p">프로젝트 명</p>
-									<p class="Project_p ma-l"><b style="color:red;">*</b> 직관적인 프로젝트명을 사용하시면 클릭률이 올라갑니다.</p>
-	                    			<input class="ProjectTitle form-control" type="text" placeholder="제목을 입력해주세요." name="p_title">  
-	                    			<p></p>
-                    			</div>
-                    			
-                    			
-                    			<div class="ProjectHeader_Right">
-                    			<p>대표 이미지</p>
-								<p class="Project_p"><b style="color:red;">*</b> 프로젝트 썸네일에 사용될 이미지를 선택해주세요.</p>
-								
-                    			<img id ="target_img" src="${pageContext.request.contextPath}/assets/img/project/Project_defalutImg.png">
-								    <input type="file" id="file" name="uploadFile" style="display:none;" onchange="changeValue(this)" >
-								    <input type="hidden" name = "target_url">
-                    			</div>
-                    			
-                    		</div>
-                    		
-                    		<div class="ProjectMember">
-                    			<p>모집인원</p>
-                    			
-                    			<p class="Project_p"><b style="color:red;">*</b> 원하는 분야를 추가하여 모집해보세요. (추후 추가/수정 가능합니다.)</p>
-                    			<hr>
-                    			
-                    			
-                    			<div id="PositionBox">
-                    			<div class="PositionBtn">
-								<input type="button" value="추가" class="PositionAdd"> <input type="button" value="삭제" class="PositionDel">
-								</div>	
-                    				
-                    			<div class="project_boxdiv">
-                    			<select class="Project_SelectBox">
-							    	<c:forEach items="${positionvo}" var="position">
-							    		 <c:if test="${position.position_enabled eq 1}">
-									 	 	<option value="${position.position_id}">${position.position_name}</option>
-									 	 </c:if>	
-									</c:forEach>
-								</select>
-									<div class="BtnWarp">
-									<input type="button" class="Up_num" value="+" >
-										<p class="number">1</p>
-									<input type="button" class="Down_num" value="-">
-									</div>
-                    			</div>
-                    			
-                    			</div>
-                    		</div>
-                    		
-                    		<div class="NavBox"> 
-                    		  <div class="ProjectNav">
-                    			<div class="Leader_Detail">  
-                    				<p>✔️ 리더 정보</p>
-                    				<p class="Project_p"><b style="color:red;">*</b> 리더 정보는 마이페이지를 통해서 수정하시기 바랍니다.</p>
-                    				<input type="text" value="${membervo.MEMBER_EMAIL}" name="member_id" hidden>
-                    				<div class="Leader_DetailBox">
-                    				<div class="LeaderImg_Box">
-                    				<img src="${pageContext.request.contextPath}/assets/img/defalutimg.jpeg">
-                    				</div>
-                    				<p><b>${membervo.MEMBER_NICKNAME}</b></p>
-                    				</div>
-                    				
-                    			</div>
-                    			<div class="Nav_Detail">
-                    				<hr>
-                    				<p>프로젝트 지역</p>
-                    				<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는 지역은 어디인가요?</p>
-    								<select class="Project_SelectBox" name="adr_code">
-								    	<c:forEach items="${adrvo}" var="adr">
-										 	 <option value="${adr.adr_code}">${adr.adr_name}</option>
-										</c:forEach>
-									</select> 
-                    				<hr>
-                    				<p>프로젝트 기간</p>
-                    				<p class="Project_p"><b style="color:red;">*</b> 프로젝트의 예상 기간을 선택해주세요.</p>
-    								<select class="Project_SelectBox" name="duration_id">
-								    	<c:forEach items="${durationvo}" var="duration">
-										 	 <option value="${duration.duration_id}">${duration.duration_date}</option>
-										</c:forEach>
-									</select>                				
-                    				<hr>
-                    				<p>프로젝트 분야</p>
-                    				<p class="Project_p"><b style="color:red;">*</b> 어떤 분야의 프로젝트를 진행할 것인지 선택해주세요.</p>
-                    				<select class="Project_SelectBox" name="field_code">
-	                    				<c:forEach items="${fieldvo}" var="field">
-	                    				  <c:if test="${field.field_enabled eq 1}">
-										 	 <option value="${field.field_code}">${field.field_name} 개발</option>
-										  </c:if>
-										</c:forEach>	
-									</select>
-                    			</div>
-                    		  </div>
-                    		  
-                    		</div>
-                    		
-                    		<div class="ProjectContent">
-                    			<p>프로젝트 내용</p>
-                    			<p class="Project_p"><b style="color:red;">*</b> 설명이 풍부한 프로젝트는, 아닌 프로젝트에 비해 지원율이 50% 높습니다.</p>
-                    			<hr>
-                    			<textarea rows="" cols="" placeholder="내용을 입력해주세요." name="p_content"></textarea>
-                    		</div>
-                    		
-                    		<div class="ProjectSkill">
-                    			<p>기술 스텍</p>
-                    			<p class="Project_p"><b style="color:red;">*</b> 프로젝트를 진행하는데 필요한 기술 스텍을 선택하세요.</p>
-                   				<hr>
-								<div id="m_skill">
-									<div>
-										<div id="tagarea">
-											<c:forEach items="${skillvo}" var="skill">
-										 	 	<c:if test="${skill.skill_enabled eq 1}">
-									 				<div class="tags">${skill.skill_name}</div>
-												</c:if>
-											</c:forEach>
-										</div>
-										<hr>
-										<p class="Project_p"><b style="color:red;">*</b> 추후 수정이 가능합니다.</p>
-										<div id="selectedarea" name="skill_code"></div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="CreateBtn_box">
-								<input type="button" class="CreateBtn" value="프로젝트 생성하기">
-								<p class="Project_p"><b style="color:red;">*</b> 프로젝트 생성시 50포인트가 소모됩니다.</p>
-							</div>
-							
-						</form>
-                   	</div>
-             </div>
-         </div> --%>
-
-
-	<%-- <script src="${pageContext.request.contextPath}/assets/js/js파일명"></script> --%>
-</body>
-<jsp:include
-	page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
-<script type="text/javascript">
-$(document).ready(function(){
+	</div>
 	
-	$('ul.tabs li').click(function(){
-		var tab_id = $(this).attr('data-tab');
-
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
-
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
-	})
-
-})
+	<!-- 지원 알림에 필요한 정보 -->
+	<input type="hidden" value="${project.member_id}" id="leader_id">
+	
+</body>
+	<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
+<script type="text/javascript">
+var _0x31fc=['${project.project_id}','178855RGavXW','${project.p_state}','37VnHasv','39916fOFiFp','1893147VnsHwf','${Check}','${sessionScope.member_id}','497148RJynbO','237957ozyIkE','663078oVifUy','1229106SqRSJF','2ujhgEn'];var _0x45b67c=_0x1e6a;(function(_0x430c4d,_0x13e42b){var _0x9fd092=_0x1e6a;while(!![]){try{var _0x1616a3=parseInt(_0x9fd092(0x11d))*-parseInt(_0x9fd092(0x129))+parseInt(_0x9fd092(0x122))+-parseInt(_0x9fd092(0x124))+parseInt(_0x9fd092(0x123))+-parseInt(_0x9fd092(0x127))+-parseInt(_0x9fd092(0x121))*-parseInt(_0x9fd092(0x125))+parseInt(_0x9fd092(0x11e));if(_0x1616a3===_0x13e42b)break;else _0x430c4d['push'](_0x430c4d['shift']());}catch(_0x4b19d4){_0x430c4d['push'](_0x430c4d['shift']());}}}(_0x31fc,0xdc9c9));function _0x1e6a(_0xf46c44,_0x2bbba1){return _0x1e6a=function(_0x31fcf9,_0x1e6ae1){_0x31fcf9=_0x31fcf9-0x11d;var _0xa0abe0=_0x31fc[_0x31fcf9];return _0xa0abe0;},_0x1e6a(_0xf46c44,_0x2bbba1);}var project_id=_0x45b67c(0x126),login_memberid=_0x45b67c(0x120),project_state=_0x45b67c(0x128),check=_0x45b67c(0x11f);
+	
+	
 </script>
+<!-- 북마크 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bookmark.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/assets/js/projectdetail.js"></script>
 </html>

@@ -21,20 +21,37 @@ ul {
 	height: 200px;
 	border-radius: 50%;
 }
-
-#modals {
-	margin: 50px auto;
-	width: 300px;
+#invitation{
+	text-align: center;
+	background-color:white;
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color: #94A7AE;
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+	padding: 5px;
+	margin: 10px auto;
+	
+}
+.name{
+	color: #94A7AE;
+	font-size:16px;
 }
 
-#modals ul {
-	display: flex;
-	margin: auto;
-	padding: 0;
-}
 
-#modals li {
-	width: 150px;
+#send{
+	text-align: center;
+	background-color:white;
+	border: 2px solid #94A7AE;
+	box-sizing: border-box;
+	color: #94A7AE;
+	width: 100px;
+	height: 40px;
+	font-size: 16px;
+	padding: 5px;
+	margin: 10px auto;
+	
 }
 
 #cycoder p {
@@ -295,6 +312,33 @@ ul {
     font-size: 14px;
 }
 
+/* 리뷰 평점 */
+.review_avg{
+	text-align: center;
+	position: relative;
+    width: 80% !important;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    color: #94A7AE;
+    font-size: 14px;
+}
+
+.review_avg > p{
+	margin-bottom: 0px !important;
+}
+
+.gradeAvg {
+	font-size: 35px;
+    font-weight: 600;
+}
+
+.reviewAvgHr{
+	width: 90%;
+    margin: 20px auto;
+}
+
 /* 리뷰 1개 */
 .reviews{
 	position: relative;
@@ -467,3 +511,110 @@ ul {
 	text-align: center;
 }
 
+
+/* 회원 초대 모달창 */
+#modal-title{
+	font-weight: 800;
+	font-size:21px;
+	color:gray;
+	margin:auto;
+}
+#inv_img{
+	width:200px;
+	height:200px;
+	background-size: cover;
+    background-position: center;
+	background-image: url(../assets/img/member_detail/invite.png);
+    background-repeat: no-repeat;
+    margin:10px auto;
+}
+#contentarea{
+	text-align:center;
+	padding:20px;
+}
+
+#inv_buttonarea{
+	text-align:center;
+	margin-bottom:20px;
+}
+.inv_btn{
+	color:#F4F2F3;
+	background-color: #94A7AE;
+	border:none;
+	padding:10px;
+	margin-bottom:20px;
+}
+#confirm_inv{
+
+	width:70px;
+	padding:5px;
+	
+}
+.modal-content{
+	    margin-top: 40%;
+}
+.modal.show .modal-dialog{
+	height: 800px;
+}
+#modal-dialog modal-login{
+	height:800px;
+}
+
+/*메시지 전송 모달창*/
+#messagearea{
+	width:300px;
+	height:300px;
+	background-size: cover;
+    background-position: center;
+	background-image: url(../assets/img/alarm/message.png);
+/* 	opacity:.5; */
+    background-repeat: no-repeat;
+    background-position:center;
+    margin:30px auto;
+    overflow: auto;
+    border:none;
+    align-items: center;
+    padding:20px;
+}
+
+#messagearea:focus{
+	background-image: url(../assets/img/alarm/read.png);
+	opacity:.5;
+    background-repeat: no-repeat;
+    background-position:center;
+    overflow: auto;
+    outline:none;
+    box-shadow: 1px;
+    border: 0.2rem solid #94A7AE;
+}
+#messagearea span{
+	text-align: center;
+    margin: 0;
+    position: relative;
+	top: 20%;
+    left: 18%;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: white
+}
+#textcount{
+	width:300px;
+	margin:auto;
+	text-align: right;
+	color: #94A7AE;
+}
+
+#msg_buttonarea{
+	text-align:center;
+	margin-bottom:20px;
+}
+
+#msg_btn{
+	color:#F4F2F3;
+	background-color: #94A7AE;
+	border:none;
+	padding:10px;
+	margin:20px auto;
+	width: 70px;
+	
+}

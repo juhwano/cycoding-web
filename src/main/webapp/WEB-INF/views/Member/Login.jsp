@@ -65,7 +65,7 @@
                                         </div>
                                         
                                         <div>
-                                        <p id="find">이메일 찾기/비밀번호 찾기</p>
+                                        <p id="find"><a href="findAccount" style="color:#C0A9BD">이메일 찾기/비밀번호 찾기</a></p>
                                         </div>
                                 
                                 <!--  
@@ -213,7 +213,22 @@ function enterkey() {
 		btnclick();
 	
 	} 	
-}			
+}
+
+//회원가입 실패여부
+$(document).ready(function(){
+	
+	var msg = "<c:out value="${msg}" />";
+
+	console.log(msg);
+
+	if(msg == "success"){
+		swal("🎉WELCOME🎉","마이페이지에서 추가 정보를 입력하시면 프로젝트 참여가 가능합니다","success");
+	} else if(msg == "fail"){
+		swal("회원가입에 실패했습니다","","error");
+	}
+	
+});
 
 </script>
 </body>

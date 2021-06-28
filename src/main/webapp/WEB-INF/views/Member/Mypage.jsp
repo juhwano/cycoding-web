@@ -41,13 +41,6 @@
 				<p>${member.MEMBER_NICKNAME}</p>
 			</div>
 
-			<div id="modals">
-				<ul>
-					<li>지원내역</li>
-					<li>프로젝트</li>
-				</ul>
-			</div>
-
 			<div id="detail_box">
 
 				<div id="persnal" class="details">
@@ -63,7 +56,7 @@
                      value="${member.MEMBER_EMAIL}" readonly>
                      <button type="button" class="modify_items m-btn hid" disabled>NONE</button></li>
                   <li class="itemlist"><span class="item">비밀번호</span><input
-                     type="password" class="info" value="password"
+                     type="password" id="password" name="password" class="info" value="password"
                      readonly>
                      <button type="button" class="modify_items m-btn">수정</button></li>
                   <li class="itemlist"><span class="item">닉네임</span><input
@@ -146,72 +139,6 @@
 							</div>
 						</div>
 
-						<div class="detail_section itmelist">
-
-							<div class="detail_title">
-
-								<span class="item">프로젝트 경험</span>
-
-							</div>
-							<!-- 스탯 입력 안 했으면 -->
-							<div class="moerdetails experience" id="exlistarea"
-								onclick="edit_modal('experience')">
-								<c:choose>
-
-									<c:when test="${empty experiences}">
-
-										<div id="ex_btn"
-											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
-											<div class="insert experience" id="never">없음</div>
-											<a href="#m_experience" class="trigger-btn" data-toggle="modal">
-												<div class="insert experience" id="have">있음</div>
-											</a>
-										</div>
-
-
-									</c:when>
-									<c:when test="${experiences eq 'none'}">
-
-										<div
-											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;" id="ex_toggle">
-											<div class="info_tags experience" id="never" style="margin:10px auto">없음</div>
-										</div>
-									</c:when>
-									<c:otherwise>
-									
-									<div id="exlist">
-									
-									<c:forEach var="experiences" items="${experiences}" varStatus="status">
-									<form action="ajax/updateexperiences" class="ex_edit_form">
-									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
-										<div class="ex_box" id="${experiences.ex_count}">
-										<div class="ex ex_titlebox">
-											<div id="exicons">
-												<i class="fas fa-edit edit_exbox"></i>
-												<i class="fas fa-eraser del_exbox"></i>
-											</div>
-										
-											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
-										</div>
-										<div class="ex"><input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
-										<div class="ex"><input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
-										<div class="ex"><input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
-										<div class="ex"><input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
-										
-										</div>
-										</form>
-										</c:forEach>
-										
-										<a href="#m_experience" class="trigger-btn" data-toggle="modal">
-												<div class="add experience" id="have">추가</div>
-											</a> 
-									</div>
-									
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
-
 						<div class="detail_section">
 							<div class="detail_title">
 
@@ -276,6 +203,76 @@
 											</a>
 										</c:forEach>
 
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+						
+						<div class="detail_section itmelist">
+
+							<div class="detail_title">
+
+								<span class="item">프로젝트 경험</span>
+
+							</div>
+							<!-- 스탯 입력 안 했으면 -->
+							<div class="moerdetails experience" id="exlistarea"
+								onclick="edit_modal('experience')">
+								<c:choose>
+
+									<c:when test="${empty experiences}">
+
+										<div id="ex_btn"
+											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;">
+											<div class="insert experience" id="never">없음</div>
+											<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+												<div class="insert experience" id="have">있음</div>
+											</a>
+										</div>
+
+
+									</c:when>
+									<c:when test="${experiences eq 'none'}">
+
+										<div
+											style="display: flex; align-items: center; width: 350px; margin: auto; justify-content: space-btween;" id="ex_toggle">
+											<div class="info_tags experience" id="never" style="margin:10px auto">없음</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+									
+									<div id="exlist">
+									
+									<c:forEach var="experiences" items="${experiences}" varStatus="status">
+									<form action="ajax/updateexperiences" class="ex_edit_form">
+									<input type="hidden" class="member_id_input" name="member_id_input" value="${member.MEMBER_ID}" />
+										<div class="ex_box" id="${experiences.ex_count}">
+										<div class="ex ex_titlebox">
+											<div id="exicons">
+												<i class="fas fa-edit edit_exbox"></i>
+												<i class="fas fa-eraser del_exbox"></i>
+											</div>
+										
+											<span class="ex_count">#${status.count}</span><input type="text" class="exp_title exp_title_input" name="exp_title_input" value="${experiences.EXP_TITLE}" readonly/>
+										</div>
+										<div class="ex"><span class="name"> 담당 업무</span>
+											<input type="text"  name="ex_position_input" class="ex_position_input" value="${experiences.EX_POSITION}" readonly/></div>
+										<div class="ex"><span class="name">사용 기술</span>
+											<input type="text"  name="ex_skill_input" class="ex_skill_input" value="${experiences.EX_SKILL}" readonly/></div>
+										<div class="ex"><span class="name">소요 기간</span>
+											<input type="text"  name="ex_duration_input" class="ex_duration_input" value="${experiences.EX_DURATION}" readonly/></div>
+										<div class="ex"><span class="name">설명</span>
+											<input type="text"  name="ex_content_input"  class="ex_content_input"value="${experiences.EX_CONTENT}" readonly/></div>
+										
+										</div>
+										</form>
+										</c:forEach>
+										
+										<a href="#m_experience" class="trigger-btn" data-toggle="modal">
+												<div class="add experience" id="have">추가</div>
+											</a> 
+									</div>
+									
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -370,8 +367,6 @@
 					
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
 							<button id="cancel_quit">닫기</button>
-							
-							
 						</a>
 						<%-- <input type="hidden" name="quit_id" id="quit_id" value="${member.MEMBER_ID}" > --%>
 						<a href="#quit_modal" class="trigger-btn" data-toggle="modal">
@@ -386,8 +381,7 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
 	<div id="point_modal" class="modal fade">
 		<div class="modal-dialog modal-login">
 			<div class="modal-content">
@@ -419,5 +413,7 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/assets/js/mypage.js?ver=4"></script>
+		
 </body>
+<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/include/footer.jsp"></jsp:include>
 </html>

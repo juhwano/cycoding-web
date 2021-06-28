@@ -1,6 +1,7 @@
 package com.cyco.member.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cyco.common.vo.Apply_Join_P_datailVo;
+import com.cyco.common.vo.BookMark_Join_P_detailVo;
 import com.cyco.common.vo.MemberVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
+import com.cyco.member.vo.MyProject_Join_Member;
+import com.cyco.member.vo.MyReviewVo;
+import com.cyco.member.vo.Project_TeamLeaderVo;
 import com.cyco.member.vo.ReviewVo;
 import com.cyco.member.vo.V_Duration;
+import com.cyco.member.vo.V_myProjectVo;
+import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.dao.ProjectDao;
+
 
 @Service
 public class MemberDetailService {
@@ -173,10 +184,10 @@ public class MemberDetailService {
 	}
 	
 	//모달 안에 기간 리스트 뽑기
-	public List<V_Duration> getDurations(){
+	public List<P_DurationVO> getDurations(){
 		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
-		List<V_Duration> list = new ArrayList<V_Duration>();
+		List<P_DurationVO> list = new ArrayList<P_DurationVO>();
 		
 		list = memberdao.getDurations();
 		
@@ -395,5 +406,110 @@ public class MemberDetailService {
 	      System.out.println("서비스 row : " + row);
 	      return row;
 	   }
+	   
+	   //회원상세 프로젝트 초대 모달 노출 전 초대할 프로젝트 있는지 확인
+	   public List<P_DetailVo> checkProjectBeforeInvite(String memberid) {
+		   
+		   MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		   List<P_DetailVo> p_detail = memberdao.checkProjectBeforeInvite(memberid);
 
+		   return p_detail;
+	   }
+	   	//북마크,지원목록 페이지
+	   	//북마크 목록 가져오기
+	   	public List<BookMark_Join_P_detailVo> getBookmarkList(String memberid) {
+		   MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		   List<BookMark_Join_P_detailVo> bookmark_list = memberdao.getBookmarkList(memberid);
+		   
+		   return bookmark_list;
+	   	}
+	   
+	   	//북마크 삭제(delete)
+		public void deleteBookMark(String projectid, String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.deletBookMark(projectid, memberid);
+		}
+		
+		//지원목록 가져오기
+		public List<Apply_Join_P_datailVo> getApplyList(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<Apply_Join_P_datailVo> apply_list = memberdao.getApplyList(memberid);
+			
+			return apply_list;
+		}
+		
+		//지원 취소
+		public void deleteApply(String applyid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.deleteApply(applyid);
+		}
+		
+		//내프로젝트, 후기 페이지
+		//로그인한 회원이 팀장인 프로젝트목록 가져오기
+		public List<Project_TeamLeaderVo> getTeamLeader(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<Project_TeamLeaderVo> teamLeaderList = memberdao.getTeamLeader(memberid);
+			
+			return teamLeaderList;
+		}
+		
+		//로그인한 회원이 팀원인 프로젝트목록 가져오기
+		public List<V_myProjectVo> getTeamMember(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<V_myProjectVo> teamMemberList = memberdao.getTeamMember(memberid);
+			
+			return teamMemberList;
+		}
+		
+		//리뷰작성용 팀장 조회
+		public MyProject_Join_Member writeReviewLeader(String projectid, String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			MyProject_Join_Member writeReviewLeader = memberdao.writeReviewLeader(projectid, memberid);
+			
+			if(writeReviewLeader == null) {
+				MyProject_Join_Member dummyMember = new MyProject_Join_Member();
+				dummyMember.setMember_nickname("dummy");
+				writeReviewLeader = dummyMember;
+			}
+			
+			return writeReviewLeader;
+		}
+		
+		//리뷰작성용 팀원 조회
+		public List<MyProject_Join_Member> writeReviewMember(String projectid, String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<MyProject_Join_Member> writeReviewMember = memberdao.writeReviewMember(projectid, memberid);
+			
+			return writeReviewMember;
+		}
+		
+		//리뷰 작성하기
+		public void setReview(List<ReviewVo> writeReviewList) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.setReview(writeReviewList);
+		}
+		
+		//로그인한 회원이 작성한 리뷰 가져오기
+		public List<ReviewVo> getMyReview(String memberid) {
+
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<ReviewVo> reviewList = memberdao.getMyReview(memberid);
+			
+			return reviewList;
+		}
+		
+		//리뷰작성시 포인트지급
+		public void giveReviewPoint(String memberid) {
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			memberdao.giveReviewPoint(memberid);
+		}
+		
+		//로그인한 회원이 해당 프로젝트에 작성한 리뷰 조회
+		public List<MyReviewVo> getMyProjectReview(String projectid, String memberid) {
+			
+			MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+			List<MyReviewVo> myProjectReview = memberdao.getMyProjectReview(projectid, memberid);
+			
+			return myProjectReview;
+		}
 }
