@@ -132,6 +132,14 @@ function updatealarmlist(id) {
 
 							);
 
+						} else if (data.alarm_CODE == "PR_EX") {
+
+							$("#alarmsub").append(
+
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "' class='alarm_content'>프로젝트에서 추방당했습니다</p></a></li>"
+
+							);
+
 						}
 					});
 

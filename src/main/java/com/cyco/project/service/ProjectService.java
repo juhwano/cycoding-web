@@ -586,7 +586,6 @@ public class ProjectService {
 			P_MemberVo membervo = new P_MemberVo(apply.getMember_id(), apply.getProject_id(), apply.getPosition_id());
 			
 			result = dao.ApplyMemberUpdate(membervo);
-			System.out.println("찍히나");
 			alarmdao.insertAlarm(alarm);
 		}
 		
@@ -607,16 +606,16 @@ public class ProjectService {
 	
 	// 프로젝트 추방
 	@Transactional
-	public int getOutMember(P_MemberVo p_member) {
+	public int getOutMember(P_MemberVo p_member, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		ApplyVo apply = new ApplyVo();
 		apply.setMember_id(p_member.getMember_id());
 		apply.setProject_id(p_member.getProject_id());
 		
 		
 		int result = dao.getOutMember(p_member);
-		
+		alarmdao.insertAlarm(alarm);
 		dao.ApplyMember_GetOut(apply);
 		
 		return result;
