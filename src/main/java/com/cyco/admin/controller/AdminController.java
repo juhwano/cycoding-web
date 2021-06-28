@@ -73,6 +73,7 @@ public class AdminController {
 			
 		//프로젝트가 가지는 기술, 포지션, 분야 랭크
 		List<ChartCount> PscountList =  service.getPSkillCount();
+		
 		List<ChartCount> PpcountList = service.getPpositionCount();
 		List<ChartCount> PfcountList = service.getPFieldCount();
 		
@@ -83,6 +84,9 @@ public class AdminController {
 		
 		//프로젝트 상태 카운트 - 도넛예정
 		List<StateCountVo> stateList = service.getStateCount();
+		
+		System.out.println(PscountList);
+		System.out.println(MscountList);
 		
 		m.addAttribute("mcount",mcount);
 		m.addAttribute("pcount",pcount);
