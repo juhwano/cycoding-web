@@ -69,7 +69,7 @@ $(document).ready(function() {
 		$('.member_list').append("<tr><td class='ProjectDetail_p'>아직 프로젝트 멤버가 없습니다.</td></tr>");
 	}
 
-
+	// 탭 시작
 	$('.Project_menuBar > li ').unbind("click").bind("click", function() {
 
 		$('.Project_menuBar > li ').attr('class', 'menuli');
@@ -152,14 +152,19 @@ $(document).ready(function() {
 							dataType: "html",
 							data: checkdata,
 							success: function(responsedata) {
-
+								
+								if(project_state != "모집중"){
+									swal("진행중인 프로젝트에는 지원이 불가능합니다.", "", "warning");
+									return false;
+								}
+								
 								if (responsedata == "is_project") {
 									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
 									return false;
 								} else if (responsedata == "ProjectApply") {
 									swal("현재 프로젝트에 이미 지원 하였습니다.", "", "warning");
 									return false;
-
+								
 								} else {
 
 									var alarm = {
@@ -1279,7 +1284,7 @@ $(document).ready(function() {
 					$('.Member_Expulsion_Btn').unbind('click').bind('click', function() {
 						var getOutMember_id = $(this).children()[1].value;
 						var getOutMember_position = $(this).children()[2].value;
-
+            
 						var alarm = {
 							"alarm_CODE": "PR_EX",
 							"url": project_id,
@@ -1295,6 +1300,7 @@ $(document).ready(function() {
 								"project_id": project_id
 							}
 		     				}			
+
 		     						swal({
 								title: "해당 멤버를 추방하시겠습니까?",
 								text: "추방된 회원은 본 프로젝트에 더 이상 지원 및 참여가 불가능합니다.",

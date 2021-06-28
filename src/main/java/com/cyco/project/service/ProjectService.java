@@ -273,6 +273,13 @@ public class ProjectService {
 		
 		List<V_PmPostion_Count> pmcountlist = dao.getPmemberCount(project_id);
 		
+		// 확인 안했는지 확인..
+		for(int i = 0; i < pmcountlist.size(); i++) {
+			int returnCount = dao.ApplyCheckMember(project_id, pmcountlist.get(i).getPosition_id());
+			pmcountlist.get(i).setCount(returnCount);
+		}
+		
+		
 		return pmcountlist;
 	}
 	
@@ -288,7 +295,11 @@ public class ProjectService {
 	public List<V_PmPosition> getProjectMemberList(String project_id) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
+		
+		
 		return pmlist;
+		
+		
 	}
 	
 	//프로젝트 체크
@@ -555,6 +566,7 @@ public class ProjectService {
 		return member;
 		
 	}
+	
 	// 프로젝트 멤버로 있는지 확인
 	public int Ismember(String member_id) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);

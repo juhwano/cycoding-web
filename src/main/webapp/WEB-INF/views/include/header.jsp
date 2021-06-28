@@ -148,7 +148,7 @@
 											<!-- 1차 메뉴 -->
 											<div class="sub panel-collapse collapse" role="tabpanel"
 												id="my_sub_admin">
-												<ul class="panel-body">
+												<ul class="panel-body" id="headerMenu">
 													<li><a
 														href="${pageContext.request.contextPath}/admin/chart">통계</a></li>
 													<li><a
@@ -185,7 +185,7 @@
 											<!-- 1차 메뉴 알림 -->
 											<div class="sub panel-collapse collapse" role="tabpanel"
 												id="a_sub">
-												<ul class="panel-body">
+												<ul class="panel-body" id="headerMenu">
 													<li><a
 														href="${pageContext.request.contextPath}/messages/">내
 															쪽지</a></li>
@@ -218,9 +218,8 @@
 													class="fas fa-caret-down"></i>
 												</a>
 											</div>
-											<div class="panel-collapse collapse sub" id="my_sub_member"
-												role="tabpanel">
-												<ul class="panel-body">
+											<div class="panel-collapse collapse sub" id="my_sub_member" role="tabpanel">
+												<ul class="panel-body" id="headerMenu">
 													<li><a
 														href="${pageContext.request.contextPath}/mypage/mypageCheck">마이페이지</a></li>
 													<li><a
@@ -346,6 +345,9 @@ $(function() {
 /* ==============================================
 Loader -->
 =============================================== */
+
+
+
 // 회원 정보
 $('#info').click(function() {
 	var toggle = $('.user_info').attr('style');
@@ -361,6 +363,8 @@ $('#info').click(function() {
 		
 	}
 })
+
+
 $('#alram').click(function() {
 	var toggle = $('.Alram_box').attr('style');
 	var infotoggle = $('.user_info').attr('style');

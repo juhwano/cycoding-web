@@ -27,7 +27,16 @@ p{
 	margin-left: 10px !important;
 }
 
-
+.Badge{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #CA8FAB;
+    display: inline-block;
+    position: absolute;
+    transform: translate(-10px, 4px);
+    cursor: pointer;
+}
 
 .ProjectDetail_p{
 	width: 100%;
@@ -868,7 +877,7 @@ p{
 }
 
 .ApplyMemberListBtn_Ok{
-    width: 34%;
+    width: 42px;
     color: white;
     background-color: #C0A9BD;
     border: 0.0625rem solid #C0A9BD;
@@ -877,7 +886,7 @@ p{
 }
 
 .ApplyMemberListBtn_No {
-    width: 34%;
+    width: 42px;
     color: #C0A9BD;
     background-color: white;
     border: 0.0625rem solid #C0A9BD;
