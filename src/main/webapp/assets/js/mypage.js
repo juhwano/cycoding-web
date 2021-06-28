@@ -420,7 +420,7 @@ $(document).ready(function() {
                         
                             $("#tagarea").append(
         
-                                "<div class='tags' id='D"+(index+1)+"'>"+obj.du_date+"</div>"
+                                "<div class='tags' id='"+obj.duration_id+"'>"+obj.duration_date+"</div>"
                             );
     
                    });
