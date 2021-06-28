@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!-- 스프링 시큐리티 설정 -->
+<%@ taglib prefix="se"
+	uri="http://www.springframework.org/security/tags"%>
 
 
 <c:set var="member" value="${aboutmember}" />
@@ -71,8 +74,16 @@
                      <button type="button" class="modify_items m-btn">수정</button></li>
                   <li class="itemlist"><span class="item">포인트</span><input
                      type="text" class="info" id="point" value="${member.HAVE_POINT}점" readonly>
-                     <a href="#point_modal" class="trigger-btn" data-toggle="modal"><button type="button" class="modify_items point-btn">충전</button></a></li>
-
+                     
+                     <!-- 권한 1인 경우 포인트 충전 불가능하게 막기 -->
+                     <se:authorize access="hasRole('ROLE_PREMEMBER')">
+                     <button type="button" class="modify_items point-btn" id="cannot_cahrge">충전</button>
+                     </se:authorize>                     
+                     <se:authorize access="!hasRole('ROLE_PREMEMBER')">
+                     <a href="#point_modal" class="trigger-btn" data-toggle="modal"><button type="button" class="modify_items point-btn">충전</button></a>
+                     </se:authorize>
+                     </li>
+					
                </ul>
 
 

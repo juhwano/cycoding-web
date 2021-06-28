@@ -140,7 +140,12 @@ $(document).ready(function() {
 					 card += '<h3 class="h5 mt-3 card-title">' + member.m_nick + '</h3>'
 					 card += '<p class="card-text">' + member.position + '</p>'
 					 card += '<p class="tags"># '+ member.skill +'</p>'
-					 card += '<a href="memberdetailpage?memberid='+member.m_id+'" class="card_link">VIEW MORE</a>'
+					 if($("#ismember").val() == 0 ){ 
+						//premember인 경우 멤버 상세 못 보게 경고
+						card += '<a href="#" class="card_link deny_premember">VIEW MORE</a>'
+					} else{
+						card += '<a href="memberdetailpage?memberid='+memberList[current].m_id+'" class="card_link">VIEW MORE</a>'
+					}
 					 card += '</div> </div> </div>'
                   $(card_section).append(card);
                }
@@ -194,7 +199,14 @@ $(document).ready(function() {
 					 card += '<h3 class="h5 mt-3 card-title">' + memberList[current].m_nick + '</h3>'
 					 card += '<p class="card-text">' + memberList[current].position + '</p>'
 					 card += '<p class="tags"># '+ memberList[current].skill +'</p>'
-					 card += '<a href="memberdetailpage?memberid='+memberList[current].m_id+'" class="card_link">VIEW MORE</a>'
+					 if($("#ismember").val() == 0 ){ 
+						//premember인 경우 멤버 상세 못 보게 경고
+						card += '<a href="#" class="card_link deny_premember">VIEW MORE</a>'
+					} else{
+						card += '<a href="memberdetailpage?memberid='+memberList[current].m_id+'" class="card_link">VIEW MORE</a>'
+					}
+					 
+					 
 					 card += '</div> </div> </div>'
      
                  /* card_section에 for문을 돌면서 card 추가 */

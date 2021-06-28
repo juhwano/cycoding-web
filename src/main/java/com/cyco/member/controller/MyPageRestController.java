@@ -1,9 +1,7 @@
 package com.cyco.member.controller;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,15 +22,12 @@ import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
 import com.cyco.member.security.ChangeAuth;
-import com.cyco.member.security.UserAuthenticationService;
 import com.cyco.member.service.MemberDetailService;
 import com.cyco.member.service.MemberService;
 import com.cyco.member.vo.M_ExperienceVo;
 import com.cyco.member.vo.MemberDetailPageVo;
 import com.cyco.member.vo.MyProject_Join_Member;
 import com.cyco.member.vo.MyReviewVo;
-import com.cyco.member.vo.ReviewVo;
-import com.cyco.member.vo.V_Duration;
 import com.cyco.project.vo.P_DurationVO;
 
 @RequestMapping("mypage/ajax/")
@@ -370,26 +360,31 @@ public class MyPageRestController {
 	
 	//모든 정보 입력시 포인트 최초 지급
 	@RequestMapping(value="givepoint",method=RequestMethod.POST)
-	public String givePointFirstTime(String member_id) {
-		
-		System.out.println("들어왔나?");
-		
+	public String givePointFirstTime(String member_id) {	
+		System.out.println("포인트 지급");
 		String result = memberdetailservice.givePointFirstTime(member_id);
 		 
-		 return result;
+		return result;
 	}
 
-	// 회원이 탈퇴 누르면 DB에 있는 탈퇴날짜 업데이트 하는 함수
+	// 회원이 탈퇴 누르면 DB에 있는 탈퇴날짜 업데이트
 	@RequestMapping(value = "updatedeletecount", method = RequestMethod.POST)
 	public String submitQuit(String quit_id) {
-
-		int result = memberdetailservice.updateDeleteDate(quit_id);
+		
 		String msg = "fail";
-
-		if (result > 0) {
-			msg = "success";
+		
+		//프로젝트 팀장인지 확인
+		int isTeamManager = memberdetailservice.isTeamManager(quit_id);
+		
+		if(isTeamManager > 0) {
+			//작성한 프로젝트가 있으면 탈퇴 반려
+			msg = "teammanager";
+		} else {
+			int result = memberdetailservice.updateDeleteDate(quit_id);
+			if (result > 0) {
+				msg = "success";
+			}
 		}
-
 		return msg;
 
 	}
