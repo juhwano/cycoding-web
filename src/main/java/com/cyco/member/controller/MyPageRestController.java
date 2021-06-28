@@ -480,7 +480,7 @@ public class MyPageRestController {
   //모든 정보 작성했을 때 준회원에서 회원으로 권한 업데이트
   @RequestMapping(value="makememberauth", method = RequestMethod.GET)
   public Boolean makeMemberAuth(@RequestParam String member_id, @RequestParam String authority_id) {
-
+	  
 	  M_AuthVo mauth = new M_AuthVo(authority_id,member_id);
 	  Boolean bo = memberservice.UpdateAuth(mauth);
 	  
