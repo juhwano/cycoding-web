@@ -166,7 +166,12 @@
 			values (#{skill.project_id}, #{skill.skill_code})
 		</foreach>
 	</insert>
- 
+ 	
+ 	<!-- 프로젝트 있는지 확인 -->
+	<select id="Ismember" resultType="int">
+		SELECT COUNT(*) FROM P_MEMBER WHERE MEMBER_ID = #{member_id}
+	</select>
+	
 	
 	<!-- 완료가 아닌 프로젝트가 있는지 확인  -->
 	<select id="CheckProjectState" resultType="int">
