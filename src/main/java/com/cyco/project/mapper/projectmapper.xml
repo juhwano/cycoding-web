@@ -125,7 +125,7 @@
 		group by position_name,position_id
 	</select>
 	
-		<!-- 프로젝트 멤버 검색. project_id를 통한 조건검색 가능 -->
+	<!-- 프로젝트 멤버 검색. project_id를 통한 조건검색 가능 -->
 	<select id="getProjectMemberList" parameterType="string" resultType="com.cyco.project.vo.V_PmPosition">
 		select project_id, member_id, position_name, position_id, member_nickname, member_image
 		from v_pm_position
@@ -349,11 +349,17 @@
 	</select>
 	
 	<!-- 프로젝트 지원한 멤버 아이디 -->
-	<select id="getApplyMemberList" resultType="com.cyco.project.vo.V_ApplyMemberList">
+	<select id="getApplyMemberList" resultType="com.cyco.project.vo.V_ApplyMemberList">	
 		SELECT MEMBER_NICKNAME,MEMBER_ID,MEMBER_IMAGE, GRADE, POSITION_NAME, PROJECT_ID, APPLYPOSITIONNAME, APPLY_POSITION_ID, APPLY_OK
 		FROM V_APPLYMEMBER_LIST 
 		WHERE DELETE_COUNT IS NULL AND PROJECT_ID = #{project_id} AND APPLY_POSITION_ID = #{apply_position_id}
 	</select>
+	
+	<!-- 상세보기에서 지원 반영 안한 데이터 확인 -->
+	<select id="ApplyCheckMember" resultType="int">
+		SELECT COUNT(*) FROM V_APPLYMEMBER_LIST WHERE PROJECT_ID = #{param1} AND APPLY_POSITION_ID = #{param2} AND APPLY_OK = 0
+	</select>
+	
 	
 	<!-- 지원 멤버 승인 -->
 	<update id="ApplyMember_Ok" >

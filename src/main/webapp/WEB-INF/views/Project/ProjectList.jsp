@@ -115,7 +115,7 @@
                        
                         <!-- 프로젝트이름, 주언어 -->
 
-						<div class="card-body" id="backimg" style="background-image:url(${pageContext.request.contextPath}/assets/img/projectimg/${rcm.p_image})">
+						<div class="card-body" id="backimg" style="background-image:url(${pageContext.request.contextPath}/resources/upload/${rcm.p_image})">
 						
 						<!-- 추가정보 미입력 회원이면 상세 보기 경고 -->
 						<se:authorize access="hasRole('ROLE_PREMEMBER')">

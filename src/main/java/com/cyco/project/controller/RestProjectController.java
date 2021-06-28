@@ -335,7 +335,7 @@ public class RestProjectController {
 		
 		//프로젝트 멤버 검색
 		List<V_PmPosition> pmlist = service.getProjectMemberList(project_id);
-				
+		
 		//프로젝트 상세의 포지션별 자리수
 		List<V_PmPostion_Count> pmcountlist = service.getPmemberCount(project_id);
 		
