@@ -136,7 +136,10 @@ public class RestProjectController {
 		AlarmVo alarm = objectMapper.convertValue(Applydata.get("alarm"), AlarmVo.class);
 
 		int check = service.CheckProjectApply(apply);
-		if(check > 0) {
+		int project = service.Ismember(apply.getMember_id());
+		
+		if(check > 0 || project > 0) {
+			returnUrl = "isProject";
 			return returnUrl;
 		}else {
 			int result = service.setProjectApply(apply, alarm);
@@ -236,18 +239,27 @@ public class RestProjectController {
 		
 		ApplyVo apply = objectMapper.convertValue(data.get("apply"), ApplyVo.class);
 		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
-		// 프로젝트 지원 승인시 프로젝트 맴버 같이 업데이트
-		int result = service.ApplyMember_Ok(apply, alarm);
 		
+		int IsProject = service.Ismember(apply.getMember_id());
 		
-		if(result == -1) {
-			returnUrl = "checkd";
-		}else if(result > 0){
-			returnUrl = "true";
-
+		if(IsProject > 0) {
+			returnUrl = "isProject";
+			
 		}else {
-			returnUrl = "false";
+			// 프로젝트 지원 승인시 프로젝트 맴버 같이 업데이트
+			int result = service.ApplyMember_Ok(apply, alarm);
+			
+			
+			if(result == -1) {
+				returnUrl = "checkd";
+			}else if(result > 0){
+				returnUrl = "true";
+
+			}else {
+				returnUrl = "false";
+			}
 		}
+		
 		
 		
 		return returnUrl;

@@ -6,7 +6,9 @@ $(document).ready(function() {
 
 		//입력하기 버튼이 있는지 그 개수를 세서 미입력 여부 확인
 		let insert_btn = $(".detail_section").children().children().children(".insert");
+
 		console.log(insert_btn.length);
+
 		console.log(insert_btn);
 		if (insert_btn.length == 0) {
 			$(".sub_title").empty();
@@ -72,7 +74,6 @@ $(document).ready(function() {
 
 			//닉네임은 중복체크 먼저
 			if (code == "닉네임") {
-
 				//닉네임 글자 수 제한
 				if ($("#nick").val().length > 10) {
 
@@ -152,6 +153,7 @@ $(document).ready(function() {
 				let num = password.search(/[0-9]/g);
 				let eng = password.search(/[a-z]/ig);
 
+
 				if (password.length < 8 || password.length > 13) {
 
 					swal("비밀번호는 8-20자리 이내로 입력하세요.", "", "error");
@@ -166,7 +168,9 @@ $(document).ready(function() {
 
 
 
+
 				} else if (num < 0 || eng < 0) {
+
 
 					swal("영문, 숫자를 포함하여 입력하세요.", "", "error");
 					checking = false;
@@ -364,6 +368,7 @@ function edit_modal(code) {
 	}
 
 
+
 	let key = "";
 	let originStat = [];
 	function getStat(key) {
@@ -454,7 +459,6 @@ function edit_modal(code) {
 			}
 
 		});
-
 	}
 }
 
@@ -799,6 +803,7 @@ $(document).on("input", ".exinput", function() {
 			$("#insert_ex").text("대기");
 			$("#insert_ex").attr("disabled", true);
 
+
 		} else {
 			check = true;
 		}
@@ -1035,8 +1040,6 @@ $('#target_img').click(function(e) {
 $('#file').change(function(event) {
 
 	var reader = new FileReader();
-
-
 	reader.onload = function(event) {
 		$('#target_img').attr("src", event.target.result);
 
@@ -1068,7 +1071,6 @@ $("#quit").on("click", function() {
 				})
 
 			} else if (response == "teammanager") {
-
 				swal("YOUR A LEADER", "프로젝트 팀장을 위임해야 탈퇴가 가능합니다", "error");
 
 			} else {
@@ -1146,7 +1148,6 @@ function makeMemberAuth() {
 $("#cannot_cahrge").on("click", function() {
 	console.log("충전 막기");
 	swal("PLEASE FILL YOUR PROFILE", "추가 정보를 먼저 채워주세요", "error");
-
 });
 
 $("#charge-btn").on("click", function() {
