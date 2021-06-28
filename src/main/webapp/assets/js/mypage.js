@@ -1087,6 +1087,7 @@ $("#quit").on("click",function(){
 //추가 정보 모두 기입시 포인트 지급
 function givePoint(){
 	
+	console.log("포인트 지급")
 	//최초 1회 지급이므로 사용 포인트, 보유 포인트가 있는지 서버에서 확인
 	$.ajax({
 		
@@ -1096,9 +1097,10 @@ function givePoint(){
 			member_id:$("#m_id").val()
 		},
 		success:function(res){
-			console.log(res);
+			console.log("포인트 지급 여부" + res);
 			
 			if(res == "success"){
+				
 				swal("🎉congratulation🎉","이제 프로젝트에 참여할 수 있어요!","success");	
 				$("#point").val("50점");
 				makeMemberAuth();
