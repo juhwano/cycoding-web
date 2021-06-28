@@ -52,13 +52,15 @@
 						<div class="cardNum">
 								<div class="m_img">
 									<img class="m_img_size"
-										src="${pageContext.request.contextPath}/assets/img/ain_test/${member.m_image}">
+										src="${pageContext.request.contextPath}/resources/upload/${member.m_image}">
 								</div>
 								<div class="Project_card-body">
 									<h3 class="card-title">${member.m_nick}</h3>
 									<p class="card-text">${member.position}</p>
 									<p class="card-tags"># ${member.skill}</p>
-									<a href="" class="card_link">VIEW MORE</a>
+									<a href="${pageContext.request.contextPath}/member/memberdetailpage?memberid=${member.m_id}" class="card_link" target="_blank">
+									VIEW MORE</a>
+			
 								</div>
 						</div>
 					</c:if>

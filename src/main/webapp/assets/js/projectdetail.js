@@ -13,7 +13,6 @@ if (project_id == "") {
 
 $(document).ready(function() {
 
-
 	// 모달 숨기기
 	$('.Project_Apply_modal').hide();
 	$('.Project_Detail_modal').hide();
@@ -64,8 +63,7 @@ $(document).ready(function() {
 		    	 $('#project_info').trigger('click');
 		    	 
 		     });
-
-
+	}
 
 
 	if ($('.member_list').children().length < 1) {
@@ -93,7 +91,7 @@ $(document).ready(function() {
 
 					var pmcountlist = responsedata.pmcountlist;
 					var project = responsedata.project;
-
+					var checkapply = responsedata.checkapply;
 
 					var project_info = "<div class='Project_info'>"
 					project_info += "<div class='ProjectMember'>"
@@ -114,9 +112,13 @@ $(document).ready(function() {
 							project_info += "<td class='memberListcurr' width='15%'>" + pmcountlist[i].curr + " / " + pmcountlist[i].max + "</td>"
 							project_info += "<td width='30%' class='BtnWarp'>"
 							if (login_memberid != project.member_id) {
+								if(checkapply > 0){
+									project_info += "<input type='button' value='지원완료'>"
+								}else{
 								project_info += "<input class='ProjectApplyBtn' type='button' value='지원'>"
 								project_info += "<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id + "</label>"
 								project_info += "<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_name + "</label>"
+								}
 							}
 							project_info += "</td>"
 						}
@@ -204,9 +206,9 @@ $(document).ready(function() {
 															document.location.reload(true);
 														}, 1000)
 													});
-													/*setTimeout(function() {
+													setTimeout(function() {
 															document.location.reload(true);
-														}, 1000);*/
+														}, 1000);
 
 												} else {
 													swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
@@ -227,7 +229,7 @@ $(document).ready(function() {
 
 			})
 			// --------------------------------------------------------------------------------------------	
-			// Qna 게시판    
+		// Qna 게시판    
 		} else if ($(this).attr('id') == "Qna") {
 			$('html').scrollTop(0);
 			$('.ChangeContentBox').empty();
@@ -583,13 +585,80 @@ $(document).ready(function() {
 
 
 			// --------------------------------------------------------------------------------------------
-			// 멤버관리 클릭	
+		// 멤버 피드	
+		} else if ($(this).attr('id') == "memberfeed") {	
+			
+			$('html').scrollTop(0);
+			$('.ChangeContentBox').empty();
+			
+			var qnaData = { "project_id": project_id }
+
+			$.ajax({
+				url: "/ajaxproject/getprojectfeed",
+				dataType: "html",
+				data: qnaData,
+				success: function(responsedata) {
+
+					var MemberFeedBox = "<div class='MemberFeedBox'>"
+					MemberFeedBox += "<p>Feed</p>"
+					MemberFeedBox += "<p class='Project_p'><b style='color: red;'>*</b> 프로젝트 리더가 남긴 프로젝트 추가 정보 사항입니다.</p>"
+					MemberFeedBox += "<hr>"
+					MemberFeedBox += "<div class='FeedBtnBox'>"
+					MemberFeedBox += "<input type='button' class='FeedBtn' value='글쓰기'>"
+					MemberFeedBox += "</div>"
+					
+					MemberFeedBox += "</div>"
+
+					$('.ChangeContentBox').append(MemberFeedBox);
+				
+					// 글쓰기 버튼
+					$('.FeedBtn').unbind("click").bind("click", function(){
+						$('.Project_Apply_modal').empty();
+	     						
+						var table = "<form class='ProjectApply'><div class='ProjectApplyMemberListDiv'>";
+						
+						table += "<p class='ApplyMemberListTitle centerImpo'>멤버들에게 공유할 정보를 입력해주세요.</p>"
+						table += "<input type='text' class='feedTitle' placeholder='제목을 입력해주세요'>"
+						table += "<textarea type='text' class='feedcontent' placeholder='내용을 입력해주세요'></textarea>"
+						table += "<input type='button' value='글쓰기' class='FeedWrite'><input type='button' value='취소' class='Feedcancel'>"
+						table += "<div class='ApplyPbox'>"
+						table += "<p class='Apply_p'><b>작성 예시</b></p>"	
+						table += "<p class='Project_p Apply_p'>ex) 협업툴은 OO입니다~ </p>"
+						table += "<p class='Project_p Apply_p'>ex) 오픈채팅방 주소는 open.kakao.com/cyco 입니다. </p>"
+						table += "</div>";
+						table += "</div></form>";
+						
+						$('.Project_Apply_modal').append(table);
+						$('.Project_Apply_modal').show();
+						
+						
+						// 모달닫기
+						$('.Feedcancel').unbind('click').bind('click',function(){
+					    	 $('.Project_Apply_modal').empty();
+					    	 $('.Project_Apply_modal').hide();
+					     					     			    	 
+				        });
+						
+						// 글쓰기
+						$('.FeedWrite').unbind('click').bind('click',function(){
+							
+							// ajax 예정
+					     					     			    	 
+				        });
+						
+					})
+					
+					
+				
+			}
+		})	
+		// 멤버관리 클릭	
 		} else if ($(this).attr('id') == "memberEdit") {
 
 			$('html').scrollTop(0);
 			$('.ChangeContentBox').empty();
 
-			// 멤버관리 리스트 뿌려주는 ajax
+			 // 멤버관리 리스트 뿌려주는 ajax
 			 $.ajax({
 		     		url:"/ajaxproject/getMemberEditBox",
 		     		dataType:"html",
@@ -1183,17 +1252,18 @@ $(document).ready(function() {
 		     						    					});
 		     						    		 		
 		     							   		  	    });
+		     							   		  	    // ----------
 		     						     		}
 		     						     	});  
 		     					     });
+		     					     // -------------------
 		     						
 		     					})
+		     					// -----------------
 		     					
 		     		}
 		     	});
-			
-
-		}
+			}
 		// -----------------------------------------------------------------------------
 
 		$(this).attr('class', 'menuliClick');
@@ -1333,7 +1403,5 @@ $(document).ready(function() {
 	     	});  
 	     });
 	})
-	
-	
-
+		
 })
