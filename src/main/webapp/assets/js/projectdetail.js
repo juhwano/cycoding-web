@@ -996,90 +996,119 @@ $(document).ready(function() {
 		     					     			     });
 		     					     				
 		     					     				// 승인 버튼
-		     					    			     $('.ApplyMemberListBtn_Ok').unbind('click').bind('click',function(){
-		     					    			    	 var Applymember_id = $(this).next().next().val();
-		     					    			    	 var ApplyPosition = $(this).next().next().next().val();
-		     					    			    	 var divBox = $(this).parent();
-		     					    			    	 var divBoxstate = $(this).parent().parent().prev();
-		     					    			    	 
-		     					    			    	
-		     					    			    	 var data = {"project_id":project_id,
-		     					    			    				"member_id":Applymember_id,
-		     					    			    				"position_id":ApplyPosition}
-		     					    			    	 
-		     					    			    	  $.ajax({
-		     					      			     		url:"/ajaxproject/applyMemberOk",
-		     					      			     		dataType:"html",
-		     					      			     		data: data,
-		     					      			     		success: function(responsedata){    
-		     					      			     			
-		     					      			     			
-		     					      			     			if(responsedata == "checkd"){
-		     					      			     				swal("요구하는 멤버수가 가득찼습니다.","추가로 모집 할 경우 멤버수를 늘려주세요.","warning");
-		     					      			     				return false;
-		     					      			     			}else if(responsedata == "true"){
-		     					      			     				
-		     						      			     			 divBox.empty();
-		     						    	    			    	 divBoxstate.empty();
-		     						    	    			    	 
-		     						    	    			    	 divBoxstate.append("<p class='applystate_1'>승인</p>");
-		     						    		     				 divBox.append("<input type='button' value='처리완료' class='successBtn'>");
-		     						    		     				 
-		     						    		     				swal("멤버로 승인 하셨습니다.","","success");
-		     					      			     				
-		     					      			     			}else{
-		     					      			     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-		     					      			     				setTimeout(function() {
-		     					      		     						document.location.reload(true);
-		     					      		     					}, 1000);
-		     					      			     			}
-		     					      			     			
-		     					      			     		}
-		     					      			     	}); 
-		     					    			    	 
-		     					    			    	 
-		     					     			     });
-		     					     				
-		     					    			  	// 거절 버튼
-		     					    			     $('.ApplyMemberListBtn_No').unbind('click').bind('click',function(){
-		     					    			    	 var Applymember_id = $(this).next().val();
-		     					    			    	 var ApplyPosition = $(this).next().next().val();
-		     					    			    	 var divBox = $(this).parent();
-		     					    			    	 var divBoxstate = $(this).parent().parent().prev();
-		     					    			    	 
-		     					    			    	
-		     					    			    	 var data = {"project_id":project_id,
-		     					    			    				"member_id":Applymember_id,
-		     					    			    				"position_id":ApplyPosition}
-		     					    			    	 
-		     					    			    	   $.ajax({
-		     					      			     		url:"/ajaxproject/applyMemberNo",
-		     					      			     		dataType:"html",
-		     					      			     		data: data,
-		     					      			     		success: function(responsedata){    
-		     					      			     			
-		     					      			     			if(responsedata == "true"){
-		     					      			     				
-		     					      			     				 divBox.empty();
-		     					      		    			    	 divBoxstate.empty();
-		     					      		    			    	 
-		     					      		    			    	 divBoxstate.append("<p class='applystate_2'>거절</p>");
-		     					      			     				 divBox.append("<input type='button' value='처리완료' class='successBtn'>");
-		     						    		     				 
-		     						    		     			     swal("요청이 거절 되었습니다","해당 회원은 더 이상 본 프로젝트에 지원이 불가능합니다.","error");
-		     					      			     			}else{
-		     					      			     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-		     					      			     				setTimeout(function() {
-		     					      		     						document.location.reload(true);
-		     					      		     					}, 1000);
-		     					      			     			}
-		     					      			     			
-		     					      			     		}
-		     					      			     	});  
-		     					     			     });
-		     					     			}
-		     					     	});
-		     					})
+								$('.ApplyMemberListBtn_Ok').unbind('click').bind('click', function() {
+									var Applymember_id = $(this).next().next().val();
+									var ApplyPosition = $(this).next().next().next().val();
+									var divBox = $(this).parent();
+									var divBoxstate = $(this).parent().parent().prev();
+									var alarm = {
+										"alarm_CODE": "PR_S",
+										"url": project_id,
+										"member_ID": Applymember_id,
+										"alarm_CONTENT": "지원하신 프로젝트의 참여가 승인되었습니다"
+									}
+
+									var data = {
+										apply: {
+											"project_id": project_id,
+											"member_id": Applymember_id,
+											"position_id": ApplyPosition
+										},
+										alarm
+									}
+
+									$.ajax({
+										url: "/ajaxproject/applyMemberOk",
+										dataType: "html",
+										type: "post",
+										contentType: "application/json",
+										data: JSON.stringify(data),
+										success: function(responsedata) {
+
+
+											if (responsedata == "checkd") {
+												swal("요구하는 멤버수가 가득찼습니다.", "추가로 모집 할 경우 멤버수를 늘려주세요.", "warning");
+												return false;
+											} else if (responsedata == "true") {
+
+												divBox.empty();
+												divBoxstate.empty();
+
+												divBoxstate.append("<p class='applystate_1'>승인</p>");
+												divBox.append("<input type='button' value='처리완료' class='successBtn'>");
+												insertAlarm(JSON.stringify(alarm)).then(function() {
+													swal("멤버로 승인 하셨습니다.", "", "success")
+												});
+												
+
+											} else {
+												swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+												setTimeout(function() {
+													document.location.reload(true);
+												}, 1000);
+											}
+
+										}
+									});
+
+
+								});
+
+								// 거절 버튼
+								$('.ApplyMemberListBtn_No').unbind('click').bind('click', function() {
+									var Applymember_id = $(this).next().val();
+									var ApplyPosition = $(this).next().next().val();
+									var divBox = $(this).parent();
+									var divBoxstate = $(this).parent().parent().prev();
+									
+									var alarm = {
+										"alarm_CODE": "PR_F",
+										"url": project_id,
+										"member_ID": Applymember_id,
+										"alarm_CONTENT": "지원하신 프로젝트의 참여가 거절되었습니다"
+									}
+
+									var data = {
+										apply:{
+										"project_id": project_id,
+										"member_id": Applymember_id,
+										"position_id": ApplyPosition},
+										alarm
+									}
+
+									$.ajax({
+										url: "/ajaxproject/applyMemberNo",
+										dataType: "html",
+										type: "post",
+										contentType: "application/json",
+										data: JSON.stringify(data),
+										success: function(responsedata) {
+
+											if (responsedata == "true") {
+
+												divBox.empty();
+												divBoxstate.empty();
+
+												divBoxstate.append("<p class='applystate_2'>거절</p>");
+												divBox.append("<input type='button' value='처리완료' class='successBtn'>");
+												
+												insertAlarm(JSON.stringify(alarm)).then(function() {
+													swal("요청이 거절 되었습니다", "해당 회원은 더 이상 본 프로젝트에 지원이 불가능합니다.", "error")
+												});
+
+											} else {
+												swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+												setTimeout(function() {
+													document.location.reload(true);
+												}, 1000);
+											}
+
+										}
+									});
+								});
+							}
+						});
+					})
 		     					
 		     					// 맴버 강퇴버튼
 		     					$('.Member_Expulsion_Btn').unbind('click').bind('click', function(){
@@ -1379,7 +1408,22 @@ $(document).ready(function() {
         });
 		
 		// 완료	
-		$('.complete_Ok').unbind('click').bind('click',function(){	
+		$('.complete_Ok').unbind('click').bind('click',function(){
+			
+			var pmlist = [];
+			
+			$.each($(".pmid"), function(index, item){
+				
+				pmlist.push($(this).val());
+			});
+			
+			console.log(pmlist);
+			var alarm = {
+				"alarm_CODE": "PR_UP",
+				"url": project_id,
+				"members": pmlist,
+				"alarm_CONTENT": "지원하신 프로젝트의 상태가 변경되었습니다"
+			}	
 			
 			 $.ajax({
 	     		url:"/ajaxproject/projectcomplete",
@@ -1388,9 +1432,15 @@ $(document).ready(function() {
 	     				"p_state":project_state},
 	     		success: function(responsedata){    
 	     			if(responsedata == "true"){
-	     				swal("프로젝트가 종료되었습니다.","수고하셨습니다.","success").then((value) => {
-	     					document.location.reload(true);
+		
+						makeAlarm(JSON.stringify(alarm)).then((value) => {
+							swal("프로젝트가 종료되었습니다.","수고하셨습니다.","success").then((value) => {
+								
+								document.location.reload(true);
+	     					
+							});
 						});
+	     				
 						
 					}else{
 						swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error").then((value) => {

@@ -1,7 +1,8 @@
 $(document).ready(function(){
+    
+    //회원가입 유효성 검사
     validation();
-    
-    
+
     //이용약관 모달창
       $('.trigger').on('click', function() {
              $('.modal-wrapper').toggleClass('open');
@@ -10,15 +11,8 @@ $(document).ready(function(){
      
     
 });
-	
 
-//let email = $('#email').val();
-//let password = $('#password').val();
-//let passwordC = $('#passwordC').val();
-//let name = $('#name').val();
-//let nickName = $('#nickName').val();
-//let phone =  $('#phone').val();
-
+//랜덤 	
 let dice = '';
 
 function validation() {
@@ -50,8 +44,6 @@ function validation() {
         let password = $('#password').val();
         let num = password.search(/[0-9]/g);
         let eng = password.search(/[a-z]/ig);
-        
-        console.log("이벤트 발생");
         
         if(password.length < 8 || password.length > 20 ){
             $("#pwdCheck").css("color","#CA8FAB");
@@ -144,8 +136,6 @@ function validation() {
                                 swal("인증 메일 발송에 실패했습니다." , "" ,"error");
                                 
                             } else {
-
-                                //alert("인증메일이 발송되었습니다.");
                                
                                 dice = result[1];
                                 console.log("랜덤 숫자 : ",dice);
@@ -187,7 +177,25 @@ function validation() {
             }
         });
     });
-
+    
+    //닉네임 글자 수 제한
+    $("#nickName").on("input",function(){
+		
+		if($(this).val().length > 10){
+			swal("닉네임을 10자를 초과할 수 없습니다","","warning");
+		}
+			
+	});
+	
+	//이름 글자 수 제한
+	$("#name").on("input",function(){
+		
+		if($(this).val().length > 10){
+			swal("성함은 10자까지만 입력해주세요","","warning");
+		}
+			
+	});
+	
     //닉네임 중복체크
     $('#nickNameCheckBtn').click(function() {
         let nickName = $('#nickName').val();
@@ -346,6 +354,8 @@ function validation() {
     
     
 /*            //비밀번호 일치 체크
+			  //분명 맞는데 자꾸 불일치 떠서
+			  //비밀번호 일치 문구로 일치여부 판단 이 부분은 주석
             if (password != passwordC) {
                  swal({
                     title: "비밀번호가 일치하지 않습니다",
@@ -411,8 +421,6 @@ function validation() {
             }
     
             if (checking) {
-                
-                console.log("가입하기");
                 
                 document.getElementById('form').submit();
             }

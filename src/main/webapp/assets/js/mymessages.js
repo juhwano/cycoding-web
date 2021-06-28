@@ -145,7 +145,13 @@ $(document).on("click", "#msg_btn", function() {
 	console.log("받는 사람 : ", $("#reply_to").val())
 	//우선 div의 텍스트를 다루기 용이하도록 input태그의 값으로 만든다
 	$("#text").val($("#messagearea").text());
-
+	
+	if($("#text").val() == ""){
+		swal("보낼 내용을 입력해주세요","","warning");
+		
+	}else{
+		
+		
 	console.log("쪽지 보내기")
 	console.log($("#text").val());
 	var data = {
@@ -162,6 +168,9 @@ $(document).on("click", "#msg_btn", function() {
 	insertAlarm(JSON.stringify(data));
 	swal("쪽지가 발송되었습니다", "", "success");
 	$("#messagearea").empty();
+		
+	}
+
 
 });
 
@@ -211,6 +220,41 @@ $(".del_received").on("click", function() {
 	} else {
 		$("#all_to").prop("checked", false)
 	}
+});
+
+//모두 체크하면 전체선택 박스도 체크/하나라도 체크 해제되면 전체선택 박스도 체크 해제
+$(".del_send").on("click", function() {
+	
+	let check = true;
+	let _this = $(this);
+
+	if (_this.prop("checked")) {
+
+		$.each($(".del_send:visible"), function(index, item) {
+
+			if(!$(this).prop("checked")){
+				check = false;
+			}
+		});
+
+	} else{
+		check = false;
+	}
+
+	if (check) {
+		$("#all_from").prop("checked", true)
+	} else {
+		$("#all_from").prop("checked", false)
+	}
+});
+
+
+//선택하면 색깔 바꾸기~
+$("input[name=NOTE_ID]").on("click",function(){
+	console.log("야호")
+	var tablebody = $(this).parent().parent().parent();
+	tablebody.toggleClass("selected_note");
+	
 });
 
 //쪽지 삭제

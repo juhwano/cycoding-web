@@ -23,6 +23,7 @@ import com.cyco.member.vo.V_Duration;
 import com.cyco.member.vo.V_MlistVo;
 import com.cyco.member.vo.V_myProjectVo;
 import com.cyco.project.vo.P_DetailVo;
+import com.cyco.project.vo.P_DurationVO;
 import com.cyco.project.vo.P_MemberVo;
 
 
@@ -91,7 +92,7 @@ public interface MemberDao {
 	public List<MemberDetailPageVo> getPreferPosition(String userid);
 	
 	//마이페이지+회원상세 기간 가져오기
-	public List<V_Duration> getDurations();
+	public List<P_DurationVO> getDurations();
 	
 	//마이페이지+회원상세 선호 기간 가져오기
 	public List<MemberDetailPageVo> getPreferDurations(String userid);

@@ -26,9 +26,10 @@ public class AlarmController {
 	public ModelAndView getAllMessages(Authentication auth){
 	
 		List<V_ToNote_Member_Vo> tolist = alarmservice.getReceivedMessages(auth.getName());
-		List<V_FromNote_Member_Vo> fromlist = alarmservice.getSendMessages(auth.getName());
+		List<V_FromNote_Member_Vo> fromlist = alarmservice.getSendMessages(auth.getName()); 	
 	
 		ModelMap mmp = new ModelMap();
+		
 		mmp.put("email", auth.getName());
 		mmp.put("tolist", tolist);
 		mmp.put("fromlist", fromlist);
