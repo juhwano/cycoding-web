@@ -69,7 +69,7 @@ $(document).ready(function() {
 		$('.member_list').append("<tr><td class='ProjectDetail_p'>아직 프로젝트 멤버가 없습니다.</td></tr>");
 	}
 
-
+	// 탭 시작
 	$('.Project_menuBar > li ').unbind("click").bind("click", function() {
 
 		$('.Project_menuBar > li ').attr('class', 'menuli');
@@ -152,14 +152,19 @@ $(document).ready(function() {
 							dataType: "html",
 							data: checkdata,
 							success: function(responsedata) {
-
+								
+								if(project_state != "모집중"){
+									swal("진행중인 프로젝트에는 지원이 불가능합니다.", "", "warning");
+									return false;
+								}
+								
 								if (responsedata == "is_project") {
 									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
 									return false;
 								} else if (responsedata == "ProjectApply") {
 									swal("현재 프로젝트에 이미 지원 하였습니다.", "", "warning");
 									return false;
-
+								
 								} else {
 
 									var alarm = {
@@ -841,6 +846,9 @@ $(document).ready(function() {
 				     			Div +=	"<input class='ProjectApplyMember_List' type='button' value='상세보기'>"
 				     			Div +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id +"</label>"
 				    			Div +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_name + "</label>"
+				    			if(pmcountlist[i].count > 0){
+									Div +=	"<span class='Badge'>️️</span>"
+								}
 				    			Div +=	"</td>"
 				    			Div +=	"</tr>"
 		     				}
@@ -1061,6 +1069,7 @@ $(document).ready(function() {
 		     					     			
 		     					     			responsedata = JSON.parse(responsedata);
 		     					     			
+		     					     			console.log(responsedata);
 		     					     			$('.Project_Apply_modal').empty();
 		     					     			
 		     					     				var table = "<form class='ProjectApply'><div class='ProjectApplyMemberListDiv'>";
@@ -1181,7 +1190,7 @@ $(document).ready(function() {
 							                                    return false;
 							                                    
 							                                 } else if (responsedata == "isProject"){
-																 swal("해당 멤버가 이미 다른 프로젝트에 가입되었습니다.", "", "error");
+																 swal("", "해당 멤버가 이미 다른 프로젝트에 가입되었습니다.", "error");
 							                                     return false;
 							                                 } else if (responsedata == "true") {
 							
