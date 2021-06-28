@@ -14,6 +14,7 @@ import com.cyco.common.vo.SkillVo;
 import com.cyco.project.vo.ApplyVo;
 import com.cyco.project.vo.P_DetailVo;
 import com.cyco.project.vo.P_DurationVO;
+import com.cyco.project.vo.P_FeedVo;
 import com.cyco.project.vo.P_MemberVo;
 import com.cyco.project.vo.P_QnaVo;
 import com.cyco.project.vo.P_SkillVo;
@@ -226,5 +227,16 @@ public interface ProjectDao {
 	//프로젝트 상세페이지 진입시 조회수 증가
 	public void addViews(String project_id);
 	
+	//프로젝트 피드 가져오기
+	public List<P_FeedVo> getFeedList(String project_id);
+	
+	//프로젝트 피드 작성
+	public int WriteProjectFeed(P_FeedVo feedvo);
+	
+	//프로젝트 피드 수정
+	public int EditProjectFeed(P_FeedVo feedvo);
+	
+	//프로젝트 피드 삭제
+	public int DeleteProjectFeed(P_FeedVo feedvo);
 	
 }
