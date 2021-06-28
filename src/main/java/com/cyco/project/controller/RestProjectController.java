@@ -290,13 +290,19 @@ public class RestProjectController {
 		return returnUrl;
 	}
 
-	@RequestMapping(value = "toHandauth", method = RequestMethod.GET)
-	public String ToHandOverAuth(ApplyVo apply, String NewMember_id) {
+	@RequestMapping(value = "toHandauth", method = { RequestMethod.POST, RequestMethod.GET })
+	public String ToHandOverAuth(@RequestBody HashMap<String, Object> data) {
 		String returnUrl = null;
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		ApplyVo apply = objectMapper.convertValue(data.get("handover"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
+		String NewMember_id = objectMapper.convertValue(data.get("NewMember_id"), String.class);
 
 		P_MemberVo NewMember = new P_MemberVo(NewMember_id, apply.getProject_id(), apply.getPosition_id());
 
-		int result = service.ToHandOverAuth(apply, NewMember);
+		int result = service.ToHandOverAuth(apply, NewMember, alarm);
 
 		if (result > 0) {
 			returnUrl = "true";

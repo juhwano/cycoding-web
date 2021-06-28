@@ -1419,12 +1419,22 @@ $(document).ready(function() {
 									});
 
 									$('.HandOverMember_Ok').unbind('click').bind('click', function() {
-
+										
+										var alarm = {
+													"alarm_CODE": "TM_CH",
+													"url": project_id,
+													"member_ID": HandOverMember_id,
+													"alarm_CONTENT": "프로젝트의 팀장이 되었습니다"
+												}
+										
 										var data = {
+											alarm,
+											handover:{
 											"member_id": HandOverMember_id,
-											"project_id": project_id,
-											"NewMember_id": login_memberid,
+											"project_id": project_id,											
 											"position_id": $('.HandOverMember_SelectBox').val()
+											},
+											"NewMember_id": login_memberid,
 										};
 
 										swal({
@@ -1440,13 +1450,20 @@ $(document).ready(function() {
 													$.ajax({
 														url: "/ajaxproject/toHandauth",
 														dataType: "html",
-														data: data,
+														type: "post",
+														contentType: "application/json",
+														data: JSON.stringify(data),
 														success: function(responsedata) {
 
 															if (responsedata == "true") {
-																swal("리더가 변경 되었습니다.", "", "success").then((value) => {
+																
+																insertAlarm(JSON.stringify(alarm)).then(function() {
+																	swal("리더가 변경 되었습니다.", "", "success").then((value) => {
 																	document.location.reload(true);
 																});
+																});
+																
+																
 
 															} else {
 																swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");

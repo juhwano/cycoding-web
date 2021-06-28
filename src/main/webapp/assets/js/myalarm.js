@@ -149,9 +149,9 @@ function addNewAlarm(message) {
 			count = 1;
 
 			if (message.alarm_CODE == "PR_IN" || message.alarm_CODE == "PR_S" || message.alarm_CODE == "PR_F" || message.alarm_CODE == "PR_UP"
-				|| message.alarm_CODE == "PR_EX") {
+				|| message.alarm_CODE == "PR_EX" || message.alarm_CODE == "TM_CH") {
 
-				//프로젝트에 초대됨, 참여 승인됨, 거절됨, 프로젝트 상태 바뀜, 추방 당함
+				//프로젝트에 초대됨, 참여 승인됨, 거절됨, 프로젝트 상태 바뀜, 추방 당함, 내가 새 팀장이 됨
 				$(this).after(
 					'<tbody class="apply_table_sec"><tr id="' + newalarm.attr("id") + '"><td>'
 					+ '<a href="/project/detail?project_id=' + message.url + '">' + message.alarm_CONTENT + '</a></td></tr></tbody>'

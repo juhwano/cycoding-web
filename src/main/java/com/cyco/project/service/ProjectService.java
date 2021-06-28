@@ -623,8 +623,9 @@ public class ProjectService {
 	
 	// 프로젝트 위임
 	@Transactional
-	public int ToHandOverAuth(ApplyVo apply, P_MemberVo member) {
+	public int ToHandOverAuth(ApplyVo apply, P_MemberVo member, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		
 		// 리더 변경
 		int result = dao.ToHandOverAuth(apply);
@@ -633,6 +634,9 @@ public class ProjectService {
 		
 		// 권한 받은 멤버 삭제
 		dao.getAuthMemberDel(apply);
+		
+		//알림 테이블 인서트
+		alarmdao.insertAlarm(alarm);
 		
 		return result;
 	}

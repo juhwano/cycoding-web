@@ -140,7 +140,16 @@ function updatealarmlist(id) {
 
 							);
 
+						} else if (data.alarm_CODE == "TM_CH") {
+
+							$("#alarmsub").append(
+
+								"<li class='header_alarm'><a href='/project/detail?project_id=" + data.url + "' class='alarm_content'>프로젝트의 팀장이 되셨습니다</p></a></li>"
+
+							);
+
 						}
+						
 					});
 
 				} else {
