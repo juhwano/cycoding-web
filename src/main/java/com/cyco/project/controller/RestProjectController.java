@@ -419,7 +419,6 @@ public class RestProjectController {
 
 		String returnURL = service.ProjectWithdrawal(member_id, project_id, state);
 		
-		
 		// 팀장 권한에서 팀원으로 보내기
 		M_AuthVo mauth = new M_AuthVo("2", member_id);
 		memberservice.UpdateAuth(mauth);

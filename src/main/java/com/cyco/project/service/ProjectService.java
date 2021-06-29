@@ -19,6 +19,7 @@ import com.cyco.common.vo.P_FieldVo;
 import com.cyco.common.vo.PositionVo;
 import com.cyco.common.vo.SkillVo;
 import com.cyco.member.dao.MemberDao;
+import com.cyco.member.security.ChangeAuth;
 import com.cyco.member.service.MemberService;
 import com.cyco.project.dao.ProjectDao;
 import com.cyco.project.vo.ApplyVo;
@@ -679,6 +680,7 @@ public class ProjectService {
 		String returnURL = "Error";
 		
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
 		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
 		
 		// 프로젝트 리더 인지 확인
@@ -698,6 +700,22 @@ public class ProjectService {
 				int delete = dao.DeleteProject(project_id, member_id);
 				
 					if(delete > 0) {
+						if(!state.equals("모집중")) {
+							// 시큐리티 권한 변경
+							ChangeAuth chau = new ChangeAuth("ROLE_PENALTY");
+							M_AuthVo mauth = new M_AuthVo("4",member_id);
+							memberdao.UpdateAuth(mauth);
+							// 지원 했던 내역 전부 추방으로 전환
+							dao.ProjectApplyWithdrawal(member_id);
+							// 패널티컬럼 업뎃
+							memberdao.penalyMember(member_id);
+							
+						}else {
+							// 시큐리티 권한 변경
+							ChangeAuth chau = new ChangeAuth("ROLE_MEMBER");
+							M_AuthVo mauth = new M_AuthVo("2",member_id);
+							memberdao.UpdateAuth(mauth);
+						}
 						returnURL = "DeleteProjecet";
 						return returnURL;
 					}else {
@@ -713,14 +731,24 @@ public class ProjectService {
 			int OutMember = dao.getOutMember(p_member);
 			
 			
-			if(!state.equals("모집중")) {
-				M_AuthVo m_Ayth = new M_AuthVo("4", member_id);
-				// 멤버 권한 4로 변경 ( 페널티 게정 )
-				memberdao.UpdateAuth(m_Ayth);
-				
-			}
-			
 			if(OutMember > 0) {
+				if(!state.equals("모집중")) {
+					
+					// 시큐리티 권한 변경
+					ChangeAuth chau = new ChangeAuth("ROLE_PENALTY");
+					M_AuthVo mauth = new M_AuthVo("4",member_id);
+					memberdao.UpdateAuth(mauth);
+					// 지원 했던 내역 전부 추방으로 전환
+					dao.ProjectApplyWithdrawal(member_id);
+					// 패널티컬럼 업뎃
+					memberdao.penalyMember(member_id);
+					
+				}else {
+					// 시큐리티 권한 변경
+					ChangeAuth chau = new ChangeAuth("ROLE_MEMBER");
+					M_AuthVo mauth = new M_AuthVo("2",member_id);
+					memberdao.UpdateAuth(mauth);
+				}
 				returnURL = "OutProjecet";
 				return returnURL;
 			}else {

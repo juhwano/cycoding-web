@@ -547,4 +547,9 @@
 		DELETE FROM P_FEED WHERE PROJECT_ID = #{project_id} AND FEED_ID = #{feed_id}
 	</delete>
 	
+	<!-- 지원 했던 내역 전부 추방으로 전환 -->
+	<update id="ProjectApplyWithdrawal">
+		UPDATE APPLY SET APPLY_OK = 3 WHERE MEMBER_ID = #{member_id} AND APPLY_OK = 0
+	</update>
+	
 </mapper>

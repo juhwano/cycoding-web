@@ -98,9 +98,10 @@
 					</div>	
 					</c:if>
 					<c:if test="${sessionScope.nickname ne replylist.MEMBER_NICKNAME}">
-						<div style="float:right; margin-top:3px; margin-right: 125px">
+					<div style="float:right; margin-top:3px; margin-right: 83px">
 						<fmt:formatDate value="${replylist.REPLY_DATE }" pattern="MM.dd hh:mm:ss" />
-						</div>
+						<span style="padding-left:6px;"><button class="imgBtn" onclick="fn_replyReply('<c:out value="${replylist.REPLY_ID}"/>')"><i class="fas fa-plus"></i></button></span>
+					</div>
 					</c:if>
 <%-- 				<a href="#" onclick="fn_replyDelete('<c:out value="${replylist.REPLY_ID}"/>')">삭제</a> --%>
 <%-- 				<a href="#" onclick="fn_replyUpdate('<c:out value="${replylist.REPLY_ID}"/>')">수정</a> --%>
@@ -142,6 +143,9 @@
 			<a href="form?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-primary boardBtn">수정</a>
 	        <a href="delete?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-black boardBtn">삭제</a>
 	        <a href="list" class="btn btn-outline-black boardBtn">목록</a>
+	 </c:if>
+	 <c:if test="${sessionScope.nickname eq '관리자'}">
+	 		<a href="delete?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-black boardBtn">삭제</a>
 	 </c:if>
 	 <c:if test="${sessionScope.nickname ne boardInfo.MEMBER_NICKNAME}">
 			<a href="list" class="btn btn-outline-black boardBtn">목록</a>

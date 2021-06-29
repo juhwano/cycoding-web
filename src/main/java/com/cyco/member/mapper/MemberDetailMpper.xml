@@ -347,4 +347,8 @@
 		where r.writer_id = ${param2}
 	</select>
 	
+	<update id="penalyMember">
+		UPDATE M_DETAIL SET PENALTY = SYSDATE WHERE MEMBER_ID = #{member_id}
+	</update>
+	
 </mapper>

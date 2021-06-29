@@ -154,10 +154,9 @@ $(document).ready(function() {
 							success: function(responsedata) {
 								
 								if(project_state != "모집중"){
-									swal("진행중인 프로젝트에는 지원이 불가능합니다.", "", "warning");
+									swal("프로젝트 지원이 마감되었습니다.", "", "warning");
 									return false;
 								}
-								
 								if (responsedata == "is_project") {
 									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
 									return false;
