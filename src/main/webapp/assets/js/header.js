@@ -124,7 +124,7 @@ function updatealarmlist(id) {
 								//"<li class='header_alarm'><p id='" + data.alarm_ID + "' class='alarm_content'>새로운 쪽지가 도착했습니다</p></li>"
 							);
 
-						} else if (data.alarm_CODE == "TM_BAN") {
+						} else if (data.alarm_CODE == "PM_BAN") {
 
 							$("#alarmsub").append(
 

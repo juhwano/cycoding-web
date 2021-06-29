@@ -511,6 +511,7 @@ $('#alram').click(function() {
 //////////////////////////////////////////
 	$(document).ready(function(){
 		
+		
 		if(logineduser != ""){
 			
 			openSocket();
