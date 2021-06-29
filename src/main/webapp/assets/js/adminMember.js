@@ -83,8 +83,9 @@ $(".m_status").on("click", function() {
 								console.log(result.list);
 								//응답이 정상적으로 왔고
 								//밴 당한 회웡이 팀장이라 응답으로 리스트가 넘어왔을 경우
-								if (result.list.length > 0) {
+								if (result.list != null) {
 									console.log("result is not null")
+									console.log(result.list);
 									var alarm = {
 										"alarm_CODE": "PM_BAN",
 										"url": "0",

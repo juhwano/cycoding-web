@@ -179,6 +179,8 @@
 													data-parent="#accordion" href="#a_sub"
 													aria-expanded="false"><img class="alarmbell"
 													src="${pageContext.request.contextPath}/assets/img/brand/ALARM.svg"></a>
+													<!-- <div id="alarmdiv">새 알림이 도착했습니다</div> -->
+													
 											</div>
 											<!-- 1차 메뉴 알림 -->
 											<div class="sub panel-collapse collapse" role="tabpanel"
@@ -190,7 +192,8 @@
 
 													<li class="subdrop"><a role="button"
 														data-toggle="collapse" data-parent="#accordion"
-														href="#a_sub_down" aria-expanded="false">알림</a>
+														href="#a_sub_down" aria-expanded="false">알림
+														</a>
 														<div id="a_sub_down" class="panel-collapse collapse"
 															role="tabpanel">
 															<ul class="susub panel-body" id="alarmsub">
@@ -304,8 +307,9 @@
 					</div>
 				</div>
 			</div>
+		
 	</main>
-
+<div id="alarmdiv">새 알림이 도착했습니다</div>
 	<!-- 반응형 토글 -->
 	<script
 		src="${pageContext.request.contextPath}/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -400,11 +404,22 @@ $('#alram').click(function() {
 		let data = event.data;
 		console.log("서버에서 받은 메시지 ",JSON.parse(data));
 		updatealarmlist(logineduser).then(function(){
+			
+			//종 바꾸기
+			changeBell_New();
+
+			//알림 왔다고 띄워주기
+			 $( '#alarmdiv' ).fadeIn( 2000, function() {
+				$( '#alarmdiv' ).fadeOut(2000, function() {});
+          		
+        	});
+
+			
 			//알림페이지에 알림 하나 추가하는 함수
 			addNewAlarm(JSON.parse(data));
 			
 		});	
-		changeBell_New();
+		
 	
 	}		
 	 	ws.onclose = function(event){
@@ -474,7 +489,7 @@ $('#alram').click(function() {
 			updatealarmlist(logineduser);
 			
 		}
-		
+
 		
 /* 		//드롭다운 메뉴
 		$("#my_sub").hide();

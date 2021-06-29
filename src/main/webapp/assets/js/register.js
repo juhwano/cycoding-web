@@ -252,10 +252,10 @@ function validation() {
 			swal("숫자만 입력하세요", "", "warning");
 			$("#m_phone").val("");
 			return;
-		} else if (phone.length > 9) {
+		} else if (phone.length > 11) {
 
-			swal("9자리를 초과해 입력할 수 없습니다", "", "warning");
-			phone.val(phone.val().substring(0, 9));
+			swal("11자리를 초과해 입력할 수 없습니다", "", "warning");
+			phone.val(phone.val().substring(0, 11));
 			return;
 		}
 
