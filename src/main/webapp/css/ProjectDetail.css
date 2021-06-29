@@ -1506,6 +1506,7 @@ memberListBox{
     letter-spacing: -.3px;
     resize: none;
     margin-left: 20px;
+    min-height: 150px;
     width: 100%;
     border: 0.0625rem solid #D1D5DB;
 }
