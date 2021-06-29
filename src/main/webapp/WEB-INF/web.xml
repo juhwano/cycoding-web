@@ -81,11 +81,7 @@
    <listener>
 	
 	<!-- 동시 접속한 세션들 관리하기 위한 설정 -->
-  	<listener-class>
-
-  		org.springframework.security.web.session.HttpSessionEventPublisher
-
-  	</listener-class>
+  	<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 
  </listener>
 
