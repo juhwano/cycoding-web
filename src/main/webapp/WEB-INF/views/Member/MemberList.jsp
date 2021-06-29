@@ -120,10 +120,7 @@
 <jsp:include page="../include/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-	var memberList = $
-	{
-		memberList
-	};
+	var memberList = ${memberList};
 </script>
 <!-- MemberList Javascript -->
 <script
