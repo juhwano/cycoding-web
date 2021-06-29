@@ -1280,53 +1280,71 @@ $(document).ready(function() {
 							               })
 		     					
 		     					// 맴버 강퇴버튼
-		     					$('.Member_Expulsion_Btn').unbind('click').bind('click', function(){
-		     						var getOutMember_id = $(this).children()[1].value;
-		     						var getOutMember_position = $(this).children()[2].value;
-		     						
-		     						var data = {"member_id":getOutMember_id,
-		     									"position_id":getOutMember_position,
-		     									"project_id":project_id}
-		     							
+					$('.Member_Expulsion_Btn').unbind('click').bind('click', function() {
+						var getOutMember_id = $(this).children()[1].value;
+						var getOutMember_position = $(this).children()[2].value;
+            
+						var alarm = {
+							"alarm_CODE": "PR_EX",
+							"url": project_id,
+							"member_ID": getOutMember_id,
+							"alarm_CONTENT": "프로젝트에서 추방당했습니다"
+						}
+
+						var data = {
+							alarm,
+							expel: {
+								"member_id": getOutMember_id,
+								"position_id": getOutMember_position,
+								"project_id": project_id
+							}
+		     				}			
+
 		     						swal({
-		     							  title: "해당 멤버를 추방하시겠습니까?",
-		     							  text: "추방된 회원은 본 프로젝트에 더 이상 지원 및 참여가 불가능합니다.",
-		     							  icon: "warning",
-		     							  buttons: true,
-		     							  dangerMode: true,
-		     							})
+								title: "해당 멤버를 추방하시겠습니까?",
+								text: "추방된 회원은 본 프로젝트에 더 이상 지원 및 참여가 불가능합니다.",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true,
+							})
 		     							.then((willDelete) => {
-		     							  if (willDelete) {
-		     								  
-		     								  $.ajax({
-		     							     		url:"/ajaxproject/getOutmember",
-		     							     		dataType:"html",
-		     							     		data: data,
-		     							     		success: function(responsedata){    
-		     							     			
-		     							     			if(responsedata == "true"){
-		     							     				swal("추방 되었습니다.","","success").then((value) => {
-		     							     					$('#memberEdit').trigger('click');
-		     												});
-		     							     				
-		     							     			}else{
-		     							     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-		     							     				setTimeout(function() {
-		     						    						document.location.reload(true);
-		     						    					}, 1000);
-		     							     			}
-		     							     			
-		     							     		}
-		     							     	});   
-		     								  
-		     							  } else {
-		     								  return false;
-		     							  }
-		     							});
-		     						
-		     						
-		     						
-		     					})
+								if (willDelete) {
+
+									$.ajax({
+										url: "/ajaxproject/getOutmember",
+										dataType: "html",
+										type: "post",
+										contentType: "application/json",
+										data: JSON.stringify(data),
+										success: function(responsedata) {
+
+											if (responsedata == "true") {
+
+												insertAlarm(JSON.stringify(alarm)).then(function() {
+													swal("추방 되었습니다.", "", "success").then((value) => {
+													$('#memberEdit').trigger('click');
+												});
+												});
+												
+
+											} else {
+												swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+												setTimeout(function() {
+													document.location.reload(true);
+												}, 1000);
+											}
+
+										}
+									});
+
+								} else {
+									return false;
+								}
+							});
+
+
+
+						})
 		     					
 		     					// 멤버 위임버튼
 		     					$('.handoverAuthority_Btn').unbind('click').bind('click', function(){
@@ -1405,62 +1423,81 @@ $(document).ready(function() {
 		     						   		 
 		     						   		  	    });
 		     						    		 	
-		     						    		 	$('.HandOverMember_Ok').unbind('click').bind('click',function(){
-		     						    		 		
-		     						    		 		var data = {"member_id":HandOverMember_id,
-		     						    						"project_id":project_id,
-		     						    						"NewMember_id":login_memberid,
-		     						    						"position_id":$('.HandOverMember_SelectBox').val()};
-		     						    		 		
-		     						    		 		swal({
-		     						    					  title:"정말로 위임하시겠습니까?",
-		     						    					  text: "* 철회가 불가능 하오니 신중히 선택바랍니다.",
-		     						    					  icon: "warning",
-		     						    					  buttons: true,
-		     						    					  dangerMode: true,
-		     						    					})
-		     						    					.then((willDelete) => {
-		     						    					  if (willDelete) {
-		     						    						  
-		     						    						  $.ajax({
-		     						    					     		url:"/ajaxproject/toHandauth",
-		     						    					     		dataType:"html",
-		     						    					     		data: data,
-		     						    					     		success: function(responsedata){    
-		     						    					     			
-		     						    					     			if(responsedata == "true"){
-		     						    					     				swal("리더가 변경 되었습니다.","","success").then((value) => {
-		     						    					     					document.location.reload(true);
-		     						    										});
-		     						    					     				
-		     						    					     			}else{
-		     						    					     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-		     						    					     				setTimeout(function() {
-		     						    				    						document.location.reload(true);
-		     						    				    					}, 1000);
-		     						    					     			}
-		     						    					     			
-		     						    					     		}
-		     						    					     	});   
-		     						    						  
-		     						    					  } else {
-		     						    						  return false;
-		     						    					  }
-		     						    					});
-		     						    		 		
-		     							   		  	    });
-		     							   		  	    // ----------
-		     						     		}
-		     						     	});  
-		     					     });
-		     					     // -------------------
-		     						
-		     					})
-		     					// -----------------
-		     					
-		     		}
-		     	});
-			}
+		     						    		 	$('.HandOverMember_Ok').unbind('click').bind('click', function() {
+										
+										var alarm = {
+													"alarm_CODE": "TM_CH",
+													"url": project_id,
+													"member_ID": HandOverMember_id,
+													"alarm_CONTENT": "프로젝트의 팀장이 되었습니다"
+												}
+										
+										var data = {
+											alarm,
+											handover:{
+											"member_id": HandOverMember_id,
+											"project_id": project_id,											
+											"position_id": $('.HandOverMember_SelectBox').val()
+											},
+											"NewMember_id": login_memberid,
+										};
+
+										swal({
+											title: "정말로 위임하시겠습니까?",
+											text: "* 철회가 불가능 하오니 신중히 선택바랍니다.",
+											icon: "warning",
+											buttons: true,
+											dangerMode: true,
+										})
+											.then((willDelete) => {
+												if (willDelete) {
+
+													$.ajax({
+														url: "/ajaxproject/toHandauth",
+														dataType: "html",
+														type: "post",
+														contentType: "application/json",
+														data: JSON.stringify(data),
+														success: function(responsedata) {
+
+															if (responsedata == "true") {
+																
+																insertAlarm(JSON.stringify(alarm)).then(function() {
+																	swal("리더가 변경 되었습니다.", "", "success").then((value) => {
+																	document.location.reload(true);
+																});
+																});
+																
+																
+
+															} else {
+																swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+																setTimeout(function() {
+																	document.location.reload(true);
+																}, 1000);
+															}
+
+														}
+													});
+
+												} else {
+													return false;
+												}
+											});
+
+									});
+									// ----------
+								}
+							});
+						});
+						// -------------------
+
+					})
+					// -----------------
+
+				}
+			});
+		}
 		// -----------------------------------------------------------------------------
 
 		$(this).attr('class', 'menuliClick');

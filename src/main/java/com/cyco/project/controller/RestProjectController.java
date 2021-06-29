@@ -241,9 +241,10 @@ public class RestProjectController {
 		ApplyVo apply = objectMapper.convertValue(data.get("apply"), ApplyVo.class);
 		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
 		
-		int IsProject = service.Ismember(apply.getMember_id());
+		int IsMember = service.Ismember(apply.getMember_id());
+		int IsProject = service.CheckProject(apply.getMember_id());
 		
-		if(IsProject > 0) {
+		if(IsMember > 0 || IsProject > 0) {
 			returnUrl = "isProject";
 			
 		}else {
@@ -288,37 +289,47 @@ public class RestProjectController {
 		return returnUrl;
 	}
 	
-	@RequestMapping(value = "getOutmember", method=RequestMethod.GET)
-	public String getOutMember(P_MemberVo p_member) {
+
+	@RequestMapping(value = "getOutmember", method = { RequestMethod.POST, RequestMethod.GET })
+	public String getOutMember(@RequestBody HashMap<String, Object> data) {
 		String returnUrl = null;
-		
-		int result = service.getOutMember(p_member);
-		
-		
-		if(result > 0) {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		P_MemberVo p_member = objectMapper.convertValue(data.get("expel"), P_MemberVo.class);
+		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
+
+		int result = service.getOutMember(p_member, alarm);
+
+		if (result > 0) {
 			returnUrl = "true";
-		}else {
+		} else {
 			returnUrl = "false";
 		}
-		
+
 		return returnUrl;
 	}
-	
-	@RequestMapping(value = "toHandauth", method=RequestMethod.GET)
-	public String ToHandOverAuth(ApplyVo apply, String NewMember_id) {
+
+	@RequestMapping(value = "toHandauth", method = { RequestMethod.POST, RequestMethod.GET })
+	public String ToHandOverAuth(@RequestBody HashMap<String, Object> data) {
 		String returnUrl = null;
 		
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		ApplyVo apply = objectMapper.convertValue(data.get("handover"), ApplyVo.class);
+		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
+		String NewMember_id = objectMapper.convertValue(data.get("NewMember_id"), String.class);
+
 		P_MemberVo NewMember = new P_MemberVo(NewMember_id, apply.getProject_id(), apply.getPosition_id());
-		
-		
-		int result = service.ToHandOverAuth(apply,NewMember);
-		
-		if(result > 0) {
+
+		int result = service.ToHandOverAuth(apply, NewMember, alarm);
+
+		if (result > 0) {
 			returnUrl = "true";
-		}else {
+		} else {
 			returnUrl = "false";
 		}
-		
+
 		return returnUrl;
 	}
 	
