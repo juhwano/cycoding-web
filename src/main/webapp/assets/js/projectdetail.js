@@ -213,6 +213,11 @@ $(document).ready(function() {
 													setTimeout(function() {
 															document.location.reload(true);
 														}, 1000);
+												} else if(responsedata == "isProject"){
+													swal("이미 다른 프로젝트에 가입 하였습니다.", "", "error");
+													setTimeout(function() {
+														document.location.reload(true);
+													}, 1000);
 
 												} else {
 													swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
