@@ -225,15 +225,34 @@
 							<h3 class="h5 card-title mt-3 deny_premember">${project.p_title}</h3>
 							</se:authorize>
 							<se:authorize access="!hasRole('ROLE_PREMEMBER')">
-							<a href="/project/detail?project_id=${project.project_id}"><h3 class="h5 card-title mt-3">${project.p_title}</h3></a>
+							<a href="/project/detail?project_id=${project.project_id}"><h3 class="h5 card-title mt-3">
+							<c:choose>
+								<c:when test="${fn:length(project.p_title) >18 }">
+									${fn:substring(project.p_title,0,15)} ...
+								</c:when>
+								<c:when test="${fn:length(project.p_title) <=18 }">
+									${project.p_title }
+								</c:when>
+							</c:choose>
+							</h3></a>
 						</se:authorize>
 							<div class="p_footer">
 							<p class="card-text p_skill">
+							<c:set var="sk" value=""/>
 								<c:forEach var = "pjsk" items="${pjsk_list}" varStatus="status" > 
 									<c:if test="${pjsk.project_id eq project.project_id}">
-									 #${pjsk.skill_name}
+									 <c:set var="sk" value="${sk} #${pjsk.skill_name}"/>
 									</c:if>
 								</c:forEach>
+								<c:choose>
+									<c:when test="${fn:length(sk)>25}">
+										${fn:substring(sk,0,23)} ...
+									</c:when>
+									<c:when test="${fn:length(sk)<=25}">
+										${sk }
+									</c:when>
+									
+								</c:choose>
 								</p>
 								<p class="card-text p_team_memNum">모집인원: 
 								<c:forEach var = "membercount" items="${membercount_list}" varStatus="status" > 

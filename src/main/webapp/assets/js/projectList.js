@@ -123,24 +123,43 @@ $(document).ready(function() {
 				/* 인증회원인지 미인증 회원인지에 따라 프로젝트 상세, 경고 후 마이페이지 분기 */
 				if ($("#ismember").val() == 0) {
 					//premember인 경우
-					card += "<h3	class='h5	card-title	mt-3 deny_premember'>" + project_list[current].p_title + "</h3>"
+					card += "<h3	class='h5	card-title	mt-3 deny_premember'>"
+					if((project_list[current].p_title).length >18){
+						card += project_list[current].p_title.substring(0,15)+" ... </h3>";
+					}
+					else{
+						card += project_list[current].p_title+"</h3>";
+					}
+					
+					
 
 				} else {
 					
-					card += "	<a href='/project/detail?project_id=" + project_list[current].project_id + "'><h3	class='h5	card-title	mt-3'>" + project_list[current].p_title + "</h3></a>"
+					card += "	<a href='/project/detail?project_id=" + project_list[current].project_id + "'><h3	class='h5	card-title	mt-3'>";
+					
+					if((project_list[current].p_title).length >18){
+						card += project_list[current].p_title.substring(0,15)+" ... </h3></a>";
+					}
+					else{
+						card += project_list[current].p_title+"</h3></a>";
+					}
 
 				}
 
 
 				card += "	<div	class='p_footer'>									"
 				card += "	<p	class='card-text	p_skill'>"
-
+				let skstr="";
 				/*기술스택, 모집인원 for문 시작*/
 				for (let sk = 0; sk < pjsk_list.length; sk++) {
 					if (project_list[current].project_id == pjsk_list[sk].project_id) {
-						card += " #" + pjsk_list[sk].skill_name;
+						skstr += " #" + pjsk_list[sk].skill_name;
 					}
 				}
+				if(skstr.length>25){
+					skstr=skstr.substring(0,23)+" ..."
+				}
+				card +=skstr;
 				card += "</p>										"
 				card += "	<p	class='card-text	p_team_memNum'>모집인원:								"
 
