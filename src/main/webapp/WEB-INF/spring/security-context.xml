@@ -32,7 +32,8 @@
 			authentication-failure-handler-ref="userLoginFailureHandler"
 			username-parameter="username" password-parameter="password" />
 		<session-management>
-			<concurrency-control max-sessions="1" expired-url="/login" error-if-maximum-exceeded="false"/>
+		<!-- error-if-maximum-exceeded="false" 이 속성이 살아있으니 중복로그인 방지가 안됨...일단 주석 -->
+			<concurrency-control max-sessions="1" expired-url="/login" />
 		</session-management>
 		<logout delete-cookies="JSESSIONID" logout-success-url="/main" logout-url="/**/logout" invalidate-session="true" success-handler-ref="" />
 

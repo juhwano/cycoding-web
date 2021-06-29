@@ -64,7 +64,7 @@
 														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/member/memberdetailpage?memberid=${newlist.URL}">${newlist.ALARM_CONTENT}</a></td>
 													</c:when>
 													
-													<c:when test="${newlist.ALARM_CODE eq 'TM_BAN'}">
+													<c:when test="${newlist.ALARM_CODE eq 'PM_BAN'}">
 														<td class="${newlist.ALARM_CODE}" id="${newlist.URL}"><a href="/mypage/myProject">${newlist.ALARM_CONTENT}</a></td>
 													</c:when>
 													

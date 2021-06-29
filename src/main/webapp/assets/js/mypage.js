@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 
 		atfer = $(this).prev().val();
-		//도대체 무슨 생각이었는지 모르겠는데 이렇게 하면 안되는 거 같다
+		//처음 작성할 때 도대체 무슨 생각이었는지 모르겠는데 이렇게 하면 안되는 거 같다
 		//아이디값 주거나 하면 되지 이게 무슨 번거로운 짓이란 말임...
 		let code = $(this).prev().prev().text();
 		console.log(code);
