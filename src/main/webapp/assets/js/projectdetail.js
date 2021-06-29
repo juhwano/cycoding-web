@@ -241,7 +241,8 @@ $(document).ready(function() {
 			var qnaData = { "project_id": project_id }
 
 			$.ajax({
-				url: "/ajaxproject/getprojectqna",
+				url: "/ajaxproject/projectqna",
+				method: "GET",
 				dataType: "html",
 				data: qnaData,
 				success: function(responsedata) {
@@ -318,8 +319,8 @@ $(document).ready(function() {
 
 						if (content != "") {
 							$.ajax({
-								url: "/ajaxproject/writeQna",
-								dataType: "html",
+								url: "/ajaxproject/projectqna",
+								method: "POST",
 								data: {
 									"project_id": project_id,
 									"member_id": login_memberid,
@@ -358,8 +359,8 @@ $(document).ready(function() {
 							} else {
 
 								$.ajax({
-									url: "/ajaxproject/editQna",
-									dataType: "html",
+									url: "/ajaxproject/projectqna",
+									method: "PUT",
 									data: {
 										"project_id": project_id,
 										"member_id": login_memberid,
@@ -402,8 +403,8 @@ $(document).ready(function() {
 								if (willDelete) {
 
 									$.ajax({
-										url: "/ajaxproject/DeleteQna",
-										dataType: "html",
+										url: "/ajaxproject/projectqna",
+										method: "DELETE",
 										data: {
 											"project_id": project_id,
 											"member_id": login_memberid,
@@ -446,7 +447,8 @@ $(document).ready(function() {
 							$("#ReplyBox" + ref).empty();
 
 							$.ajax({
-								url: "/ajaxproject/getProjectQnaReply",
+								url: "/ajaxproject/ProjectQnaReply",
+								method: "GET",
 								dataType: "html",
 								data: {
 									"project_id": project_id,
@@ -548,8 +550,8 @@ $(document).ready(function() {
 
 										if (contents != "") {
 											$.ajax({
-												url: "/ajaxproject/writeQnaReply",
-												dataType: "html",
+												url: "/ajaxproject/ProjectQnaReply",
+												method: "POST",
 												data: {
 													"project_id": project_id,
 													"member_id": login_memberid,
@@ -596,8 +598,9 @@ $(document).ready(function() {
 							"member_id":login_memberid }
 
 			$.ajax({
-				url: "/ajaxproject/getprojectfeed",
+				url: "/ajaxproject/projectfeed",
 				dataType: "html",
+				method: "GET",
 				data: FeedData,
 				success: function(responsedata) {
 					
@@ -682,8 +685,9 @@ $(document).ready(function() {
 											"member_id":login_memberid};
 							
 							$.ajax({
-								url: "/ajaxproject/writeprojectfeed",
+								url: "/ajaxproject/projectfeed",
 								dataType: "html",
+								method: "POST",
 								data: FeedData,
 								success: function(responsedata) {
 									if(responsedata == "true"){
@@ -741,8 +745,9 @@ $(document).ready(function() {
 											"feed_title":$('.feedTitle').val(),
 											"feed_content":$('.feedcontent').val()}
 			     			$.ajax({
-								url: "/ajaxproject/EditProjectFeed",
+								url: "/ajaxproject/projectfeed",
 								dataType: "html",
+								method: "PUT",
 								data: FeedEdit,
 								success: function(responsedata) {
 									if(responsedata == "true"){
@@ -774,8 +779,9 @@ $(document).ready(function() {
 							if (willDelete) {
 
 								$.ajax({
-									url: "/ajaxproject/DeleteProjectFeed",
+									url: "/ajaxproject/projectfeed",
 									dataType: "html",
+									method: "DELETE",
 									data: {
 										"project_id": project_id,
 										"feed_id": DeleteFeedId,
@@ -1501,11 +1507,13 @@ $(document).ready(function() {
 	    	 $('.Project_Apply_modal').hide();
 	     					     			    	 
         });
-			
+		
+		// 예 버튼	
 		$('.Withdrawal_Ok').unbind('click').bind('click',function(){
 	    	
 	    	 $.ajax({
 	     		url:"/ajaxproject/projectWithdrawal",
+	     		method:"DELETE",
 	     		dataType:"html",
 	     		data: {"project_id":project_id,
 	     				"state":project_state},
@@ -1539,7 +1547,7 @@ $(document).ready(function() {
 		
 	})
 	
-// 프로젝트 완료버튼
+	// 프로젝트 완료버튼
 	$('.ProjectCompleteBtn').unbind('click').bind('click',function(){
 		
 		$('.Project_Apply_modal').empty();
@@ -1575,6 +1583,7 @@ $(document).ready(function() {
 			
 			 $.ajax({
 	     		url:"/ajaxproject/projectcomplete",
+	     		method: "POST",
 	     		dataType:"html",
 	     		data: {"project_id":project_id,
 	     				"p_state":project_state},
