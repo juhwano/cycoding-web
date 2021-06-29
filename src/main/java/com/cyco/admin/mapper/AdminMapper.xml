@@ -167,13 +167,15 @@
 		}
 	</select>
 	<!-- 팀장 회원일때 -->
-	<resultMap id="idMap" type="hashmap" />
+	<resultMap id="idMap" type="hashmap">
+		<result property="member_id" column="member_id"/>
+	</resultMap>
 	<select id="procedureBanLeader" statementType="CALLABLE" parameterType="map">
 		{CALL BANLEADER(
 			${data.member_id},
 			${data.auth},
 			${data.enabled},
-			#{data.output, mode=OUT, jdbcType=INTEGER, javaType=int}
+			#{data.output, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=idMap}
 		)}
 	</select>
 	
