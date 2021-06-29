@@ -228,9 +228,12 @@ public class RestProjectController {
 		ApplyVo apply = objectMapper.convertValue(data.get("apply"), ApplyVo.class);
 		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
 
-		int IsProject = service.Ismember(apply.getMember_id());
+		
+		int IsMember = service.Ismember(apply.getMember_id());
+		int IsProject = service.CheckProject(apply.getMember_id());
+		
+		if(IsMember > 0 || IsProject > 0) {
 
-		if (IsProject > 0) {
 			returnUrl = "isProject";
 
 		} else {

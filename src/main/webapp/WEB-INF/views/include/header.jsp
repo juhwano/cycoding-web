@@ -88,7 +88,7 @@
 									</a>
 								</div>
 								<div class="col-6 collapse-close">
-									<a href="#navbar_global" class="fas fa-times"
+									<a href="#navbar_global" class="fas fa-times" id="HeaderCancle"
 										data-bs-toggle="collapse" data-bs-target="#navbar_global"
 										aria-controls="navbar_global" aria-expanded="false"
 										title="close" aria-label="Toggle navigation"></a>
@@ -121,7 +121,7 @@
 						<!-- Header Right -->
 						<div class="right_nav">
 							<ul
-								class="navbar-nav navbar-nav-hover align-items-lg-center plex_right">
+								class="navbar-nav navbar-nav-hover align-items-lg-center plex_right" id="MenuToggle">
 
 								<!-- 로그인 안하면 -->
 								<se:authorize
@@ -346,6 +346,35 @@ $(function() {
 Loader -->
 =============================================== */
 
+var hideMenu;
+var thisShow;
+var checkLi;
+
+$('#MenuToggle > li > div').click(function(){
+
+	if($(this).attr("id") == "alarm_panel"){
+		if(hideMenu < 0 && checkLi != "alarm_panel"){
+			$(thisShow).removeClass('show');
+		}
+		
+		var attr = $(this).children()[1];
+		hideMenu = $(attr).attr("class").indexOf('show');
+		thisShow = $(attr);
+		checkLi = $(this).attr("id");
+		
+	}else if($(this).attr("id") == "member_panel"){
+		if(hideMenu < 0 && checkLi != "member_panel"){
+			$(thisShow).removeClass('show');
+		}
+		
+		var attr = $(this).children()[1];
+		hideMenu = $(attr).attr("class").indexOf('show');
+		thisShow = $(attr);
+		checkLi = $(this).attr("id");
+		
+	}
+	
+})
 
 
 // 회원 정보
