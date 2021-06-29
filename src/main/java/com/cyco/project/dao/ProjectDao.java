@@ -146,6 +146,8 @@ public interface ProjectDao {
 	// 지원한 멤버 리스트
 	public List<V_ApplyMemberList> getApplyMemberList(V_ApplyMemberList memberList);
 	
+	// 상세보기에서 지원 반영 안한 데이터 확인
+	public int ApplyCheckMember(String project_id, String position_id);
 	
 	// 지원 맴버 승인
 	public int ApplyMember_Ok(ApplyVo apply);
@@ -239,4 +241,6 @@ public interface ProjectDao {
 	//프로젝트 피드 삭제
 	public int DeleteProjectFeed(P_FeedVo feedvo);
 	
+	//프로젝트 멤버로 등록 되어있는지 확인
+	public int Ismember(String member_id);
 }

@@ -83,6 +83,7 @@ $(".m_status").on("click", function() {
 								console.log(result.list);
 								//응답이 정상적으로 왔고
 								//밴 당한 회웡이 팀장이라 응답으로 리스트가 넘어왔을 경우
+
 								if (result.list != null && result.list.length > 0) {
 									var list=[];
 									result.list.forEach(function(item, index){
@@ -90,7 +91,6 @@ $(".m_status").on("click", function() {
 										console.log(item.member_id);
 										list.push(item.member_id);
 									})
-									
 									console.log("팀원이 있는 팀장이 밴 되었다.")
 									var alarm = {
 										"alarm_CODE": "PM_BAN",

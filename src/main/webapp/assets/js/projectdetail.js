@@ -69,7 +69,7 @@ $(document).ready(function() {
 		$('.member_list').append("<tr><td class='ProjectDetail_p'>아직 프로젝트 멤버가 없습니다.</td></tr>");
 	}
 
-
+	// 탭 시작
 	$('.Project_menuBar > li ').unbind("click").bind("click", function() {
 
 		$('.Project_menuBar > li ').attr('class', 'menuli');
@@ -112,7 +112,7 @@ $(document).ready(function() {
 							project_info += "<td width='30%' class='BtnWarp'>"
 							if (login_memberid != project.member_id) {
 								if(checkapply > 0){
-									project_info += "<input type='button' value='지원완료'>"
+									project_info += "<input type='button' class='ApplyComple' value='지원완료'>"
 								}else{
 								project_info += "<input class='ProjectApplyBtn' type='button' value='지원'>"
 								project_info += "<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id + "</label>"
@@ -152,14 +152,19 @@ $(document).ready(function() {
 							dataType: "html",
 							data: checkdata,
 							success: function(responsedata) {
-
+								
+								if(project_state != "모집중"){
+									swal("진행중인 프로젝트에는 지원이 불가능합니다.", "", "warning");
+									return false;
+								}
+								
 								if (responsedata == "is_project") {
 									swal("현재 진행 중인 프로젝트가 존재합니다.", "", "warning");
 									return false;
 								} else if (responsedata == "ProjectApply") {
 									swal("현재 프로젝트에 이미 지원 하였습니다.", "", "warning");
 									return false;
-
+								
 								} else {
 
 									var alarm = {
@@ -236,7 +241,8 @@ $(document).ready(function() {
 			var qnaData = { "project_id": project_id }
 
 			$.ajax({
-				url: "/ajaxproject/getprojectqna",
+				url: "/ajaxproject/projectqna",
+				method: "GET",
 				dataType: "html",
 				data: qnaData,
 				success: function(responsedata) {
@@ -313,8 +319,8 @@ $(document).ready(function() {
 
 						if (content != "") {
 							$.ajax({
-								url: "/ajaxproject/writeQna",
-								dataType: "html",
+								url: "/ajaxproject/projectqna",
+								method: "POST",
 								data: {
 									"project_id": project_id,
 									"member_id": login_memberid,
@@ -353,8 +359,8 @@ $(document).ready(function() {
 							} else {
 
 								$.ajax({
-									url: "/ajaxproject/editQna",
-									dataType: "html",
+									url: "/ajaxproject/projectqna",
+									method: "PUT",
 									data: {
 										"project_id": project_id,
 										"member_id": login_memberid,
@@ -397,8 +403,8 @@ $(document).ready(function() {
 								if (willDelete) {
 
 									$.ajax({
-										url: "/ajaxproject/DeleteQna",
-										dataType: "html",
+										url: "/ajaxproject/projectqna",
+										method: "DELETE",
 										data: {
 											"project_id": project_id,
 											"member_id": login_memberid,
@@ -441,7 +447,8 @@ $(document).ready(function() {
 							$("#ReplyBox" + ref).empty();
 
 							$.ajax({
-								url: "/ajaxproject/getProjectQnaReply",
+								url: "/ajaxproject/ProjectQnaReply",
+								method: "GET",
 								dataType: "html",
 								data: {
 									"project_id": project_id,
@@ -543,8 +550,8 @@ $(document).ready(function() {
 
 										if (contents != "") {
 											$.ajax({
-												url: "/ajaxproject/writeQnaReply",
-												dataType: "html",
+												url: "/ajaxproject/ProjectQnaReply",
+												method: "POST",
 												data: {
 													"project_id": project_id,
 													"member_id": login_memberid,
@@ -591,8 +598,9 @@ $(document).ready(function() {
 							"member_id":login_memberid }
 
 			$.ajax({
-				url: "/ajaxproject/getprojectfeed",
+				url: "/ajaxproject/projectfeed",
 				dataType: "html",
+				method: "GET",
 				data: FeedData,
 				success: function(responsedata) {
 					
@@ -625,7 +633,7 @@ $(document).ready(function() {
 							MemberFeedBox += responsedata.F_list[i].feed_content
 							MemberFeedBox += "</textarea>"
 							MemberFeedBox += "</div>"
-							if (responsedata.F_list[i].member_id == login_memberid) {
+							if (responsedata.F_list[i].member_id == login_memberid || responsedata.Reader > 0) {
 								MemberFeedBox += "<div class='FeedBtnBox'>"
 								MemberFeedBox += "<input type='button' class='FeedEditBtn' value='수정'><p>|</p>"
 								MemberFeedBox += "<input type='button' class='FeedDeleteBtn' value='삭제'>"
@@ -677,8 +685,9 @@ $(document).ready(function() {
 											"member_id":login_memberid};
 							
 							$.ajax({
-								url: "/ajaxproject/writeprojectfeed",
+								url: "/ajaxproject/projectfeed",
 								dataType: "html",
+								method: "POST",
 								data: FeedData,
 								success: function(responsedata) {
 									if(responsedata == "true"){
@@ -736,8 +745,9 @@ $(document).ready(function() {
 											"feed_title":$('.feedTitle').val(),
 											"feed_content":$('.feedcontent').val()}
 			     			$.ajax({
-								url: "/ajaxproject/EditProjectFeed",
+								url: "/ajaxproject/projectfeed",
 								dataType: "html",
+								method: "PUT",
 								data: FeedEdit,
 								success: function(responsedata) {
 									if(responsedata == "true"){
@@ -769,8 +779,9 @@ $(document).ready(function() {
 							if (willDelete) {
 
 								$.ajax({
-									url: "/ajaxproject/DeleteProjectFeed",
+									url: "/ajaxproject/projectfeed",
 									dataType: "html",
+									method: "DELETE",
 									data: {
 										"project_id": project_id,
 										"feed_id": DeleteFeedId,
@@ -841,6 +852,9 @@ $(document).ready(function() {
 				     			Div +=	"<input class='ProjectApplyMember_List' type='button' value='상세보기'>"
 				     			Div +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_id +"</label>"
 				    			Div +=	"<label for='ProjectApplyBtn' hidden>" + pmcountlist[i].position_name + "</label>"
+				    			if(pmcountlist[i].count > 0){
+									Div +=	"<span class='Badge'>️️</span>"
+								}
 				    			Div +=	"</td>"
 				    			Div +=	"</tr>"
 		     				}
@@ -1061,6 +1075,7 @@ $(document).ready(function() {
 		     					     			
 		     					     			responsedata = JSON.parse(responsedata);
 		     					     			
+		     					     			console.log(responsedata);
 		     					     			$('.Project_Apply_modal').empty();
 		     					     			
 		     					     				var table = "<form class='ProjectApply'><div class='ProjectApplyMemberListDiv'>";
@@ -1179,6 +1194,10 @@ $(document).ready(function() {
 							                                 if (responsedata == "checkd") {
 							                                    swal("요구하는 멤버수가 가득찼습니다.", "추가로 모집 할 경우 멤버수를 늘려주세요.", "warning");
 							                                    return false;
+							                                    
+							                                 } else if (responsedata == "isProject"){
+																 swal("", "해당 멤버가 이미 다른 프로젝트에 가입되었습니다.", "error");
+							                                     return false;
 							                                 } else if (responsedata == "true") {
 							
 							                                    divBox.empty();
@@ -1261,53 +1280,71 @@ $(document).ready(function() {
 							               })
 		     					
 		     					// 맴버 강퇴버튼
-		     					$('.Member_Expulsion_Btn').unbind('click').bind('click', function(){
-		     						var getOutMember_id = $(this).children()[1].value;
-		     						var getOutMember_position = $(this).children()[2].value;
-		     						
-		     						var data = {"member_id":getOutMember_id,
-		     									"position_id":getOutMember_position,
-		     									"project_id":project_id}
-		     							
+					$('.Member_Expulsion_Btn').unbind('click').bind('click', function() {
+						var getOutMember_id = $(this).children()[1].value;
+						var getOutMember_position = $(this).children()[2].value;
+            
+						var alarm = {
+							"alarm_CODE": "PR_EX",
+							"url": project_id,
+							"member_ID": getOutMember_id,
+							"alarm_CONTENT": "프로젝트에서 추방당했습니다"
+						}
+
+						var data = {
+							alarm,
+							expel: {
+								"member_id": getOutMember_id,
+								"position_id": getOutMember_position,
+								"project_id": project_id
+							}
+		     				}			
+
 		     						swal({
-		     							  title: "해당 멤버를 추방하시겠습니까?",
-		     							  text: "추방된 회원은 본 프로젝트에 더 이상 지원 및 참여가 불가능합니다.",
-		     							  icon: "warning",
-		     							  buttons: true,
-		     							  dangerMode: true,
-		     							})
+								title: "해당 멤버를 추방하시겠습니까?",
+								text: "추방된 회원은 본 프로젝트에 더 이상 지원 및 참여가 불가능합니다.",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true,
+							})
 		     							.then((willDelete) => {
-		     							  if (willDelete) {
-		     								  
-		     								  $.ajax({
-		     							     		url:"/ajaxproject/getOutmember",
-		     							     		dataType:"html",
-		     							     		data: data,
-		     							     		success: function(responsedata){    
-		     							     			
-		     							     			if(responsedata == "true"){
-		     							     				swal("추방 되었습니다.","","success").then((value) => {
-		     							     					$('#memberEdit').trigger('click');
-		     												});
-		     							     				
-		     							     			}else{
-		     							     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-		     							     				setTimeout(function() {
-		     						    						document.location.reload(true);
-		     						    					}, 1000);
-		     							     			}
-		     							     			
-		     							     		}
-		     							     	});   
-		     								  
-		     							  } else {
-		     								  return false;
-		     							  }
-		     							});
-		     						
-		     						
-		     						
-		     					})
+								if (willDelete) {
+
+									$.ajax({
+										url: "/ajaxproject/getOutmember",
+										dataType: "html",
+										type: "post",
+										contentType: "application/json",
+										data: JSON.stringify(data),
+										success: function(responsedata) {
+
+											if (responsedata == "true") {
+
+												insertAlarm(JSON.stringify(alarm)).then(function() {
+													swal("추방 되었습니다.", "", "success").then((value) => {
+													$('#memberEdit').trigger('click');
+												});
+												});
+												
+
+											} else {
+												swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+												setTimeout(function() {
+													document.location.reload(true);
+												}, 1000);
+											}
+
+										}
+									});
+
+								} else {
+									return false;
+								}
+							});
+
+
+
+						})
 		     					
 		     					// 멤버 위임버튼
 		     					$('.handoverAuthority_Btn').unbind('click').bind('click', function(){
@@ -1386,62 +1423,81 @@ $(document).ready(function() {
 		     						   		 
 		     						   		  	    });
 		     						    		 	
-		     						    		 	$('.HandOverMember_Ok').unbind('click').bind('click',function(){
-		     						    		 		
-		     						    		 		var data = {"member_id":HandOverMember_id,
-		     						    						"project_id":project_id,
-		     						    						"NewMember_id":login_memberid,
-		     						    						"position_id":$('.HandOverMember_SelectBox').val()};
-		     						    		 		
-		     						    		 		swal({
-		     						    					  title:"정말로 위임하시겠습니까?",
-		     						    					  text: "* 철회가 불가능 하오니 신중히 선택바랍니다.",
-		     						    					  icon: "warning",
-		     						    					  buttons: true,
-		     						    					  dangerMode: true,
-		     						    					})
-		     						    					.then((willDelete) => {
-		     						    					  if (willDelete) {
-		     						    						  
-		     						    						  $.ajax({
-		     						    					     		url:"/ajaxproject/toHandauth",
-		     						    					     		dataType:"html",
-		     						    					     		data: data,
-		     						    					     		success: function(responsedata){    
-		     						    					     			
-		     						    					     			if(responsedata == "true"){
-		     						    					     				swal("리더가 변경 되었습니다.","","success").then((value) => {
-		     						    					     					document.location.reload(true);
-		     						    										});
-		     						    					     				
-		     						    					     			}else{
-		     						    					     				swal("오류가 발생하였습니다.","잠시후 다시 시도해주세요.","error");
-		     						    					     				setTimeout(function() {
-		     						    				    						document.location.reload(true);
-		     						    				    					}, 1000);
-		     						    					     			}
-		     						    					     			
-		     						    					     		}
-		     						    					     	});   
-		     						    						  
-		     						    					  } else {
-		     						    						  return false;
-		     						    					  }
-		     						    					});
-		     						    		 		
-		     							   		  	    });
-		     							   		  	    // ----------
-		     						     		}
-		     						     	});  
-		     					     });
-		     					     // -------------------
-		     						
-		     					})
-		     					// -----------------
-		     					
-		     		}
-		     	});
-			}
+		     						    		 	$('.HandOverMember_Ok').unbind('click').bind('click', function() {
+										
+										var alarm = {
+													"alarm_CODE": "TM_CH",
+													"url": project_id,
+													"member_ID": HandOverMember_id,
+													"alarm_CONTENT": "프로젝트의 팀장이 되었습니다"
+												}
+										
+										var data = {
+											alarm,
+											handover:{
+											"member_id": HandOverMember_id,
+											"project_id": project_id,											
+											"position_id": $('.HandOverMember_SelectBox').val()
+											},
+											"NewMember_id": login_memberid,
+										};
+
+										swal({
+											title: "정말로 위임하시겠습니까?",
+											text: "* 철회가 불가능 하오니 신중히 선택바랍니다.",
+											icon: "warning",
+											buttons: true,
+											dangerMode: true,
+										})
+											.then((willDelete) => {
+												if (willDelete) {
+
+													$.ajax({
+														url: "/ajaxproject/toHandauth",
+														dataType: "html",
+														type: "post",
+														contentType: "application/json",
+														data: JSON.stringify(data),
+														success: function(responsedata) {
+
+															if (responsedata == "true") {
+																
+																insertAlarm(JSON.stringify(alarm)).then(function() {
+																	swal("리더가 변경 되었습니다.", "", "success").then((value) => {
+																	document.location.reload(true);
+																});
+																});
+																
+																
+
+															} else {
+																swal("오류가 발생하였습니다.", "잠시후 다시 시도해주세요.", "error");
+																setTimeout(function() {
+																	document.location.reload(true);
+																}, 1000);
+															}
+
+														}
+													});
+
+												} else {
+													return false;
+												}
+											});
+
+									});
+									// ----------
+								}
+							});
+						});
+						// -------------------
+
+					})
+					// -----------------
+
+				}
+			});
+		}
 		// -----------------------------------------------------------------------------
 
 		$(this).attr('class', 'menuliClick');
@@ -1488,11 +1544,13 @@ $(document).ready(function() {
 	    	 $('.Project_Apply_modal').hide();
 	     					     			    	 
         });
-			
+		
+		// 예 버튼	
 		$('.Withdrawal_Ok').unbind('click').bind('click',function(){
 	    	
 	    	 $.ajax({
 	     		url:"/ajaxproject/projectWithdrawal",
+	     		method:"DELETE",
 	     		dataType:"html",
 	     		data: {"project_id":project_id,
 	     				"state":project_state},
@@ -1526,7 +1584,7 @@ $(document).ready(function() {
 		
 	})
 	
-// 프로젝트 완료버튼
+	// 프로젝트 완료버튼
 	$('.ProjectCompleteBtn').unbind('click').bind('click',function(){
 		
 		$('.Project_Apply_modal').empty();
@@ -1562,6 +1620,7 @@ $(document).ready(function() {
 			
 			 $.ajax({
 	     		url:"/ajaxproject/projectcomplete",
+	     		method: "POST",
 	     		dataType:"html",
 	     		data: {"project_id":project_id,
 	     				"p_state":project_state},

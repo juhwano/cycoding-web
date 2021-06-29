@@ -193,6 +193,12 @@
 		update point set have_point=50 where member_id=${member_id}
 	
 	</update>
+	<!-- 회원 탈퇴시 우선 팀장인지 확인부터 하기 -->
+	<select id="isTeamManager" resultType="Integer">
+	
+		select member_id from project where member_id=${quit_id}
+	
+	</select>
 	
 	<!-- 회원 탈퇴시 상세 테이블에 탈퇴 날짜 업데이트 -->
 	<update id="updateDeleteDate">

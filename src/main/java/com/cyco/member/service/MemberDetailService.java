@@ -368,6 +368,18 @@ public class MemberDetailService {
 		
 	}
 	
+	//마이페이지에서 회원 탈퇴시 팀장인지 확인
+	public Integer isTeamManager(String quit_id) {
+		
+		MemberDao memberdao = sqlsession.getMapper(MemberDao.class);
+		int result = 0;
+		if(memberdao.isTeamManager(quit_id) != null) {
+			result = memberdao.isTeamManager(quit_id);
+		}
+
+		return result;		
+	}
+	
 	//마이페이지에서 회원 탈퇴날짜 업데이트
 	public Integer updateDeleteDate(String quit_id) {
 		

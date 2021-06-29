@@ -273,6 +273,13 @@ public class ProjectService {
 		
 		List<V_PmPostion_Count> pmcountlist = dao.getPmemberCount(project_id);
 		
+		// 확인 안했는지 확인..
+		for(int i = 0; i < pmcountlist.size(); i++) {
+			int returnCount = dao.ApplyCheckMember(project_id, pmcountlist.get(i).getPosition_id());
+			pmcountlist.get(i).setCount(returnCount);
+		}
+		
+		
 		return pmcountlist;
 	}
 	
@@ -288,7 +295,11 @@ public class ProjectService {
 	public List<V_PmPosition> getProjectMemberList(String project_id) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		List<V_PmPosition> pmlist = dao.getProjectMemberList(project_id);
+		
+		
 		return pmlist;
+		
+		
 	}
 	
 	//프로젝트 체크
@@ -556,6 +567,16 @@ public class ProjectService {
 		
 	}
 	
+	// 프로젝트 멤버로 있는지 확인
+	public int Ismember(String member_id) {
+		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		
+		int member = dao.Ismember(member_id);
+		
+		return member;
+	}
+	
+	
 	// 프로젝트 승인시 처리 서비스
 	@Transactional
 	public int ApplyMember_Ok(ApplyVo apply, AlarmVo alarm) {
@@ -577,7 +598,6 @@ public class ProjectService {
 			P_MemberVo membervo = new P_MemberVo(apply.getMember_id(), apply.getProject_id(), apply.getPosition_id());
 			
 			result = dao.ApplyMemberUpdate(membervo);
-			System.out.println("찍히나");
 			alarmdao.insertAlarm(alarm);
 		}
 		
@@ -598,16 +618,16 @@ public class ProjectService {
 	
 	// 프로젝트 추방
 	@Transactional
-	public int getOutMember(P_MemberVo p_member) {
+	public int getOutMember(P_MemberVo p_member, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		ApplyVo apply = new ApplyVo();
 		apply.setMember_id(p_member.getMember_id());
 		apply.setProject_id(p_member.getProject_id());
 		
 		
 		int result = dao.getOutMember(p_member);
-		
+		alarmdao.insertAlarm(alarm);
 		dao.ApplyMember_GetOut(apply);
 		
 		return result;
@@ -615,8 +635,9 @@ public class ProjectService {
 	
 	// 프로젝트 위임
 	@Transactional
-	public int ToHandOverAuth(ApplyVo apply, P_MemberVo member) {
+	public int ToHandOverAuth(ApplyVo apply, P_MemberVo member, AlarmVo alarm) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
+		AlarmDao alarmdao = sqlsession.getMapper(AlarmDao.class);
 		
 		// 리더 변경
 		int result = dao.ToHandOverAuth(apply);
@@ -625,6 +646,9 @@ public class ProjectService {
 		
 		// 권한 받은 멤버 삭제
 		dao.getAuthMemberDel(apply);
+		
+		//알림 테이블 인서트
+		alarmdao.insertAlarm(alarm);
 		
 		return result;
 	}
