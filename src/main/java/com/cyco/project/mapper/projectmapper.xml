@@ -169,7 +169,12 @@
  	
  	<!-- 프로젝트 있는지 확인 -->
 	<select id="Ismember" resultType="int">
-		SELECT COUNT(*) FROM P_MEMBER WHERE MEMBER_ID = #{member_id}
+		SELECT count(*) FROM PROJECT p 
+		LEFT JOIN P_DETAIL pd
+		ON p.PROJECT_ID = pd.PROJECT_ID 
+		LEFT JOIN P_MEMBER pm 
+		ON pm.PROJECT_ID = pd.PROJECT_ID 
+		WHERE pm.MEMBER_ID = #{member_id} AND pd.P_STATE != '완료'
 	</select>
 	
 	
