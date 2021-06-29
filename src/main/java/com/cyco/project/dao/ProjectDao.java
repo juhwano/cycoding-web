@@ -243,4 +243,7 @@ public interface ProjectDao {
 	
 	//프로젝트 멤버로 등록 되어있는지 확인
 	public int Ismember(String member_id);
+	
+	//프로젝트 패널티 먹을시 지원한 내역들 전부 추방으로 처리
+	public int ProjectApplyWithdrawal(String member_id);
 }
