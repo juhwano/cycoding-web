@@ -144,6 +144,9 @@
 	        <a href="delete?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-black boardBtn">삭제</a>
 	        <a href="list" class="btn btn-outline-black boardBtn">목록</a>
 	 </c:if>
+	 <c:if test="${sessionScope.nickname eq '관리자'}">
+	 		<a href="delete?FREE_ID=<c:out value="${boardInfo.FREE_ID}"/>" class="btn btn-outline-black boardBtn">삭제</a>
+	 </c:if>
 	 <c:if test="${sessionScope.nickname ne boardInfo.MEMBER_NICKNAME}">
 			<a href="list" class="btn btn-outline-black boardBtn">목록</a>
 	</c:if>		
