@@ -73,6 +73,7 @@ public class AdminController {
 			
 		//프로젝트가 가지는 기술, 포지션, 분야 랭크
 		List<ChartCount> PscountList =  service.getPSkillCount();
+		
 		List<ChartCount> PpcountList = service.getPpositionCount();
 		List<ChartCount> PfcountList = service.getPFieldCount();
 		

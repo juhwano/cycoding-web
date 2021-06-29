@@ -228,9 +228,12 @@ public class RestProjectController {
 		ApplyVo apply = objectMapper.convertValue(data.get("apply"), ApplyVo.class);
 		AlarmVo alarm = objectMapper.convertValue(data.get("alarm"), AlarmVo.class);
 
-		int IsProject = service.Ismember(apply.getMember_id());
+		
+		int IsMember = service.Ismember(apply.getMember_id());
+		int IsProject = service.CheckProject(apply.getMember_id());
+		
+		if(IsMember > 0 || IsProject > 0) {
 
-		if (IsProject > 0) {
 			returnUrl = "isProject";
 
 		} else {
@@ -406,7 +409,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 탈퇴
-	@RequestMapping(value = "projectWithdrawal", method = RequestMethod.GET)
+	@RequestMapping(value = "projectWithdrawal", method = RequestMethod.DELETE)
 	public String ProjectWithdrawal(HttpSession session, String project_id, String state) {
 		// 로그인 아이디 가져오기
 		String member_id = String.valueOf(session.getAttribute("member_id"));
@@ -423,7 +426,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 qna 가져오기
-	@RequestMapping(value = "getprojectqna", method = RequestMethod.GET)
+	@RequestMapping(value = "projectqna", method = RequestMethod.GET)
 	public List<P_QnaVo> getProjectQna(String project_id) {
 
 		List<P_QnaVo> qna = service.getProjectQna(project_id);
@@ -432,7 +435,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 qna 댓글 가져오기
-	@RequestMapping(value = "getProjectQnaReply", method = RequestMethod.GET)
+	@RequestMapping(value = "ProjectQnaReply", method = RequestMethod.GET)
 	public Map<String, Object> getProjectQna(String project_id, String REF, String member_id) {
 
 		// 댓글 가져오기
@@ -453,7 +456,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 qna 작성
-	@RequestMapping(value = "writeQna", method = RequestMethod.GET)
+	@RequestMapping(value = "projectqna", method = RequestMethod.POST)
 	public String writeQna(P_QnaVo qnavo) {
 
 		String returnURL = "false";
@@ -467,7 +470,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 qna 댓글 작성
-	@RequestMapping(value = "writeQnaReply", method = RequestMethod.GET)
+	@RequestMapping(value = "ProjectQnaReply", method = RequestMethod.POST)
 	public String writeQnaReply(P_QnaVo qnavo) {
 
 		String returnURL = "false";
@@ -481,7 +484,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 qna 수정
-	@RequestMapping(value = "editQna", method = RequestMethod.GET)
+	@RequestMapping(value = "projectqna", method = RequestMethod.PUT)
 	public String EditQna(P_QnaVo qnavo) {
 		String returnURL = "false";
 
@@ -494,7 +497,7 @@ public class RestProjectController {
 	}
 
 	// 플젝 qna 삭제
-	@RequestMapping(value = "DeleteQna", method = RequestMethod.GET)
+	@RequestMapping(value = "projectqna", method = RequestMethod.DELETE)
 	public String DeleteQna(P_QnaVo qnavo) {
 		String returnURL = "false";
 
@@ -526,7 +529,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 피드 가져오기
-	@RequestMapping(value = "getprojectfeed", method = RequestMethod.GET)
+	@RequestMapping(value = "projectfeed", method = RequestMethod.GET)
 	public Map<String, Object> getprojectpeed(String project_id, String member_id) {
 
 		Map<String, Object> returnURL = new HashMap<String, Object>();
@@ -543,7 +546,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 피드 작성하기
-	@RequestMapping(value = "writeprojectfeed", method = RequestMethod.GET)
+	@RequestMapping(value = "projectfeed", method = RequestMethod.POST)
 	public String WriteProjectFeed(P_FeedVo feed) {
 		String returnURL = "false";
 
@@ -556,7 +559,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 피드 수정하기
-	@RequestMapping(value = "EditProjectFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "projectfeed", method = RequestMethod.PUT)
 	public String EditProjectFeed(P_FeedVo feed) {
 		String returnURL = "false";
 
@@ -569,7 +572,7 @@ public class RestProjectController {
 	}
 
 	// 프로젝트 피드 삭제하기
-	@RequestMapping(value = "DeleteProjectFeed", method = RequestMethod.GET)
+	@RequestMapping(value = "projectfeed", method = RequestMethod.DELETE)
 	public String DeleteProjectFeed(P_FeedVo feed) {
 		String returnURL = "false";
 
