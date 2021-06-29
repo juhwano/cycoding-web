@@ -18,6 +18,15 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 
+<se:authorize access="hasAnyRole('ROLE_PENALTY')">
+	<script type="text/javascript">
+		swal("","프로젝트를 중도 포기하여 프로젝트 확인이 불가능 합니다.","error")
+		.then((value) => {
+		  location.href = "${pageContext.request.contextPath}/main";
+		});
+	</script>
+</se:authorize>
+
 <c:set var="project" value="${project}" />
 <c:set var="pmcountlist" value="${pmcountlist}" />
 <c:set var="pmlist" value="${pmlist}" />

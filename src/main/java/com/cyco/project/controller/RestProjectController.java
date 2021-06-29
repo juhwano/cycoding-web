@@ -415,12 +415,7 @@ public class RestProjectController {
 		String member_id = String.valueOf(session.getAttribute("member_id"));
 
 		String returnURL = service.ProjectWithdrawal(member_id, project_id, state);
-		// 팀장 권한에서 팀원으로 보내기
-		M_AuthVo mauth = new M_AuthVo("2", member_id);
-		memberservice.UpdateAuth(mauth);
-
-		// 시큐리티 권한 변경
-		ChangeAuth chau = new ChangeAuth("ROLE_MEMBER");
+		
 
 		return returnURL;
 	}

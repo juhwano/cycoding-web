@@ -201,5 +201,8 @@ public interface MemberDao {
 	
 	//비밀번호찾기 인증 완료 후 비밀번호 변경
 	public void findPwdEdit(String userEmail, String userPwd);
-
+	
+	//패널티 먹으면 패널티 업뎃
+	public int penalyMember(String member_id);
+	
 }

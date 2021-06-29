@@ -17,12 +17,23 @@
 
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 스프링 시큐리티 설정 -->
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags"%>
 <c:set var="adrvo" value="${AdrList}"></c:set>
 <c:set var="fieldvo" value="${FieldList}"></c:set>
 <c:set var="skillvo" value="${SkillList}"></c:set>
 <c:set var="positionvo" value="${PositionList}"></c:set>
 <c:set var="durationvo" value="${DurationList}"></c:set>
 <c:set var="membervo" value="${MemberVo}"></c:set>
+
+	<se:authorize access="hasAnyRole('ROLE_PENALTY')">
+		<script type="text/javascript">
+			swal("","프로젝트를 중도 포기하여 프로젝트 생성이 불가능 합니다.","error")
+			.then((value) => {
+			  location.href = "${pageContext.request.contextPath}/main";
+			});
+		</script>
+	</se:authorize>
 
 <body>
 	<div class="project_area">
