@@ -27,6 +27,8 @@
 	</script>
 </se:authorize>
 
+
+
 <c:set var="project" value="${project}" />
 <c:set var="pmcountlist" value="${pmcountlist}" />
 <c:set var="pmlist" value="${pmlist}" />
@@ -173,6 +175,8 @@
 				<ul class="Project_menuBar">
 					<li class="menuliClick" id="project_info"><p>정보</p></li>
 					<li class="menuli" id="Qna"><p>질문</p></li>
+					
+					<se:authorize access="hasAnyRole('ROLE_TEAMMANGER')">
 					<c:forEach items="${pmlist}" var="pmlist">
 							<c:if test="${pmlist.member_id eq sessionScope.member_id}">
 								<c:set var="member" value="1" />
@@ -184,6 +188,8 @@
 					<c:if test="${sessionScope.member_id eq project.member_id}">
 					<li class="menuli" id="memberEdit"><p>멤버관리</p></li>
 					</c:if>
+					</se:authorize>
+					
 				</ul>
 		</div>
 	<!-- -->

@@ -315,28 +315,42 @@ public class ProjectService {
 	
 	// ----------------------------------------------------------
 	// 프로젝트 생성
-	public String setProjectInsert(ProjectVo p) {
+	@Transactional
+	public String CreateProject(ProjectVo project,P_DetailVo p_detail, List<P_SkillVo> skill, List<P_MemberVo> member) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
-		dao.setProjectInsert(p);
+		dao.setProjectInsert(project);
 		
-		return p.getProject_id();
+		// 프로젝트 테이블 먼저 insert 후 project_id 값 리턴이 된다.
+		// 그후 리턴된 id 값을 각 Vo 객체에 주입 시켜준다.
+		p_detail.setProject_id(project.getProject_id());
 		
+		for(int i = 0 ; i < skill.size(); i++) {
+			skill.get(i).setProject_id(project.getProject_id());
+		}
+		for(int i = 0 ; i < member.size(); i++) {
+			member.get(i).setProject_id(project.getProject_id());
+		}
+		
+		// 프로젝트상세 insert
+		dao.setProjectDetail(p_detail);
+		
+		// 프로젝트스킬 insert
+		dao.setProjectSkillList(skill);
+		
+		// 프로젝트멤버 insert
+		dao.setProjectMemberList(member);
+				
+		return project.getProject_id();
 	}
-	
-	// 프로젝트 상세정보
-	public void setProjectDetail(P_DetailVo p) {
-		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
-		
-		dao.setProjectDetail(p);;
-		
-	}
+	// ---------------------------------------------------------
+
 	
 	// 프로젝트 + 기술
 	public void setProjectSkillList(List<P_SkillVo> p) {
 		ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 		
-		dao.setProjectSkillList(p);;
+		dao.setProjectSkillList(p);
 		
 	}
 	
@@ -344,12 +358,9 @@ public class ProjectService {
 		public void setProjectMemberList(List<P_MemberVo> m) {
 			ProjectDao dao = sqlsession.getMapper(ProjectDao.class);
 			
-			dao.setProjectMemberList(m);;
+			dao.setProjectMemberList(m);
 			
 		}
-	// ---------------------------------------------------------
-
-  
 			
 	// 프로젝트 지원내역
 	public int CheckProjectApply(ApplyVo apply) {
