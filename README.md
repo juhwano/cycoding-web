@@ -102,6 +102,12 @@ deploy : aws
 ![image](https://user-images.githubusercontent.com/77667889/125512103-10ccc7c8-877e-43ee-ad4e-d538e9aec2a4.png)
 <br/>
 
+## CLOUD COMPUTING
+
+클라우드 컴퓨팅이란, 인터넷이라는 통신 서비스를 활용한 컴퓨팅 서비스 종류의 하나로 개인용 컴퓨터가 아닌, 인터넷을 통해 연결된 원격 컴퓨터를 활용하는 기술을 말합니다. 쉽게 말해 ‘개인용 컴퓨터보다 성능이 뛰어난 컴퓨터나 저장장치 등의 컴퓨터 자원을 다른 곳에서 빌려 사용할 수 있도록 처리해주는 IT 기술이다’라고 할 수 있습니다.
+![aws](https://user-images.githubusercontent.com/77667889/125514520-626a89bf-b6d8-464a-ba64-1c07ddc1949b.png)
+
+
 ## 형상관리
 ![vc](https://user-images.githubusercontent.com/77667889/125510995-680b565c-fbff-458c-ae01-6a346285c781.png)
 <br/>
