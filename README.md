@@ -69,7 +69,7 @@ deploy : aws
 # 기술
 
 ## REST API
-![rest1](https://user-images.githubusercontent.com/77667889/125508593-b0b0f0aa-9cb9-4fdd-94ce-6d8357da02d6.png)
+![rest](https://user-images.githubusercontent.com/77667889/125513961-b86f9f81-4e88-4182-8893-20427b2aef61.png)
 <br/>
 
 ## Spring Transaction
