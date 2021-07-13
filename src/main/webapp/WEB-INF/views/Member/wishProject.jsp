@@ -26,6 +26,10 @@
 					<div class="table_sec">
 					<!-- 프로젝트목록 -->
 					<!-- 지원목록 영역 -->
+					
+					<!-- 지원한 프로젝트(모집중)가 한개도 없는 경우 문구 출력용 -->
+					<c:set var="wish_project_nothing" value="true"/>
+					
 					<div class="info_text_sec">
 						<p class="table_name_text">모집중인 프로젝트</p>
 					</div>
@@ -48,9 +52,19 @@
 										<td>${fn:substring(apply.apply_date, 2,10)}</td>
 										<td><p class="state_ing"> 모집중 </p></td>
 									</tr>
+									<c:set var="wish_project_nothing" value="false"/>
 								</c:if>
 							</c:forEach>
 						</tbody>
+						
+						<!-- 모집중인 프로젝트 없는 경우 목록 출력 -->
+						<c:if test="${wish_project_nothing eq true}">
+							<tr><td colspan="4">
+								<p class="not_project">지원한 프로젝트가 없습니다.</p>
+							</td></tr>
+							<c:set var="wish_project_nothing" value="false"/>
+						</c:if>
+						
 					</table>
 					<div class="info_text_sec">
 						<p class="info_text">
@@ -58,6 +72,9 @@
 						</p>
 					</div>
 					<div class="marginBox"></div>
+					
+					<!-- 지원한 프로젝트(마감)가 한개도 없는 경우 문구 출력용 -->
+					<c:set var="wish_end_project_nothing" value="true"/>
 					
 					<!-- 마감된 플젝 -->
 					<div class="info_text_sec">
@@ -80,17 +97,27 @@
 										<td>${fn:substring(apply.apply_date, 2,10)}</td>
 										<td><p class="state_end"> 모집완료 </p></td>
 									</tr>
+									<!-- 지원한 프로젝트(마감)가 한개도 없는 경우 문구 출력용 -->
+									<c:set var="wish_end_project_nothing" value="false"/>
 								</c:when>
 								<c:when test="${apply.apply_ok eq 2}">
 									<tr>
 										<td><a href="/project/detail?project_id=${apply.project_id}">${apply.p_title}</a></td>
 										<td>${fn:substring(apply.apply_date, 2,10)}</td>
 										<td><p class="state_ban"> 승인거절 </p></td>
+										<c:set var="wish_end_project_nothing" value="false"/>
 									</tr>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 						</tbody>
+						<!-- 마감된 프로젝트 없는 경우 목록 출력 -->
+						<c:if test="${wish_end_project_nothing eq true}">
+							<tr><td colspan="3">
+								<p class="not_project">지원한 프로젝트가 없습니다.</p>
+							</td></tr>
+							<c:set var="wish_end_project_nothing" value="false"/>
+						</c:if>
 					</table>
 				</div>
 			</div>
