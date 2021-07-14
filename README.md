@@ -29,8 +29,7 @@
 <br/>
 
 ## 미리보기
-
-![cycoding (2) (1)](https://user-images.githubusercontent.com/77667889/125496943-e608e230-10f1-4f8b-9583-4ea7293eb2ed.gif)
+![cycoding-preview](https://user-images.githubusercontent.com/77667889/125571105-1d48e739-0eda-4306-9135-c68072ed98df.gif)
 
 <br/>
 <hr/>
