@@ -54,12 +54,9 @@
 
 ## 개발 환경
 ```BASH
-Programming Language - Java 1.8
-IDE - Eclipse
-DB - OracleDB 
-Framework - MyBatis, Spring 4
-Build Tool - Maven
-deploy : aws
+* 서버기술:Apache2, Tomcat9, AWS EC2, AWS RDS, Oracle, Spring Framework
+* 회면기술:HTML5, CSS3, JavaScript, Bootstrap
+* 개발도구:Eclipse(sts), Oracle SQL Developer, exERD
 ```
 
 <br/>
